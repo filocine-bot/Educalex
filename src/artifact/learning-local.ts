@@ -4,6 +4,7 @@ import { useCapability } from '@/lib/claude-runtime';
 import { artifactUser } from './supabase-stub';
 import { freeCoursePaths, unitCount } from '@/lib/learning-policy';
 import { resultScore } from '@/lib/simulation-scoring';
+import { PRACTICE_EXAM_VERSION } from '@/lib/simulation-bank';
 import { currentPreparationLevel } from '@/lib/preparation-levels';
 
 type DocRef = { get(): Promise<{ exists: boolean; data(): Record<string, unknown> | undefined }>; set(d: Record<string, unknown>): Promise<void> };
@@ -78,7 +79,7 @@ export async function saveAttempt({ data }: { data: { id: string; profile: strin
   const { state, doc, uid } = await load();
   if (!state.attempts.some(a => a.id === data.id)) {
     const score = resultScore(data as Parameters<typeof resultScore>[0]);
-    state.attempts.push({ id: data.id, user_id: uid, profile: data.profile, exam_version: 'practice-v1', answers: data.answers, elapsed_seconds: data.elapsedSeconds, timed_out: data.timedOut, correct: score.correct, percentage: score.percentage, competencies: score.competencies, created_at: new Date().toISOString() });
+    state.attempts.push({ id: data.id, user_id: uid, profile: data.profile, exam_version: PRACTICE_EXAM_VERSION, answers: data.answers, elapsed_seconds: data.elapsedSeconds, timed_out: data.timedOut, correct: score.correct, percentage: score.percentage, competencies: score.competencies, created_at: new Date().toISOString() });
     state.attempts = state.attempts.slice(-MAX_ATTEMPTS);
     await save(doc, state);
   }

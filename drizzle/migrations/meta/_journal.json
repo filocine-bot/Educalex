@@ -43,6 +43,13 @@
       "when": 1794689800297,
       "tag": "0005_educational_profile_navigation",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1794800000000,
+      "tag": "0006_practice_v2_twenty_questions",
+      "breakpoints": true
     }
   ]
 }

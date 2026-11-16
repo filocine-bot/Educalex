@@ -5,7 +5,7 @@ import {PracticeSessionProvider,usePracticeSession} from '@/components/practice-
 const mocks=vi.hoisted(()=>({user:{id:'A'} as {id:string}|null,save:vi.fn()}));
 vi.mock('@/components/account-session',()=>({useAccount:()=>({user:mocks.user})}));
 vi.mock('@/lib/learning.functions',()=>({saveAttempt:(input:unknown)=>mocks.save(input)}));
-function Probe(){const session=usePracticeSession();return <><button onClick={()=>session.addResult({profile:'rector',answers:Array(8).fill(null),elapsedSeconds:1,timedOut:false})}>Deliver</button><button onClick={session.clearResults}>Clear</button><output data-testid="message">{session.saveMessage}</output><output data-testid="count">{session.results.length}</output></>;}
+function Probe(){const session=usePracticeSession();return <><button onClick={()=>session.addResult({profile:'rector',answers:Array(20).fill(null),elapsedSeconds:1,timedOut:false})}>Deliver</button><button onClick={session.clearResults}>Clear</button><output data-testid="message">{session.saveMessage}</output><output data-testid="count">{session.results.length}</output></>;}
 afterEach(()=>{cleanup();vi.clearAllMocks();mocks.user={id:'A'};});
 describe('Respuestas tardías de guardado (sin cuentas reales)',()=>{
  it('un guardado de A no confirma éxito en la sesión de B',async()=>{
