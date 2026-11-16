@@ -1,0 +1,11 @@
+ALTER TABLE public.practice_offer_drafts ADD COLUMN IF NOT EXISTS content_rules jsonb NOT NULL DEFAULT '{}'::jsonb;
+ALTER TABLE public.practice_offer_drafts ADD COLUMN IF NOT EXISTS simulation_rules jsonb NOT NULL DEFAULT '{}'::jsonb;
+COMMENT ON TABLE public.practice_offer_drafts IS 'Internal preparation-level drafts only. Never individual simulation packages. No active premium restrictions or billing.';
+COMMENT ON COLUMN public.practice_offer_drafts.extra_attempts IS 'DEPRECATED: legacy package quantity; not used by preparation-level UI or access checks.';
+COMMENT ON COLUMN public.practice_offer_drafts.integral_access IS 'DEPRECATED: legacy package flag; not used by preparation-level UI or access checks.';
+COMMENT ON COLUMN public.practice_offer_drafts.level_rules IS 'DEPRECATED: retained historical package rules; replaced by content_rules and simulation_rules.';
+COMMENT ON COLUMN public.practice_offer_drafts.content_rules IS 'Inactive administrator-configurable future content rules; existing content remains free.';
+COMMENT ON COLUMN public.practice_offer_drafts.simulation_rules IS 'Inactive administrator-configurable future practice rules; current four practice-v1 simulations remain free.';
+COMMENT ON TABLE public.practice_access_rights IS 'DEPRECATED: legacy package rights; preserved without active use, activation or consumption.';
+COMMENT ON TABLE public.practice_level_drafts IS 'Legacy inactive user/profile drafts. Never determine the current level or restrict access.';
+COMMENT ON TABLE public.practice_access_ledger IS 'Append-only audit history for internal drafts. Legacy package events retained; no consumption or nonzero delta.';

@@ -1,0 +1,16 @@
+import { historicalInterviewCompetencies, referencesFor, type CompetitionProfile } from '@/lib/competition-references';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './ui/accordion';
+
+export function CompetitionReferences({ profile }: { profile: CompetitionProfile }) {
+  const refs = referencesFor(profile);
+  const historical = profile !== 'ascenso-reubicacion';
+  return <section className="competition-references" aria-label="Referentes documentales">
+    <h2>{historical ? 'Concurso 2026 y referentes anteriores' : 'Referentes del proceso de ascenso y reubicación'}</h2>
+    <p className="competition-reference-label">{historical ? 'Las fuentes 2026 están marcadas como vigentes; las de 2021–2023 son históricas y no determinan la convocatoria actual' : 'Referente MEN de 2025: verificar modificaciones y convocatoria aplicable'}</p>
+    <p>{historical ? 'El aviso de 2022 distingue pruebas rurales de conocimientos específicos y pedagógicos, no rurales de aptitudes y competencias básicas, y psicotécnicas. Son denominaciones de ese proceso; la guía escrita y sus ejes siguen pendientes de verificación.' : 'Ascenso y reubicación no es ingreso CNSC. La Resolución 018987 de 2025 se refiere a educadores oficiales regidos por el Decreto Ley 1278: prueba pedagógica escrita, autoevaluación y valoraciones de experiencia, zona y movimientos en el escalafón (art. 9). No se trasladan aquí las etapas del concurso de ingreso.'}</p>
+    {historical ? <p><strong>Entrevista histórica no rural · {profile === 'ingreso-docente' ? 'docente de aula' : profile}:</strong> {historicalInterviewCompetencies[profile].join('; ')}. Fuente: guía de 2023, capítulo 1. El docente orientador tiene una combinación distinta; no se generaliza a todos los cargos.</p> : <p><strong>Marco docente (art. 10):</strong> contexto de la práctica, reflexión y planeación, praxis pedagógica y ambiente en el aula. Rector/directivo rural y coordinador tienen marcos diferenciados de dirección o coordinación y ambiente institucional; no son ejes del ingreso CNSC.</p>}
+    <Accordion type="single" collapsible><AccordionItem value="references"><AccordionTrigger>Procedencia y enlaces oficiales ({refs.length})</AccordionTrigger><AccordionContent>
+      <ul className="competition-reference-list">{refs.map(ref => <li key={ref.id}><a href={ref.url} target="_blank" rel="noopener noreferrer">{ref.title} ↗</a><small>{ref.historical ? 'Histórico' : 'Vigente 2026'} · {ref.entity} · {ref.year} · {ref.type} · Consulta: {ref.consulted}</small><small>{ref.process}</small><p>{ref.evidence}</p>{ref.annexUrl && ref.status === 'read' && <a href={ref.annexUrl} target="_blank" rel="noopener noreferrer">Consultar anexo oficial ↗</a>}{ref.status === 'page-only' && <strong className="academic-pending">{ref.historical ? 'Anexo escrito: pendiente de verificación' : 'Acuerdos y guía de pruebas: consultar en el micrositio'}</strong>}</li>)}</ul>
+    </AccordionContent></AccordionItem></Accordion>
+  </section>;
+}

@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794687389858,
+      "tag": "0000_free_learning_accounts",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794687523239,
+      "tag": "0001_restrict_learning_function_execution",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794687604091,
+      "tag": "0002_enforce_learning_minimum_grants",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794687720554,
+      "tag": "0003_future_practice_access_drafts",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794688524046,
+      "tag": "0004_preparation_level_drafts",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794689800297,
+      "tag": "0005_educational_profile_navigation",
+      "breakpoints": true
+    }
+  ]
+}
