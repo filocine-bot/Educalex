@@ -28,5 +28,5 @@ export const historicalInterviewCompetencies: Record<Exclude<CompetitionProfile,
 };
 export const practiceProvenance = {
   label: 'Preguntas originales de práctica EDUCALEX',
-  review: 'Referencias normativas de los 32 ítems revisadas el 14 de noviembre de 2026 contra las fichas verificadas de la biblioteca. Las categorías son de estudio EDUCALEX, no categorías oficiales de evaluación. No se reproducen preguntas de exámenes no liberadas ni se afirma que estas preguntas se aplicaron en un proceso oficial.',
+  review: 'Referencias normativas de los 160 ítems (40 por perfil) contrastadas con fuentes oficiales y revisadas por un segundo revisor el 16 de noviembre de 2026. Las categorías son de estudio EDUCALEX, no categorías oficiales de evaluación. No se reproducen preguntas de exámenes no liberadas ni se afirma que estas preguntas se aplicaron en un proceso oficial.',
 };
