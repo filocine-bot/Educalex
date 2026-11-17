@@ -21,7 +21,7 @@ describe('Verified competition provenance', () => {
     expect(historicalInterviewCompetencies.coordinador).toEqual(['Liderazgo', 'Trabajo en equipo', 'Negociación y mediación']);
     expect(historicalInterviewCompetencies['ingreso-docente']).toEqual(['Trabajo en equipo', 'Comunicación y relaciones interpersonales', 'Compromiso social e institucional']);
   });
-  it('preserves four banks of eight original practice items', () => {
-    expect(Object.values(simulationBank).map(bank => bank.questions.length)).toEqual([8, 8, 8, 8]);
+  it('preserves four banks of forty original practice items', () => {
+    expect(Object.values(simulationBank).map(bank => bank.questions.length)).toEqual([40, 40, 40, 40]);
   });
 });

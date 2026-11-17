@@ -35,7 +35,7 @@ describe("Reglas de entrega interactiva", () => {
     fireEvent.click(screen.getByRole("button", { name: "Entregar práctica" }));
     expect(screen.queryByTestId("delivery")).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Confirmar entrega" }));
-    expect(JSON.parse(screen.getByTestId("delivery").textContent ?? "{}").answers).toEqual([1, null, null, null, null, null, null, null]);
+    expect(JSON.parse(screen.getByTestId("delivery").textContent ?? "{}").answers).toEqual([1, ...Array(39).fill(null)]);
     expect(screen.getByTestId("delivery-count")).toHaveTextContent("1");
   });
   it("entrega una sola vez al agotarse los cinco minutos, conservando la respuesta", () => {
@@ -48,7 +48,7 @@ describe("Reglas de entrega interactiva", () => {
     const result = JSON.parse(screen.getByTestId("delivery").textContent ?? "{}");
     expect(result.timedOut).toBe(true);
     expect(result.elapsedSeconds).toBe(300);
-    expect(result.answers).toEqual([0, null, null, null, null, null, null, null]);
+    expect(result.answers).toEqual([0, ...Array(39).fill(null)]);
     act(() => vi.advanceTimersByTime(2000));
     expect(screen.getByTestId("delivery-count")).toHaveTextContent("1");
   });

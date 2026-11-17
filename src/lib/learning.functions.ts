@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { requireSupabaseAuth } from '@/integrations/supabase/auth-middleware';
 import { freeCoursePaths, unitCount } from './learning-policy';
 import { resultScore } from './simulation-scoring';
+import { PRACTICE_EXAM_VERSION, PRACTICE_QUESTION_COUNT } from './simulation-bank';
 import { currentPreparationLevel } from './preparation-levels';
 const profileInput = z.object({display_name:z.string().max(80),teacher_type:z.enum(['','aspirante','docente','coordinador','rector','directivo']),preparation_path:z.enum(['','ingreso-docente','ascenso-reubicacion','coordinador','rector','directivo'])});
 export const getLearning = createServerFn({method:'POST'}).middleware([requireSupabaseAuth]).handler(async ({context}) => {
@@ -28,8 +29,8 @@ export const saveUnit = createServerFn({method:'POST'}).middleware([requireSupab
  else {const {error}=await context.supabase.from('unit_progress').delete().eq('user_id',context.userId).eq('course_path',data.path).eq('unit_number',data.unit);if(error)throw new Error('No se pudo actualizar la unidad.');}
  }return true;
 });
-export const saveAttempt = createServerFn({method:'POST'}).middleware([requireSupabaseAuth]).inputValidator(input=>z.object({id:z.string().uuid(),profile:z.enum(['ingreso-docente','ascenso-reubicacion','rector','coordinador']),answers:z.array(z.number().int().min(0).max(3).nullable()).length(8),elapsedSeconds:z.number().int().min(0).max(86400),timedOut:z.boolean()}).parse(input)).handler(async ({data,context})=>{
- const score=resultScore(data); const {error}=await context.supabase.from('exam_attempts').upsert({id:data.id,user_id:context.userId,profile:data.profile,answers:data.answers,elapsed_seconds:data.elapsedSeconds,timed_out:data.timedOut,correct:score.correct,percentage:score.percentage,competencies:score.competencies,exam_version:'practice-v1'},{onConflict:'id',ignoreDuplicates:true});if(error)throw new Error('No se pudo guardar tu práctica.');const saved=await context.supabase.from('exam_attempts').select('id').eq('id',data.id).eq('user_id',context.userId).single();if(saved.error||!saved.data)throw new Error('No se pudo comprobar el guardado de tu práctica.');return true;
+export const saveAttempt = createServerFn({method:'POST'}).middleware([requireSupabaseAuth]).inputValidator(input=>z.object({id:z.string().uuid(),profile:z.enum(['ingreso-docente','ascenso-reubicacion','rector','coordinador']),answers:z.array(z.number().int().min(0).max(3).nullable()).length(PRACTICE_QUESTION_COUNT),elapsedSeconds:z.number().int().min(0).max(86400),timedOut:z.boolean()}).parse(input)).handler(async ({data,context})=>{
+ const score=resultScore(data); const {error}=await context.supabase.from('exam_attempts').upsert({id:data.id,user_id:context.userId,profile:data.profile,answers:data.answers,elapsed_seconds:data.elapsedSeconds,timed_out:data.timedOut,correct:score.correct,percentage:score.percentage,competencies:score.competencies,exam_version:PRACTICE_EXAM_VERSION},{onConflict:'id',ignoreDuplicates:true});if(error)throw new Error('No se pudo guardar tu práctica.');const saved=await context.supabase.from('exam_attempts').select('id').eq('id',data.id).eq('user_id',context.userId).single();if(saved.error||!saved.data)throw new Error('No se pudo comprobar el guardado de tu práctica.');return true;
 });
 export const checkAdmin = createServerFn({method:'POST'}).middleware([requireSupabaseAuth]).handler(async ({context})=>{
  const {data,error}=await context.supabase.rpc('has_role',{_user_id:context.userId,_role:'admin'}); if(error||data!==true) return false; return true;
