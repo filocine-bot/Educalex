@@ -1,5 +1,6 @@
 import type { PagePath } from "@/lib/educalex-sitemap";
 import { simulationBankAmpliacion } from "@/lib/simulation-bank-ampliacion";
+import { simulationBankAmpliacion2 } from "@/lib/simulation-bank-ampliacion-2";
 
 export type SimulationProfile = "ingreso-docente" | "ascenso-reubicacion" | "rector" | "coordinador";
 export type PracticeQuestion = {
@@ -263,12 +264,12 @@ const baseBank: Record<SimulationProfile, PracticeBank> = {
   },
 };
 
-// Banco vigente: 8 situaciones originales + 12 de la ampliación verificada (20 por perfil).
+// Banco vigente: 8 situaciones originales + 12 + 20 de las ampliaciones verificadas (40 por perfil).
 export const PRACTICE_EXAM_VERSION = "practice-v2" as const;
-export const PRACTICE_QUESTION_COUNT = 20;
+export const PRACTICE_QUESTION_COUNT = 40;
 export const simulationBank: Record<SimulationProfile, PracticeBank> = Object.fromEntries(
   (Object.keys(baseBank) as SimulationProfile[]).map(profile => [
     profile,
-    { title: baseBank[profile].title, questions: [...baseBank[profile].questions, ...simulationBankAmpliacion[profile]] },
+    { title: baseBank[profile].title, questions: [...baseBank[profile].questions, ...simulationBankAmpliacion[profile], ...simulationBankAmpliacion2[profile]] },
   ]),
 ) as Record<SimulationProfile, PracticeBank>;

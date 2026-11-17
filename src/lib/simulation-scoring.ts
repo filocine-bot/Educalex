@@ -1,6 +1,6 @@
 import { simulationBank, type PracticeQuestion, type SimulationProfile } from "@/lib/simulation-bank";
 
-export const durationOptions = [0, 5, 10, 15, 20, 30] as const;
+export const durationOptions = [0, 5, 10, 15, 20, 30, 45, 60, 90] as const;
 export type PracticeResult = {
   profile: SimulationProfile;
   answers: (number | null)[];

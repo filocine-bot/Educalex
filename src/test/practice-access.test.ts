@@ -8,7 +8,7 @@ describe('Modelo individual futuro sin monetización',()=>{
  it('Élite propone acceso integral',()=>expect(initialOfferDrafts.find(o=>o.code==='elite')?.integral_access).toBe(true));
  it('las cantidades son editables, no fijadas al nombre',()=>expect(offerDraftSchema.parse({code:'avanza',label:'Avanza',extra_attempts:7,integral_access:false}).extra_attempts).toBe(7));
  it('no permite cantidades negativas',()=>expect(offerDraftSchema.safeParse({code:'avanza',label:'Avanza',extra_attempts:-1,integral_access:false}).success).toBe(false));
- it('existen exactamente cuatro prácticas con veinte preguntas',()=>{expect(Object.keys(simulationBank)).toHaveLength(4);for(const bank of Object.values(simulationBank))expect(bank.questions).toHaveLength(20);});
+ it('existen exactamente cuatro prácticas con cuarenta preguntas',()=>{expect(Object.keys(simulationBank)).toHaveLength(4);for(const bank of Object.values(simulationBank))expect(bank.questions).toHaveLength(40);});
  for(const profile of ['ingreso-docente','ascenso-reubicacion','rector','coordinador'])it(`${profile} permanece libre y sin consumo`,()=>expect(currentPracticeAccess(profile)).toMatchObject({allowed:true,requiresAccount:false,consumesQuota:false}));
  it('diseño: prácticas existentes no consumen aunque no haya saldo',()=>expect(futureConsumptionDesign({balance:0,integral:false,existingFree:true,previousAttempt:false})).toMatchObject({allowed:true,delta:0}));
  it('diseño: un intento adicional consumiría un cupo',()=>expect(futureConsumptionDesign({balance:5,integral:false,existingFree:false,previousAttempt:false})).toMatchObject({allowed:true,delta:-1}));
