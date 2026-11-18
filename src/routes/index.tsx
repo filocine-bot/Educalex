@@ -55,11 +55,11 @@ function Index() {
         <ClipboardCheck className="hx-card-deco" />
       </article>
       <article className="hx-card hx-card-ia">
-        <img src={robot} width={816} height={816} loading="lazy" alt="Robot asistente DOCENTE IA con birrete" className="hx-robot" />
+        <img src={robot} width={816} height={816} loading="lazy" alt="EducatIA, robot asistente de EDUCALEX con birrete" className="hx-robot" />
         <div className="hx-ia-body">
-          <h2 className="hx-ia-title">DOCENTE IA</h2>
+          <h2 className="hx-ia-title">EducatIA</h2>
           <p className="hx-ia-sub">Tu asistente pedagógico y normativo</p>
-          <ul className="hx-checks">{["Resuelve tus dudas", "Consulta normatividad", "Recibe orientación"].map(s => <li key={s}><CheckCircle2 className="text-brand-blue" />{s}</li>)}</ul>
+          <ul className="hx-checks">{["Resuelve tus dudas", "Consulta normatividad", "Te responde en voz alta"].map(s => <li key={s}><CheckCircle2 className="text-brand-blue" />{s}</li>)}</ul>
           <Button variant="navy" asChild><Link to="/docente-ia">Preguntar ahora <ArrowRight /></Link></Button>
         </div>
       </article>

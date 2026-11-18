@@ -19,7 +19,7 @@ export function ModulePage({ path, children, showItems = true, compact = false }
       {children}
       {showItems && page.items && <div><h2 className="mod-h2">{page.itemsTitle}</h2><ol className="mod-items">{page.items.map((it, i) => <li key={it}><span>{String(i + 1).padStart(2, "0")}</span>{it}</li>)}</ol></div>}
       {page.children && <div><h2 className="mod-h2">Explora</h2><div className="mod-cards">{page.children.map(c => { const p = getPage(c); if (!p) return null; return <Link key={c} to={c as PagePath} className="mod-card"><strong>{p.title}</strong><small>{p.description}</small><span className="pathway-link">Ver <ArrowRight /></span></Link>; })}</div></div>}
-      {page.related && <div><h2 className="mod-h2">Módulos relacionados</h2><div className={compact ? 'academic-related' : 'mod-related'}>{page.related.map(r => { const p = getPage(r); return <Link key={r} to={r as PagePath} className={compact ? undefined : 'mod-chip'}>{!compact && <CheckCircle2 />}{p?.title ?? (r === "/docente-ia" ? "DOCENTE IA" : "Nosotros")}</Link>; })}</div></div>}
+      {page.related && <div><h2 className="mod-h2">Módulos relacionados</h2><div className={compact ? 'academic-related' : 'mod-related'}>{page.related.map(r => { const p = getPage(r); return <Link key={r} to={r as PagePath} className={compact ? undefined : 'mod-chip'}>{!compact && <CheckCircle2 />}{p?.title ?? (r === "/docente-ia" ? "EducatIA" : "Nosotros")}</Link>; })}</div></div>}
     </section>
   </>;
   return compact ? <div className="academic-route">{content}</div> : content;

@@ -35,14 +35,15 @@ export const privacySections: LegalSection[] = [
       "Perfil educativo: la ruta de preparación que eliges (por ejemplo, ingreso docente, ascenso, coordinador, rector o directivo en ejercicio) y, si lo escribes, un nombre visible.",
       "Actividad de aprendizaje: cursos en los que te inscribes, unidades completadas y resultados de los simulacros (respuestas, aciertos, tiempo y fecha).",
       "Registro de tu autorización: versión de esta política que aceptaste y la fecha.",
-      "Consultas a Docente IA: el texto que escribes se envía al proveedor de inteligencia artificial para generar la respuesta. EDUCALEX no guarda esas conversaciones en su base de datos.",
+      "Consultas a EducatIA: el texto que escribes (o que dictas por voz) se envía al proveedor de inteligencia artificial para generar la respuesta. EDUCALEX no guarda esas conversaciones en su base de datos.",
+      "Voz: el reconocimiento de voz y la lectura en voz alta los realiza tu propio navegador (por ejemplo, Chrome puede usar los servicios de voz de Google). EDUCALEX no graba ni guarda audio.",
       "Datos técnicos: la dirección IP se usa de forma temporal, sin almacenarse en nuestra base de datos, para limitar el abuso del asistente. El proveedor de alojamiento puede registrarla en sus bitácoras de funcionamiento y seguridad.",
     ],
   },
   {
     title: "3. Datos que no pedimos",
     paragraphs: [
-      "EDUCALEX no solicita datos sensibles (salud, origen racial o étnico, orientación política o sexual, convicciones religiosas, datos biométricos, entre otros). Te pedimos no incluirlos en tus consultas a Docente IA ni en ningún campo del sitio.",
+      "EDUCALEX no solicita datos sensibles (salud, origen racial o étnico, orientación política o sexual, convicciones religiosas, datos biométricos, entre otros). Te pedimos no incluirlos en tus consultas a EducatIA ni en ningún campo del sitio.",
       "La plataforma está dirigida a personas adultas: docentes, aspirantes y directivos. No está dirigida a niños, niñas ni adolescentes, y no deben registrarse menores de 18 años ni incluirse datos de estudiantes menores de edad en las consultas.",
       "El sitio no usa cookies de publicidad ni herramientas de analítica de terceros. El navegador guarda tu sesión de forma local para que no tengas que ingresar en cada visita.",
     ],
@@ -53,7 +54,7 @@ export const privacySections: LegalSection[] = [
       "Crear y administrar tu cuenta, y permitirte ingresar de forma segura.",
       "Guardar tu progreso en cursos y tu historial de simulacros para que puedas consultarlo.",
       "Personalizar la navegación según el perfil educativo que elijas.",
-      "Responder tus preguntas en Docente IA.",
+      "Responder tus preguntas en EducatIA.",
       "Atender tus consultas, reclamos y solicitudes sobre tus datos.",
       "Elaborar estadísticas agregadas y anónimas de uso para mejorar la plataforma.",
       "Enviarte comunicaciones necesarias sobre tu cuenta (por ejemplo, confirmación o recuperación de contraseña). No enviamos publicidad sin tu autorización adicional.",
@@ -68,7 +69,7 @@ export const privacySections: LegalSection[] = [
     items: [
       "Supabase: base de datos y autenticación de cuentas. Servidores en São Paulo, Brasil.",
       "Vercel: alojamiento y publicación del sitio. Infraestructura en Estados Unidos y otros países.",
-      "Anthropic: modelo de inteligencia artificial que genera las respuestas de Docente IA. Estados Unidos. Solo recibe el texto de las consultas.",
+      "Anthropic: modelo de inteligencia artificial que genera las respuestas de EducatIA. Estados Unidos. Solo recibe el texto de las consultas.",
     ],
   },
   {
@@ -113,7 +114,7 @@ export const termsSections: LegalSection[] = [
   {
     title: "1. Qué es EDUCALEX",
     paragraphs: [
-      `EDUCALEX es una plataforma de formación y preparación para docentes, aspirantes a la carrera docente y directivos docentes en Colombia, administrada por ${LEGAL_OWNER.name}. Ofrece una biblioteca normativa con enlaces a fuentes oficiales, cursos de autoestudio, simulacros de práctica y el asistente Docente IA.`,
+      `EDUCALEX es una plataforma de formación y preparación para docentes, aspirantes a la carrera docente y directivos docentes en Colombia, administrada por ${LEGAL_OWNER.name}. Ofrece una biblioteca normativa con enlaces a fuentes oficiales, cursos de autoestudio, simulacros de práctica y el asistente EducatIA, que puede leer sus respuestas en voz alta.`,
     ],
   },
   {
@@ -126,10 +127,10 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    title: "3. Docente IA",
+    title: "3. EducatIA",
     paragraphs: [
-      "Docente IA genera respuestas con inteligencia artificial a partir de las fuentes de la biblioteca. Las respuestas pueden contener errores u omisiones: son una orientación de estudio, no asesoría jurídica ni concepto oficial. Verifica siempre la información importante en la norma o fuente oficial citada.",
-      "No escribas en Docente IA datos personales sensibles, información de estudiantes ni datos de terceros. El servicio tiene límites de uso para evitar abusos.",
+      "EducatIA genera respuestas con inteligencia artificial a partir de las fuentes de la biblioteca. Las respuestas pueden contener errores u omisiones: son una orientación de estudio, no asesoría jurídica ni concepto oficial. Verifica siempre la información importante en la norma o fuente oficial citada.",
+      "No escribas en EducatIA datos personales sensibles, información de estudiantes ni datos de terceros. El servicio tiene límites de uso para evitar abusos.",
     ],
   },
   {

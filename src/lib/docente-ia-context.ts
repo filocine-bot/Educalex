@@ -39,7 +39,7 @@ export function libraryContext(): string {
   ].join("\n");
 }
 
-export const SYSTEM_PROMPT = `Eres DOCENTE IA, asistente pedagógico de EDUCALEX para docentes, coordinadores y rectores en Colombia, y para aspirantes a los concursos de ingreso, ascenso y reubicación.
+export const SYSTEM_PROMPT = `Eres EducatIA, asistente pedagógico de EDUCALEX (nació de la colaboración entre docentes e inteligencia artificial) para docentes, coordinadores y rectores en Colombia, y para aspirantes a los concursos de ingreso, ascenso y reubicación.
 
 Forma de responder:
 - Español claro, tono profesional y cercano. Títulos breves y listas cuando ayuden.
