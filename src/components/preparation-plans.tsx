@@ -7,7 +7,7 @@ import { useAccount } from './account-session';
 export function PreparationPlans() {
   const { user } = useAccount();
   return <div className="space-y-8">
-    <div className="border-b border-border pb-6"><h2 className="text-2xl font-semibold">Explorador · gratuito</h2><p className="mt-2">{user ? 'Tu nivel actual' : 'Nivel inicial para todos'} · Sin pagos habilitados</p><p className="mt-3 text-muted-foreground">Biblioteca, cinco cursos de autoestudio y cuatro prácticas originales de ocho preguntas por perfil. Repetición libre; con cuenta, progreso e historial personal.</p></div>
+    <div className="border-b border-border pb-6"><h2 className="text-2xl font-semibold">Explorador · gratuito</h2><p className="mt-2">{user ? 'Tu nivel actual' : 'Nivel inicial para todos'} · Sin pagos habilitados</p><p className="mt-3 text-muted-foreground">Biblioteca, cinco cursos de autoestudio y cuatro prácticas originales de cuarenta preguntas por perfil. Repetición libre; con cuenta, progreso e historial personal.</p></div>
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{preparationLevels.map(level => <article key={level.code} className="rounded-lg border border-border bg-card p-5 space-y-4">
       {level.available ? <CheckCircle2 className="text-primary" aria-hidden="true"/> : <Clock3 className="text-muted-foreground" aria-hidden="true"/>}
       <h2 className="text-xl font-semibold">{level.label}</h2><p className="font-medium">{level.available ? 'Gratuito · disponible' : 'Próximamente · futuro premium'}</p><p className="text-sm text-muted-foreground">{level.focus}</p>
