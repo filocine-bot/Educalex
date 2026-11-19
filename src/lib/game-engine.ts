@@ -12,7 +12,7 @@ export const BASE_POINTS = 10;
  * Para cobrar: cambiar a true cuando exista la compra de créditos.
  */
 export const PREMIUM_FROM_LEVEL = 2;
-export const PREMIUM_LOCKED = false;
+export const PREMIUM_LOCKED = true;
 
 export const LEVEL_NAMES = ["Básico", "Intermedio", "Avanzado", "Experto"] as const;
 
