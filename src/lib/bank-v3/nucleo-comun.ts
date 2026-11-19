@@ -256,7 +256,7 @@ export const nucleoComunV3: PracticeQuestion[] = [
   // ───────────── Nivel 4 · Experto ─────────────
   {
     id: "nc-lc-9", level: 4, competency: "Lectura crítica",
-    context: "En una columna de opinión se lee: «Visité tres colegios rurales del departamento y en ninguno los estudiantes tenían acceso a internet. Es evidente que la educación rural colombiana está completamente desconectada y que cualquier estrategia digital está condenada al fracaso». El autor no cita otras fuentes.",
+    context: "Una columna de opinión afirma: «Visité tres colegios rurales del departamento y en ninguno había internet. Es evidente que la educación rural colombiana está desconectada y que toda estrategia digital fracasará». No cita otras fuentes.",
     prompt: "¿Cuál es la principal debilidad del razonamiento del columnista?",
     options: ["Generaliza a todo el país a partir de una muestra muy pequeña.", "Supone que el acceso a internet es necesario para la educación rural.", "Usa un lenguaje demasiado emotivo para un tema educativo.", "Contradice las cifras oficiales sobre conectividad escolar."], correct: 0,
     explanation: "Tres colegios de un departamento no permiten concluir sobre toda la educación rural del país ni descartar cualquier estrategia digital: es una generalización apresurada. El texto no muestra contradicción con cifras, y el tono no es el problema central del argumento.",
@@ -328,7 +328,7 @@ export const nucleoComunV3: PracticeQuestion[] = [
   },
   {
     id: "nc-pe-10", level: 4, competency: "Pedagógica · evaluar",
-    context: "Un docente de filosofía de once recibe varios ensayos con redacción impecable pero muy parecida entre sí, y sospecha que fueron generados con inteligencia artificial. La institución no tiene una política sobre el tema y el docente debe valorar los ensayos esta semana.",
+    context: "Un docente de filosofía de once recibe varios ensayos de redacción impecable y muy parecidos entre sí, y sospecha que fueron generados con inteligencia artificial. La institución no tiene política sobre el tema y debe valorarlos esta semana.",
     prompt: "¿Cuál decisión es más pertinente?",
     options: ["Calificar con desempeño bajo los ensayos sospechosos, por falta de originalidad.", "Usar un detector de inteligencia artificial y anular los ensayos que resulten positivos.", "Prohibir el uso de inteligencia artificial y repetir el ensayo en clase bajo supervisión.", "Conversar con los autores sobre su proceso y pedir evidencias de su elaboración."], correct: 3,
     explanation: "Sin política y con solo una sospecha, lo pertinente es indagar el proceso: dialogar con los estudiantes, pedir borradores o una defensa oral, y luego acordar criterios claros de uso. Sancionar por sospecha, confiar en detectores poco fiables o prohibir sin criterio no garantizan una evaluación justa.",
