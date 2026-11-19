@@ -26,11 +26,11 @@ describe("Banco original de práctica", () => {
     expect(new Set(questions.map(q => q.prompt)).size).toBe(160);
   });
   it.each([
-    // Ingreso docente v3: reordenado por nivel de complejidad y con opciones reequilibradas (tipo ICFES).
+    // Bancos v3: reordenados por nivel de complejidad y con opciones reequilibradas (tipo ICFES).
     ["ingreso-docente", [3, 2, 0, 2, 1, 1, 0, 3, 1, 1, 1, 2, 3, 2, 0, 3, 0, 3, 3, 0, 0, 1, 0, 3, 2, 0, 1, 0, 3, 2, 2, 1, 3, 3, 1, 0, 1, 1, 2, 2]],
-    ["ascenso-reubicacion", [2, 0, 3, 1, 2, 0, 3, 1, 2, 0, 3, 1, 3, 0, 2, 1, 3, 0, 2, 1, 1, 3, 0, 2, 1, 3, 2, 1, 0, 0, 3, 2, 0, 1, 3, 3, 1, 0, 2, 2]],
-    ["rector", [0, 3, 1, 2, 0, 3, 1, 2, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 0, 3, 0, 2, 3, 1, 1, 1, 3, 2, 0, 0, 3, 3, 1, 1, 2, 2]],
-    ["coordinador", [3, 1, 2, 0, 3, 1, 2, 0, 1, 3, 0, 2, 3, 1, 0, 2, 3, 1, 2, 0, 1, 2, 1, 3, 1, 2, 3, 0, 0, 0, 3, 2, 1, 1, 3, 3, 0, 0, 2, 2]],
+    ["ascenso-reubicacion", [1, 0, 3, 3, 0, 1, 2, 1, 1, 3, 2, 0, 1, 2, 0, 3, 2, 3, 0, 1, 2, 0, 2, 1, 3, 2, 3, 0, 1, 0, 2, 0, 2, 1, 3, 0, 3, 1, 2, 3]],
+    ["rector", [0, 2, 1, 3, 0, 2, 2, 2, 1, 3, 2, 1, 0, 2, 3, 3, 1, 3, 0, 1, 0, 1, 0, 2, 1, 0, 3, 3, 0, 1, 3, 2, 3, 1, 0, 0, 2, 2, 1, 3]],
+    ["coordinador", [3, 2, 3, 3, 0, 2, 0, 1, 3, 3, 1, 0, 2, 0, 0, 1, 2, 0, 3, 2, 1, 2, 1, 3, 1, 2, 0, 3, 2, 3, 0, 1, 1, 1, 0, 2, 3, 0, 2, 1]],
   ] as const)("%s conserva las claves revisadas de las cuarenta situaciones", (profile, keys) => {
     expect(simulationBank[profile].questions.map(q => q.correct)).toEqual(keys);
   });

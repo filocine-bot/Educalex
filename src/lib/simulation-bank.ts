@@ -2,6 +2,9 @@ import type { PagePath } from "@/lib/educalex-sitemap";
 import { simulationBankAmpliacion } from "@/lib/simulation-bank-ampliacion";
 import { simulationBankAmpliacion2 } from "@/lib/simulation-bank-ampliacion-2";
 import { ingresoDocenteV3 } from "@/lib/bank-v3/ingreso-docente";
+import { ascensoReubicacionV3 } from "@/lib/bank-v3/ascenso-reubicacion";
+import { rectorV3 } from "@/lib/bank-v3/rector";
+import { coordinadorV3 } from "@/lib/bank-v3/coordinador";
 
 export type SimulationProfile = "ingreso-docente" | "ascenso-reubicacion" | "rector" | "coordinador";
 export type PracticeQuestion = {
@@ -272,7 +275,12 @@ const baseBank: Record<SimulationProfile, PracticeBank> = {
 
 // Bancos reestructurados al formato tipo ICFES (contexto + tarea + opciones homogéneas), ordenados por nivel de complejidad.
 const byLevel = (qs: PracticeQuestion[]) => [...qs].sort((a, b) => (a.level ?? 0) - (b.level ?? 0));
-const v3Banks: Partial<Record<SimulationProfile, PracticeQuestion[]>> = { "ingreso-docente": byLevel(ingresoDocenteV3) };
+const v3Banks: Partial<Record<SimulationProfile, PracticeQuestion[]>> = {
+  "ingreso-docente": byLevel(ingresoDocenteV3),
+  "ascenso-reubicacion": byLevel(ascensoReubicacionV3),
+  rector: byLevel(rectorV3),
+  coordinador: byLevel(coordinadorV3),
+};
 
 // Banco anterior: 8 situaciones originales + 12 + 20 de las ampliaciones verificadas (40 por perfil).
 export const PRACTICE_EXAM_VERSION = "practice-v2" as const;

@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { ingresoDocenteV3 } from "@/lib/bank-v3/ingreso-docente";
+import { ascensoReubicacionV3 } from "@/lib/bank-v3/ascenso-reubicacion";
+import { rectorV3 } from "@/lib/bank-v3/rector";
+import { coordinadorV3 } from "@/lib/bank-v3/coordinador";
 import { levelsFor } from "@/lib/game-engine";
 
 // Control de calidad tipo ICFES: contexto + tarea + cuatro opciones homogéneas; complejidad creciente por nivel.
-const banks = { "ingreso-docente": ingresoDocenteV3 };
+const banks = { "ingreso-docente": ingresoDocenteV3, "ascenso-reubicacion": ascensoReubicacionV3, rector: rectorV3, coordinador: coordinadorV3 };
 const avg = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
 
 describe.each(Object.entries(banks))("calidad del banco %s", (_, qs) => {
@@ -37,8 +40,8 @@ describe.each(Object.entries(banks))("calidad del banco %s", (_, qs) => {
   });
 });
 
-it("el juego arma cada nivel con su complejidad", () => {
-  const levels = levelsFor("ingreso-docente");
+it.each(["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador"] as const)("el juego arma cada nivel de %s con su complejidad", profile => {
+  const levels = levelsFor(profile);
   expect(levels).toHaveLength(4);
-  levels.forEach(l => expect(l.questions.every(q => q.level === l.number)).toBe(true));
+  levels.forEach(l => { expect(l.questions).toHaveLength(10); expect(l.questions.every(q => q.level === l.number)).toBe(true); });
 });
