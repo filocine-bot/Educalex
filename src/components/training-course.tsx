@@ -6,6 +6,7 @@ import { getLibraryDoc } from "@/lib/educalex-sitemap";
 import { trainingCourses, type TrainingPath } from "@/lib/training-courses";
 import { UnitCompletion } from "./learning-account";
 import { TrainingWorkshop } from "@/components/training-workshop";
+import { OfficialVideos } from "@/components/official-videos";
 
 export function TrainingCourseReader({ path }: { path: TrainingPath }) {
   const course = trainingCourses[path];
@@ -37,6 +38,7 @@ export function TrainingCourseReader({ path }: { path: TrainingPath }) {
         <nav className="training-unit-nav no-print" aria-label="Navegación entre unidades"><Button variant="outline" disabled={active === 0} onClick={() => select(active - 1)}><ArrowLeft /> Anterior</Button><span>{active + 1} / {course.units.length}</span><Button variant="navy" disabled={active === course.units.length - 1} onClick={() => select(active + 1)}>Siguiente <ArrowRight /></Button></nav>
       </article>
     </div>
+    <OfficialVideos path={path} />
     <TrainingWorkshop workshop={course.workshop} />
   </div>;
 }

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Trophy, ChartNoAxesCombined, Users, Settings, GraduationCap, FileText, CheckCircle2, BookOpen, ClipboardCheck, TrendingUp, Scale, Rocket, ShieldCheck, CalendarClock, ExternalLink } from "lucide-react";
+import { ArrowRight, Trophy, ChartNoAxesCombined, Users, Settings, GraduationCap, FileText, CheckCircle2, BookOpen, ClipboardCheck, TrendingUp, Scale, Rocket, Video, ShieldCheck, CalendarClock, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { pageHead } from "@/lib/educalex-content";
 import hero from "@/assets/educalex-hero-docentes.jpg";
@@ -24,6 +24,7 @@ const bottom = [
   { icon: BookOpen, title: "Biblioteca Normativa", to: "/biblioteca" },
   { icon: ClipboardCheck, title: "Simulacros y Banco de Preguntas", to: "/simulacros" },
   { icon: TrendingUp, title: "Seguimiento de tu progreso", to: "/mi-progreso" },
+  { icon: Video, title: "Videos de apoyo por temática", to: "/biblioteca/videos" },
   { icon: ShieldCheck, title: "Fuentes oficiales verificadas", to: "/biblioteca/recursos" },
   { icon: Scale, title: "Basado en la normativa educativa colombiana", to: "/biblioteca/legislacion" },
 ] as const;

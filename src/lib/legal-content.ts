@@ -70,6 +70,7 @@ export const privacySections: LegalSection[] = [
       "Supabase: base de datos y autenticación de cuentas. Servidores en São Paulo, Brasil.",
       "Vercel: alojamiento y publicación del sitio. Infraestructura en Estados Unidos y otros países.",
       "Anthropic: modelo de inteligencia artificial que genera las respuestas de EducatIA. Estados Unidos. Solo recibe el texto de las consultas.",
+      "YouTube (Google): reproductor de los videos oficiales de apoyo. Se usa el modo de privacidad mejorada y el video solo se carga cuando la persona pulsa «Reproducir»; desde ese momento aplican las políticas de privacidad de Google.",
     ],
   },
   {

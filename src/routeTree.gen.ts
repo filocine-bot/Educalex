@@ -37,6 +37,7 @@ import { Route as BibliotecaIndexRouteImport } from './routes/biblioteca.index'
 import { Route as BibliotecaGuiasMenRouteImport } from './routes/biblioteca.guias-men'
 import { Route as BibliotecaLegislacionRouteImport } from './routes/biblioteca.legislacion'
 import { Route as BibliotecaRecursosRouteImport } from './routes/biblioteca.recursos'
+import { Route as BibliotecaVideosRouteImport } from './routes/biblioteca.videos'
 import { Route as ConcursosIndexRouteImport } from './routes/concursos.index'
 import { Route as ConcursosAscensoReubicacionRouteImport } from './routes/concursos.ascenso-reubicacion'
 import { Route as ConcursosCoordinadorRouteImport } from './routes/concursos.coordinador'
@@ -216,6 +217,11 @@ const BibliotecaLegislacionRoute = BibliotecaLegislacionRouteImport.update({
 const BibliotecaRecursosRoute = BibliotecaRecursosRouteImport.update({
   id: '/biblioteca/recursos',
   path: '/biblioteca/recursos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BibliotecaVideosRoute = BibliotecaVideosRouteImport.update({
+  id: '/biblioteca/videos',
+  path: '/biblioteca/videos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConcursosIndexRoute = ConcursosIndexRouteImport.update({
@@ -457,6 +463,7 @@ export interface FileRoutesByFullPath {
   '/biblioteca/guias-men': typeof BibliotecaGuiasMenRoute
   '/biblioteca/legislacion': typeof BibliotecaLegislacionRoute
   '/biblioteca/recursos': typeof BibliotecaRecursosRoute
+  '/biblioteca/videos': typeof BibliotecaVideosRoute
   '/concursos/ascenso-reubicacion': typeof ConcursosAscensoReubicacionRoute
   '/concursos/coordinador': typeof ConcursosCoordinadorRoute
   '/concursos/ingreso-docente': typeof ConcursosIngresoDocenteRoute
@@ -523,6 +530,7 @@ export interface FileRoutesByTo {
   '/biblioteca/guias-men': typeof BibliotecaGuiasMenRoute
   '/biblioteca/legislacion': typeof BibliotecaLegislacionRoute
   '/biblioteca/recursos': typeof BibliotecaRecursosRoute
+  '/biblioteca/videos': typeof BibliotecaVideosRoute
   '/concursos/ascenso-reubicacion': typeof ConcursosAscensoReubicacionRoute
   '/concursos/coordinador': typeof ConcursosCoordinadorRoute
   '/concursos/ingreso-docente': typeof ConcursosIngresoDocenteRoute
@@ -592,6 +600,7 @@ export interface FileRoutesById {
   '/biblioteca/guias-men': typeof BibliotecaGuiasMenRoute
   '/biblioteca/legislacion': typeof BibliotecaLegislacionRoute
   '/biblioteca/recursos': typeof BibliotecaRecursosRoute
+  '/biblioteca/videos': typeof BibliotecaVideosRoute
   '/concursos/ascenso-reubicacion': typeof ConcursosAscensoReubicacionRoute
   '/concursos/coordinador': typeof ConcursosCoordinadorRoute
   '/concursos/ingreso-docente': typeof ConcursosIngresoDocenteRoute
@@ -661,6 +670,7 @@ export interface FileRouteTypes {
     | '/biblioteca/guias-men'
     | '/biblioteca/legislacion'
     | '/biblioteca/recursos'
+    | '/biblioteca/videos'
     | '/concursos/ascenso-reubicacion'
     | '/concursos/coordinador'
     | '/concursos/ingreso-docente'
@@ -727,6 +737,7 @@ export interface FileRouteTypes {
     | '/biblioteca/guias-men'
     | '/biblioteca/legislacion'
     | '/biblioteca/recursos'
+    | '/biblioteca/videos'
     | '/concursos/ascenso-reubicacion'
     | '/concursos/coordinador'
     | '/concursos/ingreso-docente'
@@ -795,6 +806,7 @@ export interface FileRouteTypes {
     | '/biblioteca/guias-men'
     | '/biblioteca/legislacion'
     | '/biblioteca/recursos'
+    | '/biblioteca/videos'
     | '/concursos/ascenso-reubicacion'
     | '/concursos/coordinador'
     | '/concursos/ingreso-docente'
@@ -856,6 +868,7 @@ export interface RootRouteChildren {
   BibliotecaGuiasMenRoute: typeof BibliotecaGuiasMenRoute
   BibliotecaLegislacionRoute: typeof BibliotecaLegislacionRoute
   BibliotecaRecursosRoute: typeof BibliotecaRecursosRoute
+  BibliotecaVideosRoute: typeof BibliotecaVideosRoute
   ConcursosAscensoReubicacionRoute: typeof ConcursosAscensoReubicacionRoute
   ConcursosCoordinadorRoute: typeof ConcursosCoordinadorRoute
   ConcursosIngresoDocenteRoute: typeof ConcursosIngresoDocenteRoute
@@ -1084,6 +1097,13 @@ declare module '@tanstack/react-router' {
       path: '/biblioteca/recursos'
       fullPath: '/biblioteca/recursos'
       preLoaderRoute: typeof BibliotecaRecursosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biblioteca/videos': {
+      id: '/biblioteca/videos'
+      path: '/biblioteca/videos'
+      fullPath: '/biblioteca/videos'
+      preLoaderRoute: typeof BibliotecaVideosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/concursos/': {
@@ -1427,6 +1447,7 @@ const rootRouteChildren: RootRouteChildren = {
   BibliotecaGuiasMenRoute: BibliotecaGuiasMenRoute,
   BibliotecaLegislacionRoute: BibliotecaLegislacionRoute,
   BibliotecaRecursosRoute: BibliotecaRecursosRoute,
+  BibliotecaVideosRoute: BibliotecaVideosRoute,
   ConcursosAscensoReubicacionRoute: ConcursosAscensoReubicacionRoute,
   ConcursosCoordinadorRoute: ConcursosCoordinadorRoute,
   ConcursosIngresoDocenteRoute: ConcursosIngresoDocenteRoute,
