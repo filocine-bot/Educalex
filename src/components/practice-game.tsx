@@ -79,6 +79,7 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
         <span style={{ width: `${(run.answers.length / run.questions.length) * 100}%` }} />
       </div>
       <span className="course-kicker">{q.competency}</span>
+      {q.context && <p className="question-context"><strong>Situación:</strong> {q.context}</p>}
       <h2 id="game-question" ref={questionRef} tabIndex={-1} className="game-prompt">{q.prompt}</h2>
       <div className="game-options">
         {q.options.map((text, i) => {

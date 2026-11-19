@@ -21,11 +21,13 @@ export type GameLevel = { number: number; name: string; questions: PracticeQuest
 export function levelsFor(profile: SimulationProfile): GameLevel[] {
   const qs = simulationBank[profile].questions;
   const levels: GameLevel[] = [];
+  // Si el banco declara niveles de complejidad, cada nivel reúne sus propias preguntas; si no, se reparte en bloques.
+  const leveled = qs.length > 0 && qs.every(q => q.level !== undefined);
   for (let i = 0; i * QUESTIONS_PER_LEVEL < qs.length; i++) {
     levels.push({
       number: i + 1,
       name: LEVEL_NAMES[i] ?? `Nivel ${i + 1}`,
-      questions: qs.slice(i * QUESTIONS_PER_LEVEL, (i + 1) * QUESTIONS_PER_LEVEL),
+      questions: leveled ? qs.filter(q => q.level === i + 1) : qs.slice(i * QUESTIONS_PER_LEVEL, (i + 1) * QUESTIONS_PER_LEVEL),
       premium: i + 1 >= PREMIUM_FROM_LEVEL,
     });
   }

@@ -26,7 +26,8 @@ describe("Banco original de práctica", () => {
     expect(new Set(questions.map(q => q.prompt)).size).toBe(160);
   });
   it.each([
-    ["ingreso-docente", [1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 2, 0, 3, 1, 2, 0, 1, 3, 1, 2, 1, 3, 2, 0, 0, 0, 2, 3, 1, 1, 2, 2, 0, 0, 3, 3]],
+    // Ingreso docente v3: reordenado por nivel de complejidad y con opciones reequilibradas (tipo ICFES).
+    ["ingreso-docente", [3, 2, 0, 2, 1, 1, 0, 3, 1, 1, 1, 2, 3, 2, 0, 3, 0, 3, 3, 0, 0, 1, 0, 3, 2, 0, 1, 0, 3, 2, 2, 1, 3, 3, 1, 0, 1, 1, 2, 2]],
     ["ascenso-reubicacion", [2, 0, 3, 1, 2, 0, 3, 1, 2, 0, 3, 1, 3, 0, 2, 1, 3, 0, 2, 1, 1, 3, 0, 2, 1, 3, 2, 1, 0, 0, 3, 2, 0, 1, 3, 3, 1, 0, 2, 2]],
     ["rector", [0, 3, 1, 2, 0, 3, 1, 2, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 3, 1, 0, 2, 0, 3, 0, 2, 3, 1, 1, 1, 3, 2, 0, 0, 3, 3, 1, 1, 2, 2]],
     ["coordinador", [3, 1, 2, 0, 3, 1, 2, 0, 1, 3, 0, 2, 3, 1, 0, 2, 3, 1, 2, 0, 1, 2, 1, 3, 1, 2, 3, 0, 0, 0, 3, 2, 1, 1, 3, 3, 0, 0, 2, 2]],
@@ -41,10 +42,14 @@ describe("Calificación de una entrega", () => {
     expect(scorePractice(questions, simulationBank["ingreso-docente"].questions.map(q => q.correct))).toMatchObject({ correct: 40, total: 40, percentage: 100, incorrect: 0, unanswered: 0 });
   });
   it("errores y omisiones valen cero, sin penalización adicional", () => {
-    expect(scorePractice(questions, [1, 0, null, 2, ...Array(36).fill(null)])).toMatchObject({ correct: 2, incorrect: 1, unanswered: 37, percentage: 5 });
+    const wrong = (i: number) => (questions[i]!.correct + 1) % 4;
+    expect(scorePractice(questions, [questions[0]!.correct, wrong(1), null, questions[3]!.correct, ...Array(36).fill(null)])).toMatchObject({ correct: 2, incorrect: 1, unanswered: 37, percentage: 5 });
   });
   it("desglosa aciertos y total por competencia", () => {
-    expect(scorePractice(questions, [1, null, 0, 2, null, null, null, 2, ...Array(32).fill(null)]).competencies).toEqual({ Didáctica: { correct: 1, total: 2 }, Inclusión: { correct: 2, total: 6 }, Evaluación: { correct: 0, total: 9 }, Convivencia: { correct: 1, total: 9 }, "Fundamentos normativos": { correct: 0, total: 8 }, "Carrera docente": { correct: 0, total: 4 }, "Participación escolar": { correct: 0, total: 2 } });
+    const answers = questions.map((q, i) => (i % 3 === 0 ? q.correct : null));
+    const expected: Record<string, { correct: number; total: number }> = {};
+    questions.forEach((q, i) => { const e = (expected[q.competency] ??= { correct: 0, total: 0 }); e.total++; if (i % 3 === 0) e.correct++; });
+    expect(scorePractice(questions, answers).competencies).toEqual(expected);
   });
   it("las respuestas fuera de A–D no se cuentan como respondidas", () => {
     expect(scorePractice(questions, [-1, 4, 0.5, ...Array(37).fill(null)])).toMatchObject({ correct: 0, answered: 0, unanswered: 40 });

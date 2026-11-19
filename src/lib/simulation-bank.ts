@@ -1,11 +1,17 @@
 import type { PagePath } from "@/lib/educalex-sitemap";
 import { simulationBankAmpliacion } from "@/lib/simulation-bank-ampliacion";
 import { simulationBankAmpliacion2 } from "@/lib/simulation-bank-ampliacion-2";
+import { ingresoDocenteV3 } from "@/lib/bank-v3/ingreso-docente";
 
 export type SimulationProfile = "ingreso-docente" | "ascenso-reubicacion" | "rector" | "coordinador";
 export type PracticeQuestion = {
   id: string;
+  /** Nivel de complejidad: 1 identificar · 2 aplicar · 3 analizar · 4 evaluar y decidir. */
+  level?: 1 | 2 | 3 | 4;
   competency: string;
+  /** Situación o caso (estructura tipo ICFES): se muestra antes de la tarea. */
+  context?: string;
+  /** Tarea de evaluación: lo que se pide resolver. */
   prompt: string;
   options: [string, string, string, string];
   correct: number;
@@ -264,12 +270,16 @@ const baseBank: Record<SimulationProfile, PracticeBank> = {
   },
 };
 
-// Banco vigente: 8 situaciones originales + 12 + 20 de las ampliaciones verificadas (40 por perfil).
+// Bancos reestructurados al formato tipo ICFES (contexto + tarea + opciones homogéneas), ordenados por nivel de complejidad.
+const byLevel = (qs: PracticeQuestion[]) => [...qs].sort((a, b) => (a.level ?? 0) - (b.level ?? 0));
+const v3Banks: Partial<Record<SimulationProfile, PracticeQuestion[]>> = { "ingreso-docente": byLevel(ingresoDocenteV3) };
+
+// Banco anterior: 8 situaciones originales + 12 + 20 de las ampliaciones verificadas (40 por perfil).
 export const PRACTICE_EXAM_VERSION = "practice-v2" as const;
 export const PRACTICE_QUESTION_COUNT = 40;
 export const simulationBank: Record<SimulationProfile, PracticeBank> = Object.fromEntries(
   (Object.keys(baseBank) as SimulationProfile[]).map(profile => [
     profile,
-    { title: baseBank[profile].title, questions: [...baseBank[profile].questions, ...simulationBankAmpliacion[profile], ...simulationBankAmpliacion2[profile]] },
+    { title: baseBank[profile].title, questions: v3Banks[profile] ?? [...baseBank[profile].questions, ...simulationBankAmpliacion[profile], ...simulationBankAmpliacion2[profile]] },
   ]),
 ) as Record<SimulationProfile, PracticeBank>;

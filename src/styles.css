@@ -869,6 +869,7 @@ html { scroll-padding-top: 120px; }
 .game-progress span { display: block; height: 100%; background: var(--primary); transition: width .3s ease; }
 .game-prompt { font-size: 1.2rem; line-height: 1.5; margin: .4rem 0 1rem; }
 .game-prompt:focus { outline: none; }
+.question-context { background: color-mix(in srgb, var(--accent, #f4b400) 10%, white); border-left: 4px solid var(--accent, #f4b400); border-radius: 8px; padding: .8rem 1rem; margin: .5rem 0 .8rem; line-height: 1.6; color: inherit; }
 .game-options { display: grid; gap: .65rem; }
 .game-option { display: flex; align-items: flex-start; gap: .75rem; text-align: left; width: 100%; border: 2px solid var(--border); border-radius: .85rem; padding: .85rem 1rem; background: var(--card); font-size: 1rem; cursor: pointer; transition: transform .1s ease, border-color .15s ease; }
 .game-option:hover:not(:disabled) { border-color: var(--primary); transform: translateY(-1px); }
