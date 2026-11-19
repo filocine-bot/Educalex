@@ -7,6 +7,7 @@ import { getLibraryDoc } from "@/lib/educalex-sitemap";
 import { applyOutcome, describeBadge, emptyProfile, errorMap, isLevelPlayable, levelsFor, PASS_RATIO, pointsFor, PREMIUM_LOCKED, type GameLevel } from "@/lib/game-engine";
 import { useGameProgress } from "@/lib/game-progress";
 import { BuyPremium, useMyPremium } from "@/components/premium-purchase";
+import { useAccount } from "@/components/account-session";
 
 const LETTERS = ["A", "B", "C", "D"];
 
@@ -17,6 +18,7 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
   const levels = useMemo(() => levelsFor(profile), [profile]);
   const { progress, save, ready, signedIn } = useGameProgress();
   const premium = useMyPremium();
+  const { isAdmin } = useAccount();
   const locked = PREMIUM_LOCKED && !premium.has(profile);
   const mine = progress[profile] ?? emptyProfile();
   const [run, setRun] = useState<Run | null>(null);
@@ -164,7 +166,7 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
         </li>;
       })}
     </ol>
-    {locked && <BuyPremium profile={profile} returnPath={`/simulacros/${profile}`} />}
+    {(locked || (isAdmin && !premium.has(profile))) && <>{!locked && <p className="game-launch">Vista de administración: compra de prueba (los demás usuarios aún no ven este recuadro).</p>}<BuyPremium profile={profile} returnPath={`/simulacros/${profile}`} /></>}
     {mine.badges.length > 0 && <div className="game-badges">
       <h3><Medal aria-hidden="true" /> Mis insignias</h3>
       <ul>{mine.badges.map(id => { const b = describeBadge(id); return <li key={id} title={b.description}><Award aria-hidden="true" /> {b.title}</li>; })}</ul>
