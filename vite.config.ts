@@ -27,7 +27,7 @@ export default defineConfig(({ command, mode }) => {
         server: { entry: "server" },
         importProtection: { behavior: "error", client: { files: ["**/server/**"], specifiers: ["server-only"] } },
       }),
-      ...(command === "build" ? [nitro({ preset: process.env["NITRO_PRESET"] || "vercel" })] : []),
+      ...(command === "build" ? [nitro({ preset: process.env["NITRO_PRESET"] || "vercel", vercel: { functions: { maxDuration: 60 } } })] : []),
       viteReact(),
     ],
   };
