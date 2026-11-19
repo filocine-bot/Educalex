@@ -14,11 +14,11 @@ const PROFILE_LABEL: Record<SimulationProfile, string> = { "ingreso-docente": "I
  * Los define Enadis; cambiar aquí y publicar.
  */
 export const PRICES: Record<ProductId, number | null> = {
-  "premium-todos": null,
-  "premium-ingreso-docente": null,
-  "premium-ascenso-reubicacion": null,
-  "premium-rector": null,
-  "premium-coordinador": null,
+  "premium-todos": 49900,
+  "premium-ingreso-docente": 29900,
+  "premium-ascenso-reubicacion": 29900,
+  "premium-rector": 29900,
+  "premium-coordinador": 29900,
 };
 
 export const products: Product[] = [

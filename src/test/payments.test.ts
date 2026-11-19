@@ -29,8 +29,9 @@ describe("pagos Wompi", () => {
     expect(wompiApiBase("pub_test_x")).toContain("sandbox");
     expect(wompiApiBase("pub_prod_x")).toContain("production");
   });
-  it("sin precio definido no se vende nada", () => {
-    expect(products.filter(purchasable)).toHaveLength(0);
+  it("precios definidos: $29.900 por perfil y $49.900 completo", () => {
+    expect(products.filter(purchasable)).toHaveLength(5);
+    expect(products.find(p => p.id === "premium-todos")?.priceCOP).toBe(49900);
     expect(productsCovering("rector")).toEqual(["premium-todos", "premium-rector"]);
   });
 });

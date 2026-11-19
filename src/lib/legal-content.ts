@@ -163,9 +163,15 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    title: "7. Gratuidad y planes futuros",
+    title: "7. Contenido gratuito, acceso Premium y pagos",
     paragraphs: [
-      "Actualmente todos los contenidos y simulacros son gratuitos. Si en el futuro se ofrecen planes de pago, sus condiciones, precios y derechos se informarán con claridad antes de cualquier cobro, y los contenidos gratuitos existentes no se restringirán sin aviso previo.",
+      "La biblioteca normativa, la videoteca, los cursos de autoestudio, EducatIA, el simulacro completo y el nivel Básico del modo juego son gratuitos.",
+      "El acceso Premium desbloquea los niveles Intermedio, Avanzado y Experto del modo juego. Se ofrece así, con precios en pesos colombianos e IVA incluido si aplica: Premium por perfil (Ingreso docente, Ascenso y reubicación, Rector o Coordinador): $29.900. Premium completo (los cuatro perfiles): $49.900.",
+      "Es un pago único, sin suscripción ni renovación automática. El acceso queda asociado a tu cuenta mientras EDUCALEX preste el servicio. Si en algún momento el servicio dejara de prestarse, se avisará con anticipación.",
+      "Los pagos se procesan con Wompi (Grupo Bancolombia). EDUCALEX no recibe ni guarda los datos de tu tarjeta o de tu cuenta bancaria; solo conserva la referencia, el valor, la fecha y el estado del pago.",
+      "Derecho de retracto: conforme al artículo 47 de la Ley 1480 de 2011 (Estatuto del Consumidor) y sus modificaciones, puedes retractarte de la compra dentro de los cinco (5) días hábiles siguientes al pago, sin dar explicaciones, escribiendo a educalexcolombia@gmail.com. Te devolveremos la totalidad del dinero pagado, sin descuentos ni retenciones, en un plazo máximo de treinta (30) días calendario, y el acceso Premium se retirará.",
+      "Si un pago aprobado no activa tu acceso, o se cobra dos veces, escríbenos con la referencia del pago y lo resolveremos o te devolveremos el valor.",
+      "Durante el lanzamiento, los niveles Premium pueden estar abiertos gratuitamente por tiempo limitado; cuando se cierre ese periodo se avisará en el sitio.",
     ],
   },
   {
