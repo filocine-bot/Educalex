@@ -283,11 +283,27 @@ const v3Banks: Partial<Record<SimulationProfile, PracticeQuestion[]>> = {
 };
 
 // Banco anterior: 8 situaciones originales + 12 + 20 de las ampliaciones verificadas (40 por perfil).
-export const PRACTICE_EXAM_VERSION = "practice-v2" as const;
+// practice-v3 (19 nov 2026): bancos tipo ICFES por niveles. Las entregas v2 se interpretan con el banco anterior (legacyBankV2).
+export const PRACTICE_EXAM_VERSION = "practice-v3" as const;
+export type PracticeExamVersion = "practice-v1" | "practice-v2" | "practice-v3";
 export const PRACTICE_QUESTION_COUNT = 40;
+/** Banco anterior (practice-v2): mismo orden y opciones con que se guardaron las entregas previas al 19 nov 2026. */
+export const legacyBankV2: Record<SimulationProfile, PracticeBank> = Object.fromEntries(
+  (Object.keys(baseBank) as SimulationProfile[]).map(profile => [
+    profile,
+    { title: baseBank[profile].title, questions: [...baseBank[profile].questions, ...simulationBankAmpliacion[profile], ...simulationBankAmpliacion2[profile]] },
+  ]),
+) as Record<SimulationProfile, PracticeBank>;
 export const simulationBank: Record<SimulationProfile, PracticeBank> = Object.fromEntries(
   (Object.keys(baseBank) as SimulationProfile[]).map(profile => [
     profile,
-    { title: baseBank[profile].title, questions: v3Banks[profile] ?? [...baseBank[profile].questions, ...simulationBankAmpliacion[profile], ...simulationBankAmpliacion2[profile]] },
+    { title: baseBank[profile].title, questions: v3Banks[profile] ?? legacyBankV2[profile].questions },
   ]),
 ) as Record<SimulationProfile, PracticeBank>;
+
+/** Banco con el que se debe leer una entrega según su versión. Las entregas v1 (8 preguntas) usan las primeras 8 del banco anterior. */
+export function bankForVersion(profile: SimulationProfile, version: string | undefined): PracticeBank {
+  if (version === "practice-v2") return legacyBankV2[profile];
+  if (version === "practice-v1") return { ...legacyBankV2[profile], questions: legacyBankV2[profile].questions.slice(0, 8) };
+  return simulationBank[profile];
+}

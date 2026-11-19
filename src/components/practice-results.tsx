@@ -1,18 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { RotateCcw, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { simulationBank } from "@/lib/simulation-bank";
+import { bankForVersion, simulationBank } from "@/lib/simulation-bank";
 import { getLibraryDoc, getPage } from "@/lib/educalex-sitemap";
 import { resultScore, type PracticeResult } from "@/lib/simulation-scoring";
 import { usePracticeSession } from "@/components/practice-session";
 
 export function ResultDetail({ result, onRepeat }: { result: PracticeResult; onRepeat?: () => void }) {
   const { saveMessage } = usePracticeSession();
-  const bank = simulationBank[result.profile];
+  const bank = bankForVersion(result.profile, result.version);
+  const legacy = result.version === "practice-v1" || result.version === "practice-v2";
   const score = resultScore(result);
   const courses = [...new Set(bank.questions.map(q => q.course))];
   return <section className="practice-results" aria-label="Resultado de práctica">
     <div className="practice-result-heading"><div><p className="course-kicker">PRÁCTICA ORIGINAL · {bank.title.toUpperCase()}</p><h2 tabIndex={-1} data-result-heading>Resultado de la práctica</h2></div>{onRepeat && <Button variant="outline" onClick={onRepeat}><RotateCcw /> Repetir práctica</Button>}</div>
+    {legacy && <p role="status" className="mod-notice">Esta práctica se respondió con la versión anterior del banco (antes del 19 de noviembre de 2026). La revisión muestra esas mismas preguntas.</p>}
     {result.timedOut && <p role="status" className="mod-notice">El tiempo terminó. Se entregaron las respuestas registradas hasta ese momento.</p>}
     <div className="practice-score"><strong>{score.correct}/{score.total}</strong><span>{score.percentage} % de aciertos</span><span>{score.incorrect} incorrectas · {score.unanswered} sin responder</span><span>Tiempo empleado: {Math.floor(result.elapsedSeconds / 60)} min {result.elapsedSeconds % 60} s</span></div>
     <p className="text-muted-foreground">Cada acierto vale un punto; errores y omisiones valen cero. No hay umbral oficial de aprobación ni equivalencia con una prueba de concurso.</p>

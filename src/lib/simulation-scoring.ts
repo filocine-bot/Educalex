@@ -1,4 +1,4 @@
-import { simulationBank, type PracticeQuestion, type SimulationProfile } from "@/lib/simulation-bank";
+import { bankForVersion, type PracticeQuestion, type SimulationProfile } from "@/lib/simulation-bank";
 
 export const durationOptions = [0, 5, 10, 15, 20, 30, 45, 60, 90] as const;
 export type PracticeResult = {
@@ -6,6 +6,8 @@ export type PracticeResult = {
   answers: (number | null)[];
   elapsedSeconds: number;
   timedOut: boolean;
+  /** Versión del banco con que se respondió (por defecto, la vigente). */
+  version?: string;
 };
 
 export function scorePractice(questions: PracticeQuestion[], answers: (number | null)[]) {
@@ -31,5 +33,5 @@ export function remainingSeconds(deadline: number | null, now: number) {
 }
 
 export function resultScore(result: PracticeResult) {
-  return scorePractice(simulationBank[result.profile].questions, result.answers);
+  return scorePractice(bankForVersion(result.profile, result.version).questions, result.answers);
 }
