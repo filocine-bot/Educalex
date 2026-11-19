@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Award, BookOpen, CheckCircle2, Flame, Lock, Medal, RotateCcw, Star, Trophy, XCircle } from "lucide-react";
+import { Award, BookOpen, ListChecks, CheckCircle2, Flame, Lock, Medal, RotateCcw, Star, Trophy, XCircle } from "lucide-react";
+import { CompetencyGuide } from "@/components/competency-guide";
 import { Button } from "@/components/ui/button";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
@@ -175,12 +176,13 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
 
 /** Selector entre el modo juego y el simulacro completo cronometrado. */
 export function SimulationModes({ profile, children }: { profile: SimulationProfile; children: React.ReactNode }) {
-  const [mode, setMode] = useState<"juego" | "simulacro">("juego");
+  const [mode, setMode] = useState<"juego" | "simulacro" | "competencias">("juego");
   return <div>
     <div className="game-modes" role="tablist" aria-label="Forma de practicar">
       <button type="button" role="tab" aria-selected={mode === "juego"} className={mode === "juego" ? "active" : ""} onClick={() => setMode("juego")}><Trophy aria-hidden="true" /> Modo juego por niveles</button>
       <button type="button" role="tab" aria-selected={mode === "simulacro"} className={mode === "simulacro" ? "active" : ""} onClick={() => setMode("simulacro")}>Simulacro completo con tiempo</button>
+      <button type="button" role="tab" aria-selected={mode === "competencias"} className={mode === "competencias" ? "active" : ""} onClick={() => setMode("competencias")}><ListChecks aria-hidden="true" /> Competencias evaluadas</button>
     </div>
-    <div role="tabpanel">{mode === "juego" ? <PracticeGame profile={profile} /> : children}</div>
+    <div role="tabpanel">{mode === "juego" ? <PracticeGame profile={profile} /> : mode === "competencias" ? <CompetencyGuide profile={profile} /> : children}</div>
   </div>;
 }
