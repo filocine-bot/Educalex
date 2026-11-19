@@ -17,7 +17,7 @@ describe("pagos Wompi", () => {
     expect(await verifyEvent(ev, "test_events_secret")).toBe(true);
     expect(await verifyEvent(ev, "otro")).toBe(false);
     expect(await verifyEvent({ ...ev, data: { transaction: { ...data.transaction, amount_in_cents: 100 } } }, "test_events_secret")).toBe(false);
-    expect(await verifyEvent({ ...ev, signature: undefined }, "test_events_secret")).toBe(false);
+    expect(await verifyEvent({ event: ev.event, data, timestamp }, "test_events_secret")).toBe(false);
   });
   it("arma la URL del checkout", () => {
     const u = new URL(checkoutUrl({ publicKey: "pub_test_x", reference: "EDX-1", amountInCents: 1000000, signature: "abc", redirectUrl: "https://e.app/r", email: "a@b.co" }));
