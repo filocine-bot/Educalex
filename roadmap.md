@@ -1,5 +1,5 @@
 # EDUCALEX
-- [x] 18 nov. 2026 · Clave ANTHROPIC_API_KEY configurada en Vercel (Production); el asistente responde con IA.
+- [x] 18 nov. 2026 · Clave ANTHROPIC_API_KEY configurada en Vercel (Production); el asistente responde con IA (clave reemplazada y créditos comprados el 18 nov.).
 - [x] 16 nov. 2026 · Publicación: Vercel (proyecto `educalex`, https://educalex-six.vercel.app; duplicado eliminado) y Supabase en São Paulo con el esquema completo; variables de Supabase configuradas en Vercel. Pendientes: registro real de la propietaria, rol de administradora y clave de Docente IA.
 - [x] 14 nov. 2026 · Migración fuera de Lovable: configuración estándar de Vite y Nitro (Vercel/Cloudflare), sin componentes de Lovable; esquema Supabase consolidado y probado en PostgreSQL 16 (la migración 0005 llegó vacía y se reconstruyó); `.env.example` y guía de publicación. El sitio público funciona aunque Supabase no esté configurado.
 - [x] 14 nov. 2026 · Docente IA con Claude: conversación de varios turnos, contexto con las fuentes verificadas de la biblioteca, límite de consultas, botón de copiar.
