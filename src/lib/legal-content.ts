@@ -6,14 +6,14 @@
 export const LEGAL_OWNER = {
   name: "Enadis Ester Vargas Hernández",
   role: "persona natural, responsable del tratamiento",
-  city: "[municipio por confirmar], Córdoba, Colombia",
+  city: "San Pelayo, Córdoba, Colombia",
   email: "educalexcolombia@gmail.com",
-  address: "[dirección de correspondencia por confirmar]",
+  address: "Calle 2 # 2-78, San Pelayo, Córdoba",
   phone: "+57 301 874 7379",
 };
 
-export const LEGAL_VERSION = "2026-11-18";
-export const LEGAL_VERSION_LABEL = "18 de noviembre de 2026";
+export const LEGAL_VERSION = "2026-11-19";
+export const LEGAL_VERSION_LABEL = "19 de noviembre de 2026";
 
 export type LegalSection = { title: string; paragraphs?: string[]; items?: string[]; closing?: string };
 

@@ -10,7 +10,7 @@ describe('Acceso seguro por correo (servicio simulado, sin crear usuarios)',()=>
  it('un registro sin sesión espera confirmación y no navega a la cuenta',async()=>{
   mocks.auth.signUp.mockResolvedValue({data:{session:null},error:null});render(<AuthForm mode="register"/>);
   fireEvent.change(screen.getByLabelText('Correo'),{target:{value:'owner@example.test'}});fireEvent.change(screen.getByLabelText('Contraseña'),{target:{value:'local-test-only'}});fireEvent.click(screen.getByLabelText(/Autorizo el tratamiento/));fireEvent.click(screen.getByLabelText(/mayor de 18/));fireEvent.click(screen.getByRole('button',{name:'Crear cuenta'}));
-  await waitFor(()=>expect(mocks.auth.signUp).toHaveBeenCalledWith({email:'owner@example.test',password:'local-test-only',options:{emailRedirectTo:window.location.origin,data:expect.objectContaining({preparation_path:'ingreso-docente',privacy_policy_version:'2026-11-18',declared_adult:true})}}));expect(mocks.navigate).not.toHaveBeenCalled();
+  await waitFor(()=>expect(mocks.auth.signUp).toHaveBeenCalledWith({email:'owner@example.test',password:'local-test-only',options:{emailRedirectTo:window.location.origin,data:expect.objectContaining({preparation_path:'ingreso-docente',privacy_policy_version:'2026-11-19',declared_adult:true})}}));expect(mocks.navigate).not.toHaveBeenCalled();
  });
  it('la recuperación sin sesión validada no llama al cambio de contraseña',()=>{render(<AuthForm mode="reset"/>);expect(screen.getByRole('button',{name:'Guardar contraseña'})).toBeDisabled();expect(mocks.auth.updateUser).not.toHaveBeenCalled();});
  it('el evento de recuperación permite actualizar sin current_password ni fragmento',async()=>{
