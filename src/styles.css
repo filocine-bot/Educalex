@@ -992,13 +992,15 @@ html { scroll-padding-top: 120px; }
 .library-doc-card:focus-visible { outline: 3px solid var(--gold, #d97706); outline-offset: 2px; }
 .library-more { margin-top: 1rem; border-top: 1px solid var(--border); padding-top: .6rem; }
 .library-more summary { cursor: pointer; font-weight: 700; color: var(--brand-blue, #1e3a8a); padding: .3rem 0; }
-.tight-route .subpage-header { padding-block: 14px 16px; }
-.tight-route .subpage-header h1 { font-size: 26px; margin-top: 4px; }
+.tight-route .subpage-header { padding-block: 10px 12px; }
+.tight-route .subpage-header .crumbs { margin-bottom: 2px; }
+.tight-route .subpage-header h1 { font-size: 24px; margin-top: 0; line-height: 1.25; }
 .tight-route .subpage-header .eyebrow { display: none; }
 .tight-route .subpage-header .section-description { margin: 2px 0 0; font-size: 14px; }
 .tight-route .mod-body { padding-block: 16px 40px; gap: 18px; }
 .tight-route .mod-notice { padding: 8px 14px; font-size: 13px; }
 .tight-route .mod-notice svg { width: 18px; }
+.game.game-map { max-width: none; }
 .game-intro-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .4rem 1rem; }
 .game-intro-row h2 { margin: 0; font-size: 1.35rem; }
 .game-intro-row .game-stats { margin: 0; font-size: 14px; }

@@ -141,7 +141,7 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
   }
 
   // ---- Mapa de niveles ----
-  return <section className="game" aria-labelledby="game-levels-title">
+  return <section className="game game-map" aria-labelledby="game-levels-title">
     <div className="game-intro">
       <div className="game-intro-row"><h2 id="game-levels-title">Elige tu nivel</h2><p className="game-stats"><span><Star aria-hidden="true" /> {mine.points} puntos</span><span><Flame aria-hidden="true" /> Mejor racha {mine.bestStreak}</span><span><Medal aria-hidden="true" /> {mine.badges.length} insignias</span></p></div>
       <p className="game-hint">Explicación inmediata en cada respuesta. Supera un nivel con {Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
