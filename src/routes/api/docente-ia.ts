@@ -52,8 +52,8 @@ export const Route = createFileRoute("/api/docente-ia")({
                   const e = part.error as { statusCode?: number; message?: string };
                   const s = e?.statusCode;
                   const msg = s === 429 ? "Hay muchas consultas en este momento. Intenta de nuevo en un minuto."
-                    : s === 401 || s === 402 || s === 403 ? "El asistente no está disponible por ahora (límite de uso alcanzado)."
-                    : "No fue posible generar la respuesta. Intenta de nuevo.";
+                    : s === 401 || s === 402 || s === 403 ? `El asistente no está disponible por ahora (código ${s}).`
+                    : `No fue posible generar la respuesta. Intenta de nuevo.${s ? ` (código ${s}${/credit/i.test(e?.message ?? "") ? ": sin créditos" : /model/i.test(e?.message ?? "") ? ": modelo no disponible" : ""})` : ""}`;
                   console.error("docente-ia error", s, e?.message);
                   c.enqueue(enc.encode(JSON.stringify({ error: msg }) + "\n"));
                 }
