@@ -1,7 +1,7 @@
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Menu, ChevronDown, UserRound, LogOut } from 'lucide-react';
+import { Menu, ChevronDown, UserRound, LogOut , Scale, BookMarked, Library, Video, ClipboardCheck, GraduationCap, Bot, Star } from 'lucide-react';
 import { useAccount } from './account-session';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from './ui/dropdown-menu';
@@ -55,9 +55,21 @@ export function SiteHeader() {
       {user ? <ProfileSelector /> : <span className="preparation-label">Aprende. Avanza. Transforma.</span>}
       <nav className="profile-desktop-nav" aria-label="Navegación de preparación">{user ? <><Link className="nav-item" to="/mi-panel">Mi panel</Link>{groups.map(group => <NavGroup key={group.label} group={group} />)}<Link className="nav-item" to="/mi-progreso">Mi progreso</Link></> : <>{institutionalLinks.map(item => <Link key={item.to} className="nav-item" to={item.to}>{item.label}</Link>)}</>}</nav>
       <DropdownMenu><DropdownMenuTrigger asChild><Button className="profile-mobile-button" variant="ghost">Mi preparación<ChevronDown aria-hidden="true" /></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="header-menu-content mobile-header-menu">{user ? <><MenuLink item={{ label: 'Mi panel', to: '/mi-panel' }} />{groups.map(group => <MenuSection key={group.label} item={{ label: group.label, to: '/mi-panel', children: group.links }} />)}<MenuLink item={{ label: 'Mi progreso', to: '/mi-progreso' }} /></> : <>{headerNavigation.filter(item => item.children).map(item => <MenuSection key={item.to} item={item} />)}</>}</DropdownMenuContent></DropdownMenu>
-    </div></div>{message && <p role="alert" className="header-error">{message}</p>}
+    </div></div>
+    <nav className="quick-tabs" aria-label="Accesos rápidos"><div className="quick-tabs-inner">{quickTabs.map(t => <Link key={t.to} to={t.to}><t.icon aria-hidden="true" />{t.label}</Link>)}</div></nav>{message && <p role="alert" className="header-error">{message}</p>}
   </header>;
 }
+
+const quickTabs = [
+  { label: 'Legislación educativa', to: '/biblioteca/legislacion', icon: Scale },
+  { label: 'Guías del MEN', to: '/biblioteca/guias-men', icon: BookMarked },
+  { label: 'Bibliografía y recursos', to: '/biblioteca/recursos', icon: Library },
+  { label: 'Videos educativos', to: '/biblioteca/videos', icon: Video },
+  { label: 'Simulacros', to: '/simulacros', icon: ClipboardCheck },
+  { label: 'Cursos', to: '/formacion', icon: GraduationCap },
+  { label: 'EducatIA', to: '/docente-ia', icon: Bot },
+  { label: 'Planes', to: '/planes', icon: Star },
+] as const;
 
 export function SiteFooter() {
   return <footer className="site-footer"><div className="site-container footer-inner"><div><Link to="/" className="footer-name">EDUCA<span>LEX</span></Link><p className="footer-note">ACADEMIA INTELIGENTE DE EDUCACIÓN</p></div><p>Aprende. Avanza. Transforma.</p><nav className="footer-links" aria-label="Enlaces del sitio"><Link to="/planes">Niveles</Link><Link to="/nosotros">Nosotros</Link><Link to="/contacto">Contacto</Link><Link to="/privacidad">Privacidad</Link><Link to="/terminos">Términos</Link></nav></div></footer>;

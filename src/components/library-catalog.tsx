@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { useMemo, useState } from 'react';
-import { CheckCircle2, ExternalLink, Search, Clock3, ChevronLeft, ChevronRight, X, BookOpen } from 'lucide-react';
+import { CheckCircle2, ExternalLink, Search, Clock3, ChevronLeft, ChevronRight, X, BookOpen, Download, Network } from 'lucide-react';
+import { DocInfographic } from './doc-infographic';
 import { Button } from './ui/button';
 import { Dialog, DialogTrigger, DialogPortal, DialogOverlay, DialogClose, DialogTitle, DialogDescription } from './ui/dialog';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -18,10 +19,12 @@ function DocumentDetail({ doc }: { doc: LibraryDoc }) {
       <p className="library-detail-kicker">Resumen EDUCALEX · {doc.tipo}</p><DialogTitle className="library-detail-title">{doc.title}</DialogTitle>
       <DialogDescription id={`library-description-${doc.id}`}>{doc.descripcion}</DialogDescription>
       <dl className="library-metadata"><dt>Nombre oficial</dt><dd>{doc.nombreOficial}</dd><dt>Entidad</dt><dd>{doc.entidad}</dd><dt>Año</dt><dd>{doc.anio ?? 'Por verificar'}</dd><dt>Tema</dt><dd>{doc.categoria}</dd></dl>
+      <div className="library-detail-actions"><Button asChild variant="navy"><Link to="/biblioteca/ficha/$id" params={{ id: doc.id }} search={{ imprimir: true }} target="_blank"><Download aria-hidden="true" />Descargar ficha en PDF</Link></Button><Button asChild variant="outline"><Link to="/biblioteca/ficha/$id" params={{ id: doc.id }} search={{ imprimir: false }}><Network aria-hidden="true" />Ver ficha e infografía</Link></Button></div>
+      <section><h3>Infografía</h3><DocInfographic doc={doc} /></section>
       <section><h3>Puntos clave para estudiar</h3><ul>{notes.points.map(point => <li key={point}>{point}</li>)}</ul></section>
       <section><h3>Aplicación pedagógica</h3><p>{notes.application}</p></section>
       <section className="library-verification"><h3>Estado de verificación</h3><Verification doc={doc} /><p>{doc.notas}</p></section>
-      <div className="library-detail-actions">{source ? <Button asChild><a href={source.url} target="_blank" rel="noopener noreferrer"><ExternalLink aria-hidden="true" />{source.kind === 'pdf' ? 'Abrir PDF oficial' : 'Consultar fuente oficial'}</a></Button> : <Button disabled variant="outline">Enlace pendiente</Button>}<p className="text-sm text-muted-foreground">{source?.kind === 'pdf' ? 'Documento PDF en el sitio oficial; se abre en una pestaña nueva.' : source ? 'Página oficial; desde allí se accede al documento completo cuando está disponible.' : 'Fuente oficial pendiente de comprobación.'}</p></div>
+      <div className="library-detail-actions">{source ? <Button asChild><a href={source.url} target="_blank" rel="noopener noreferrer"><ExternalLink aria-hidden="true" />{source.kind === 'pdf' ? 'Descargar norma oficial (PDF)' : 'Consultar fuente oficial'}</a></Button> : <Button disabled variant="outline">Enlace pendiente</Button>}<p className="text-sm text-muted-foreground">{source?.kind === 'pdf' ? 'Documento PDF en el sitio oficial; se abre en una pestaña nueva.' : source ? 'Página oficial; desde allí se accede al documento completo cuando está disponible.' : 'Fuente oficial pendiente de comprobación.'}</p></div>
       <section><h3>Estudio relacionado</h3><div className="library-related">{doc.related.map(to => <Button asChild variant="outline" key={to}><Link to={to}><BookOpen aria-hidden="true" />{getPage(to)?.title ?? to}</Link></Button>)}</div></section>
       <DialogClose asChild><Button variant="outline">Cerrar ficha</Button></DialogClose>
     </DialogPrimitive.Content></DialogPortal>

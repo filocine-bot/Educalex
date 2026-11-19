@@ -926,3 +926,56 @@ html { scroll-padding-top: 120px; }
 .pay-result-card.ok > svg { color: #16a34a; }
 .pay-result-card h1 { font-size: 1.5rem; margin-bottom: .5rem; }
 .pay-result-card .game-links { justify-content: center; margin-top: 1rem; }
+
+/* ===== Infografía / organizador gráfico de fichas ===== */
+.doc-infographic { margin: 1rem 0; padding: 1rem; border-radius: 1rem; background: linear-gradient(180deg, #f8fafc, #fff); border: 1px solid var(--border); }
+.info-center { position: relative; max-width: 30rem; margin: 0 auto 1.4rem; text-align: center; background: var(--brand-blue, #1e3a8a); color: #fff; border-radius: 1rem; padding: .9rem 1.2rem; display: grid; gap: .2rem; box-shadow: 0 6px 18px rgba(30,58,138,.18); }
+.info-center::after { content: ""; position: absolute; left: 50%; bottom: -1.4rem; width: 3px; height: 1.4rem; background: var(--brand-blue, #1e3a8a); transform: translateX(-50%); }
+.info-center strong { font-size: 1.25rem; line-height: 1.25; }
+.info-kicker { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: #fde68a; font-weight: 700; }
+.info-meta { font-size: .85rem; opacity: .9; }
+.info-branches { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); border-top: 3px solid var(--brand-blue, #1e3a8a); padding-top: 1rem; }
+.info-branch { position: relative; border-radius: .85rem; padding: .85rem 1rem; background: #fff; border: 1px solid var(--border); border-top: 6px solid; }
+.info-branch::before { content: ""; position: absolute; top: -1.45rem; left: 50%; width: 3px; height: 1rem; background: var(--brand-blue, #1e3a8a); }
+.info-branch h4 { display: flex; align-items: center; gap: .4rem; font-size: .98rem; margin-bottom: .4rem; }
+.info-branch h4 svg { width: 1.1rem; height: 1.1rem; flex: none; }
+.info-branch p, .info-branch li { font-size: .92rem; line-height: 1.5; }
+.info-branch ul { list-style: none; padding: 0; display: grid; gap: .3rem; }
+.info-branch a { text-decoration: underline; display: inline-flex; align-items: center; gap: .3rem; }
+.info-branch a svg { width: 1rem; height: 1rem; }
+.info-branch.b1 { border-top-color: #2563eb; } .info-branch.b1 h4 { color: #1d4ed8; }
+.info-branch.b2 { border-top-color: #d97706; } .info-branch.b2 h4 { color: #b45309; }
+.info-branch.b3 { border-top-color: #16a34a; } .info-branch.b3 h4 { color: #15803d; }
+.info-branch.b4 { border-top-color: #9333ea; } .info-branch.b4 h4 { color: #7e22ce; }
+.info-branch.b5 { border-top-color: #475569; } .info-branch.b5 h4 { color: #334155; }
+.info-small { font-size: .82rem; color: var(--muted-foreground); }
+.info-ok, .info-pending { display: inline-flex; align-items: center; gap: .3rem; font-weight: 600; }
+.info-ok { color: #15803d; } .info-pending { color: #b45309; }
+.info-ok svg, .info-pending svg { width: 1rem; height: 1rem; }
+.doc-infographic figcaption { margin-top: .75rem; text-align: center; }
+.ficha-page { max-width: 64rem; }
+.ficha-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: .75rem; }
+.ficha-header h1 { font-size: 1.8rem; margin: .2rem 0; }
+.ficha-body h2 { font-size: 1.35rem; margin: 1.2rem 0 .5rem; } .ficha-body h3 { font-size: 1.05rem; margin: 1rem 0 .3rem; }
+.ficha-body ul { padding-left: 1.2rem; list-style: disc; }
+
+/* ===== Pestañas rápidas del encabezado ===== */
+.quick-tabs { background: #fff; border-bottom: 1px solid var(--border); }
+.quick-tabs-inner { width: min(1480px, calc(100% - 32px)); margin: 0 auto; display: flex; gap: .25rem; overflow-x: auto; scrollbar-width: thin; }
+.quick-tabs a { display: inline-flex; align-items: center; gap: .35rem; white-space: nowrap; padding: .55rem .8rem; font-size: 13px; font-weight: 600; color: var(--foreground); border-bottom: 3px solid transparent; }
+.quick-tabs a svg { width: 1rem; height: 1rem; color: var(--brand-blue, #1e3a8a); }
+.quick-tabs a:hover { color: var(--brand-blue, #1e3a8a); }
+.quick-tabs a[data-status='active'] { border-bottom-color: var(--gold, #d97706); color: var(--brand-blue, #1e3a8a); }
+.quick-tabs a:focus-visible { outline: 2px solid var(--gold, #d97706); outline-offset: -2px; }
+html { scroll-padding-top: 170px; }
+[id] { scroll-margin-top: 170px; }
+
+@media print {
+  .site-header, .site-footer, .no-print, .educatia-launcher, .ficha-actions { display: none !important; }
+  body { background: #fff; }
+  .ficha-page { width: 100%; max-width: none; padding: 0; }
+  .doc-infographic { break-inside: avoid; border-color: #ccc; }
+  .info-branch { break-inside: avoid; }
+  .info-center, .info-branch { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  a { color: inherit; }
+}

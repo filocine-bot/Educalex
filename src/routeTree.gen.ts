@@ -78,6 +78,7 @@ import { Route as AuthenticatedAdminPreguntasRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminSimulacrosRouteImport } from './routes/_authenticated/admin.simulacros'
 import { Route as AuthenticatedAdminUsuariosRouteImport } from './routes/_authenticated/admin.usuarios'
 import { Route as ApiWompiEventosRouteImport } from './routes/api/wompi/eventos'
+import { Route as BibliotecaFichaIdRouteImport } from './routes/biblioteca.ficha.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -447,6 +448,11 @@ const ApiWompiEventosRoute = ApiWompiEventosRouteImport.update({
   path: '/api/wompi/eventos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BibliotecaFichaIdRoute = BibliotecaFichaIdRouteImport.update({
+  id: '/biblioteca/ficha/$id',
+  path: '/biblioteca/ficha/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -516,6 +522,7 @@ export interface FileRoutesByFullPath {
   '/admin/simulacros': typeof AuthenticatedAdminSimulacrosRoute
   '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/api/wompi/eventos': typeof ApiWompiEventosRoute
+  '/biblioteca/ficha/$id': typeof BibliotecaFichaIdRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -585,6 +592,7 @@ export interface FileRoutesByTo {
   '/admin/simulacros': typeof AuthenticatedAdminSimulacrosRoute
   '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/api/wompi/eventos': typeof ApiWompiEventosRoute
+  '/biblioteca/ficha/$id': typeof BibliotecaFichaIdRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -657,6 +665,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/simulacros': typeof AuthenticatedAdminSimulacrosRoute
   '/_authenticated/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/api/wompi/eventos': typeof ApiWompiEventosRoute
+  '/biblioteca/ficha/$id': typeof BibliotecaFichaIdRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -729,6 +738,7 @@ export interface FileRouteTypes {
     | '/admin/simulacros'
     | '/admin/usuarios'
     | '/api/wompi/eventos'
+    | '/biblioteca/ficha/$id'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -798,6 +808,7 @@ export interface FileRouteTypes {
     | '/admin/simulacros'
     | '/admin/usuarios'
     | '/api/wompi/eventos'
+    | '/biblioteca/ficha/$id'
     | '/admin'
   id:
     | '__root__'
@@ -869,6 +880,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/simulacros'
     | '/_authenticated/admin/usuarios'
     | '/api/wompi/eventos'
+    | '/biblioteca/ficha/$id'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -925,6 +937,7 @@ export interface RootRouteChildren {
   FormacionIndexRoute: typeof FormacionIndexRoute
   SimulacrosIndexRoute: typeof SimulacrosIndexRoute
   ApiWompiEventosRoute: typeof ApiWompiEventosRoute
+  BibliotecaFichaIdRoute: typeof BibliotecaFichaIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1412,6 +1425,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiWompiEventosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/biblioteca/ficha/$id': {
+      id: '/biblioteca/ficha/$id'
+      path: '/biblioteca/ficha/$id'
+      fullPath: '/biblioteca/ficha/$id'
+      preLoaderRoute: typeof BibliotecaFichaIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1520,6 +1540,7 @@ const rootRouteChildren: RootRouteChildren = {
   FormacionIndexRoute: FormacionIndexRoute,
   SimulacrosIndexRoute: SimulacrosIndexRoute,
   ApiWompiEventosRoute: ApiWompiEventosRoute,
+  BibliotecaFichaIdRoute: BibliotecaFichaIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
