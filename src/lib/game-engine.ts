@@ -1,6 +1,15 @@
 // Modo juego de los simulacros: niveles, puntos, rachas e insignias.
 // Lógica pura (sin interfaz) para poder probarla.
 import { simulationBank, type PracticeQuestion, type SimulationProfile } from "@/lib/simulation-bank";
+import { nucleoComunV3 } from "@/lib/bank-v3/nucleo-comun";
+
+/** Banco del modo juego: el específico de cada perfil o el núcleo común (lectura, razonamiento, blandas, pedagógicas). */
+export type GameBankKey = SimulationProfile | "nucleo-comun";
+const byLevel = (qs: PracticeQuestion[]) => [...qs].sort((a, b) => (a.level ?? 0) - (b.level ?? 0));
+const NUCLEO = byLevel(nucleoComunV3);
+export function questionsFor(bank: GameBankKey): PracticeQuestion[] {
+  return bank === "nucleo-comun" ? NUCLEO : simulationBank[bank].questions;
+}
 
 export const QUESTIONS_PER_LEVEL = 10;
 export const PASS_RATIO = 0.7;
@@ -18,8 +27,8 @@ export const LEVEL_NAMES = ["Básico", "Intermedio", "Avanzado", "Experto"] as c
 
 export type GameLevel = { number: number; name: string; questions: PracticeQuestion[]; premium: boolean };
 
-export function levelsFor(profile: SimulationProfile): GameLevel[] {
-  const qs = simulationBank[profile].questions;
+export function levelsFor(profile: GameBankKey): GameLevel[] {
+  const qs = questionsFor(profile);
   const levels: GameLevel[] = [];
   // Si el banco declara niveles de complejidad, cada nivel reúne sus propias preguntas; si no, se reparte en bloques.
   const leveled = qs.length > 0 && qs.every(q => q.level !== undefined);
@@ -46,7 +55,7 @@ export type ProfileProgress = {
   badges: string[];
 };
 
-export type GameProgress = Partial<Record<SimulationProfile, ProfileProgress>>;
+export type GameProgress = Partial<Record<GameBankKey, ProfileProgress>>;
 
 export const emptyProfile = (): ProfileProgress => ({ unlocked: 1, best: {}, points: 0, bestStreak: 0, correctIds: [], badges: [] });
 
@@ -85,7 +94,7 @@ export function describeBadge(id: string): Badge {
 export type LevelOutcome = { level: number; answers: { id: string; correct: boolean }[]; pointsEarned: number; bestStreak: number };
 
 /** Aplica el resultado de un nivel al progreso y devuelve el nuevo progreso y las insignias ganadas. */
-export function applyOutcome(profile: SimulationProfile, current: ProfileProgress, outcome: LevelOutcome): { progress: ProfileProgress; newBadges: string[] } {
+export function applyOutcome(profile: GameBankKey, current: ProfileProgress, outcome: LevelOutcome): { progress: ProfileProgress; newBadges: string[] } {
   const levels = levelsFor(profile);
   const total = outcome.answers.length;
   const right = outcome.answers.filter(a => a.correct).length;
@@ -107,7 +116,7 @@ export function applyOutcome(profile: SimulationProfile, current: ProfileProgres
   if (outcome.bestStreak >= 5) add("racha:5");
   if (outcome.bestStreak >= 10) add("racha:10");
   if (levels.every(l => next.badges.includes(`nivel:${l.number}`))) add("perfil-completo");
-  const all = simulationBank[profile].questions;
+  const all = questionsFor(profile);
   for (const c of new Set(all.map(q => q.competency))) {
     const ids = all.filter(q => q.competency === c).map(q => q.id);
     if (ids.length >= 3 && ids.every(id => correctIds.includes(id))) add(competencyBadgeId(c));
@@ -118,7 +127,7 @@ export function applyOutcome(profile: SimulationProfile, current: ProfileProgres
 /** Une dos progresos (por ejemplo, el del navegador y el de la cuenta) quedándose con lo mejor de cada uno. */
 export function mergeProgress(a: GameProgress, b: GameProgress): GameProgress {
   const out: GameProgress = {};
-  for (const key of new Set([...Object.keys(a), ...Object.keys(b)]) as Set<SimulationProfile>) {
+  for (const key of new Set([...Object.keys(a), ...Object.keys(b)]) as Set<GameBankKey>) {
     const x = a[key], y = b[key];
     if (!x || !y) { out[key] = (x ?? y)!; continue; }
     const best: Record<number, number> = { ...x.best };

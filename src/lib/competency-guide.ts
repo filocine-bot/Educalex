@@ -15,9 +15,9 @@ const concurso = (cargo: "docente" | "directivo"): CompetencyGuide => ({
       name: "Prueba de aptitudes y competencias básicas",
       character: `Eliminatoria: mínimo ${cargo === "docente" ? "60" : "70"} sobre 100. Es la única prueba eliminatoria del concurso.`,
       areas: [
-        { name: "Lectura crítica", what: "Comprender, interpretar y evaluar textos, y tomar posición argumentada frente a ellos.", inEducalex: "En preparación: bloque de práctica de lectura crítica.", status: "en-preparacion" },
-        { name: "Razonamiento cuantitativo", what: "Usar conocimientos matemáticos para interpretar datos y resolver problemas de la vida cotidiana y escolar.", inEducalex: "En preparación: bloque de práctica de razonamiento cuantitativo.", status: "en-preparacion" },
-        { name: "Competencias blandas", what: "Liderazgo, ética, trabajo en equipo y ciudadanía.", inEducalex: "Parcial: situaciones de convivencia, participación y liderazgo de este simulacro.", status: "parcial" },
+        { name: "Lectura crítica", what: "Comprender, interpretar y evaluar textos, y tomar posición argumentada frente a ellos.", inEducalex: "Pestaña «Núcleo común»: 10 preguntas con textos originales, en 4 niveles.", status: "cubierta" },
+        { name: "Razonamiento cuantitativo", what: "Usar conocimientos matemáticos para interpretar datos y resolver problemas de la vida cotidiana y escolar.", inEducalex: "Pestaña «Núcleo común»: 10 problemas de porcentajes, proporciones, conteo e interpretación de datos.", status: "cubierta" },
+        { name: "Competencias blandas", what: "Liderazgo, ética, trabajo en equipo y ciudadanía.", inEducalex: "Pestaña «Núcleo común»: 10 situaciones de liderazgo, ética, trabajo en equipo y ciudadanía, más las de este simulacro.", status: "cubierta" },
         { name: cargo === "docente" ? "Conocimientos disciplinares y competencias pedagógicas" : "Conocimientos requeridos para el cargo directivo", what: cargo === "docente" ? "Saberes del área del empleo y capacidad para enseñar, evaluar e incluir." : "Saberes de gestión escolar, gobierno escolar, normativa y liderazgo pedagógico.", inEducalex: PEDAGOGIA_NORMAS, status: "cubierta" },
       ],
     },

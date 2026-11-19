@@ -5,7 +5,7 @@ import { CompetencyGuide } from "@/components/competency-guide";
 import { Button } from "@/components/ui/button";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
-import { applyOutcome, describeBadge, emptyProfile, errorMap, isLevelPlayable, levelsFor, PASS_RATIO, pointsFor, PREMIUM_LOCKED, type GameLevel } from "@/lib/game-engine";
+import { applyOutcome, describeBadge, emptyProfile, errorMap, isLevelPlayable, levelsFor, PASS_RATIO, type GameBankKey, pointsFor, PREMIUM_LOCKED, type GameLevel } from "@/lib/game-engine";
 import { useGameProgress } from "@/lib/game-progress";
 import { BuyPremium, useMyPremium } from "@/components/premium-purchase";
 import { useAccount } from "@/components/account-session";
@@ -15,13 +15,13 @@ const LETTERS = ["A", "B", "C", "D"];
 type Answer = { id: string; chosen: number; correct: boolean };
 type Run = { level: GameLevel; review: boolean; questions: PracticeQuestion[]; index: number; answers: Answer[]; streak: number; bestStreak: number; points: number };
 
-export function PracticeGame({ profile }: { profile: SimulationProfile }) {
-  const levels = useMemo(() => levelsFor(profile), [profile]);
+export function PracticeGame({ profile, bank = profile }: { profile: SimulationProfile; bank?: GameBankKey }) {
+  const levels = useMemo(() => levelsFor(bank), [bank]);
   const { progress, save, ready, signedIn } = useGameProgress();
   const premium = useMyPremium();
   const { isAdmin } = useAccount();
   const locked = PREMIUM_LOCKED && !premium.has(profile);
-  const mine = progress[profile] ?? emptyProfile();
+  const mine = progress[bank] ?? emptyProfile();
   const [run, setRun] = useState<Run | null>(null);
   const [chosen, setChosen] = useState<number | null>(null);
   const [summary, setSummary] = useState<{ run: Run; newBadges: string[]; passed: boolean } | null>(null);
@@ -57,8 +57,8 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
     const right = r.answers.filter(a => a.correct).length;
     const ok = right / r.answers.length >= PASS_RATIO;
     if (r.review) { setSummary({ run: r, newBadges: [], passed: ok }); return; }
-    const { progress: updated, newBadges } = applyOutcome(profile, mine, { level: r.level.number, answers: r.answers, pointsEarned: r.points, bestStreak: r.bestStreak });
-    save({ ...progress, [profile]: updated });
+    const { progress: updated, newBadges } = applyOutcome(bank, mine, { level: r.level.number, answers: r.answers, pointsEarned: r.points, bestStreak: r.bestStreak });
+    save({ ...progress, [bank]: updated });
     setSummary({ run: r, newBadges, passed: ok });
   }
 
@@ -114,7 +114,7 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
     const wrongIds = r.answers.filter(a => !a.correct).map(a => a.id);
     const map = errorMap(r.questions, wrongIds);
     const nextLevel = levels.find(l => l.number === r.level.number + 1);
-    const nextPlayable = nextLevel ? isLevelPlayable(nextLevel, (progress[profile] ?? mine), locked) : null;
+    const nextPlayable = nextLevel ? isLevelPlayable(nextLevel, (progress[bank] ?? mine), locked) : null;
     return <section className="game game-summary" aria-labelledby="game-summary-title">
       <div className={`game-result ${summary.passed ? "ok" : "bad"}`}>
         {summary.passed ? <Trophy aria-hidden="true" /> : <RotateCcw aria-hidden="true" />}
@@ -176,13 +176,14 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
 
 /** Selector entre el modo juego y el simulacro completo cronometrado. */
 export function SimulationModes({ profile, children }: { profile: SimulationProfile; children: React.ReactNode }) {
-  const [mode, setMode] = useState<"juego" | "simulacro" | "competencias">("juego");
+  const [mode, setMode] = useState<"juego" | "nucleo" | "simulacro" | "competencias">("juego");
   return <div>
     <div className="game-modes" role="tablist" aria-label="Forma de practicar">
       <button type="button" role="tab" aria-selected={mode === "juego"} className={mode === "juego" ? "active" : ""} onClick={() => setMode("juego")}><Trophy aria-hidden="true" /> Modo juego por niveles</button>
+      <button type="button" role="tab" aria-selected={mode === "nucleo"} className={mode === "nucleo" ? "active" : ""} onClick={() => setMode("nucleo")}><BookOpen aria-hidden="true" /> Núcleo común</button>
       <button type="button" role="tab" aria-selected={mode === "simulacro"} className={mode === "simulacro" ? "active" : ""} onClick={() => setMode("simulacro")}>Simulacro completo con tiempo</button>
       <button type="button" role="tab" aria-selected={mode === "competencias"} className={mode === "competencias" ? "active" : ""} onClick={() => setMode("competencias")}><ListChecks aria-hidden="true" /> Competencias evaluadas</button>
     </div>
-    <div role="tabpanel">{mode === "juego" ? <PracticeGame profile={profile} /> : mode === "competencias" ? <CompetencyGuide profile={profile} /> : children}</div>
+    <div role="tabpanel">{mode === "juego" ? <PracticeGame key="perfil" profile={profile} /> : mode === "nucleo" ? <><p className="game-hint nucleo-hint">Núcleo común para todos los cargos: lectura crítica, razonamiento cuantitativo, competencias blandas y pedagógicas (40 preguntas, 4 niveles).</p><PracticeGame key="nucleo" profile={profile} bank="nucleo-comun" /></> : mode === "competencias" ? <CompetencyGuide profile={profile} /> : children}</div>
   </div>;
 }

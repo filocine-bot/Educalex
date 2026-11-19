@@ -3,10 +3,11 @@ import { ingresoDocenteV3 } from "@/lib/bank-v3/ingreso-docente";
 import { ascensoReubicacionV3 } from "@/lib/bank-v3/ascenso-reubicacion";
 import { rectorV3 } from "@/lib/bank-v3/rector";
 import { coordinadorV3 } from "@/lib/bank-v3/coordinador";
+import { nucleoComunV3 } from "@/lib/bank-v3/nucleo-comun";
 import { levelsFor } from "@/lib/game-engine";
 
 // Control de calidad tipo ICFES: contexto + tarea + cuatro opciones homogéneas; complejidad creciente por nivel.
-const banks = { "ingreso-docente": ingresoDocenteV3, "ascenso-reubicacion": ascensoReubicacionV3, rector: rectorV3, coordinador: coordinadorV3 };
+const banks = { "ingreso-docente": ingresoDocenteV3, "ascenso-reubicacion": ascensoReubicacionV3, rector: rectorV3, coordinador: coordinadorV3, "nucleo-comun": nucleoComunV3 };
 const avg = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
 
 describe.each(Object.entries(banks))("calidad del banco %s", (_, qs) => {
@@ -30,7 +31,7 @@ describe.each(Object.entries(banks))("calidad del banco %s", (_, qs) => {
       const ratio = lens[q.correct]! / avg(others);
       expect(ratio, `${q.id}: la correcta mide ${ratio.toFixed(2)} veces el promedio`).toBeLessThanOrEqual(1.35);
       expect(ratio, q.id).toBeGreaterThanOrEqual(0.65);
-      if (lens[q.correct] === Math.max(...lens)) longest++;
+      if (others.every(l => lens[q.correct]! > l)) longest++; // estrictamente la más larga (los empates no delatan)
     }
     expect(longest / qs.length).toBeLessThanOrEqual(0.4);
   });
@@ -40,7 +41,7 @@ describe.each(Object.entries(banks))("calidad del banco %s", (_, qs) => {
   });
 });
 
-it.each(["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador"] as const)("el juego arma cada nivel de %s con su complejidad", profile => {
+it.each(["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador", "nucleo-comun"] as const)("el juego arma cada nivel de %s con su complejidad", profile => {
   const levels = levelsFor(profile);
   expect(levels).toHaveLength(4);
   levels.forEach(l => { expect(l.questions).toHaveLength(10); expect(l.questions.every(q => q.level === l.number)).toBe(true); });
