@@ -24,7 +24,7 @@ const concurso = (cargo: "docente" | "directivo"): CompetencyGuide => ({
     {
       name: "Prueba psicotécnica (comportamental)",
       character: "Clasificatoria: suma puntaje, pero no elimina.",
-      areas: [{ name: "Competencias comportamentales", what: "Actitudes, habilidades, motivaciones e intereses profesionales relacionados con las funciones del empleo.", inEducalex: "No se practica con preguntas de opción única: no tiene respuestas correctas o incorrectas.", status: "en-preparacion" }],
+      areas: [{ name: "Competencias comportamentales", what: "Actitudes, habilidades, motivaciones e intereses profesionales relacionados con las funciones del empleo.", inEducalex: "Pestaña «Psicotécnica»: 12 situaciones para conocer el formato, con un perfil de tendencias y sin puntaje.", status: "parcial" }],
     },
     {
       name: "Valoración de antecedentes y entrevista",

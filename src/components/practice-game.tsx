@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Award, BookOpen, ListChecks, CheckCircle2, Flame, Lock, Medal, RotateCcw, Star, Trophy, XCircle } from "lucide-react";
+import { Award, BookOpen, Brain, ListChecks, CheckCircle2, Flame, Lock, Medal, RotateCcw, Star, Trophy, XCircle } from "lucide-react";
 import { CompetencyGuide } from "@/components/competency-guide";
+import { PsychoPractice } from "@/components/psycho-practice";
 import { Button } from "@/components/ui/button";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
@@ -176,14 +177,15 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
 
 /** Selector entre el modo juego y el simulacro completo cronometrado. */
 export function SimulationModes({ profile, children }: { profile: SimulationProfile; children: React.ReactNode }) {
-  const [mode, setMode] = useState<"juego" | "nucleo" | "simulacro" | "competencias">("juego");
+  const [mode, setMode] = useState<"juego" | "nucleo" | "simulacro" | "psico" | "competencias">("juego");
   return <div>
     <div className="game-modes" role="tablist" aria-label="Forma de practicar">
       <button type="button" role="tab" aria-selected={mode === "juego"} className={mode === "juego" ? "active" : ""} onClick={() => setMode("juego")}><Trophy aria-hidden="true" /> Modo juego por niveles</button>
       <button type="button" role="tab" aria-selected={mode === "nucleo"} className={mode === "nucleo" ? "active" : ""} onClick={() => setMode("nucleo")}><BookOpen aria-hidden="true" /> Núcleo común</button>
       <button type="button" role="tab" aria-selected={mode === "simulacro"} className={mode === "simulacro" ? "active" : ""} onClick={() => setMode("simulacro")}>Simulacro completo con tiempo</button>
+      <button type="button" role="tab" aria-selected={mode === "psico"} className={mode === "psico" ? "active" : ""} onClick={() => setMode("psico")}><Brain aria-hidden="true" /> Psicotécnica</button>
       <button type="button" role="tab" aria-selected={mode === "competencias"} className={mode === "competencias" ? "active" : ""} onClick={() => setMode("competencias")}><ListChecks aria-hidden="true" /> Competencias evaluadas</button>
     </div>
-    <div role="tabpanel">{mode === "juego" ? <PracticeGame key="perfil" profile={profile} /> : mode === "nucleo" ? <><p className="game-hint nucleo-hint">Núcleo común para todos los cargos: lectura crítica, razonamiento cuantitativo, competencias blandas y pedagógicas (40 preguntas, 4 niveles).</p><PracticeGame key="nucleo" profile={profile} bank="nucleo-comun" /></> : mode === "competencias" ? <CompetencyGuide profile={profile} /> : children}</div>
+    <div role="tabpanel">{mode === "juego" ? <PracticeGame key="perfil" profile={profile} /> : mode === "nucleo" ? <><p className="game-hint nucleo-hint">Núcleo común para todos los cargos: lectura crítica, razonamiento cuantitativo, competencias blandas y pedagógicas (40 preguntas, 4 niveles).</p><PracticeGame key="nucleo" profile={profile} bank="nucleo-comun" /></> : mode === "competencias" ? <CompetencyGuide profile={profile} /> : mode === "psico" ? <PsychoPractice /> : children}</div>
   </div>;
 }
