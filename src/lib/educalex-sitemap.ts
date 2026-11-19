@@ -34,7 +34,7 @@ const ADMIN = "Área reservada a administradores autorizados. La edición de con
 
 export const pages = {
   "/mi-panel": { section: "Mi preparación", title: "Mi panel", description: "Tu ruta de estudio según el perfil educativo activo.", related: ["/mi-cuenta", "/mi-progreso", "/planes"], notice: "Las recomendaciones no limitan el acceso gratuito a los contenidos existentes." },
-  "/planes": { section: "Preparación", title: "Niveles de preparación", description: "Explorador gratuito y futuros niveles Avanza, Experto y Élite de EDUCALEX.", related: ["/formacion", "/simulacros", "/mi-cuenta"], notice: "Todos los contenidos actuales siguen gratis. Avanza, Experto y Élite: próximamente. Sin pagos habilitados." },
+  "/planes": { section: "Preparación", title: "Planes: Gratuito y Premium", description: "Qué es gratis en EDUCALEX y qué incluye el acceso Premium del modo juego.", related: ["/simulacros", "/formacion", "/mi-cuenta"] },
   "/concursos": { section: "Concursos", title: "Concursos docentes", description: "Rutas de preparación para los concursos de mérito del sector educativo en Colombia.", children: ["/concursos/ingreso-docente", "/concursos/ascenso-reubicacion", "/concursos/rector", "/concursos/coordinador"], related: ["/simulacros", "/formacion", "/biblioteca"], notice: VERIFY },
   "/concursos/ingreso-docente": {
     section: "Concursos", parent: "/concursos", title: "Ingreso a la carrera docente",

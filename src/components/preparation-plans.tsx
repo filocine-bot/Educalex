@@ -1,19 +1,29 @@
 import { Link } from '@tanstack/react-router';
-import { CheckCircle2, Clock3 } from 'lucide-react';
+import { CheckCircle2, Crown, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { preparationLevels } from '@/lib/preparation-levels';
-import { useAccount } from './account-session';
+import { PREMIUM_LOCKED } from '@/lib/game-engine';
+
+const cop = (n: number) => n.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+
+const plans = [
+  { icon: CheckCircle2, name: 'Gratuito', price: 'Sin costo', items: ['Biblioteca normativa y videoteca del MEN', 'Cursos de autoestudio', 'EducatIA con voz', 'Simulacro completo con tiempo (40 preguntas por perfil)', 'Modo juego: nivel Básico de cada perfil'] },
+  { icon: Star, name: 'Premium por perfil', price: `${cop(29900)} · pago único`, items: ['Todo lo gratuito', 'Niveles Intermedio, Avanzado y Experto del perfil que elijas', 'Insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
+  { icon: Crown, name: 'Premium completo', price: `${cop(49900)} · pago único`, items: ['Todo lo gratuito', 'Niveles Premium de los cuatro perfiles: Ingreso, Ascenso, Rector y Coordinador', 'Insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
+];
 
 export function PreparationPlans() {
-  const { user } = useAccount();
   return <div className="space-y-8">
-    <div className="border-b border-border pb-6"><h2 className="text-2xl font-semibold">Explorador · gratuito</h2><p className="mt-2">{user ? 'Tu nivel actual' : 'Nivel inicial para todos'} · Sin pagos habilitados</p><p className="mt-3 text-muted-foreground">Biblioteca, cinco cursos de autoestudio y cuatro prácticas originales de cuarenta preguntas por perfil. Repetición libre; con cuenta, progreso e historial personal.</p></div>
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{preparationLevels.map(level => <article key={level.code} className="rounded-lg border border-border bg-card p-5 space-y-4">
-      {level.available ? <CheckCircle2 className="text-primary" aria-hidden="true"/> : <Clock3 className="text-muted-foreground" aria-hidden="true"/>}
-      <h2 className="text-xl font-semibold">{level.label}</h2><p className="font-medium">{level.available ? 'Gratuito · disponible' : 'Próximamente · futuro premium'}</p><p className="text-sm text-muted-foreground">{level.focus}</p>
-      <dl className="space-y-3 text-sm"><div><dt className="font-semibold">Contenido actual</dt><dd>Todo gratuito, sin restricciones</dd></div><div><dt className="font-semibold">Prácticas actuales</dt><dd>4 perfiles × 8 preguntas · repetición libre</dd></div><div><dt className="font-semibold">Beneficios adicionales</dt><dd>{level.available ? 'Progreso e historial con cuenta' : 'Por definir; no disponibles'}</dd></div><div><dt className="font-semibold">Contratación</dt><dd>{level.available ? 'No requiere compra' : 'No habilitada'}</dd></div></dl>
+    {!PREMIUM_LOCKED && <p className="game-launch">Lanzamiento: por tiempo limitado, todos los niveles están abiertos gratis.</p>}
+    <div className="grid gap-5 md:grid-cols-3">{plans.map(p => <article key={p.name} className="rounded-lg border border-border bg-card p-5 space-y-3">
+      <p.icon className="text-primary" aria-hidden="true" />
+      <h2 className="text-xl font-semibold">{p.name}</h2>
+      <p className="font-semibold">{p.price}</p>
+      <ul className="list-disc pl-5 space-y-1 text-sm">{p.items.map(i => <li key={i}>{i}</li>)}</ul>
     </article>)}</div>
-    <p className="text-muted-foreground">Los niveles futuros no están disponibles para contratar. Sus beneficios y reglas se definirán antes de su activación; no hay simulacros adicionales disponibles ni ascensos automáticos por progreso.</p>
-    <div className="flex flex-wrap gap-3"><Button asChild><Link to="/formacion">Estudiar gratis</Link></Button><Button asChild variant="outline"><Link to="/simulacros">Practicar gratis</Link></Button><Button asChild variant="outline"><Link to={user ? '/mi-cuenta' : '/registro'}>{user ? 'Mi cuenta' : 'Crear cuenta gratuita'}</Link></Button></div>
+    <p>El acceso Premium se compra dentro de cada simulacro, en el <strong>modo juego por niveles</strong>, con pago seguro por Wompi (tarjetas, PSE, Nequi). Derecho de retracto de 5 días hábiles; consulta los <Link to="/terminos" className="underline">términos</Link>.</p>
+    <div className="flex flex-wrap gap-3">
+      <Button asChild variant="navy"><Link to="/simulacros">Ir a los simulacros</Link></Button>
+      <Button asChild variant="outline"><Link to="/registro">Crear cuenta gratis</Link></Button>
+    </div>
   </div>;
 }
