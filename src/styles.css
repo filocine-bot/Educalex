@@ -842,3 +842,72 @@ html { scroll-padding-top: 120px; }
 .video-theme-links a { display: inline-flex; align-items: center; gap: .35rem; text-decoration: underline; }
 .video-theme-links svg { width: 1rem; height: 1rem; }
 .official-videos h3 { font-size: 1.1rem; }
+
+/* ===== Modo juego de simulacros ===== */
+.game-modes { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.5rem; }
+.game-modes button { display: inline-flex; align-items: center; gap: .4rem; border: 2px solid var(--border); background: var(--card); border-radius: 999px; padding: .55rem 1.1rem; font-weight: 600; cursor: pointer; }
+.game-modes button svg { width: 1.1rem; height: 1.1rem; }
+.game-modes button.active { border-color: var(--primary); background: var(--primary); color: var(--primary-foreground); }
+.game-modes button:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.game { max-width: 52rem; }
+.game-intro p { margin-bottom: .6rem; }
+.game-stats, .game-hud { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; font-weight: 600; }
+.game-stats span, .game-hud span { display: inline-flex; align-items: center; gap: .3rem; }
+.game-stats svg, .game-hud svg { width: 1.1rem; height: 1.1rem; color: #d97706; }
+.game-launch { display: inline-block; background: #fef3c7; color: #78350f; border-radius: .5rem; padding: .4rem .75rem; font-weight: 600; }
+.game-levels { list-style: none; padding: 0; margin: 1.25rem 0; display: grid; gap: .9rem; }
+.game-level { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border: 2px solid var(--border); border-radius: 1rem; padding: 1rem 1.25rem; background: var(--card); }
+.game-level h3 { font-size: 1.2rem; margin: .1rem 0; }
+.game-level p { margin: 0; color: var(--muted-foreground); }
+.game-level.is-done { border-color: #16a34a; }
+.game-level.is-done h3::after { content: " ✓"; color: #16a34a; }
+.game-level.is-locked { opacity: .75; background: var(--muted); }
+.game-lock { display: inline-flex; align-items: center; gap: .35rem; font-weight: 600; }
+.game-lock svg { width: 1.1rem; height: 1.1rem; }
+.game-hud { justify-content: space-between; border: 1px solid var(--border); border-radius: .75rem; padding: .6rem 1rem; background: var(--card); }
+.game-progress { height: .55rem; background: var(--muted); border-radius: 999px; overflow: hidden; margin: .75rem 0 1.25rem; }
+.game-progress span { display: block; height: 100%; background: var(--primary); transition: width .3s ease; }
+.game-prompt { font-size: 1.2rem; line-height: 1.5; margin: .4rem 0 1rem; }
+.game-prompt:focus { outline: none; }
+.game-options { display: grid; gap: .65rem; }
+.game-option { display: flex; align-items: flex-start; gap: .75rem; text-align: left; width: 100%; border: 2px solid var(--border); border-radius: .85rem; padding: .85rem 1rem; background: var(--card); font-size: 1rem; cursor: pointer; transition: transform .1s ease, border-color .15s ease; }
+.game-option:hover:not(:disabled) { border-color: var(--primary); transform: translateY(-1px); }
+.game-option:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.game-option:disabled { cursor: default; }
+.game-option svg { margin-left: auto; flex: none; width: 1.4rem; height: 1.4rem; }
+.game-letter { flex: none; display: inline-grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--muted); font-weight: 700; }
+.game-option.is-correct { border-color: #16a34a; background: #f0fdf4; color: #14532d; }
+.game-option.is-correct svg { color: #16a34a; }
+.game-option.is-wrong { border-color: #dc2626; background: #fef2f2; color: #7f1d1d; }
+.game-option.is-wrong svg { color: #dc2626; }
+.game-option.is-dim { opacity: .6; }
+.game-feedback { margin-top: 1.1rem; border-radius: 1rem; padding: 1rem 1.25rem; border-left: 6px solid; background: var(--card); }
+.game-feedback:focus { outline: 3px solid var(--ring); outline-offset: 2px; }
+.game-feedback.ok { border-color: #16a34a; }
+.game-feedback.bad { border-color: #dc2626; }
+.game-feedback h3 { display: flex; align-items: center; gap: .4rem; font-size: 1.15rem; margin-bottom: .5rem; }
+.game-feedback.ok h3 { color: #15803d; }
+.game-feedback.bad h3 { color: #b91c1c; }
+.game-feedback h3 svg { width: 1.3rem; height: 1.3rem; }
+.game-feedback p { margin-bottom: .6rem; line-height: 1.55; }
+.game-reference { display: flex; gap: .4rem; font-size: .92rem; color: var(--muted-foreground); }
+.game-reference svg { flex: none; width: 1.1rem; height: 1.1rem; margin-top: .15rem; }
+.game-links { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+.game-links a { text-decoration: underline; font-weight: 600; }
+.game-result { text-align: center; border-radius: 1.25rem; padding: 1.5rem 1rem; margin-bottom: 1.25rem; }
+.game-result.ok { background: #f0fdf4; color: #14532d; }
+.game-result.bad { background: #fff7ed; color: #7c2d12; }
+.game-result svg { width: 3rem; height: 3rem; margin: 0 auto .5rem; }
+.game-result.ok svg { color: #d97706; animation: game-pop .6s ease; }
+.game-result h2 { font-size: 1.4rem; }
+.game-result h2:focus { outline: none; }
+.game-badges-new, .game-errors, .game-badges { border: 1px solid var(--border); border-radius: 1rem; padding: 1rem 1.25rem; margin-bottom: 1rem; background: var(--card); }
+.game-badges-new h3, .game-badges h3 { display: flex; align-items: center; gap: .4rem; }
+.game-badges-new ul, .game-badges ul { list-style: none; padding: 0; margin: .6rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.game-badges-new li, .game-badges li { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .35rem; background: #fef3c7; color: #78350f; border-radius: 999px; padding: .35rem .8rem; font-size: .92rem; }
+.game-badges-new li small { flex-basis: 100%; }
+.game-badges-new li { border-radius: .75rem; }
+.game-badges-new svg, .game-badges svg { width: 1.1rem; height: 1.1rem; }
+.game-errors ul ul { margin: .25rem 0 .5rem 1.25rem; font-size: .92rem; color: var(--muted-foreground); }
+@keyframes game-pop { 0% { transform: scale(.4); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .game-result.ok svg, .game-option, .game-progress span { animation: none; transition: none; } }
