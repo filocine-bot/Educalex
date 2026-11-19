@@ -30,7 +30,7 @@ export const Route = createFileRoute("/api/docente-ia")({
         const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "anon";
         if (tooMany(ip))
           return Response.json({ error: "Hay muchas consultas en este momento. Intenta de nuevo en un minuto." }, { status: 429 });
-        const apiKey = process.env["ANTHROPIC_API_KEY"];
+        const apiKey = process.env["ANTHROPIC_API_KEY"]?.replace(/\s+/g, "").replace(/^["']|["']$/g, "");
         if (!apiKey) return Response.json({ error: "El asistente no está configurado todavía." }, { status: 503 });
 
         const anthropic = createAnthropic({ apiKey });
@@ -54,7 +54,7 @@ export const Route = createFileRoute("/api/docente-ia")({
                   const s = e?.statusCode;
                   const msg = s === 429 ? "Hay muchas consultas en este momento. Intenta de nuevo en un minuto."
                     : s === 401 || s === 402 || s === 403 ? `El asistente no está disponible por ahora (código ${s}).`
-                    : `No fue posible generar la respuesta. Intenta de nuevo. (código ${s ?? raw?.name ?? "desconocido"}${/credit|balance|billing/i.test(e?.message ?? "") ? ": sin créditos" : /model/i.test(e?.message ?? "") ? ": modelo no disponible" : /overloaded/i.test(e?.message ?? "") ? ": servicio saturado" : ""})`;
+                    : `No fue posible generar la respuesta. Intenta de nuevo. (código ${s ?? `${raw?.name ?? "desconocido"}${raw?.name === "TypeError" ? `: ${String(raw?.message ?? "").slice(0, 80)}` : ""}`}${/credit|balance|billing/i.test(e?.message ?? "") ? ": sin créditos" : /model/i.test(e?.message ?? "") ? ": modelo no disponible" : /overloaded/i.test(e?.message ?? "") ? ": servicio saturado" : ""})`;
                   console.error("docente-ia error", s, e?.message);
                   c.enqueue(enc.encode(JSON.stringify({ error: msg }) + "\n"));
                 }
