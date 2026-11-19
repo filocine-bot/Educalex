@@ -31,7 +31,7 @@ export function PsychoPractice() {
       <p className="competency-sources">Ejercicio original de familiarización. El formato y la calificación oficiales los define el Anexo Técnico de cada convocatoria.</p>
     </div>
     <ol className="psycho-items">{psychoItems.map((item, i) => <li key={item.id}><fieldset><legend><span className="course-kicker">Situación {i + 1}</span> {item.situation}</legend>
-      {item.options.map((o, j) => <label key={j} className="practice-option" data-selected={answers[i] === j}><input type="radio" name={item.id} checked={answers[i] === j} onChange={() => setAnswers(prev => prev.map((a, k) => k === i ? j : a))} /><span>{o.text}</span></label>)}
+      {item.options.map((o, j) => <label key={j} className="practice-option" data-selected={answers[i] === j}><input type="radio" name={item.id} checked={answers[i] === j} onChange={() => setAnswers(prev => prev.map((a, k) => k === i ? j : a))} /><strong>{"ABCD"[j]}</strong><span>{o.text}</span></label>)}
     </fieldset></li>)}</ol>
     <p className="game-hint">{answered} de {psychoItems.length} situaciones respondidas.</p>
     <Button variant="navy" disabled={answered < psychoItems.length} onClick={() => setDone(true)}>Ver mi perfil</Button>
