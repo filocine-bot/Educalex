@@ -29,11 +29,12 @@ const SIM_PARTS = ["Instrucciones", "Número de preguntas", "Tiempo disponible",
 const SIM_NOTE = " Práctica original; no es prueba oficial del ICFES ni de la CNSC.";
 const SELF_STUDY = "Autoestudio disponible: cinco unidades originales y un taller ficticio editable. Inscripción y progreso gratuitos con cuenta; sin calificación ni certificación oficial. No ingreses información de menores reales.";
 const COURSE_NOTE = "Curso en preparación. Aún no hay inscripciones, lecciones ni evaluaciones habilitadas.";
-const ACCOUNT = "Espacio personal protegido. Todo el contenido existente es gratuito.";
+const ACCOUNT = "Espacio personal protegido. Biblioteca, cursos y nivel Básico de los simulacros son gratuitos; los niveles Premium requieren pago único.";
 const ADMIN = "Área reservada a administradores autorizados. La edición de contenidos permanece en preparación.";
 
 export const pages = {
   "/mi-panel": { section: "Mi preparación", title: "Mi panel", description: "Tu ruta de estudio según el perfil educativo activo.", related: ["/mi-cuenta", "/mi-progreso", "/planes"], notice: "Las recomendaciones no limitan el acceso gratuito a los contenidos existentes." },
+  "/guia-de-uso": { section: "EDUCALEX", title: "Cómo usar EDUCALEX", description: "Guía rápida en seis pasos para estudiar, practicar y prepararte con EDUCALEX.", related: ["/simulacros", "/biblioteca", "/planes"] },
   "/planes": { section: "Preparación", title: "Planes: Gratuito y Premium", description: "Qué es gratis en EDUCALEX y qué incluye el acceso Premium del modo juego.", related: ["/simulacros", "/formacion", "/mi-cuenta"] },
   "/concursos": { section: "Concursos", title: "Concursos docentes", description: "Rutas de preparación para los concursos de mérito del sector educativo en Colombia.", children: ["/concursos/ingreso-docente", "/concursos/ascenso-reubicacion", "/concursos/rector", "/concursos/coordinador"], related: ["/simulacros", "/formacion", "/biblioteca"], notice: VERIFY },
   "/concursos/ingreso-docente": {

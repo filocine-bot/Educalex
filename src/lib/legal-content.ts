@@ -171,7 +171,6 @@ export const termsSections: LegalSection[] = [
       "Los pagos se procesan con Wompi (Grupo Bancolombia). EDUCALEX no recibe ni guarda los datos de tu tarjeta o de tu cuenta bancaria; solo conserva la referencia, el valor, la fecha y el estado del pago.",
       "Derecho de retracto: conforme al artículo 47 de la Ley 1480 de 2011 (Estatuto del Consumidor) y sus modificaciones, puedes retractarte de la compra dentro de los cinco (5) días hábiles siguientes al pago, sin dar explicaciones, escribiendo a educalexcolombia@gmail.com. Te devolveremos la totalidad del dinero pagado, sin descuentos ni retenciones, en un plazo máximo de treinta (30) días calendario, y el acceso Premium se retirará.",
       "Si un pago aprobado no activa tu acceso, o se cobra dos veces, escríbenos con la referencia del pago y lo resolveremos o te devolveremos el valor.",
-      "Durante el lanzamiento, los niveles Premium pueden estar abiertos gratuitamente por tiempo limitado; cuando se cierre ese periodo se avisará en el sitio.",
     ],
   },
   {

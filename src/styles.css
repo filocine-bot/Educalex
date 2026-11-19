@@ -1092,6 +1092,13 @@ html { scroll-padding-top: 120px; }
 .dilemma-others { border: 1px dashed var(--border); border-radius: 12px; padding: .6rem 1rem; font-size: 14px; }
 .dilemma-others summary { cursor: pointer; font-weight: 700; color: var(--brand-blue, #1e3a8a); }
 .dilemma-others div { border-top: 1px solid var(--border); padding-top: .5rem; margin-top: .5rem; }
+.guide-steps { list-style: none; padding: 0; display: grid; gap: .8rem; max-width: 56rem; }
+.guide-steps li { display: grid; grid-template-columns: 2.6rem 1fr; gap: .9rem; border: 1px solid var(--border); border-radius: 14px; padding: 1rem 1.1rem; background: var(--card); }
+.guide-num { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 999px; background: var(--brand-blue, #1e3a8a); color: #fff; font-weight: 800; font-size: 1.1rem; }
+.guide-steps h2 { display: flex; align-items: center; gap: .45rem; font-size: 1.1rem; margin: 0 0 .25rem; }
+.guide-steps h2 svg { width: 1.2rem; color: var(--gold, #d97706); }
+.guide-steps p { margin: 0; line-height: 1.55; font-size: 15px; }
+.guide-steps a { text-decoration: underline; font-weight: 600; }
 html { scroll-padding-top: 170px; }
 [id] { scroll-margin-top: 170px; }
 

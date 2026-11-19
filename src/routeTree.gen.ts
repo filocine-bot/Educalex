@@ -18,6 +18,7 @@ import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as CursosRouteImport } from './routes/cursos'
 import { Route as DocenteIaRouteImport } from './routes/docente-ia'
 import { Route as EducatiaRouteImport } from './routes/educatia'
+import { Route as GuiaDeUsoRouteImport } from './routes/guia-de-uso'
 import { Route as IngresarRouteImport } from './routes/ingresar'
 import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as PlanesRouteImport } from './routes/planes'
@@ -124,6 +125,11 @@ const DocenteIaRoute = DocenteIaRouteImport.update({
 const EducatiaRoute = EducatiaRouteImport.update({
   id: '/educatia',
   path: '/educatia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuiaDeUsoRoute = GuiaDeUsoRouteImport.update({
+  id: '/guia-de-uso',
+  path: '/guia-de-uso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IngresarRoute = IngresarRouteImport.update({
@@ -476,6 +482,7 @@ export interface FileRoutesByFullPath {
   '/cursos': typeof CursosRoute
   '/docente-ia': typeof DocenteIaRoute
   '/educatia': typeof EducatiaRoute
+  '/guia-de-uso': typeof GuiaDeUsoRoute
   '/ingresar': typeof IngresarRoute
   '/nosotros': typeof NosotrosRoute
   '/planes': typeof PlanesRoute
@@ -549,6 +556,7 @@ export interface FileRoutesByTo {
   '/cursos': typeof CursosRoute
   '/docente-ia': typeof DocenteIaRoute
   '/educatia': typeof EducatiaRoute
+  '/guia-de-uso': typeof GuiaDeUsoRoute
   '/ingresar': typeof IngresarRoute
   '/nosotros': typeof NosotrosRoute
   '/planes': typeof PlanesRoute
@@ -623,6 +631,7 @@ export interface FileRoutesById {
   '/cursos': typeof CursosRoute
   '/docente-ia': typeof DocenteIaRoute
   '/educatia': typeof EducatiaRoute
+  '/guia-de-uso': typeof GuiaDeUsoRoute
   '/ingresar': typeof IngresarRoute
   '/nosotros': typeof NosotrosRoute
   '/planes': typeof PlanesRoute
@@ -698,6 +707,7 @@ export interface FileRouteTypes {
     | '/cursos'
     | '/docente-ia'
     | '/educatia'
+    | '/guia-de-uso'
     | '/ingresar'
     | '/nosotros'
     | '/planes'
@@ -771,6 +781,7 @@ export interface FileRouteTypes {
     | '/cursos'
     | '/docente-ia'
     | '/educatia'
+    | '/guia-de-uso'
     | '/ingresar'
     | '/nosotros'
     | '/planes'
@@ -844,6 +855,7 @@ export interface FileRouteTypes {
     | '/cursos'
     | '/docente-ia'
     | '/educatia'
+    | '/guia-de-uso'
     | '/ingresar'
     | '/nosotros'
     | '/planes'
@@ -919,6 +931,7 @@ export interface RootRouteChildren {
   CursosRoute: typeof CursosRoute
   DocenteIaRoute: typeof DocenteIaRoute
   EducatiaRoute: typeof EducatiaRoute
+  GuiaDeUsoRoute: typeof GuiaDeUsoRoute
   IngresarRoute: typeof IngresarRoute
   NosotrosRoute: typeof NosotrosRoute
   PlanesRoute: typeof PlanesRoute
@@ -1030,6 +1043,13 @@ declare module '@tanstack/react-router' {
       path: '/educatia'
       fullPath: '/educatia'
       preLoaderRoute: typeof EducatiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guia-de-uso': {
+      id: '/guia-de-uso'
+      path: '/guia-de-uso'
+      fullPath: '/guia-de-uso'
+      preLoaderRoute: typeof GuiaDeUsoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ingresar': {
@@ -1538,6 +1558,7 @@ const rootRouteChildren: RootRouteChildren = {
   CursosRoute: CursosRoute,
   DocenteIaRoute: DocenteIaRoute,
   EducatiaRoute: EducatiaRoute,
+  GuiaDeUsoRoute: GuiaDeUsoRoute,
   IngresarRoute: IngresarRoute,
   NosotrosRoute: NosotrosRoute,
   PlanesRoute: PlanesRoute,

@@ -66,5 +66,5 @@ export function SiteHeader() {
 
 
 export function SiteFooter() {
-  return <footer className="site-footer"><div className="site-container footer-inner"><div><Link to="/" className="footer-name">EDUCA<span>LEX</span></Link><p className="footer-note">ACADEMIA INTELIGENTE DE EDUCACIÓN</p></div><p>Aprende. Avanza. Transforma.</p><nav className="footer-links" aria-label="Enlaces del sitio"><Link to="/planes">Niveles</Link><Link to="/nosotros">Nosotros</Link><Link to="/contacto">Contacto</Link><Link to="/privacidad">Privacidad</Link><Link to="/terminos">Términos</Link></nav></div></footer>;
+  return <footer className="site-footer"><div className="site-container footer-inner"><div><Link to="/" className="footer-name">EDUCA<span>LEX</span></Link><p className="footer-note">ACADEMIA INTELIGENTE DE EDUCACIÓN</p></div><p>Aprende. Avanza. Transforma.</p><nav className="footer-links" aria-label="Enlaces del sitio"><Link to="/guia-de-uso">Cómo usar</Link><Link to="/planes">Planes</Link><Link to="/nosotros">Nosotros</Link><Link to="/contacto">Contacto</Link><Link to="/privacidad">Privacidad</Link><Link to="/terminos">Términos</Link></nav></div></footer>;
 }

@@ -6,9 +6,9 @@ import { PREMIUM_LOCKED } from '@/lib/game-engine';
 const cop = (n: number) => n.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 
 const plans = [
-  { icon: CheckCircle2, name: 'Gratuito', price: 'Sin costo', items: ['Biblioteca normativa y videoteca del MEN', 'Cursos de autoestudio', 'EducatIA con voz', 'Simulacro completo con tiempo (40 preguntas por perfil)', 'Modo juego: nivel Básico de cada perfil'] },
-  { icon: Star, name: 'Premium por perfil', price: `${cop(29900)} · pago único`, items: ['Todo lo gratuito', 'Niveles Intermedio, Avanzado y Experto del perfil que elijas', 'Insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
-  { icon: Crown, name: 'Premium completo', price: `${cop(49900)} · pago único`, items: ['Todo lo gratuito', 'Niveles Premium de los cuatro perfiles: Ingreso, Ascenso, Rector y Coordinador', 'Insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
+  { icon: CheckCircle2, name: 'Gratuito', price: 'Sin costo', items: ['Biblioteca normativa y videoteca del MEN', 'Cursos de autoestudio', 'EducatIA con voz', 'Simulacro completo con tiempo (40 preguntas por perfil)', 'Modo juego: nivel Básico de cada perfil y del núcleo común', 'Psicotécnica, competencias evaluadas y dilemas educativos', 'Constancia de participación al superar el nivel Básico'] },
+  { icon: Star, name: 'Premium por perfil', price: `${cop(29900)} · pago único`, items: ['Todo lo gratuito', 'Niveles Intermedio, Avanzado y Experto del perfil que elijas y del núcleo común', 'Insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
+  { icon: Crown, name: 'Premium completo', price: `${cop(49900)} · pago único`, items: ['Todo lo gratuito', 'Niveles Premium de los cuatro perfiles (Ingreso, Ascenso, Rector y Coordinador) y del núcleo común', 'Insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
 ];
 
 export function PreparationPlans() {

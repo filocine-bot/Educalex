@@ -29,6 +29,7 @@ export const headerNavigation: HeaderItem[] = [
   { label: 'Mi cuenta', to: '/mi-cuenta', compact: true },
 ];
 export const institutionalLinks: HeaderLink[] = [
+  { label: 'Cómo usar EDUCALEX', to: '/guia-de-uso' },
   { label: 'Nuestra Academia', to: '/nosotros' },
   { label: 'Contacto', to: '/contacto' },
 ];
