@@ -40,7 +40,7 @@ export const Route = createFileRoute("/api/docente-ia")({
           messages: turns,
           abortSignal: request.signal,
           maxRetries: 1,
-          maxOutputTokens: 2000,
+          maxOutputTokens: 4000,
         });
         const enc = new TextEncoder();
         const stream = new ReadableStream({
@@ -48,6 +48,8 @@ export const Route = createFileRoute("/api/docente-ia")({
             try {
               for await (const part of result.fullStream) {
                 if (part.type === "text-delta") c.enqueue(enc.encode(JSON.stringify({ t: part.text }) + "\n"));
+                else if (part.type === "finish" && part.finishReason === "length")
+                  c.enqueue(enc.encode(JSON.stringify({ t: "\n\n*(La respuesta se cortó por su extensión. Pide «continúa» o haz una pregunta más concreta.)*" }) + "\n"));
                 else if (part.type === "error") {
                   const raw = part.error as { statusCode?: number; message?: string; name?: string; lastError?: { statusCode?: number; message?: string } };
                   const e = raw?.lastError ?? raw;
