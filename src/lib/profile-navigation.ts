@@ -19,3 +19,9 @@ export function profileGroups(profile:EducationalProfile):ProfileGroup[]{
  if(profile!=='directivo')groups.push({label:'Simulacros',links:[link('Práctica del perfil',`/simulacros/${profile}` as PagePath),link('Resultados y retroalimentación','/mis-resultados')]});
  return groups;
 }
+/** Simulacros que corresponden a cada perfil educativo. El directivo en ejercicio practica los dos cargos directivos. */
+export const SIMULATION_PROFILES = ['ingreso-docente', 'ascenso-reubicacion', 'rector', 'coordinador'] as const;
+export function simulacrosFor(profile: EducationalProfile | null): readonly (typeof SIMULATION_PROFILES)[number][] {
+ if (!profile) return SIMULATION_PROFILES;
+ return profile === 'directivo' ? ['rector', 'coordinador'] : [profile];
+}
