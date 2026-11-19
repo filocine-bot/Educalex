@@ -7,7 +7,9 @@ export const LEGAL_OWNER = {
   name: "Enadis Ester Vargas Hernández",
   role: "persona natural, responsable del tratamiento",
   city: "[municipio por confirmar], Córdoba, Colombia",
-  email: "[correo de contacto por confirmar]",
+  email: "educalexcolombia@gmail.com",
+  address: "[dirección de correspondencia por confirmar]",
+  phone: "+57 301 874 7379",
 };
 
 export const LEGAL_VERSION = "2026-11-18";
@@ -23,7 +25,9 @@ export const privacySections: LegalSection[] = [
     items: [
       `Nombre: ${LEGAL_OWNER.name} (${LEGAL_OWNER.role}), titular del proyecto EDUCALEX.`,
       `Ubicación: ${LEGAL_OWNER.city}.`,
+      `Dirección de correspondencia: ${LEGAL_OWNER.address}.`,
       `Correo para consultas y reclamos sobre datos personales: ${LEGAL_OWNER.email}.`,
+      `Teléfono: ${LEGAL_OWNER.phone}.`,
       "Sitio web: https://educalex-six.vercel.app",
     ],
   },

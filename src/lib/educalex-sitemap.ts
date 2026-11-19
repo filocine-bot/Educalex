@@ -105,7 +105,7 @@ export const pages = {
   "/admin/certificados": { section: "Administración", parent: "/admin", title: "Certificados", description: "Emisión y consulta de certificados.", restricted: "admin", notice: ADMIN },
   "/admin/estadisticas": { section: "Administración", parent: "/admin", title: "Estadísticas", description: "Indicadores de uso de la plataforma.", restricted: "admin", notice: ADMIN },
 
-  "/contacto": { section: "EDUCALEX", title: "Contacto", description: "Comunícate con el equipo de EDUCALEX.", related: ["/nosotros"], notice: "Los canales de contacto se publicarán próximamente." },
+  "/contacto": { section: "EDUCALEX", title: "Contacto", description: "Comunícate con el equipo de EDUCALEX.", related: ["/nosotros"], },
   "/privacidad": { section: "EDUCALEX", title: "Política de tratamiento de datos personales", description: "Cómo EDUCALEX trata tu información personal y cómo ejercer tus derechos (Ley 1581 de 2012).", related: ["/terminos"] },
   "/terminos": { section: "EDUCALEX", title: "Términos y condiciones", description: "Condiciones de uso de la plataforma EDUCALEX.", related: ["/privacidad"] },
 } satisfies Record<string, PageDef>;
