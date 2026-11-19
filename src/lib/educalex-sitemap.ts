@@ -105,8 +105,8 @@ export const pages = {
   "/admin/estadisticas": { section: "Administración", parent: "/admin", title: "Estadísticas", description: "Indicadores de uso de la plataforma.", restricted: "admin", notice: ADMIN },
 
   "/contacto": { section: "EDUCALEX", title: "Contacto", description: "Comunícate con el equipo de EDUCALEX.", related: ["/nosotros"], notice: "Los canales de contacto se publicarán próximamente." },
-  "/privacidad": { section: "EDUCALEX", title: "Política de privacidad", description: "Cómo EDUCALEX tratará la información personal.", related: ["/terminos"], notice: "La política de tratamiento de datos está en elaboración y se publicará antes de habilitar las cuentas de usuario." },
-  "/terminos": { section: "EDUCALEX", title: "Términos y condiciones", description: "Condiciones de uso de la plataforma.", related: ["/privacidad"], notice: "Los términos y condiciones están en elaboración y se publicarán antes de habilitar las cuentas de usuario." },
+  "/privacidad": { section: "EDUCALEX", title: "Política de tratamiento de datos personales", description: "Cómo EDUCALEX trata tu información personal y cómo ejercer tus derechos (Ley 1581 de 2012).", related: ["/terminos"] },
+  "/terminos": { section: "EDUCALEX", title: "Términos y condiciones", description: "Condiciones de uso de la plataforma EDUCALEX.", related: ["/privacidad"] },
 } satisfies Record<string, PageDef>;
 
 export type PagePath = keyof typeof pages;

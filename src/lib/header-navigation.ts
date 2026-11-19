@@ -24,7 +24,7 @@ export const headerNavigation: HeaderItem[] = [
   { label: 'Simulacros', to: '/simulacros', children: profileLinks('simulacros') },
   { label: 'Biblioteca', to: '/biblioteca', compact: true },
   { label: 'Planes', to: '/planes', compact: true },
-  { label: 'DOCENTE IA', to: '/docente-ia', compact: true },
+  { label: 'EducatIA', to: '/docente-ia', compact: true },
   { label: 'Mi cuenta', to: '/mi-cuenta', compact: true },
 ];
 export const institutionalLinks: HeaderLink[] = [

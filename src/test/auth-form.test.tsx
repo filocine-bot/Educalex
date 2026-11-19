@@ -9,8 +9,8 @@ beforeEach(()=>{cleanup();vi.clearAllMocks();mocks.account.user=null;mocks.accou
 describe('Acceso seguro por correo (servicio simulado, sin crear usuarios)',()=>{
  it('un registro sin sesión espera confirmación y no navega a la cuenta',async()=>{
   mocks.auth.signUp.mockResolvedValue({data:{session:null},error:null});render(<AuthForm mode="register"/>);
-  fireEvent.change(screen.getByLabelText('Correo'),{target:{value:'owner@example.test'}});fireEvent.change(screen.getByLabelText('Contraseña'),{target:{value:'local-test-only'}});fireEvent.click(screen.getByRole('button',{name:'Crear cuenta'}));
-  await waitFor(()=>expect(mocks.auth.signUp).toHaveBeenCalledWith({email:'owner@example.test',password:'local-test-only',options:{emailRedirectTo:window.location.origin,data:{preparation_path:'ingreso-docente'}}}));expect(mocks.navigate).not.toHaveBeenCalled();
+  fireEvent.change(screen.getByLabelText('Correo'),{target:{value:'owner@example.test'}});fireEvent.change(screen.getByLabelText('Contraseña'),{target:{value:'local-test-only'}});fireEvent.click(screen.getByLabelText(/Autorizo el tratamiento/));fireEvent.click(screen.getByLabelText(/mayor de 18/));fireEvent.click(screen.getByRole('button',{name:'Crear cuenta'}));
+  await waitFor(()=>expect(mocks.auth.signUp).toHaveBeenCalledWith({email:'owner@example.test',password:'local-test-only',options:{emailRedirectTo:window.location.origin,data:expect.objectContaining({preparation_path:'ingreso-docente',privacy_policy_version:'2026-11-18',declared_adult:true})}}));expect(mocks.navigate).not.toHaveBeenCalled();
  });
  it('la recuperación sin sesión validada no llama al cambio de contraseña',()=>{render(<AuthForm mode="reset"/>);expect(screen.getByRole('button',{name:'Guardar contraseña'})).toBeDisabled();expect(mocks.auth.updateUser).not.toHaveBeenCalled();});
  it('el evento de recuperación permite actualizar sin current_password ni fragmento',async()=>{
@@ -25,5 +25,9 @@ describe('Acceso seguro por correo (servicio simulado, sin crear usuarios)',()=>
  it('un correo no confirmado nunca navega como si hubiera ingresado',async()=>{
   mocks.auth.signInWithPassword.mockResolvedValue({error:{code:'email_not_confirmed'}});render(<AuthForm mode="login"/>);fireEvent.change(screen.getByLabelText('Correo'),{target:{value:'owner@example.test'}});fireEvent.change(screen.getByLabelText('Contraseña'),{target:{value:'local-test-only'}});fireEvent.click(screen.getByRole('button',{name:'Ingresar'}));
   await waitFor(()=>expect(mocks.auth.signInWithPassword).toHaveBeenCalled());expect(mocks.navigate).not.toHaveBeenCalled();
+ });
+ it('sin autorización de datos no se crea la cuenta',async()=>{
+  render(<AuthForm mode="register"/>);fireEvent.change(screen.getByLabelText('Correo'),{target:{value:'owner@example.test'}});fireEvent.change(screen.getByLabelText('Contraseña'),{target:{value:'local-test-only'}});fireEvent.submit(screen.getByRole('button',{name:'Crear cuenta'}).closest('form')!);
+  await waitFor(()=>expect(screen.getByRole('status')).toHaveTextContent('debes aceptar la política'));expect(mocks.auth.signUp).not.toHaveBeenCalled();
  });
 });

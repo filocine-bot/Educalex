@@ -15,6 +15,7 @@ import { SiteHeader, SiteFooter } from "@/components/site-shell";
 import { AccountProvider } from "@/components/account-session";
 import { PracticeSessionProvider } from "@/components/practice-session";
 import { RecoveryNavigation } from '@/components/recovery-navigation';
+import { EducatiaLauncher } from '@/components/educatia-launcher';
 import { Button } from '@/components/ui/button';
 
 function NotFoundComponent() {
@@ -129,7 +130,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <AccountProvider><SiteHeader />
       <PracticeSessionProvider><main><Outlet /></main></PracticeSessionProvider>
-      <SiteFooter /></AccountProvider>
+      <SiteFooter /><EducatiaLauncher /></AccountProvider>
     </QueryClientProvider>
   );
 }
