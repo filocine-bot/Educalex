@@ -238,11 +238,11 @@ export const nucleoComunV3: PracticeQuestion[] = [
   },
   {
     id: "nc-pe-6", level: 3, competency: "Pedagógica · enseñar",
-    context: "En un grupo de séptimo, una evaluación diagnóstica muestra tres situaciones: un tercio aún no domina las operaciones con fracciones, otro tercio las domina y la mitad del tercio restante ya resuelve problemas con ellas de forma autónoma. La unidad busca resolver problemas con fracciones.",
+    context: "En un grupo de séptimo, una evaluación diagnóstica muestra tres situaciones: un tercio aún no domina las operaciones con fracciones, otro tercio las domina y el tercio restante ya resuelve problemas con ellas de forma autónoma. La unidad busca resolver problemas con fracciones.",
     prompt: "¿Qué decisión de planeación es más pertinente?",
     options: ["Repasar fracciones con todo el grupo antes de iniciar la resolución de problemas.", "Avanzar con los problemas y dejar refuerzo extraclase para quienes no dominan las operaciones.", "Mantener el mismo objetivo y diseñar tareas diferenciadas con apoyos y retos graduados.", "Organizar el grupo en tres cursos separados según el nivel de desempeño en la prueba."], correct: 2,
     explanation: "Diferenciar consiste en mantener la meta común y variar apoyos, tareas y retos según el punto de partida. Repasar con todos frena a quienes ya avanzan, el refuerzo extraclase deja atrás a quienes lo necesitan y separar en grupos fijos por nivel limita las expectativas.",
-    reference: "Decreto 1421 de 2017: diseño universal y atención a la diversidad. Aplicación de competencias pedagógicas.", documentId: "dua", course: "/formacion/inclusion-dua-piar",
+    reference: "Decreto 1290 de 2009, artículo 3: identificar ritmos de desarrollo y estilos de aprendizaje y reorientar los procesos educativos. Aplicación de competencias pedagógicas: enseñanza diferenciada.", documentId: "decreto-1290-2009", course: "/formacion/evaluacion-formativa",
   },
   {
     id: "nc-pe-7", level: 3, competency: "Pedagógica · evaluar",
