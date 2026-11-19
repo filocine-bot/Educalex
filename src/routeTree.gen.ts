@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AccesoRouteImport } from './routes/acceso'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CertificadoRouteImport } from './routes/certificado'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as CursosRouteImport } from './routes/cursos'
 import { Route as DocenteIaRouteImport } from './routes/docente-ia'
@@ -46,6 +47,7 @@ import { Route as ConcursosRectorRouteImport } from './routes/concursos.rector'
 import { Route as FormacionIndexRouteImport } from './routes/formacion.index'
 import { Route as FormacionActualizacionNormativaRouteImport } from './routes/formacion.actualizacion-normativa'
 import { Route as FormacionConvivenciaEscolarRouteImport } from './routes/formacion.convivencia-escolar'
+import { Route as FormacionDilemasEducativosRouteImport } from './routes/formacion.dilemas-educativos'
 import { Route as FormacionEducacionEmocionalRouteImport } from './routes/formacion.educacion-emocional'
 import { Route as FormacionEducacionIntegralRouteImport } from './routes/formacion.educacion-integral'
 import { Route as FormacionEducacionRuralRouteImport } from './routes/formacion.educacion-rural'
@@ -97,6 +99,11 @@ const AccesoRoute = AccesoRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CertificadoRoute = CertificadoRouteImport.update({
+  id: '/certificado',
+  path: '/certificado',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactoRoute = ContactoRouteImport.update({
@@ -268,6 +275,12 @@ const FormacionConvivenciaEscolarRoute =
   FormacionConvivenciaEscolarRouteImport.update({
     id: '/formacion/convivencia-escolar',
     path: '/formacion/convivencia-escolar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormacionDilemasEducativosRoute =
+  FormacionDilemasEducativosRouteImport.update({
+    id: '/formacion/dilemas-educativos',
+    path: '/formacion/dilemas-educativos',
     getParentRoute: () => rootRouteImport,
   } as any)
 const FormacionEducacionEmocionalRoute =
@@ -458,6 +471,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/acceso': typeof AccesoRoute
   '/auth': typeof AuthRoute
+  '/certificado': typeof CertificadoRoute
   '/contacto': typeof ContactoRoute
   '/cursos': typeof CursosRoute
   '/docente-ia': typeof DocenteIaRoute
@@ -488,6 +502,7 @@ export interface FileRoutesByFullPath {
   '/concursos/rector': typeof ConcursosRectorRoute
   '/formacion/actualizacion-normativa': typeof FormacionActualizacionNormativaRoute
   '/formacion/convivencia-escolar': typeof FormacionConvivenciaEscolarRoute
+  '/formacion/dilemas-educativos': typeof FormacionDilemasEducativosRoute
   '/formacion/educacion-emocional': typeof FormacionEducacionEmocionalRoute
   '/formacion/educacion-integral': typeof FormacionEducacionIntegralRoute
   '/formacion/educacion-rural': typeof FormacionEducacionRuralRoute
@@ -529,6 +544,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/acceso': typeof AccesoRoute
   '/auth': typeof AuthRoute
+  '/certificado': typeof CertificadoRoute
   '/contacto': typeof ContactoRoute
   '/cursos': typeof CursosRoute
   '/docente-ia': typeof DocenteIaRoute
@@ -558,6 +574,7 @@ export interface FileRoutesByTo {
   '/concursos/rector': typeof ConcursosRectorRoute
   '/formacion/actualizacion-normativa': typeof FormacionActualizacionNormativaRoute
   '/formacion/convivencia-escolar': typeof FormacionConvivenciaEscolarRoute
+  '/formacion/dilemas-educativos': typeof FormacionDilemasEducativosRoute
   '/formacion/educacion-emocional': typeof FormacionEducacionEmocionalRoute
   '/formacion/educacion-integral': typeof FormacionEducacionIntegralRoute
   '/formacion/educacion-rural': typeof FormacionEducacionRuralRoute
@@ -601,6 +618,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/acceso': typeof AccesoRoute
   '/auth': typeof AuthRoute
+  '/certificado': typeof CertificadoRoute
   '/contacto': typeof ContactoRoute
   '/cursos': typeof CursosRoute
   '/docente-ia': typeof DocenteIaRoute
@@ -631,6 +649,7 @@ export interface FileRoutesById {
   '/concursos/rector': typeof ConcursosRectorRoute
   '/formacion/actualizacion-normativa': typeof FormacionActualizacionNormativaRoute
   '/formacion/convivencia-escolar': typeof FormacionConvivenciaEscolarRoute
+  '/formacion/dilemas-educativos': typeof FormacionDilemasEducativosRoute
   '/formacion/educacion-emocional': typeof FormacionEducacionEmocionalRoute
   '/formacion/educacion-integral': typeof FormacionEducacionIntegralRoute
   '/formacion/educacion-rural': typeof FormacionEducacionRuralRoute
@@ -674,6 +693,7 @@ export interface FileRouteTypes {
     | '/'
     | '/acceso'
     | '/auth'
+    | '/certificado'
     | '/contacto'
     | '/cursos'
     | '/docente-ia'
@@ -704,6 +724,7 @@ export interface FileRouteTypes {
     | '/concursos/rector'
     | '/formacion/actualizacion-normativa'
     | '/formacion/convivencia-escolar'
+    | '/formacion/dilemas-educativos'
     | '/formacion/educacion-emocional'
     | '/formacion/educacion-integral'
     | '/formacion/educacion-rural'
@@ -745,6 +766,7 @@ export interface FileRouteTypes {
     | '/'
     | '/acceso'
     | '/auth'
+    | '/certificado'
     | '/contacto'
     | '/cursos'
     | '/docente-ia'
@@ -774,6 +796,7 @@ export interface FileRouteTypes {
     | '/concursos/rector'
     | '/formacion/actualizacion-normativa'
     | '/formacion/convivencia-escolar'
+    | '/formacion/dilemas-educativos'
     | '/formacion/educacion-emocional'
     | '/formacion/educacion-integral'
     | '/formacion/educacion-rural'
@@ -816,6 +839,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/acceso'
     | '/auth'
+    | '/certificado'
     | '/contacto'
     | '/cursos'
     | '/docente-ia'
@@ -846,6 +870,7 @@ export interface FileRouteTypes {
     | '/concursos/rector'
     | '/formacion/actualizacion-normativa'
     | '/formacion/convivencia-escolar'
+    | '/formacion/dilemas-educativos'
     | '/formacion/educacion-emocional'
     | '/formacion/educacion-integral'
     | '/formacion/educacion-rural'
@@ -889,6 +914,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AccesoRoute: typeof AccesoRoute
   AuthRoute: typeof AuthRoute
+  CertificadoRoute: typeof CertificadoRoute
   ContactoRoute: typeof ContactoRoute
   CursosRoute: typeof CursosRoute
   DocenteIaRoute: typeof DocenteIaRoute
@@ -911,6 +937,7 @@ export interface RootRouteChildren {
   ConcursosRectorRoute: typeof ConcursosRectorRoute
   FormacionActualizacionNormativaRoute: typeof FormacionActualizacionNormativaRoute
   FormacionConvivenciaEscolarRoute: typeof FormacionConvivenciaEscolarRoute
+  FormacionDilemasEducativosRoute: typeof FormacionDilemasEducativosRoute
   FormacionEducacionEmocionalRoute: typeof FormacionEducacionEmocionalRoute
   FormacionEducacionIntegralRoute: typeof FormacionEducacionIntegralRoute
   FormacionEducacionRuralRoute: typeof FormacionEducacionRuralRoute
@@ -968,6 +995,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/certificado': {
+      id: '/certificado'
+      path: '/certificado'
+      fullPath: '/certificado'
+      preLoaderRoute: typeof CertificadoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contacto': {
@@ -1199,6 +1233,13 @@ declare module '@tanstack/react-router' {
       path: '/formacion/convivencia-escolar'
       fullPath: '/formacion/convivencia-escolar'
       preLoaderRoute: typeof FormacionConvivenciaEscolarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formacion/dilemas-educativos': {
+      id: '/formacion/dilemas-educativos'
+      path: '/formacion/dilemas-educativos'
+      fullPath: '/formacion/dilemas-educativos'
+      preLoaderRoute: typeof FormacionDilemasEducativosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/formacion/educacion-emocional': {
@@ -1492,6 +1533,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AccesoRoute: AccesoRoute,
   AuthRoute: AuthRoute,
+  CertificadoRoute: CertificadoRoute,
   ContactoRoute: ContactoRoute,
   CursosRoute: CursosRoute,
   DocenteIaRoute: DocenteIaRoute,
@@ -1514,6 +1556,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConcursosRectorRoute: ConcursosRectorRoute,
   FormacionActualizacionNormativaRoute: FormacionActualizacionNormativaRoute,
   FormacionConvivenciaEscolarRoute: FormacionConvivenciaEscolarRoute,
+  FormacionDilemasEducativosRoute: FormacionDilemasEducativosRoute,
   FormacionEducacionEmocionalRoute: FormacionEducacionEmocionalRoute,
   FormacionEducacionIntegralRoute: FormacionEducacionIntegralRoute,
   FormacionEducacionRuralRoute: FormacionEducacionRuralRoute,

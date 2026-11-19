@@ -168,6 +168,7 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
       })}
     </ol>
     {(locked || (isAdmin && !premium.has(profile))) && <>{!locked && <p className="game-launch">Vista de administración: compra de prueba (los demás usuarios aún no ven este recuadro).</p>}<BuyPremium profile={profile} returnPath={`/simulacros/${profile}`} /></>}
+    {mine.badges.includes("nivel:1") && <p className="game-certificate"><Award aria-hidden="true" /> Ya superaste el nivel Básico. <Link to="/certificado" search={{ perfil: bank }}>Descarga tu constancia de participación</Link></p>}
     {mine.badges.length > 0 && <div className="game-badges">
       <h3><Medal aria-hidden="true" /> Mis insignias</h3>
       <ul>{mine.badges.map(id => { const b = describeBadge(id); return <li key={id} title={b.description}><Award aria-hidden="true" /> {b.title}</li>; })}</ul>
