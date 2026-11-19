@@ -6,4 +6,4 @@ import { PracticeExam } from "@/components/practice-exam";
 import { SimulationModes } from "@/components/practice-game";
 
 const page = pages["/simulacros/rector"];
-export const Route = createFileRoute("/simulacros/rector")({ head: () => pageHead(page.title, page.description), component: () => <ModulePage path="/simulacros/rector" showItems={false}><SimulationModes key="rector" profile="rector"><PracticeExam key="rector" profile="rector" /></SimulationModes></ModulePage> });
+export const Route = createFileRoute("/simulacros/rector")({ head: () => pageHead(page.title, page.description), component: () => <ModulePage path="/simulacros/rector" showItems={false} tight><SimulationModes key="rector" profile="rector"><PracticeExam key="rector" profile="rector" /></SimulationModes></ModulePage> });

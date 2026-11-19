@@ -22,11 +22,11 @@ export type PageDef = {
 };
 
 const VERIFY = "Los requisitos, pruebas y fechas de cada convocatoria deben confirmarse en las fuentes oficiales vigentes antes de tomar decisiones.";
-const PRACTICE_SIM = "Dos formas de practicar con 40 preguntas originales EDUCALEX por perfil: el modo juego, por niveles y con explicación inmediata en cada respuesta, y el simulacro completo, con tiempo configurable y retroalimentación al entregar. Con cuenta, las entregas se guardan en tu historial; sin cuenta son temporales y se pierden al recargar. Las claves no se muestran antes de entregar, pero están en el cliente y no tienen seguridad real sin servidor.";
+const PRACTICE_SIM = "40 preguntas tipo ICFES por perfil: modo juego por niveles o simulacro completo con tiempo.";
 const DOCS = "Las fichas distinguen enlaces institucionales consultados de fuentes pendientes. Consultar un enlace no equivale a confirmar la vigencia ni a haber leído el documento completo; revisa siempre el texto oficial y sus modificaciones.";
 const COURSE = ["Objetivos de aprendizaje", "Unidades", "Lecciones", "Videos", "Documentos", "Recursos descargables", "Talleres", "Actividades", "Evaluaciones", "Seguimiento del aprendizaje", "Certificado, al cumplir las condiciones de aprobación"];
 const SIM_PARTS = ["Instrucciones", "Número de preguntas", "Tiempo disponible", "Preguntas de selección múltiple con opciones A, B, C y D", "Temporizador", "Navegación entre preguntas", "Marcación para revisión", "Finalización y calificación", "Retroalimentación argumentada", "Resultados y recomendaciones"];
-const SIM_NOTE = " No son pruebas oficiales del ICFES ni de la CNSC; no reproducen formatos, requisitos ni claves oficiales.";
+const SIM_NOTE = " Práctica original; no es prueba oficial del ICFES ni de la CNSC.";
 const SELF_STUDY = "Autoestudio disponible: cinco unidades originales y un taller ficticio editable. Inscripción y progreso gratuitos con cuenta; sin calificación ni certificación oficial. No ingreses información de menores reales.";
 const COURSE_NOTE = "Curso en preparación. Aún no hay inscripciones, lecciones ni evaluaciones habilitadas.";
 const ACCOUNT = "Espacio personal protegido. Todo el contenido existente es gratuito.";

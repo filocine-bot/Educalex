@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Clock3, Lock } from "lucide-react"
 import type { ReactNode } from "react";
 import { getPage, type PagePath } from "@/lib/educalex-sitemap";
 
-export function ModulePage({ path, children, showItems = true, compact = false, childFilter, childNote }: { path: PagePath; children?: ReactNode; showItems?: boolean; compact?: boolean; childFilter?: (child: string) => boolean; childNote?: ReactNode }) {
+export function ModulePage({ path, children, showItems = true, compact = false, tight = false, childFilter, childNote }: { path: PagePath; children?: ReactNode; showItems?: boolean; compact?: boolean; tight?: boolean; childFilter?: (child: string) => boolean; childNote?: ReactNode }) {
   const page = getPage(path);
   if (!page) return null;
   const parent = page.parent ? getPage(page.parent) : undefined;
@@ -22,5 +22,5 @@ export function ModulePage({ path, children, showItems = true, compact = false, 
       {page.related && <div><h2 className="mod-h2">Módulos relacionados</h2><div className={compact ? 'academic-related' : 'mod-related'}>{page.related.map(r => { const p = getPage(r); return <Link key={r} to={r as PagePath} className={compact ? undefined : 'mod-chip'}>{!compact && <CheckCircle2 />}{p?.title ?? (r === "/docente-ia" ? "EducatIA" : "Nosotros")}</Link>; })}</div></div>}
     </section>
   </>;
-  return compact ? <div className="academic-route">{content}</div> : content;
+  return compact ? <div className="academic-route">{content}</div> : tight ? <div className="tight-route">{content}</div> : content;
 }
