@@ -985,6 +985,13 @@ html { scroll-padding-top: 120px; }
 .quick-panel-more { margin-top: .5rem; border-top: 1px solid var(--border); }
 .quick-panel-more a, a.quick-panel-more { display: flex; justify-content: space-between; font-weight: 700; color: var(--brand-blue, #1e3a8a); padding: .55rem; }
 .profile-filter-note { background: #f5f7fb; border-left: 4px solid var(--gold, #d97706); border-radius: 8px; padding: .6rem .9rem; margin: 0 0 1rem; }
+.library-doc-grid { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }
+.library-doc-card { width: 100%; height: 100%; display: flex; align-items: center; gap: .7rem; text-align: left; padding: 1rem 1.1rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; font-weight: 600; font-size: 15px; line-height: 1.35; color: var(--brand-blue, #1e3a8a); cursor: pointer; transition: box-shadow .15s, border-color .15s, transform .15s; }
+.library-doc-card svg { flex: 0 0 auto; width: 1.4rem; height: 1.4rem; color: var(--gold, #d97706); }
+.library-doc-card:hover { border-color: var(--gold, #d97706); box-shadow: 0 6px 18px rgb(15 23 42 / .08); transform: translateY(-1px); }
+.library-doc-card:focus-visible { outline: 3px solid var(--gold, #d97706); outline-offset: 2px; }
+.library-more { margin-top: 1rem; border-top: 1px solid var(--border); padding-top: .6rem; }
+.library-more summary { cursor: pointer; font-weight: 700; color: var(--brand-blue, #1e3a8a); padding: .3rem 0; }
 html { scroll-padding-top: 170px; }
 [id] { scroll-margin-top: 170px; }
 
