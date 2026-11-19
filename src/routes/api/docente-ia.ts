@@ -49,17 +49,19 @@ export const Route = createFileRoute("/api/docente-ia")({
               for await (const part of result.fullStream) {
                 if (part.type === "text-delta") c.enqueue(enc.encode(JSON.stringify({ t: part.text }) + "\n"));
                 else if (part.type === "error") {
-                  const e = part.error as { statusCode?: number; message?: string };
+                  const raw = part.error as { statusCode?: number; message?: string; name?: string; lastError?: { statusCode?: number; message?: string } };
+                  const e = raw?.lastError ?? raw;
                   const s = e?.statusCode;
                   const msg = s === 429 ? "Hay muchas consultas en este momento. Intenta de nuevo en un minuto."
                     : s === 401 || s === 402 || s === 403 ? `El asistente no está disponible por ahora (código ${s}).`
-                    : `No fue posible generar la respuesta. Intenta de nuevo.${s ? ` (código ${s}${/credit/i.test(e?.message ?? "") ? ": sin créditos" : /model/i.test(e?.message ?? "") ? ": modelo no disponible" : ""})` : ""}`;
+                    : `No fue posible generar la respuesta. Intenta de nuevo. (código ${s ?? raw?.name ?? "desconocido"}${/credit|balance|billing/i.test(e?.message ?? "") ? ": sin créditos" : /model/i.test(e?.message ?? "") ? ": modelo no disponible" : /overloaded/i.test(e?.message ?? "") ? ": servicio saturado" : ""})`;
                   console.error("docente-ia error", s, e?.message);
                   c.enqueue(enc.encode(JSON.stringify({ error: msg }) + "\n"));
                 }
               }
             } catch (err) {
-              if (!request.signal.aborted) c.enqueue(enc.encode(JSON.stringify({ error: "Se interrumpió la respuesta." }) + "\n"));
+              console.error("docente-ia stream", (err as Error)?.name, (err as Error)?.message);
+              if (!request.signal.aborted) c.enqueue(enc.encode(JSON.stringify({ error: `Se interrumpió la respuesta. (${(err as Error)?.name ?? "error"})` }) + "\n"));
             }
             c.close();
           },
