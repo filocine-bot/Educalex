@@ -32,6 +32,18 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_orders: {
+        Row: { reference: string; user_id: string; product: string; amount_in_cents: number; currency: string; status: string; transaction_id: string | null; created_at: string; updated_at: string }
+        Insert: { reference: string; user_id: string; product: string; amount_in_cents: number; currency?: string; status?: string; transaction_id?: string | null; created_at?: string; updated_at?: string }
+        Update: { reference?: string; user_id?: string; product?: string; amount_in_cents?: number; currency?: string; status?: string; transaction_id?: string | null; created_at?: string; updated_at?: string }
+        Relationships: []
+      }
+      premium_access: {
+        Row: { user_id: string; product: string; reference: string; granted_at: string }
+        Insert: { user_id: string; product: string; reference: string; granted_at?: string }
+        Update: { user_id?: string; product?: string; reference?: string; granted_at?: string }
+        Relationships: []
+      }
       exam_attempts: {
         Row: {
           answers: Json

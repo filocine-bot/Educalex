@@ -915,3 +915,14 @@ html { scroll-padding-top: 120px; }
 .contact-channels li { display: flex; align-items: center; gap: .6rem; }
 .contact-channels svg { width: 1.3rem; height: 1.3rem; color: var(--primary); flex: none; }
 .contact-channels a { text-decoration: underline; }
+.premium-box { border: 2px solid #d97706; border-radius: 1rem; padding: 1rem 1.25rem; margin: 1rem 0; background: #fffbeb; }
+.premium-box h3, .premium-box > p:first-child { display: flex; align-items: center; gap: .4rem; }
+.premium-box svg { width: 1.2rem; height: 1.2rem; }
+.premium-box ul { list-style: none; padding: 0; display: grid; gap: .75rem; margin: .75rem 0; }
+.premium-box li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
+.premium-box li small { display: block; color: var(--muted-foreground); }
+.pay-result-card { max-width: 36rem; margin: 2rem auto; text-align: center; border: 1px solid var(--border); border-radius: 1.25rem; padding: 2rem 1.5rem; background: var(--card); }
+.pay-result-card > svg { width: 3rem; height: 3rem; margin: 0 auto .75rem; color: var(--muted-foreground); }
+.pay-result-card.ok > svg { color: #16a34a; }
+.pay-result-card h1 { font-size: 1.5rem; margin-bottom: .5rem; }
+.pay-result-card .game-links { justify-content: center; margin-top: 1rem; }

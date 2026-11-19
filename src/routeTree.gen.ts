@@ -61,6 +61,7 @@ import { Route as FormacionPmiRouteImport } from './routes/formacion.pmi'
 import { Route as FormacionSteamIaRouteImport } from './routes/formacion.steam-ia'
 import { Route as FormacionSteamRoboticaRouteImport } from './routes/formacion.steam-robotica'
 import { Route as FormacionTalleresPmiRouteImport } from './routes/formacion.talleres-pmi'
+import { Route as PagoResultadoRouteImport } from './routes/pago.resultado'
 import { Route as RecursosRecursoRouteImport } from './routes/recursos.$recurso'
 import { Route as SimulacrosIndexRouteImport } from './routes/simulacros.index'
 import { Route as SimulacrosAscensoReubicacionRouteImport } from './routes/simulacros.ascenso-reubicacion'
@@ -76,6 +77,7 @@ import { Route as AuthenticatedAdminEstadisticasRouteImport } from './routes/_au
 import { Route as AuthenticatedAdminPreguntasRouteImport } from './routes/_authenticated/admin.preguntas'
 import { Route as AuthenticatedAdminSimulacrosRouteImport } from './routes/_authenticated/admin.simulacros'
 import { Route as AuthenticatedAdminUsuariosRouteImport } from './routes/_authenticated/admin.usuarios'
+import { Route as ApiWompiEventosRouteImport } from './routes/api/wompi/eventos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -350,6 +352,11 @@ const FormacionTalleresPmiRoute = FormacionTalleresPmiRouteImport.update({
   path: '/formacion/talleres-pmi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PagoResultadoRoute = PagoResultadoRouteImport.update({
+  id: '/pago/resultado',
+  path: '/pago/resultado',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecursosRecursoRoute = RecursosRecursoRouteImport.update({
   id: '/recursos/$recurso',
   path: '/recursos/$recurso',
@@ -435,6 +442,11 @@ const AuthenticatedAdminUsuariosRoute =
     path: '/usuarios',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ApiWompiEventosRoute = ApiWompiEventosRouteImport.update({
+  id: '/api/wompi/eventos',
+  path: '/api/wompi/eventos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -485,6 +497,7 @@ export interface FileRoutesByFullPath {
   '/formacion/steam-ia': typeof FormacionSteamIaRoute
   '/formacion/steam-robotica': typeof FormacionSteamRoboticaRoute
   '/formacion/talleres-pmi': typeof FormacionTalleresPmiRoute
+  '/pago/resultado': typeof PagoResultadoRoute
   '/recursos/$recurso': typeof RecursosRecursoRoute
   '/simulacros/ascenso-reubicacion': typeof SimulacrosAscensoReubicacionRoute
   '/simulacros/coordinador': typeof SimulacrosCoordinadorRoute
@@ -502,6 +515,7 @@ export interface FileRoutesByFullPath {
   '/admin/preguntas': typeof AuthenticatedAdminPreguntasRoute
   '/admin/simulacros': typeof AuthenticatedAdminSimulacrosRoute
   '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
+  '/api/wompi/eventos': typeof ApiWompiEventosRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -552,6 +566,7 @@ export interface FileRoutesByTo {
   '/formacion/steam-ia': typeof FormacionSteamIaRoute
   '/formacion/steam-robotica': typeof FormacionSteamRoboticaRoute
   '/formacion/talleres-pmi': typeof FormacionTalleresPmiRoute
+  '/pago/resultado': typeof PagoResultadoRoute
   '/recursos/$recurso': typeof RecursosRecursoRoute
   '/simulacros/ascenso-reubicacion': typeof SimulacrosAscensoReubicacionRoute
   '/simulacros/coordinador': typeof SimulacrosCoordinadorRoute
@@ -569,6 +584,7 @@ export interface FileRoutesByTo {
   '/admin/preguntas': typeof AuthenticatedAdminPreguntasRoute
   '/admin/simulacros': typeof AuthenticatedAdminSimulacrosRoute
   '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
+  '/api/wompi/eventos': typeof ApiWompiEventosRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -622,6 +638,7 @@ export interface FileRoutesById {
   '/formacion/steam-ia': typeof FormacionSteamIaRoute
   '/formacion/steam-robotica': typeof FormacionSteamRoboticaRoute
   '/formacion/talleres-pmi': typeof FormacionTalleresPmiRoute
+  '/pago/resultado': typeof PagoResultadoRoute
   '/recursos/$recurso': typeof RecursosRecursoRoute
   '/simulacros/ascenso-reubicacion': typeof SimulacrosAscensoReubicacionRoute
   '/simulacros/coordinador': typeof SimulacrosCoordinadorRoute
@@ -639,6 +656,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/preguntas': typeof AuthenticatedAdminPreguntasRoute
   '/_authenticated/admin/simulacros': typeof AuthenticatedAdminSimulacrosRoute
   '/_authenticated/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
+  '/api/wompi/eventos': typeof ApiWompiEventosRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -692,6 +710,7 @@ export interface FileRouteTypes {
     | '/formacion/steam-ia'
     | '/formacion/steam-robotica'
     | '/formacion/talleres-pmi'
+    | '/pago/resultado'
     | '/recursos/$recurso'
     | '/simulacros/ascenso-reubicacion'
     | '/simulacros/coordinador'
@@ -709,6 +728,7 @@ export interface FileRouteTypes {
     | '/admin/preguntas'
     | '/admin/simulacros'
     | '/admin/usuarios'
+    | '/api/wompi/eventos'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -759,6 +779,7 @@ export interface FileRouteTypes {
     | '/formacion/steam-ia'
     | '/formacion/steam-robotica'
     | '/formacion/talleres-pmi'
+    | '/pago/resultado'
     | '/recursos/$recurso'
     | '/simulacros/ascenso-reubicacion'
     | '/simulacros/coordinador'
@@ -776,6 +797,7 @@ export interface FileRouteTypes {
     | '/admin/preguntas'
     | '/admin/simulacros'
     | '/admin/usuarios'
+    | '/api/wompi/eventos'
     | '/admin'
   id:
     | '__root__'
@@ -828,6 +850,7 @@ export interface FileRouteTypes {
     | '/formacion/steam-ia'
     | '/formacion/steam-robotica'
     | '/formacion/talleres-pmi'
+    | '/pago/resultado'
     | '/recursos/$recurso'
     | '/simulacros/ascenso-reubicacion'
     | '/simulacros/coordinador'
@@ -845,6 +868,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/preguntas'
     | '/_authenticated/admin/simulacros'
     | '/_authenticated/admin/usuarios'
+    | '/api/wompi/eventos'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -890,6 +914,7 @@ export interface RootRouteChildren {
   FormacionSteamIaRoute: typeof FormacionSteamIaRoute
   FormacionSteamRoboticaRoute: typeof FormacionSteamRoboticaRoute
   FormacionTalleresPmiRoute: typeof FormacionTalleresPmiRoute
+  PagoResultadoRoute: typeof PagoResultadoRoute
   RecursosRecursoRoute: typeof RecursosRecursoRoute
   SimulacrosAscensoReubicacionRoute: typeof SimulacrosAscensoReubicacionRoute
   SimulacrosCoordinadorRoute: typeof SimulacrosCoordinadorRoute
@@ -899,6 +924,7 @@ export interface RootRouteChildren {
   ConcursosIndexRoute: typeof ConcursosIndexRoute
   FormacionIndexRoute: typeof FormacionIndexRoute
   SimulacrosIndexRoute: typeof SimulacrosIndexRoute
+  ApiWompiEventosRoute: typeof ApiWompiEventosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1267,6 +1293,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FormacionTalleresPmiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pago/resultado': {
+      id: '/pago/resultado'
+      path: '/pago/resultado'
+      fullPath: '/pago/resultado'
+      preLoaderRoute: typeof PagoResultadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recursos/$recurso': {
       id: '/recursos/$recurso'
       path: '/recursos/$recurso'
@@ -1372,6 +1405,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsuariosRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/wompi/eventos': {
+      id: '/api/wompi/eventos'
+      path: '/api/wompi/eventos'
+      fullPath: '/api/wompi/eventos'
+      preLoaderRoute: typeof ApiWompiEventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1469,6 +1509,7 @@ const rootRouteChildren: RootRouteChildren = {
   FormacionSteamIaRoute: FormacionSteamIaRoute,
   FormacionSteamRoboticaRoute: FormacionSteamRoboticaRoute,
   FormacionTalleresPmiRoute: FormacionTalleresPmiRoute,
+  PagoResultadoRoute: PagoResultadoRoute,
   RecursosRecursoRoute: RecursosRecursoRoute,
   SimulacrosAscensoReubicacionRoute: SimulacrosAscensoReubicacionRoute,
   SimulacrosCoordinadorRoute: SimulacrosCoordinadorRoute,
@@ -1478,6 +1519,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConcursosIndexRoute: ConcursosIndexRoute,
   FormacionIndexRoute: FormacionIndexRoute,
   SimulacrosIndexRoute: SimulacrosIndexRoute,
+  ApiWompiEventosRoute: ApiWompiEventosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,0 +1,54 @@
+import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { CreditCard, Lock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useAccount } from "@/components/account-session";
+import { getMyPurchases, startCheckout } from "@/lib/payments.functions";
+import { products, productsCovering, purchasable } from "@/lib/payments";
+import type { SimulationProfile } from "@/lib/simulation-bank";
+
+const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
+
+/** Productos premium comprados por la persona (vacío si no hay sesión). */
+export function useMyPremium() {
+  const { user } = useAccount();
+  const fetchPurchases = useServerFn(getMyPurchases);
+  const [owned, setOwned] = useState<string[]>([]);
+  useEffect(() => {
+    if (!user) { setOwned([]); return; }
+    let alive = true;
+    fetchPurchases().then(r => { if (alive) setOwned(r.products); }).catch(() => { /* sin compras o pagos no configurados */ });
+    return () => { alive = false; };
+  }, [user, fetchPurchases]);
+  return { owned, has: (profile: SimulationProfile) => productsCovering(profile).some(p => owned.includes(p)) };
+}
+
+/** Opciones de compra para desbloquear los niveles premium de un perfil. */
+export function BuyPremium({ profile, returnPath }: { profile: SimulationProfile; returnPath: string }) {
+  const { user } = useAccount();
+  const checkout = useServerFn(startCheckout);
+  const [busy, setBusy] = useState<string | null>(null);
+  const [error, setError] = useState("");
+  const options = products.filter(p => p.profiles.includes(profile));
+  const forSale = options.filter(purchasable);
+
+  if (!forSale.length) return <div className="premium-box"><p><Lock aria-hidden="true" /> Los niveles premium estarán a la venta muy pronto.</p></div>;
+  if (!user) return <div className="premium-box"><p><Lock aria-hidden="true" /> Para comprar el acceso premium, <Link to="/ingresar">inicia sesión</Link> o <Link to="/registro">crea una cuenta</Link>.</p></div>;
+
+  async function buy(id: string) {
+    setBusy(id); setError("");
+    try { const { url } = await checkout({ data: { product: id, returnPath } }); window.location.href = url; }
+    catch (e) { setError((e as Error).message || "No se pudo iniciar el pago."); setBusy(null); }
+  }
+
+  return <div className="premium-box">
+    <h3><CreditCard aria-hidden="true" /> Desbloquea los niveles premium</h3>
+    <ul>{forSale.map(p => <li key={p.id}>
+      <div><strong>{p.title}</strong><small>{p.description}</small></div>
+      <Button variant="navy" disabled={busy !== null} onClick={() => buy(p.id)}>{busy === p.id ? "Abriendo Wompi…" : `Comprar · ${cop(p.priceCOP!)}`}</Button>
+    </li>)}</ul>
+    {error && <p role="alert" className="text-destructive">{error}</p>}
+    <p className="section-description">Pago seguro con Wompi (tarjetas, PSE, Nequi y más). Pago único, sin renovación automática. Consulta los <Link to="/terminos">términos</Link>.</p>
+  </div>;
+}

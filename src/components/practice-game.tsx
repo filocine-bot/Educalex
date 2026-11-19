@@ -6,6 +6,7 @@ import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank"
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
 import { applyOutcome, describeBadge, emptyProfile, errorMap, isLevelPlayable, levelsFor, PASS_RATIO, pointsFor, PREMIUM_LOCKED, type GameLevel } from "@/lib/game-engine";
 import { useGameProgress } from "@/lib/game-progress";
+import { BuyPremium, useMyPremium } from "@/components/premium-purchase";
 
 const LETTERS = ["A", "B", "C", "D"];
 
@@ -15,6 +16,8 @@ type Run = { level: GameLevel; review: boolean; questions: PracticeQuestion[]; i
 export function PracticeGame({ profile }: { profile: SimulationProfile }) {
   const levels = useMemo(() => levelsFor(profile), [profile]);
   const { progress, save, ready, signedIn } = useGameProgress();
+  const premium = useMyPremium();
+  const locked = PREMIUM_LOCKED && !premium.has(profile);
   const mine = progress[profile] ?? emptyProfile();
   const [run, setRun] = useState<Run | null>(null);
   const [chosen, setChosen] = useState<number | null>(null);
@@ -107,7 +110,7 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
     const wrongIds = r.answers.filter(a => !a.correct).map(a => a.id);
     const map = errorMap(r.questions, wrongIds);
     const nextLevel = levels.find(l => l.number === r.level.number + 1);
-    const nextPlayable = nextLevel ? isLevelPlayable(nextLevel, (progress[profile] ?? mine)) : null;
+    const nextPlayable = nextLevel ? isLevelPlayable(nextLevel, (progress[profile] ?? mine), locked) : null;
     return <section className="game game-summary" aria-labelledby="game-summary-title">
       <div className={`game-result ${summary.passed ? "ok" : "bad"}`}>
         {summary.passed ? <Trophy aria-hidden="true" /> : <RotateCcw aria-hidden="true" />}
@@ -141,11 +144,12 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
       <p>Responde y recibe la explicación al instante. Supera cada nivel con {Math.round(PASS_RATIO * 100)} % o más para desbloquear el siguiente, suma puntos con tus rachas y gana insignias.</p>
       <p className="game-stats"><span><Star aria-hidden="true" /> {mine.points} puntos</span><span><Flame aria-hidden="true" /> Mejor racha {mine.bestStreak}</span><span><Medal aria-hidden="true" /> {mine.badges.length} insignias</span></p>
       {!signedIn && <p className="section-description">Tu progreso se guarda en este navegador. <Link to="/registro">Crea una cuenta</Link> para conservarlo en cualquier dispositivo.</p>}
+      {PREMIUM_LOCKED && premium.has(profile) && <p className="game-launch">Tienes acceso premium a este perfil. ¡Gracias por apoyar EDUCALEX!</p>}
       {!PREMIUM_LOCKED && <p className="game-launch">Lanzamiento: todos los niveles están abiertos gratis por tiempo limitado.</p>}
     </div>
     <ol className="game-levels">
       {levels.map(level => {
-        const status = isLevelPlayable(level, mine);
+        const status = isLevelPlayable(level, mine, locked);
         const best = mine.best[level.number];
         const done = mine.badges.includes(`nivel:${level.number}`);
         return <li key={level.number} className={`game-level ${status.playable ? "" : "is-locked"} ${done ? "is-done" : ""}`}>
@@ -160,6 +164,7 @@ export function PracticeGame({ profile }: { profile: SimulationProfile }) {
         </li>;
       })}
     </ol>
+    {locked && <BuyPremium profile={profile} returnPath={`/simulacros/${profile}`} />}
     {mine.badges.length > 0 && <div className="game-badges">
       <h3><Medal aria-hidden="true" /> Mis insignias</h3>
       <ul>{mine.badges.map(id => { const b = describeBadge(id); return <li key={id} title={b.description}><Award aria-hidden="true" /> {b.title}</li>; })}</ul>
