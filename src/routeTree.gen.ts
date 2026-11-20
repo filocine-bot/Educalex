@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AccesoRouteImport } from './routes/acceso'
+import { Route as AsesoriaInvestigacionRouteImport } from './routes/asesoria-investigacion'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CertificadoRouteImport } from './routes/certificado'
 import { Route as ContactoRouteImport } from './routes/contacto'
@@ -97,6 +98,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AccesoRoute = AccesoRouteImport.update({
   id: '/acceso',
   path: '/acceso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AsesoriaInvestigacionRoute = AsesoriaInvestigacionRouteImport.update({
+  id: '/asesoria-investigacion',
+  path: '/asesoria-investigacion',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -489,6 +495,7 @@ const BibliotecaFichaIdRoute = BibliotecaFichaIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/acceso': typeof AccesoRoute
+  '/asesoria-investigacion': typeof AsesoriaInvestigacionRoute
   '/auth': typeof AuthRoute
   '/certificado': typeof CertificadoRoute
   '/contacto': typeof ContactoRoute
@@ -565,6 +572,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/acceso': typeof AccesoRoute
+  '/asesoria-investigacion': typeof AsesoriaInvestigacionRoute
   '/auth': typeof AuthRoute
   '/certificado': typeof CertificadoRoute
   '/contacto': typeof ContactoRoute
@@ -642,6 +650,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/acceso': typeof AccesoRoute
+  '/asesoria-investigacion': typeof AsesoriaInvestigacionRoute
   '/auth': typeof AuthRoute
   '/certificado': typeof CertificadoRoute
   '/contacto': typeof ContactoRoute
@@ -720,6 +729,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/acceso'
+    | '/asesoria-investigacion'
     | '/auth'
     | '/certificado'
     | '/contacto'
@@ -796,6 +806,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/acceso'
+    | '/asesoria-investigacion'
     | '/auth'
     | '/certificado'
     | '/contacto'
@@ -872,6 +883,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/acceso'
+    | '/asesoria-investigacion'
     | '/auth'
     | '/certificado'
     | '/contacto'
@@ -950,6 +962,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AccesoRoute: typeof AccesoRoute
+  AsesoriaInvestigacionRoute: typeof AsesoriaInvestigacionRoute
   AuthRoute: typeof AuthRoute
   CertificadoRoute: typeof CertificadoRoute
   ContactoRoute: typeof ContactoRoute
@@ -1028,6 +1041,13 @@ declare module '@tanstack/react-router' {
       path: '/acceso'
       fullPath: '/acceso'
       preLoaderRoute: typeof AccesoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/asesoria-investigacion': {
+      id: '/asesoria-investigacion'
+      path: '/asesoria-investigacion'
+      fullPath: '/asesoria-investigacion'
+      preLoaderRoute: typeof AsesoriaInvestigacionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -1593,6 +1613,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AccesoRoute: AccesoRoute,
+  AsesoriaInvestigacionRoute: AsesoriaInvestigacionRoute,
   AuthRoute: AuthRoute,
   CertificadoRoute: CertificadoRoute,
   ContactoRoute: ContactoRoute,

@@ -26,6 +26,7 @@ export function FounderCard({ compact = false }: { compact?: boolean }) {
         <span>{ORCID}</span>
       </a>
       <ul className="founder-list">{highlights.map(h => <li key={h.text}><h.icon aria-hidden="true" />{h.text}</li>)}</ul>
+      <Link to="/asesoria-investigacion" className="founder-advice">Solicitar asesoría en investigación <ArrowRight aria-hidden="true" /></Link>
       {compact && <Link to="/nosotros" className="hx-inline-link founder-more">Conoce más sobre EDUCALEX <ArrowRight aria-hidden="true" /></Link>}
     </div>
   </section>;

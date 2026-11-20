@@ -110,6 +110,7 @@ export const pages = {
   "/admin/certificados": { section: "Administración", parent: "/admin", title: "Certificados", description: "Emisión y consulta de certificados.", restricted: "admin", notice: ADMIN },
   "/admin/estadisticas": { section: "Administración", parent: "/admin", title: "Estadísticas", description: "Indicadores de uso de la plataforma.", restricted: "admin", notice: ADMIN },
 
+  "/asesoria-investigacion": { section: "EDUCALEX", title: "Asesoría en investigación", description: "Acompañamiento personalizado con la Dra. Enadis Vargas para proyectos de investigación, tesis y artículos, desde el problema hasta la sustentación.", related: ["/nosotros", "/contacto"], notice: "Servicio aparte de los planes de EDUCALEX. El valor se cotiza según el nivel, el alcance y el número de sesiones." },
   "/contacto": { section: "EDUCALEX", title: "Contacto", description: "Comunícate con el equipo de EDUCALEX.", related: ["/nosotros"], },
   "/privacidad": { section: "EDUCALEX", title: "Política de tratamiento de datos personales", description: "Cómo EDUCALEX trata tu información personal y cómo ejercer tus derechos (Ley 1581 de 2012).", related: ["/terminos"] },
   "/terminos": { section: "EDUCALEX", title: "Términos y condiciones", description: "Condiciones de uso de la plataforma EDUCALEX.", related: ["/privacidad"] },
