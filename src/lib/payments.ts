@@ -4,7 +4,7 @@ import type { SimulationProfile } from "@/lib/simulation-bank";
 export const WOMPI_PUBLIC_KEY = "pub_prod_4A8Op11I2dUFiwGesOZ8Mdx4HtDrLjFI";
 
 export type PlanTier = "intermedio" | "completo" | "mejora";
-export type ProductId = "premium-todos" | `premium-${SimulationProfile}` | `${PlanTier}-${SimulationProfile}`;
+export type ProductId = "premium-todos" | "directivo-completo" | `premium-${SimulationProfile}` | `${PlanTier}-${SimulationProfile}`;
 /** level = nivel más alto que desbloquea (1 Básico, 2 Intermedio, 3 Avanzado, 4 Experto). */
 export type Product = { id: ProductId; title: string; description: string; profiles: SimulationProfile[]; priceCOP: number | null; level: number; requires?: ProductId };
 
@@ -16,7 +16,7 @@ export const PROFILE_LABEL: Record<SimulationProfile, string> = { "ingreso-docen
  * Aplican a las primeras 100 compras; después se actualizan aquí y en Planes y Términos.
  * El nivel Básico es gratis. Cada plan incluye los niveles anteriores.
  */
-export const PRICES = { intermedio: 29900, completo: 49900 } as const;
+export const PRICES = { intermedio: 29900, completo: 49900, directivo: 79900 } as const;
 export const UPGRADE_PRICE = PRICES.completo - PRICES.intermedio;
 export const LAUNCH_BUYERS = 100;
 
@@ -26,6 +26,7 @@ export const products: Product[] = [
     { id: `completo-${p}` as ProductId, title: `Plan Completo · ${PROFILE_LABEL[p]}`, description: `Niveles Intermedio, Avanzado y Experto del perfil ${PROFILE_LABEL[p]} y del núcleo común.`, profiles: [p], priceCOP: PRICES.completo, level: 4 },
     { id: `mejora-${p}` as ProductId, title: `Pasar a Completo · ${PROFILE_LABEL[p]}`, description: `Si ya tienes el Plan Intermedio: suma los niveles Avanzado y Experto pagando solo la diferencia.`, profiles: [p], priceCOP: UPGRADE_PRICE, level: 4, requires: `intermedio-${p}` as ProductId },
   ]),
+  { id: "directivo-completo", title: "Paquete directivo · Rector + Coordinador", description: "Plan Completo de los perfiles Rector y Coordinador y del núcleo común.", profiles: ["rector", "coordinador"], priceCOP: PRICES.directivo, level: 4 },
   // Productos anteriores: ya no se venden, pero conservan el acceso de quienes los compraron.
   { id: "premium-todos", title: "Acceso Premium completo (anterior)", description: "Todos los niveles de los cuatro perfiles.", profiles: PROFILES, priceCOP: null, level: 4 },
   ...PROFILES.map(p => ({ id: `premium-${p}` as ProductId, title: `Premium · ${PROFILE_LABEL[p]} (anterior)`, description: `Todos los niveles del perfil ${PROFILE_LABEL[p]}.`, profiles: [p], priceCOP: null, level: 4 })),
@@ -42,7 +43,13 @@ export function unlockedLevel(owned: readonly string[], profile: SimulationProfi
 /** Opciones de compra que tienen sentido para alguien con este nivel desbloqueado. */
 export function offersFor(owned: readonly string[], profile: SimulationProfile): Product[] {
   const level = unlockedLevel(owned, profile);
-  return products.filter(p => p.profiles.length === 1 && p.profiles.includes(profile) && purchasable(p) && p.level > level && (p.requires ? owned.includes(p.requires) : !(level >= 2 && p.id.startsWith("completo-"))));
+  return products.filter(p => {
+    if (!purchasable(p) || !p.profiles.includes(profile) || p.level <= level) return false;
+    // Paquete de varios perfiles: solo si aún no tiene ningún plan en esos perfiles (si no, le sale más barato comprar por separado).
+    if (p.profiles.length > 1) return p.profiles.every(q => unlockedLevel(owned, q) === 1);
+    if (p.requires) return owned.includes(p.requires);
+    return !(level >= 2 && p.id.startsWith("completo-"));
+  });
 }
 
 export function wompiApiBase(publicKey: string) {
