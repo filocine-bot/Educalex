@@ -12,7 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { isArtifact } from '@/lib/runtime-mode';
 import { profileGroups, resolveEducationalProfile, simulacrosFor } from '@/lib/profile-navigation';
 import { headerNavigation, institutionalLinks, type HeaderItem, type HeaderLink } from '@/lib/header-navigation';
-import logo from '@/assets/educalex-logo-horizontal.png';
+import logo from '@/assets/educalex-logo-horizontal.webp';
 
 function MenuLink({ item }: { item: HeaderLink }) {
   return <DropdownMenuItem asChild className="min-h-11"><Link to={item.to} activeOptions={{ exact: item.to === '/' }}>{item.label}</Link></DropdownMenuItem>;
@@ -45,7 +45,7 @@ export function SiteHeader() {
   const sessionItems = <>{user ? <><MenuLink item={{ label: 'Mi cuenta', to: '/mi-cuenta' }} />{isAdmin && <MenuLink item={{ label: 'Administración', to: '/admin' }} />}{!isArtifact && <DropdownMenuItem className="min-h-11" disabled={busy} onSelect={() => void signOut()}><LogOut aria-hidden="true" />Salir</DropdownMenuItem>}</> : <><MenuLink item={{ label: 'Ingresar', to: '/ingresar' }} /><MenuLink item={{ label: 'Registrarse', to: '/registro' }} /></>}</>;
   return <header className="site-header profile-header">
     <div className="institutional-bar"><div className="site-container header-inner">
-      <Link className="header-brand" to="/" aria-label="EDUCALEX, inicio"><img src={logo} className="brand-logo" width={1104} height={239} alt="EDUCALEX – Academia Inteligente de Educación" /></Link>
+      <Link className="header-brand" to="/" aria-label="EDUCALEX, inicio"><img src={logo} className="brand-logo" width={480} height={104} alt="EDUCALEX – Academia Inteligente de Educación" /></Link>
       <nav className="desktop-nav" aria-label="Navegación institucional">
         {navItems.filter(item => item.to !== '/').map(item => <div key={item.to} className={item.compact ? 'header-secondary-link' : 'header-core-link'}>{item.children ? <NavGroup active={active(item.to)} group={{ label: item.label, links: [{ label: `Ver ${item.label.toLowerCase()}`, to: item.to }, ...item.children] }} /> : <Link className="nav-item" to={item.to} activeOptions={{ exact: item.to === '/' }}>{item.label}</Link>}</div>)}
         <DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" className="profile-menu-trigger" data-active={headerNavigation.some(item => item.compact && active(item.to)) || institutionalLinks.some(item => active(item.to))}>Más<ChevronDown aria-hidden="true" /></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="header-menu-content"><div className="header-overflow-links">{headerNavigation.filter(item => item.compact).map(item => <MenuLink key={item.to} item={item} />)}<DropdownMenuSeparator /></div>{institutionalLinks.map(item => <MenuLink key={item.to} item={item} />)}</DropdownMenuContent></DropdownMenu>

@@ -3,15 +3,16 @@ import { useEffect, useState } from "react";
 import { ArrowRight, Trophy, ChartNoAxesCombined, Users, Settings, GraduationCap, FileText, CheckCircle2, BookOpen, ClipboardCheck, Scale, Rocket, Video, CalendarClock, ExternalLink, Play, Bot, Compass, UserPlus, Award, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { pageHead } from "@/lib/educalex-content";
-import hero from "@/assets/educalex-hero-docentes.jpg";
-import robot from "@/assets/educalex-robot.png";
+import hero from "@/assets/educalex-hero-docentes.webp";
+import robot from "@/assets/educalex-robot.webp";
 import { libraryDocs } from "@/lib/educalex-sitemap";
 import { questionsFor } from "@/lib/game-engine";
 import { videoThemes } from "@/lib/official-videos";
 import { trainingCourses } from "@/lib/training-courses";
+import { LAUNCH_BUYERS, PRICES, UPGRADE_PRICE } from "@/lib/payments";
 import { dilemmas } from "@/lib/dilemmas";
 
-export const Route = createFileRoute("/")({ head: () => pageHead("Inicio · Academia Inteligente de Educación", "Tu aliado en la preparación y formación docente en Colombia. Prepárate para los concursos y fortalece tus competencias con EDUCALEX."), component: Index });
+export const Route = createFileRoute("/")({ head: () => pageHead("Preparación para el concurso docente 2026 en Colombia", "Simulacros tipo ICFES por niveles, normas verificadas en fuentes oficiales y cursos para docentes, coordinadores y rectores. Concurso CNSC, ascenso y reubicación. Empieza gratis."), component: Index });
 
 const routes = [
   { to: "/concursos/ingreso-docente", sim: "/simulacros/ingreso-docente", icon: Trophy, title: "Ingreso a la Carrera Docente", text: "Prepárate y alcanza tu meta", tone: "blue", perks: ["Ruta de estudio por competencias", "Simulacro tipo ICFES en 4 niveles", "Núcleo común y prueba psicotécnica"] },
@@ -33,6 +34,13 @@ const tryNow = [
   { to: "/formacion/ruta-atencion-integral", icon: Scale, tag: "6 casos", title: "Ruta de Atención Integral", text: "Clasifica situaciones tipo I, II y III.", tone: "red" },
   { to: "/formacion/dilemas-educativos", icon: Compass, tag: `${dilemmas.length} dilemas`, title: "Dilemas educativos", text: "Decide y mira las consecuencias de cada opción.", tone: "green" },
   { to: "/docente-ia", icon: Bot, tag: "Con voz", title: "Pregúntale a EducatIA", text: "Resuelve dudas de normas y pedagogía.", tone: "gold" },
+] as const;
+const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
+const priceCards = [
+  { name: "Gratis", price: "$0", note: "Para empezar hoy", items: ["Nivel Básico de todos los perfiles", "Simulacro completo con tiempo", "Biblioteca, cursos, videos y dilemas", "Constancia de participación"], cta: "Empieza gratis", to: "/registro", featured: false },
+  { name: "Plan Intermedio", price: cop(PRICES.intermedio), note: "Pago único por perfil", items: ["Todo lo gratuito", "Nivel Intermedio del perfil y del núcleo común", "Mapa de errores e insignias"], cta: "Ver planes", to: "/planes", featured: false },
+  { name: "Plan Completo", price: cop(PRICES.completo), note: "Pago único por perfil", items: ["Niveles Intermedio, Avanzado y Experto", "Del perfil y del núcleo común", `Desde el Intermedio pagas solo ${cop(UPGRADE_PRICE)}`], cta: "Ver planes", to: "/planes", featured: true },
+  { name: "Paquete directivo", price: cop(PRICES.directivo), note: "Rector + Coordinador", items: ["Plan Completo de los dos perfiles", `Ahorras ${cop(2 * PRICES.completo - PRICES.directivo)}`, "Pago único, sin renovación"], cta: "Ver planes", to: "/planes", featured: false },
 ] as const;
 const steps = [
   { icon: UserPlus, title: "Elige tu perfil", text: "Docente, ascenso, coordinador o rector: la plataforma se organiza según tu meta." },
@@ -66,12 +74,12 @@ function Index() {
     <section className="hx-hero">
       <img className="hx-hero-img" src={hero} width={1920} height={768} alt="Docentes colombianos sonrientes frente a una institución educativa, junto a la bandera de Colombia" fetchPriority="high" />
       <div className="site-container hx-hero-content">
-        <h1>EDUCALEX</h1>
-        <p className="hx-hero-title">Tu aliado en la preparación y <span className="text-gold">formación docente</span> en Colombia</p>
-        <p className="hx-hero-text">Prepárate para los concursos, fortalece tus competencias y lidera la transformación educativa.</p>
+        <p className="hx-hero-brand">EDUCALEX · Academia Inteligente de Educación</p>
+        <h1 className="hx-hero-title">Prepárate para el <span className="text-gold">concurso docente</span> con normas verificadas y simulacros que te explican cada respuesta</h1>
+        <p className="hx-hero-text">Biblioteca con infografías, {totalQuestions} preguntas tipo ICFES por niveles y cursos para docentes, coordinadores y rectores de Colombia. Empieza gratis.</p>
         <div className="hx-hero-actions">
-          <Button variant="hero" size="lg" asChild><Link to="/concursos">Comenzar mi preparación <ArrowRight /></Link></Button>
-          <Link to="/simulacros" className="hx-hero-ghost"><Play aria-hidden="true" /> Prueba un simulacro gratis</Link>
+          <Button variant="hero" size="lg" asChild><Link to="/registro">Empieza gratis <ArrowRight /></Link></Button>
+          <Link to="/simulacros" className="hx-hero-ghost"><Play aria-hidden="true" /> Haz una pregunta de prueba</Link>
         </div>
         <a className="hx-simo" href="https://www.cnsc.gov.co/convocatorias/docentes-y-directivos-docentes-2026" target="_blank" rel="noopener noreferrer"><CalendarClock aria-hidden="true" /><span><strong>Concurso docente 2026 · vacantes reservadas para personas con discapacidad.</strong> {simo}</span></a>
       </div>
@@ -110,7 +118,7 @@ function Index() {
         <ClipboardCheck className="hx-card-deco" />
       </article>
       <article className="hx-card hx-card-ia">
-        <img src={robot} width={816} height={816} loading="lazy" alt="EducatIA, robot asistente de EDUCALEX con birrete" className="hx-robot" />
+        <img src={robot} width={400} height={400} loading="lazy" alt="EducatIA, robot asistente de EDUCALEX con birrete" className="hx-robot" />
         <div className="hx-ia-body">
           <h2 className="hx-ia-title">EducatIA</h2>
           <p className="hx-ia-sub">Tu asistente pedagógico y normativo</p>
@@ -118,6 +126,18 @@ function Index() {
           <Button variant="navy" asChild><Link to="/docente-ia">Preguntar ahora <ArrowRight /></Link></Button>
         </div>
       </article>
+    </section>
+
+    <section className="site-container hx-prices" aria-labelledby="hx-prices-title">
+      <div className="hx-section-head"><Award className="text-gold" aria-hidden="true" /><div><h2 id="hx-prices-title">Planes y precios</h2><p>Precios de lanzamiento para las primeras {LAUNCH_BUYERS} compras. Pago único con Wompi, sin suscripción.</p></div></div>
+      <div className="hx-price-grid">{priceCards.map(c => <article key={c.name} className={`hx-price ${c.featured ? "is-featured" : ""}`}>
+        {c.featured && <span className="hx-price-flag">Más completo</span>}
+        <h3>{c.name}</h3>
+        <p className="hx-price-value">{c.price}</p>
+        <p className="hx-price-note">{c.note}</p>
+        <ul>{c.items.map(i => <li key={i}><CheckCircle2 aria-hidden="true" />{i}</li>)}</ul>
+        <Button variant={c.featured ? "hero" : "outline"} asChild><Link to={c.to}>{c.cta}</Link></Button>
+      </article>)}</div>
     </section>
 
     <section className="site-container hx-news" aria-labelledby="hx-news-title">

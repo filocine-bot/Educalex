@@ -1197,3 +1197,24 @@ html { scroll-padding-top: 170px; }
 .hx-step-icon { width: 30px; height: 30px; color: var(--gold); }
 @media (max-width: 1000px) { .hx-goals, .hx-try-grid, .hx-steps-list { grid-template-columns: 1fr 1fr; } .hx-stats { grid-template-columns: repeat(3, 1fr); row-gap: 14px; } .hx-stat:nth-child(3) { border-right: 0; } }
 @media (max-width: 600px) { .hx-goals, .hx-try-grid, .hx-steps-list { grid-template-columns: 1fr; } .hx-goals { margin-top: -40px; } .hx-stats { grid-template-columns: 1fr 1fr; } .hx-stat { border-right: 0; } }
+
+/* Inicio: marca sobre el titular, precios y contraste AA */
+.hx-hero-brand { font-family: Poppins, sans-serif; font-weight: 600; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); margin: 0 0 6px; }
+.hx-hero h1.hx-hero-title { font-family: Poppins, sans-serif; font-weight: 700; font-size: clamp(28px, 3.6vw, 46px); line-height: 1.15; letter-spacing: -0.01em; max-width: 680px; margin: 0 0 14px; }
+.hx-prices { margin-top: 44px; }
+.hx-price-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: stretch; }
+.hx-price { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 22px 18px 18px; border-radius: 16px; background: var(--background); border: 1px solid var(--border); }
+.hx-price.is-featured { border: 2px solid var(--brand-blue); box-shadow: 0 18px 36px -24px color-mix(in oklab, var(--brand-blue) 60%, transparent); }
+.hx-price-flag { position: absolute; top: -12px; left: 18px; background: var(--brand-blue); color: #fff; font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+.hx-price h3 { font-family: Poppins, sans-serif; font-size: 17px; color: var(--brand-blue); margin: 0; }
+.hx-price-value { font-family: Poppins, sans-serif; font-size: 30px; font-weight: 700; color: var(--foreground); margin: 2px 0 0; line-height: 1.1; }
+.hx-price-note { font-size: 13px; color: var(--muted-foreground); margin: 0 0 6px; }
+.hx-price ul { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 6px; font-size: 13.5px; }
+.hx-price li { display: flex; gap: 7px; align-items: flex-start; }
+.hx-price li svg { flex: none; width: 16px; height: 16px; color: #176b46; margin-top: 2px; }
+.hx-price .inline-flex { margin-top: auto; width: 100%; }
+@media (max-width: 1000px) { .hx-price-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .hx-price-grid { grid-template-columns: 1fr; } }
+/* Contraste: dorado y verde con al menos 4,5:1 sobre fondos claros (WCAG 2.2 AA) */
+.hx-tone-green { --tone: #176b46; } .hx-tone-gold { --tone: #8a5d00; }
+.hx-section-head > .text-gold, .hx-news-head .text-gold, .hx-card-light .text-gold, .hx-step-icon { color: #8a5d00; }

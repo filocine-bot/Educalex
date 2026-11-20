@@ -7,7 +7,7 @@ import { pages } from "@/lib/educalex-sitemap";
 import { useGameProgress } from "@/lib/game-progress";
 import { CERT_BANK_NAMES, certificateCode, isGameBankKey, passedLevels } from "@/lib/certificate";
 import { useAccount } from "@/components/account-session";
-import logo from "@/assets/educalex-logo-horizontal.png";
+import logo from "@/assets/educalex-logo-horizontal.webp";
 
 const page = pages["/certificado"];
 export const Route = createFileRoute("/certificado")({

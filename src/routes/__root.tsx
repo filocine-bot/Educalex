@@ -90,6 +90,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Tu aliado en la preparación y formación docente en Colombia." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: "https://www.educalex.co/og-educalex.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "EDUCALEX: prepárate para el concurso docente en Colombia" },
+      { property: "og:locale", content: "es_CO" },
+      { property: "og:site_name", content: "EDUCALEX" },
+      { name: "twitter:image", content: "https://www.educalex.co/og-educalex.jpg" },
     ],
     links: [
       {
