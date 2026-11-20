@@ -1242,3 +1242,5 @@ html { scroll-padding-top: 170px; }
 .founder-more svg { width: 15px; height: 15px; }
 .founder-compact { grid-template-columns: minmax(200px, 300px) 1fr; }
 @media (max-width: 760px) { .founder, .founder-compact { grid-template-columns: 1fr; } .founder-photo { max-width: 360px; margin: 0 auto; } .founder-list { grid-template-columns: 1fr; } }
+.founder-orcid { display: inline-flex; align-items: center; gap: 8px; margin: 2px 0 4px; font-size: 14px; font-weight: 600; color: var(--brand-blue); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+.founder-orcid svg { flex: none; }
