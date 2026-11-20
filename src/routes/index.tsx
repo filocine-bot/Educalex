@@ -10,6 +10,7 @@ import { questionsFor } from "@/lib/game-engine";
 import { videoThemes } from "@/lib/official-videos";
 import { trainingCourses } from "@/lib/training-courses";
 import { LAUNCH_BUYERS, PRICES, UPGRADE_PRICE } from "@/lib/payments";
+import { FounderCard } from "@/components/founder-card";
 import { dilemmas } from "@/lib/dilemmas";
 
 export const Route = createFileRoute("/")({ head: () => pageHead("Preparación para el concurso docente 2026 en Colombia", "Simulacros tipo ICFES por niveles, normas verificadas en fuentes oficiales y cursos para docentes, coordinadores y rectores. Concurso CNSC, ascenso y reubicación. Empieza gratis."), component: Index });
@@ -99,6 +100,8 @@ function Index() {
     </section>
 
     <section className="site-container hx-stats" aria-label="EDUCALEX en cifras">{stats.map(st => <div key={st.label} className="hx-stat"><st.icon aria-hidden="true" /><span><strong>{st.value}</strong>{st.label}</span></div>)}</section>
+
+    <div className="site-container"><FounderCard compact /></div>
 
     <section className="site-container hx-try" aria-labelledby="hx-try-title">
       <div className="hx-section-head"><Sparkles className="text-gold" aria-hidden="true" /><div><h2 id="hx-try-title">Empieza hoy, sin pagar</h2><p>Herramientas interactivas abiertas para todos los perfiles.</p></div></div>
