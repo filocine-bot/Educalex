@@ -22,6 +22,7 @@ export const headerNavigation: HeaderItem[] = [
     { label: 'Educación rural', to: '/formacion/educacion-rural' },
     { label: 'STEAM y robótica', to: '/formacion/steam-robotica' },
     { label: 'Dilemas educativos', to: '/formacion/dilemas-educativos' },
+    { label: 'Herramientas de IA', to: '/formacion/herramientas-ia' },
   ] },
   { label: 'Simulacros', to: '/simulacros', children: profileLinks('simulacros') },
   { label: 'Biblioteca', to: '/biblioteca', compact: true },

@@ -55,6 +55,7 @@ import { Route as FormacionEducacionRuralRouteImport } from './routes/formacion.
 import { Route as FormacionEvaluacionFormativaRouteImport } from './routes/formacion.evaluacion-formativa'
 import { Route as FormacionGestionInstitucionalRouteImport } from './routes/formacion.gestion-institucional'
 import { Route as FormacionGuia34PmiRouteImport } from './routes/formacion.guia-34-pmi'
+import { Route as FormacionHerramientasIaRouteImport } from './routes/formacion.herramientas-ia'
 import { Route as FormacionInclusionDuaPiarRouteImport } from './routes/formacion.inclusion-dua-piar'
 import { Route as FormacionInteligenciaArtificialRouteImport } from './routes/formacion.inteligencia-artificial'
 import { Route as FormacionLiderazgoDirectivoRouteImport } from './routes/formacion.liderazgo-directivo'
@@ -324,6 +325,11 @@ const FormacionGuia34PmiRoute = FormacionGuia34PmiRouteImport.update({
   path: '/formacion/guia-34-pmi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormacionHerramientasIaRoute = FormacionHerramientasIaRouteImport.update({
+  id: '/formacion/herramientas-ia',
+  path: '/formacion/herramientas-ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FormacionInclusionDuaPiarRoute =
   FormacionInclusionDuaPiarRouteImport.update({
     id: '/formacion/inclusion-dua-piar',
@@ -523,6 +529,7 @@ export interface FileRoutesByFullPath {
   '/formacion/evaluacion-formativa': typeof FormacionEvaluacionFormativaRoute
   '/formacion/gestion-institucional': typeof FormacionGestionInstitucionalRoute
   '/formacion/guia-34-pmi': typeof FormacionGuia34PmiRoute
+  '/formacion/herramientas-ia': typeof FormacionHerramientasIaRoute
   '/formacion/inclusion-dua-piar': typeof FormacionInclusionDuaPiarRoute
   '/formacion/inteligencia-artificial': typeof FormacionInteligenciaArtificialRoute
   '/formacion/liderazgo-directivo': typeof FormacionLiderazgoDirectivoRoute
@@ -597,6 +604,7 @@ export interface FileRoutesByTo {
   '/formacion/evaluacion-formativa': typeof FormacionEvaluacionFormativaRoute
   '/formacion/gestion-institucional': typeof FormacionGestionInstitucionalRoute
   '/formacion/guia-34-pmi': typeof FormacionGuia34PmiRoute
+  '/formacion/herramientas-ia': typeof FormacionHerramientasIaRoute
   '/formacion/inclusion-dua-piar': typeof FormacionInclusionDuaPiarRoute
   '/formacion/inteligencia-artificial': typeof FormacionInteligenciaArtificialRoute
   '/formacion/liderazgo-directivo': typeof FormacionLiderazgoDirectivoRoute
@@ -674,6 +682,7 @@ export interface FileRoutesById {
   '/formacion/evaluacion-formativa': typeof FormacionEvaluacionFormativaRoute
   '/formacion/gestion-institucional': typeof FormacionGestionInstitucionalRoute
   '/formacion/guia-34-pmi': typeof FormacionGuia34PmiRoute
+  '/formacion/herramientas-ia': typeof FormacionHerramientasIaRoute
   '/formacion/inclusion-dua-piar': typeof FormacionInclusionDuaPiarRoute
   '/formacion/inteligencia-artificial': typeof FormacionInteligenciaArtificialRoute
   '/formacion/liderazgo-directivo': typeof FormacionLiderazgoDirectivoRoute
@@ -751,6 +760,7 @@ export interface FileRouteTypes {
     | '/formacion/evaluacion-formativa'
     | '/formacion/gestion-institucional'
     | '/formacion/guia-34-pmi'
+    | '/formacion/herramientas-ia'
     | '/formacion/inclusion-dua-piar'
     | '/formacion/inteligencia-artificial'
     | '/formacion/liderazgo-directivo'
@@ -825,6 +835,7 @@ export interface FileRouteTypes {
     | '/formacion/evaluacion-formativa'
     | '/formacion/gestion-institucional'
     | '/formacion/guia-34-pmi'
+    | '/formacion/herramientas-ia'
     | '/formacion/inclusion-dua-piar'
     | '/formacion/inteligencia-artificial'
     | '/formacion/liderazgo-directivo'
@@ -901,6 +912,7 @@ export interface FileRouteTypes {
     | '/formacion/evaluacion-formativa'
     | '/formacion/gestion-institucional'
     | '/formacion/guia-34-pmi'
+    | '/formacion/herramientas-ia'
     | '/formacion/inclusion-dua-piar'
     | '/formacion/inteligencia-artificial'
     | '/formacion/liderazgo-directivo'
@@ -970,6 +982,7 @@ export interface RootRouteChildren {
   FormacionEvaluacionFormativaRoute: typeof FormacionEvaluacionFormativaRoute
   FormacionGestionInstitucionalRoute: typeof FormacionGestionInstitucionalRoute
   FormacionGuia34PmiRoute: typeof FormacionGuia34PmiRoute
+  FormacionHerramientasIaRoute: typeof FormacionHerramientasIaRoute
   FormacionInclusionDuaPiarRoute: typeof FormacionInclusionDuaPiarRoute
   FormacionInteligenciaArtificialRoute: typeof FormacionInteligenciaArtificialRoute
   FormacionLiderazgoDirectivoRoute: typeof FormacionLiderazgoDirectivoRoute
@@ -1318,6 +1331,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FormacionGuia34PmiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/formacion/herramientas-ia': {
+      id: '/formacion/herramientas-ia'
+      path: '/formacion/herramientas-ia'
+      fullPath: '/formacion/herramientas-ia'
+      preLoaderRoute: typeof FormacionHerramientasIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/formacion/inclusion-dua-piar': {
       id: '/formacion/inclusion-dua-piar'
       path: '/formacion/inclusion-dua-piar'
@@ -1605,6 +1625,7 @@ const rootRouteChildren: RootRouteChildren = {
   FormacionEvaluacionFormativaRoute: FormacionEvaluacionFormativaRoute,
   FormacionGestionInstitucionalRoute: FormacionGestionInstitucionalRoute,
   FormacionGuia34PmiRoute: FormacionGuia34PmiRoute,
+  FormacionHerramientasIaRoute: FormacionHerramientasIaRoute,
   FormacionInclusionDuaPiarRoute: FormacionInclusionDuaPiarRoute,
   FormacionInteligenciaArtificialRoute: FormacionInteligenciaArtificialRoute,
   FormacionLiderazgoDirectivoRoute: FormacionLiderazgoDirectivoRoute,
