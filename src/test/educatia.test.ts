@@ -28,3 +28,16 @@ describe("EducatIA: modo guiado", () => {
     expect(guidedAnswer("xyzw qwerty")).toContain("No encontré una ficha");
   });
 });
+
+import { voiceScore } from "@/lib/educatia-voice";
+describe("voz de EducatIA", () => {
+  it("prefiere voces femeninas y naturales en español latinoamericano", () => {
+    const salome = { name: "Microsoft Salome Online (Natural) - Spanish (Colombia)", lang: "es-CO" };
+    const gonzalo = { name: "Microsoft Gonzalo Online (Natural) - Spanish (Colombia)", lang: "es-CO" };
+    const googleUs = { name: "Google español de Estados Unidos", lang: "es-US" };
+    const generic = { name: "Spanish", lang: "es-ES" };
+    expect(voiceScore(salome)).toBeGreaterThan(voiceScore(gonzalo));
+    expect(voiceScore(salome)).toBeGreaterThan(voiceScore(googleUs));
+    expect(voiceScore(googleUs)).toBeGreaterThan(voiceScore(generic));
+  });
+});

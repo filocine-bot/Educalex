@@ -1218,3 +1218,12 @@ html { scroll-padding-top: 170px; }
 /* Contraste: dorado y verde con al menos 4,5:1 sobre fondos claros (WCAG 2.2 AA) */
 .hx-tone-green { --tone: #176b46; } .hx-tone-gold { --tone: #8a5d00; }
 .hx-section-head > .text-gold, .hx-news-head .text-gold, .hx-card-light .text-gold, .hx-step-icon { color: #8a5d00; }
+
+/* EducatIA: controles de voz visibles arriba */
+.ia-composer { margin-top: 14px; padding: 14px; border: 1px solid var(--border); border-radius: 14px; background: color-mix(in oklab, var(--brand-blue) 4%, white); }
+.ia-voicebar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.ia-mic { min-height: 48px; }
+.ia-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 14px; font-weight: 600; color: var(--foreground); }
+.ia-voice-select { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.ia-voice-select select { min-height: 40px; max-width: 260px; border: 1px solid var(--border); border-radius: 8px; padding: 0 8px; background: #fff; font-weight: 400; }
+@media (max-width: 600px) { .ia-mic { width: 100%; } .ia-voice-select, .ia-voice-select select { width: 100%; max-width: none; } }

@@ -19,14 +19,40 @@ export function speechSupported(): boolean {
 }
 
 const PREFERRED = ["es-CO", "es-419", "es-MX", "es-US", "es-ES"];
+// Voces femeninas conocidas de Windows/Edge (Natural), Chrome, Android y Apple. Las "Natural"/"Online" suenan más humanas.
+const FEMALE = /salome|dalia|paloma|elvira|ximena|larissa|renata|camila|catalina|elena|helena|laura|lupe|mia|monica|mónica|paulina|marisol|sabina|soledad|ines|inés|google español|esc-|female|mujer/i;
+const MALE = /gonzalo|jorge|diego|juan|pablo|raul|raúl|alvaro|álvaro|carlos|enrique|tomas|tomás|male|hombre/i;
+const VOICE_KEY = "educatia-voz";
+
+export function spanishVoices(): SpeechSynthesisVoice[] {
+  if (!speechSupported()) return [];
+  return window.speechSynthesis.getVoices().filter((v) => v.lang.toLowerCase().startsWith("es"));
+}
+
+/** Puntúa una voz: más alta = más natural y femenina, con acento latinoamericano. */
+export function voiceScore(v: { name: string; lang: string; localService?: boolean }): number {
+  let score = 0;
+  if (/natural|neural|online|enhanced|premium|mejorada/i.test(v.name)) score += 40;
+  if (FEMALE.test(v.name)) score += 30;
+  if (MALE.test(v.name)) score -= 50;
+  const i = PREFERRED.indexOf(PREFERRED.find((l) => l.toLowerCase() === v.lang.toLowerCase()) ?? "");
+  if (i >= 0) score += 10 - i * 2;
+  return score;
+}
+
+export function savedVoiceName(): string | null {
+  try { return window.localStorage.getItem(VOICE_KEY); } catch { return null; }
+}
+export function saveVoiceName(name: string): void {
+  try { window.localStorage.setItem(VOICE_KEY, name); } catch { /* sin almacenamiento */ }
+}
 
 function spanishVoice(): SpeechSynthesisVoice | undefined {
-  const voices = window.speechSynthesis.getVoices().filter((v) => v.lang.toLowerCase().startsWith("es"));
-  for (const lang of PREFERRED) {
-    const v = voices.find((x) => x.lang.toLowerCase() === lang.toLowerCase());
-    if (v) return v;
-  }
-  return voices[0];
+  const voices = spanishVoices();
+  const chosen = savedVoiceName();
+  const saved = chosen ? voices.find((v) => v.name === chosen) : undefined;
+  if (saved) return saved;
+  return [...voices].sort((x, y) => voiceScore(y) - voiceScore(x))[0];
 }
 
 /** Lee el texto en voz alta. Devuelve false si el navegador no tiene síntesis de voz. */
@@ -48,7 +74,8 @@ export function speak(markdown: string, opts: { rate?: number; onEnd?: () => voi
     const u = new SpeechSynthesisUtterance(chunk);
     u.lang = voice?.lang ?? "es-CO";
     if (voice) u.voice = voice;
-    u.rate = opts.rate ?? 1;
+    u.rate = opts.rate ?? 0.97;
+    u.pitch = 1.05;
     if (i === chunks.length - 1 && opts.onEnd) { u.onend = opts.onEnd; u.onerror = opts.onEnd; }
     synth.speak(u);
   });

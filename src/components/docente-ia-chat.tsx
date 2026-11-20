@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { isArtifact } from "@/lib/runtime-mode";
 import { useCapability } from "@/lib/claude-runtime";
 import { SYSTEM_PROMPT, libraryContext, MAX_TURNS } from "@/lib/docente-ia-context";
-import { listen, listeningSupported, speak, speechSupported, stopSpeaking } from "@/lib/educatia-voice";
+import { listen, listeningSupported, saveVoiceName, savedVoiceName, speak, spanishVoices, speechSupported, stopSpeaking, voiceScore } from "@/lib/educatia-voice";
 import { guidedAnswer } from "@/lib/educatia-guided";
 
 type SampleFn = ((input: { role: "user" | "assistant"; content: string }[], opts?: { onText?: (e: { text: string }) => void; signal?: AbortSignal; cache?: boolean }) => Promise<{ text: string }>);
@@ -49,13 +49,28 @@ export function DocenteIaChat() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState<number | null>(null);
   const [category, setCategory] = useState<string | null>(null);
-  const [autoRead, setAutoRead] = useState(false);
+  const [autoRead, setAutoRead] = useState(true);
+  const [voices, setVoices] = useState<{ name: string; label: string }[]>([]);
+  const [voiceName, setVoiceName] = useState("");
   const [speakingIndex, setSpeakingIndex] = useState<number | null>(null);
   const [listening, setListening] = useState(false);
   const [voiceStatus, setVoiceStatus] = useState("");
   const [voice, setVoice] = useState({ speak: false, listen: false });
   const stopListen = useRef<(() => void) | null>(null);
   useEffect(() => { setVoice({ speak: speechSupported(), listen: listeningSupported() }); return () => { stopSpeaking(); stopListen.current?.(); }; }, []);
+  useEffect(() => {
+    try { const v = window.localStorage.getItem("educatia-leer"); if (v === "0") setAutoRead(false); } catch { /* sin almacenamiento */ }
+    if (!speechSupported()) return;
+    // Las voces se cargan de forma asíncrona en algunos navegadores.
+    const load = () => {
+      const list = [...spanishVoices()].sort((a, b) => voiceScore(b) - voiceScore(a));
+      setVoices(list.map(v => ({ name: v.name, label: `${v.name.replace(/^Microsoft |^Google /, "").replace(/ Online \(Natural\)/, " (natural)")} · ${v.lang}` })));
+      setVoiceName(savedVoiceName() ?? list[0]?.name ?? "");
+    };
+    load();
+    window.speechSynthesis.addEventListener?.("voiceschanged", load);
+    return () => window.speechSynthesis.removeEventListener?.("voiceschanged", load);
+  }, []);
 
   function readAloud(i: number, text: string) {
     if (speakingIndex === i) { stopSpeaking(); setSpeakingIndex(null); return; }
@@ -133,10 +148,30 @@ export function DocenteIaChat() {
   }
 
   const started = turns.length > 0;
+  const composer = <>
+    <div className="ia-composer">
+      {(voice.speak || voice.listen) && <div className="ia-voicebar" role="group" aria-label="Opciones de voz">
+        {voice.listen && <Button type="button" size="lg" variant={listening ? "destructive" : "navy"} className="ia-mic" aria-pressed={listening} onClick={toggleListen}>{listening ? <><MicOff /> Dejar de escuchar</> : <><Mic /> Preguntar con mi voz</>}</Button>}
+        {voice.speak && <label className="ia-toggle" htmlFor="educatia-autoread"><input id="educatia-autoread" type="checkbox" className="size-5" checked={autoRead} onChange={e => { setAutoRead(e.target.checked); try { window.localStorage.setItem("educatia-leer", e.target.checked ? "1" : "0"); } catch { /* sin almacenamiento */ } if (!e.target.checked) { stopSpeaking(); setSpeakingIndex(null); } }} /> <Volume2 className="size-4" aria-hidden="true" /> Leer respuestas en voz alta</label>}
+        {voice.speak && voices.length > 1 && <label className="ia-voice-select" htmlFor="educatia-voice">Voz <select id="educatia-voice" value={voiceName} onChange={e => { setVoiceName(e.target.value); saveVoiceName(e.target.value); speak("Hola, soy EducatIA. Así sonará mi voz."); }}>{voices.map(v => <option key={v.name} value={v.name}>{v.label}</option>)}</select></label>}
+      </div>}
+      <p className="sr-only" role="status" aria-live="assertive">{voiceStatus}</p>
+      {voiceStatus && <p className="mt-2 text-sm text-muted-foreground" aria-hidden="true">{voiceStatus}</p>}
+      <Textarea className="mt-3 min-h-24" value={question} maxLength={4000} onChange={e => setQuestion(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); ask(); } }} placeholder={started ? "Haz una pregunta de seguimiento…" : "Escribe o dicta tu consulta: planeación, evaluación, inclusión, convivencia, concursos…"} aria-label="Consulta educativa" />
+      <div className="mt-3 flex flex-wrap gap-3">
+        {loading ? <Button variant="outline" onClick={() => ctrl.current?.abort()}><Square /> Detener</Button>
+          : <Button onClick={ask} disabled={question.trim().length < 5}>{started ? <><Send /> Enviar</> : <><Sparkles /> Generar respuesta</>}</Button>}
+        {started && !loading && <Button variant="outline" onClick={() => { setTurns([]); setError(""); }}><RotateCcw /> Nueva conversación</Button>}
+      </div>
+      {error && <p className="mt-3 text-sm text-destructive" role="alert">{error}</p>}
+    </div>
+  </>;
   return <section className="section site-container"><div className="ia-panel">
     <div className="eyebrow">EDUCATIA · ASISTENTE PEDAGÓGICO</div><h2>{started ? "Conversación" : "¿En qué te puedo ayudar hoy?"}</h2>
+    {!started && composer}
     {!started && <>
-      <p className="mt-2 text-sm text-muted-foreground">Elige una categoría (opcional) para orientar tu consulta.</p>
+      <div className="mt-3 flex flex-wrap gap-2">{examples.map(x => <button key={x} type="button" className="feature-tag" onClick={() => setQuestion(x)}>{x}</button>)}</div>
+      <p className="mt-4 text-sm text-muted-foreground">Elige una categoría (opcional) para orientar tu consulta.</p>
       <div className="ia-cats" role="group" aria-label="Categorías de consulta">{categories.map(c => <button key={c.name} type="button" className="ia-cat" aria-pressed={category === c.name} onClick={() => setCategory(category === c.name ? null : c.name)}>{c.name}</button>)}</div>
     </>}
     {started && <div className="ia-thread" aria-live="polite">
@@ -151,20 +186,7 @@ export function DocenteIaChat() {
           </div>)}
       <div ref={endRef} />
     </div>}
-    {error && <p className="mt-3 text-sm text-destructive" role="alert">{error}</p>}
-    {(voice.speak || voice.listen) && <div className="mt-5 flex flex-wrap items-center gap-3" role="group" aria-label="Opciones de voz">
-      {voice.listen && <Button type="button" size="lg" variant={listening ? "destructive" : "outline"} className="min-h-12" aria-pressed={listening} onClick={toggleListen}>{listening ? <><MicOff /> Dejar de escuchar</> : <><Mic /> Preguntar con mi voz</>}</Button>}
-      {voice.speak && <label className="flex min-h-12 items-center gap-2 text-sm font-medium" htmlFor="educatia-autoread"><input id="educatia-autoread" type="checkbox" className="size-5" checked={autoRead} onChange={e => { setAutoRead(e.target.checked); if (!e.target.checked) { stopSpeaking(); setSpeakingIndex(null); } }} /> Leer las respuestas en voz alta automáticamente</label>}
-    </div>}
-    <p className="sr-only" role="status" aria-live="assertive">{voiceStatus}</p>
-    {voiceStatus && <p className="mt-2 text-sm text-muted-foreground" aria-hidden="true">{voiceStatus}</p>}
-    <Textarea className="mt-5 min-h-28" value={question} maxLength={4000} onChange={e => setQuestion(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); ask(); } }} placeholder={started ? "Haz una pregunta de seguimiento…" : "Escribe tu consulta educativa: planeación, evaluación, inclusión, convivencia, concursos…"} aria-label="Consulta educativa" />
-    {!started && <div className="mt-3 flex flex-wrap gap-2">{examples.map(x => <button key={x} type="button" className="feature-tag" onClick={() => setQuestion(x)}>{x}</button>)}</div>}
-    <div className="mt-4 flex flex-wrap gap-3">
-      {loading ? <Button variant="outline" onClick={() => ctrl.current?.abort()}><Square /> Detener</Button>
-        : <Button onClick={ask} disabled={question.trim().length < 5}>{started ? <><Send /> Enviar</> : <><Sparkles /> Generar respuesta</>}</Button>}
-      {started && !loading && <Button variant="outline" onClick={() => { setTurns([]); setError(""); }}><RotateCcw /> Nueva conversación</Button>}
-    </div>
+    {started && composer}
     {related.length > 0 && <div className="mt-6"><p className="mb-2 text-sm font-semibold text-brand-blue">Cursos y documentos relacionados con «{category}»</p><div className="mod-related">{related.map(r => <Link key={r} to={r} className="mod-chip">{getPage(r)?.title}</Link>)}</div></div>}
     <p className="mt-5 flex gap-2 text-xs text-muted-foreground"><Info className="size-4 shrink-0" /> EducatIA responde con inteligencia artificial (Claude) como apoyo pedagógico; si el servicio no está disponible, responde en modo guiado con la biblioteca. La voz la producen tu navegador y su servicio de voz; EDUCALEX no graba audio. El asistente solo enlaza fuentes verificadas de la biblioteca EDUCALEX, pero puede equivocarse: confirma siempre la norma y su vigencia en la fuente oficial. No escribas datos personales de estudiantes.</p>
   </div></section>;
