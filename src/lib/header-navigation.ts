@@ -18,6 +18,7 @@ export const headerNavigation: HeaderItem[] = [
     { label: 'Guía 34 y PMI', to: '/formacion/guia-34-pmi' },
     { label: 'Inclusión, DUA y PIAR', to: '/formacion/inclusion-dua-piar' },
     { label: 'Convivencia escolar', to: '/formacion/convivencia-escolar' },
+    { label: 'Ruta de Atención Integral', to: '/formacion/ruta-atencion-integral' },
     { label: 'Educación rural', to: '/formacion/educacion-rural' },
     { label: 'STEAM y robótica', to: '/formacion/steam-robotica' },
     { label: 'Dilemas educativos', to: '/formacion/dilemas-educativos' },

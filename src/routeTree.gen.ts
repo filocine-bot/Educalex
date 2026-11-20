@@ -61,6 +61,7 @@ import { Route as FormacionLiderazgoDirectivoRouteImport } from './routes/formac
 import { Route as FormacionLiderazgoPedagogicoRouteImport } from './routes/formacion.liderazgo-pedagogico'
 import { Route as FormacionPeiRouteImport } from './routes/formacion.pei'
 import { Route as FormacionPmiRouteImport } from './routes/formacion.pmi'
+import { Route as FormacionRutaAtencionIntegralRouteImport } from './routes/formacion.ruta-atencion-integral'
 import { Route as FormacionSteamIaRouteImport } from './routes/formacion.steam-ia'
 import { Route as FormacionSteamRoboticaRouteImport } from './routes/formacion.steam-robotica'
 import { Route as FormacionTalleresPmiRouteImport } from './routes/formacion.talleres-pmi'
@@ -357,6 +358,12 @@ const FormacionPmiRoute = FormacionPmiRouteImport.update({
   path: '/formacion/pmi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormacionRutaAtencionIntegralRoute =
+  FormacionRutaAtencionIntegralRouteImport.update({
+    id: '/formacion/ruta-atencion-integral',
+    path: '/formacion/ruta-atencion-integral',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const FormacionSteamIaRoute = FormacionSteamIaRouteImport.update({
   id: '/formacion/steam-ia',
   path: '/formacion/steam-ia',
@@ -522,6 +529,7 @@ export interface FileRoutesByFullPath {
   '/formacion/liderazgo-pedagogico': typeof FormacionLiderazgoPedagogicoRoute
   '/formacion/pei': typeof FormacionPeiRoute
   '/formacion/pmi': typeof FormacionPmiRoute
+  '/formacion/ruta-atencion-integral': typeof FormacionRutaAtencionIntegralRoute
   '/formacion/steam-ia': typeof FormacionSteamIaRoute
   '/formacion/steam-robotica': typeof FormacionSteamRoboticaRoute
   '/formacion/talleres-pmi': typeof FormacionTalleresPmiRoute
@@ -595,6 +603,7 @@ export interface FileRoutesByTo {
   '/formacion/liderazgo-pedagogico': typeof FormacionLiderazgoPedagogicoRoute
   '/formacion/pei': typeof FormacionPeiRoute
   '/formacion/pmi': typeof FormacionPmiRoute
+  '/formacion/ruta-atencion-integral': typeof FormacionRutaAtencionIntegralRoute
   '/formacion/steam-ia': typeof FormacionSteamIaRoute
   '/formacion/steam-robotica': typeof FormacionSteamRoboticaRoute
   '/formacion/talleres-pmi': typeof FormacionTalleresPmiRoute
@@ -671,6 +680,7 @@ export interface FileRoutesById {
   '/formacion/liderazgo-pedagogico': typeof FormacionLiderazgoPedagogicoRoute
   '/formacion/pei': typeof FormacionPeiRoute
   '/formacion/pmi': typeof FormacionPmiRoute
+  '/formacion/ruta-atencion-integral': typeof FormacionRutaAtencionIntegralRoute
   '/formacion/steam-ia': typeof FormacionSteamIaRoute
   '/formacion/steam-robotica': typeof FormacionSteamRoboticaRoute
   '/formacion/talleres-pmi': typeof FormacionTalleresPmiRoute
@@ -747,6 +757,7 @@ export interface FileRouteTypes {
     | '/formacion/liderazgo-pedagogico'
     | '/formacion/pei'
     | '/formacion/pmi'
+    | '/formacion/ruta-atencion-integral'
     | '/formacion/steam-ia'
     | '/formacion/steam-robotica'
     | '/formacion/talleres-pmi'
@@ -820,6 +831,7 @@ export interface FileRouteTypes {
     | '/formacion/liderazgo-pedagogico'
     | '/formacion/pei'
     | '/formacion/pmi'
+    | '/formacion/ruta-atencion-integral'
     | '/formacion/steam-ia'
     | '/formacion/steam-robotica'
     | '/formacion/talleres-pmi'
@@ -895,6 +907,7 @@ export interface FileRouteTypes {
     | '/formacion/liderazgo-pedagogico'
     | '/formacion/pei'
     | '/formacion/pmi'
+    | '/formacion/ruta-atencion-integral'
     | '/formacion/steam-ia'
     | '/formacion/steam-robotica'
     | '/formacion/talleres-pmi'
@@ -963,6 +976,7 @@ export interface RootRouteChildren {
   FormacionLiderazgoPedagogicoRoute: typeof FormacionLiderazgoPedagogicoRoute
   FormacionPeiRoute: typeof FormacionPeiRoute
   FormacionPmiRoute: typeof FormacionPmiRoute
+  FormacionRutaAtencionIntegralRoute: typeof FormacionRutaAtencionIntegralRoute
   FormacionSteamIaRoute: typeof FormacionSteamIaRoute
   FormacionSteamRoboticaRoute: typeof FormacionSteamRoboticaRoute
   FormacionTalleresPmiRoute: typeof FormacionTalleresPmiRoute
@@ -1346,6 +1360,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FormacionPmiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/formacion/ruta-atencion-integral': {
+      id: '/formacion/ruta-atencion-integral'
+      path: '/formacion/ruta-atencion-integral'
+      fullPath: '/formacion/ruta-atencion-integral'
+      preLoaderRoute: typeof FormacionRutaAtencionIntegralRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/formacion/steam-ia': {
       id: '/formacion/steam-ia'
       path: '/formacion/steam-ia'
@@ -1590,6 +1611,7 @@ const rootRouteChildren: RootRouteChildren = {
   FormacionLiderazgoPedagogicoRoute: FormacionLiderazgoPedagogicoRoute,
   FormacionPeiRoute: FormacionPeiRoute,
   FormacionPmiRoute: FormacionPmiRoute,
+  FormacionRutaAtencionIntegralRoute: FormacionRutaAtencionIntegralRoute,
   FormacionSteamIaRoute: FormacionSteamIaRoute,
   FormacionSteamRoboticaRoute: FormacionSteamRoboticaRoute,
   FormacionTalleresPmiRoute: FormacionTalleresPmiRoute,

@@ -1111,3 +1111,33 @@ html { scroll-padding-top: 170px; }
   .info-center, .info-branch { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   a { color: inherit; }
 }
+
+/* Ruta de Atención Integral */
+.ruta-block { margin: 1.25rem 0 1.75rem; }
+.ruta-block h2 { font-size: 1.15rem; margin-bottom: .75rem; color: var(--navy, #102a5c); }
+.ruta-components { list-style: none; padding: 0; display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.ruta-components li { display: flex; gap: .6rem; border: 1px solid #dbe3f0; border-radius: .6rem; padding: .7rem; background: #fff; }
+.ruta-components p { margin: .2rem 0; font-size: .92rem; }
+.ruta-components small, .ruta-entities small { color: #5b667a; }
+.ruta-step { flex: none; width: 1.8rem; height: 1.8rem; border-radius: 50%; display: grid; place-items: center; background: #102a5c; color: #fff; font-weight: 700; }
+.ruta-tabs { display: flex; gap: .4rem; margin-bottom: .6rem; flex-wrap: wrap; }
+.ruta-tab { border: 1px solid #c8d2e4; background: #fff; border-radius: 999px; padding: .35rem 1rem; font-weight: 600; cursor: pointer; }
+.ruta-tab[aria-selected="true"] { color: #fff; }
+.ruta-tab-I[aria-selected="true"] { background: #2e7d32; border-color: #2e7d32; }
+.ruta-tab-II[aria-selected="true"] { background: #e08a00; border-color: #e08a00; }
+.ruta-tab-III[aria-selected="true"] { background: #c62828; border-color: #c62828; }
+.ruta-type { border-left: 6px solid; border-radius: .5rem; padding: .8rem 1rem; background: #f8fafd; }
+.ruta-type-I { border-color: #2e7d32; } .ruta-type-II { border-color: #e08a00; } .ruta-type-III { border-color: #c62828; }
+.ruta-type h3 { margin: 0 0 .4rem; } .ruta-type h4 { margin: .6rem 0 .3rem; }
+.ruta-protocol li { margin: .25rem 0; }
+.ruta-entities { display: flex; gap: .5rem; align-items: flex-start; margin-top: .8rem; font-size: .92rem; }
+.ruta-entities svg { flex: none; width: 1.1rem; margin-top: .15rem; }
+.ruta-cases { display: grid; gap: .6rem; }
+.ruta-case { border: 1px solid #dbe3f0; border-radius: .6rem; padding: .7rem .9rem; background: #fff; }
+.ruta-case p { margin: 0 0 .5rem; }
+.ruta-case-options { display: flex; gap: .4rem; flex-wrap: wrap; }
+.ruta-case-options button { border: 1px solid #c8d2e4; background: #fff; border-radius: .4rem; padding: .3rem .8rem; cursor: pointer; font-weight: 600; }
+.ruta-case-options button:disabled { cursor: default; opacity: .75; }
+.ruta-case-options button.is-right { background: #e3f3e4; border-color: #2e7d32; opacity: 1; }
+.ruta-case-options button.is-wrong { background: #fde6e6; border-color: #c62828; opacity: 1; }
+.ruta-why { margin-top: .5rem !important; font-size: .92rem; }

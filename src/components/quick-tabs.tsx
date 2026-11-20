@@ -13,11 +13,16 @@ type Tab = { label: string; to: PagePath | '/docente-ia'; icon: LucideIcon; summ
 
 const SIM_LABELS: Record<string, string> = { 'ingreso-docente': 'Ingreso docente', 'ascenso-reubicacion': 'Ascenso y reubicación', rector: 'Rector', coordinador: 'Coordinador' };
 const shelf = (s: string, n = 8): Entry[] => libraryDocs.filter(d => d.shelf === s).slice(0, n).map(d => ({ label: d.title, to: '/biblioteca/ficha/$id', params: { id: d.id }, hint: d.categoria }));
+const KEY_LAWS = ['ley-115-1994', 'ley-1620-2013', 'decreto-1965-2013', 'decreto-1278-2002', 'ley-715-2001', 'decreto-1290-2009', 'decreto-1421-2017'];
+const keyLaws = (): Entry[] => [
+  ...KEY_LAWS.flatMap(id => libraryDocs.filter(d => d.id === id)).map(d => ({ label: d.title, to: '/biblioteca/ficha/$id', params: { id: d.id }, hint: d.categoria })),
+  { label: 'Ruta de Atención Integral (interactiva)', to: '/formacion/ruta-atencion-integral', hint: 'Convivencia' },
+];
 const count = (s: string) => libraryDocs.filter(d => d.shelf === s).length;
 
 function tabsFor(sims: readonly string[]): Tab[] {
   return [
-    { label: 'Legislación educativa', to: '/biblioteca/legislacion', icon: Scale, summary: 'Leyes, decretos y resoluciones del sector, con ficha, infografía y descarga en PDF.', entries: shelf('/biblioteca/legislacion'), more: `Ver las ${count('/biblioteca/legislacion')} normas` },
+    { label: 'Legislación educativa', to: '/biblioteca/legislacion', icon: Scale, summary: 'Leyes, decretos y resoluciones del sector, con ficha, infografía y descarga en PDF.', entries: keyLaws(), more: `Ver las ${count('/biblioteca/legislacion')} normas` },
     { label: 'Guías del MEN', to: '/biblioteca/guias-men', icon: BookMarked, summary: 'Guías y orientaciones del Ministerio de Educación Nacional.', entries: shelf('/biblioteca/guias-men'), more: `Ver las ${count('/biblioteca/guias-men')} guías` },
     { label: 'Bibliografía y recursos', to: '/biblioteca/recursos', icon: Library, summary: 'Documentos y recursos institucionales de consulta.', entries: shelf('/biblioteca/recursos'), more: `Ver los ${count('/biblioteca/recursos')} recursos` },
     { label: 'Videos educativos', to: '/biblioteca/videos', icon: Video, summary: 'Videos públicos del Ministerio de Educación, organizados por temática.', entries: videoThemes.map(t => ({ label: t.title, to: '/biblioteca/videos', hash: t.id, hint: `${t.videos.length} videos` })), more: 'Ver toda la videoteca' },
