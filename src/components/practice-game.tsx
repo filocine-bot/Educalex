@@ -21,7 +21,9 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
   const { progress, save, ready, signedIn } = useGameProgress();
   const premium = useMyPremium();
   const { isAdmin } = useAccount();
-  const locked = PREMIUM_LOCKED && !premium.has(profile);
+  const myLevel = premium.level(profile);
+  const lockedAt = (n: number) => PREMIUM_LOCKED && n > myLevel;
+  const locked = lockedAt(4);
   const mine = progress[bank] ?? emptyProfile();
   const [run, setRun] = useState<Run | null>(null);
   const [chosen, setChosen] = useState<number | null>(null);
@@ -115,7 +117,7 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
     const wrongIds = r.answers.filter(a => !a.correct).map(a => a.id);
     const map = errorMap(r.questions, wrongIds);
     const nextLevel = levels.find(l => l.number === r.level.number + 1);
-    const nextPlayable = nextLevel ? isLevelPlayable(nextLevel, (progress[bank] ?? mine), locked) : null;
+    const nextPlayable = nextLevel ? isLevelPlayable(nextLevel, (progress[bank] ?? mine), lockedAt(nextLevel.number)) : null;
     return <section className="game game-summary" aria-labelledby="game-summary-title">
       <div className={`game-result ${summary.passed ? "ok" : "bad"}`}>
         {summary.passed ? <Trophy aria-hidden="true" /> : <RotateCcw aria-hidden="true" />}
@@ -147,12 +149,12 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
     <div className="game-intro">
       <div className="game-intro-row"><h2 id="game-levels-title">Elige tu nivel</h2><p className="game-stats"><span><Star aria-hidden="true" /> {mine.points} puntos</span><span><Flame aria-hidden="true" /> Mejor racha {mine.bestStreak}</span><span><Medal aria-hidden="true" /> {mine.badges.length} insignias</span></p></div>
       <p className="game-hint">Explicación inmediata en cada respuesta. Supera un nivel con {Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
-      {PREMIUM_LOCKED && premium.has(profile) && <p className="game-launch">Tienes acceso premium a este perfil. ¡Gracias por apoyar EDUCALEX!</p>}
+      {PREMIUM_LOCKED && myLevel > 1 && <p className="game-launch">Tienes desbloqueado hasta el nivel {["Básico", "Intermedio", "Avanzado", "Experto"].at(myLevel - 1)} en este perfil. ¡Gracias por apoyar EDUCALEX!</p>}
       {!PREMIUM_LOCKED && <p className="game-launch">Lanzamiento: todos los niveles están abiertos gratis por tiempo limitado.</p>}
     </div>
     <ol className="game-levels">
       {levels.map(level => {
-        const status = isLevelPlayable(level, mine, locked);
+        const status = isLevelPlayable(level, mine, lockedAt(level.number));
         const best = mine.best[level.number];
         const done = mine.badges.includes(`nivel:${level.number}`);
         return <li key={level.number} className={`game-level ${status.playable ? "" : "is-locked"} ${done ? "is-done" : ""}`}>
@@ -163,11 +165,11 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
           </div>
           {status.playable
             ? <Button variant={done ? "outline" : "navy"} onClick={() => start(level)}>{done ? "Jugar de nuevo" : best !== undefined ? "Reintentar" : "Jugar"}</Button>
-            : <span className="game-lock"><Lock aria-hidden="true" /> {status.reason === "premium" ? "Requiere créditos" : `Supera el nivel ${level.number - 1}`}</span>}
+            : <span className="game-lock"><Lock aria-hidden="true" /> {status.reason === "premium" ? "Requiere plan" : `Supera el nivel ${level.number - 1}`}</span>}
         </li>;
       })}
     </ol>
-    {(locked || (isAdmin && !premium.has(profile))) && <>{!locked && <p className="game-launch">Vista de administración: compra de prueba (los demás usuarios aún no ven este recuadro).</p>}<BuyPremium profile={profile} returnPath={`/simulacros/${profile}`} /></>}
+    {(locked || (isAdmin && myLevel < 4)) && <>{!locked && <p className="game-launch">Vista de administración: compra de prueba (los demás usuarios aún no ven este recuadro).</p>}<BuyPremium profile={profile} returnPath={`/simulacros/${profile}`} /></>}
     {mine.badges.includes("nivel:1") && <p className="game-certificate"><Award aria-hidden="true" /> Ya superaste el nivel Básico. <Link to="/certificado" search={{ perfil: bank }}>Descarga tu constancia de participación</Link></p>}
     {mine.badges.length > 0 && <div className="game-badges">
       <h3><Medal aria-hidden="true" /> Mis insignias</h3>

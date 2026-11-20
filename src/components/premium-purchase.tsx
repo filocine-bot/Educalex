@@ -5,7 +5,7 @@ import { CreditCard, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "@/components/account-session";
 import { getMyPurchases, startCheckout } from "@/lib/payments.functions";
-import { products, productsCovering, purchasable } from "@/lib/payments";
+import { LAUNCH_BUYERS, offersFor, unlockedLevel } from "@/lib/payments";
 import type { SimulationProfile } from "@/lib/simulation-bank";
 
 const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
@@ -21,7 +21,7 @@ export function useMyPremium() {
     fetchPurchases().then(r => { if (alive) setOwned(r.products); }).catch(() => { /* sin compras o pagos no configurados */ });
     return () => { alive = false; };
   }, [user, fetchPurchases]);
-  return { owned, has: (profile: SimulationProfile) => productsCovering(profile).some(p => owned.includes(p)) };
+  return { owned, level: (profile: SimulationProfile) => unlockedLevel(owned, profile) };
 }
 
 /** Opciones de compra para desbloquear los niveles premium de un perfil. */
@@ -30,10 +30,10 @@ export function BuyPremium({ profile, returnPath }: { profile: SimulationProfile
   const checkout = useServerFn(startCheckout);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
-  const options = products.filter(p => p.profiles.includes(profile));
-  const forSale = options.filter(purchasable);
+  const { owned } = useMyPremium();
+  const forSale = offersFor(owned, profile);
 
-  if (!forSale.length) return <div className="premium-box"><p><Lock aria-hidden="true" /> Los niveles premium estarán a la venta muy pronto.</p></div>;
+  if (!forSale.length) return null;
   if (!user) return <div className="premium-box"><p><Lock aria-hidden="true" /> Para comprar el acceso premium, <Link to="/ingresar">inicia sesión</Link> o <Link to="/registro">crea una cuenta</Link>.</p></div>;
 
   async function buy(id: string) {
@@ -43,7 +43,8 @@ export function BuyPremium({ profile, returnPath }: { profile: SimulationProfile
   }
 
   return <div className="premium-box">
-    <h3><CreditCard aria-hidden="true" /> Desbloquea los niveles premium</h3>
+    <h3><CreditCard aria-hidden="true" /> Desbloquea más niveles</h3>
+    <p className="section-description">Precios de lanzamiento para las primeras {LAUNCH_BUYERS} compras. Cada plan incluye los niveles anteriores.</p>
     <ul>{forSale.map(p => <li key={p.id}>
       <div><strong>{p.title}</strong><small>{p.description}</small></div>
       <Button variant="navy" disabled={busy !== null} onClick={() => buy(p.id)}>{busy === p.id ? "Abriendo Wompi…" : `Comprar · ${cop(p.priceCOP!)}`}</Button>

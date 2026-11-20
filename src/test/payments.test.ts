@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { checkoutUrl, integritySignature, productsCovering, products, purchasable, verifyEvent, wompiApiBase } from "@/lib/payments";
+import { checkoutUrl, integritySignature, offersFor, products, purchasable, unlockedLevel, verifyEvent, wompiApiBase } from "@/lib/payments";
 
 const sha = (s: string) => createHash("sha256").update(s).digest("hex");
 
@@ -29,9 +29,25 @@ describe("pagos Wompi", () => {
     expect(wompiApiBase("pub_test_x")).toContain("sandbox");
     expect(wompiApiBase("pub_prod_x")).toContain("production");
   });
-  it("precios definidos: $29.900 por perfil y $49.900 completo", () => {
-    expect(products.filter(purchasable)).toHaveLength(5);
-    expect(products.find(p => p.id === "premium-todos")?.priceCOP).toBe(49900);
-    expect(productsCovering("rector")).toEqual(["premium-todos", "premium-rector"]);
+  it("precios de lanzamiento: Intermedio $29.900, Completo $49.900 y mejora por la diferencia", () => {
+    const forSale = products.filter(purchasable);
+    expect(forSale).toHaveLength(12);
+    expect(products.find(p => p.id === "intermedio-rector")?.priceCOP).toBe(29900);
+    expect(products.find(p => p.id === "completo-rector")?.priceCOP).toBe(49900);
+    expect(products.find(p => p.id === "mejora-rector")?.priceCOP).toBe(20000);
+    expect(purchasable(products.find(p => p.id === "premium-todos")!)).toBe(false);
+  });
+  it("cada plan desbloquea hasta su nivel y conserva compras anteriores", () => {
+    expect(unlockedLevel([], "rector")).toBe(1);
+    expect(unlockedLevel(["intermedio-rector"], "rector")).toBe(2);
+    expect(unlockedLevel(["intermedio-rector"], "coordinador")).toBe(1);
+    expect(unlockedLevel(["completo-rector"], "rector")).toBe(4);
+    expect(unlockedLevel(["premium-todos"], "coordinador")).toBe(4);
+    expect(unlockedLevel(["premium-rector"], "rector")).toBe(4);
+  });
+  it("ofrece solo lo que tiene sentido comprar", () => {
+    expect(offersFor([], "rector").map(p => p.id)).toEqual(["intermedio-rector", "completo-rector"]);
+    expect(offersFor(["intermedio-rector"], "rector").map(p => p.id)).toEqual(["mejora-rector"]);
+    expect(offersFor(["completo-rector"], "rector")).toEqual([]);
   });
 });

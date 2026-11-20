@@ -3,35 +3,46 @@ import type { SimulationProfile } from "@/lib/simulation-bank";
 
 export const WOMPI_PUBLIC_KEY = "pub_prod_4A8Op11I2dUFiwGesOZ8Mdx4HtDrLjFI";
 
-export type ProductId = "premium-todos" | `premium-${SimulationProfile}`;
-export type Product = { id: ProductId; title: string; description: string; profiles: SimulationProfile[]; priceCOP: number | null };
+export type PlanTier = "intermedio" | "completo" | "mejora";
+export type ProductId = "premium-todos" | `premium-${SimulationProfile}` | `${PlanTier}-${SimulationProfile}`;
+/** level = nivel más alto que desbloquea (1 Básico, 2 Intermedio, 3 Avanzado, 4 Experto). */
+export type Product = { id: ProductId; title: string; description: string; profiles: SimulationProfile[]; priceCOP: number | null; level: number; requires?: ProductId };
 
 export const PROFILES: SimulationProfile[] = ["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador"];
-const PROFILE_LABEL: Record<SimulationProfile, string> = { "ingreso-docente": "Ingreso docente", "ascenso-reubicacion": "Ascenso y reubicación", rector: "Rector", coordinador: "Coordinador" };
+export const PROFILE_LABEL: Record<SimulationProfile, string> = { "ingreso-docente": "Ingreso docente", "ascenso-reubicacion": "Ascenso y reubicación", rector: "Rector", coordinador: "Coordinador" };
 
 /**
- * Precios en pesos colombianos. null = aún sin definir (no se puede comprar).
- * Los define Enadis; cambiar aquí y publicar.
+ * Precios de lanzamiento en pesos colombianos (decisión de Enadis, 19 nov 2026).
+ * Aplican a las primeras 100 compras; después se actualizan aquí y en Planes y Términos.
+ * El nivel Básico es gratis. Cada plan incluye los niveles anteriores.
  */
-export const PRICES: Record<ProductId, number | null> = {
-  "premium-todos": 49900,
-  "premium-ingreso-docente": 29900,
-  "premium-ascenso-reubicacion": 29900,
-  "premium-rector": 29900,
-  "premium-coordinador": 29900,
-};
+export const PRICES = { intermedio: 29900, completo: 49900 } as const;
+export const UPGRADE_PRICE = PRICES.completo - PRICES.intermedio;
+export const LAUNCH_BUYERS = 100;
 
 export const products: Product[] = [
-  { id: "premium-todos", title: "Acceso Premium completo", description: "Niveles Intermedio, Avanzado y Experto de los cuatro perfiles.", profiles: PROFILES, priceCOP: PRICES["premium-todos"] },
-  ...PROFILES.map(p => ({ id: `premium-${p}` as ProductId, title: `Premium · ${PROFILE_LABEL[p]}`, description: `Niveles Intermedio, Avanzado y Experto del perfil ${PROFILE_LABEL[p]}.`, profiles: [p], priceCOP: PRICES[`premium-${p}` as ProductId] })),
+  ...PROFILES.flatMap(p => [
+    { id: `intermedio-${p}` as ProductId, title: `Plan Intermedio · ${PROFILE_LABEL[p]}`, description: `Nivel Intermedio del perfil ${PROFILE_LABEL[p]} y del núcleo común (el Básico es gratis).`, profiles: [p], priceCOP: PRICES.intermedio, level: 2 },
+    { id: `completo-${p}` as ProductId, title: `Plan Completo · ${PROFILE_LABEL[p]}`, description: `Niveles Intermedio, Avanzado y Experto del perfil ${PROFILE_LABEL[p]} y del núcleo común.`, profiles: [p], priceCOP: PRICES.completo, level: 4 },
+    { id: `mejora-${p}` as ProductId, title: `Pasar a Completo · ${PROFILE_LABEL[p]}`, description: `Si ya tienes el Plan Intermedio: suma los niveles Avanzado y Experto pagando solo la diferencia.`, profiles: [p], priceCOP: UPGRADE_PRICE, level: 4, requires: `intermedio-${p}` as ProductId },
+  ]),
+  // Productos anteriores: ya no se venden, pero conservan el acceso de quienes los compraron.
+  { id: "premium-todos", title: "Acceso Premium completo (anterior)", description: "Todos los niveles de los cuatro perfiles.", profiles: PROFILES, priceCOP: null, level: 4 },
+  ...PROFILES.map(p => ({ id: `premium-${p}` as ProductId, title: `Premium · ${PROFILE_LABEL[p]} (anterior)`, description: `Todos los niveles del perfil ${PROFILE_LABEL[p]}.`, profiles: [p], priceCOP: null, level: 4 })),
 ];
 
 export const getProduct = (id: string) => products.find(p => p.id === id);
 export const purchasable = (p: Product) => typeof p.priceCOP === "number" && p.priceCOP >= 1000;
 
-/** Productos que dan acceso premium a un perfil. */
-export function productsCovering(profile: SimulationProfile): ProductId[] {
-  return ["premium-todos", `premium-${profile}` as ProductId];
+/** Nivel más alto que la persona puede jugar en un perfil según sus compras (1 = solo el Básico gratis). */
+export function unlockedLevel(owned: readonly string[], profile: SimulationProfile): number {
+  return products.filter(p => p.profiles.includes(profile) && owned.includes(p.id)).reduce((max, p) => Math.max(max, p.level), 1);
+}
+
+/** Opciones de compra que tienen sentido para alguien con este nivel desbloqueado. */
+export function offersFor(owned: readonly string[], profile: SimulationProfile): Product[] {
+  const level = unlockedLevel(owned, profile);
+  return products.filter(p => p.profiles.length === 1 && p.profiles.includes(profile) && purchasable(p) && p.level > level && (p.requires ? owned.includes(p.requires) : !(level >= 2 && p.id.startsWith("completo-"))));
 }
 
 export function wompiApiBase(publicKey: string) {
