@@ -28,7 +28,7 @@ export const privacySections: LegalSection[] = [
       `Dirección de correspondencia: ${LEGAL_OWNER.address}.`,
       `Correo para consultas y reclamos sobre datos personales: ${LEGAL_OWNER.email}.`,
       `Teléfono: ${LEGAL_OWNER.phone}.`,
-      "Sitio web: https://educalex-six.vercel.app",
+      "Sitio web: https://www.educalex.co",
     ],
   },
   {

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { checkoutUrl, getProduct, integritySignature, newReference, purchasable, WOMPI_PUBLIC_KEY, wompiApiBase } from "@/lib/payments";
 
-const SITE = "https://educalex-six.vercel.app";
+const SITE = "https://www.educalex.co";
 
 /** Crea una orden y devuelve la URL del checkout de Wompi. */
 export const startCheckout = createServerFn({ method: "POST" })

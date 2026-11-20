@@ -35,7 +35,7 @@ function Ficha() {
       <h3>Puntos clave</h3><ul>{notes.points.map(p => <li key={p}>{p}</li>)}</ul>
       <h3>Aplicación pedagógica</h3><p>{notes.application}</p>
       <h3>Notas de verificación</h3><p>{doc.notas}</p>
-      <p className="info-small">Ficha elaborada por EDUCALEX con fines de estudio. No es un documento oficial ni asesoría jurídica. Fecha de descarga: {new Date().toLocaleDateString('es-CO')}. educalex-six.vercel.app</p>
+      <p className="info-small">Ficha elaborada por EDUCALEX con fines de estudio. No es un documento oficial ni asesoría jurídica. Fecha de descarga: {new Date().toLocaleDateString('es-CO')}. www.educalex.co</p>
     </section>
   </section>;
 }
