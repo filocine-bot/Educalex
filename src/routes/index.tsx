@@ -24,7 +24,7 @@ const totalVideos = videoThemes.reduce((n, t) => n + t.videos.length, 0);
 const stats = [
   { icon: Scale, value: libraryDocs.length, label: "normas y guías con infografía" },
   { icon: ClipboardCheck, value: totalQuestions, label: "preguntas tipo ICFES con explicación" },
-  { icon: GraduationCap, value: Object.keys(trainingCourses).length, label: "cursos de autoestudio" },
+  { icon: GraduationCap, value: Object.keys(trainingCourses).length + 1, label: "cursos de autoestudio" }, // + Guía 34 y PMI
   { icon: Video, value: totalVideos, label: "videos oficiales por temática" },
   { icon: Compass, value: dilemmas.length, label: "dilemas educativos interactivos" },
 ] as const;
