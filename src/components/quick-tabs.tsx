@@ -13,7 +13,7 @@ type Tab = { label: string; to: PagePath | '/docente-ia'; icon: LucideIcon; summ
 
 const SIM_LABELS: Record<string, string> = { 'ingreso-docente': 'Ingreso docente', 'ascenso-reubicacion': 'Ascenso y reubicación', rector: 'Rector', coordinador: 'Coordinador' };
 const shelf = (s: string, n = 8): Entry[] => libraryDocs.filter(d => d.shelf === s).slice(0, n).map(d => ({ label: d.title, to: '/biblioteca/ficha/$id', params: { id: d.id }, hint: d.categoria }));
-const KEY_LAWS = ['ley-115-1994', 'ley-1620-2013', 'decreto-1965-2013', 'decreto-1278-2002', 'ley-715-2001', 'decreto-1290-2009', 'decreto-1421-2017'];
+const KEY_LAWS = ['constitucion-1991', 'ley-115-1994', 'ley-1620-2013', 'decreto-1965-2013', 'decreto-1278-2002', 'ley-715-2001', 'decreto-1290-2009', 'decreto-1421-2017', 'ley-1098-2006', 'ley-1952-2019'];
 const keyLaws = (): Entry[] => [
   ...KEY_LAWS.flatMap(id => libraryDocs.filter(d => d.id === id)).map(d => ({ label: d.title, to: '/biblioteca/ficha/$id', params: { id: d.id }, hint: d.categoria })),
   { label: 'Ruta de Atención Integral (interactiva)', to: '/formacion/ruta-atencion-integral', hint: 'Convivencia' },

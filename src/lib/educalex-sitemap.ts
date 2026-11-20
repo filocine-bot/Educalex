@@ -163,6 +163,11 @@ const OFFICIAL_NOTE = "Fuente oficial localizada y verificada el 14 de noviembre
 const PENDING = "Fuente pendiente de verificación. No se ha incorporado un enlace porque todavía no se ha identificado y comprobado la dirección oficial exacta.";
 export const libraryDocs: LibraryDoc[] = [
   {
+    id: "constitucion-1991", title: "Constitución Política de 1991", nombreOficial: "Constitución Política de Colombia de 1991", tipo: "Constitución", entidad: "Asamblea Nacional Constituyente / Función Pública", anio: 1991,
+    fuenteUrl: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4125", fuenteConsultada: true,
+    descripcion: "Norma de normas. Consagra la educación como derecho de la persona y servicio público con función social, la idoneidad ética y pedagógica de los educadores, la prevalencia de los derechos de los niños y la carrera administrativa basada en el mérito.", notas: FP_NOTE + " Ha sido reformada por actos legislativos; consulta el texto vigente antes de citar.", categoria: "Fundamentos constitucionales", shelf: L, related: ["/concursos/ingreso-docente", "/concursos/rector", "/formacion/actualizacion-normativa"],
+  },
+  {
     id: "decreto-1278-2002", title: "Decreto Ley 1278 de 2002", nombreOficial: "Decreto 1278 de 2002 — Estatuto de Profesionalización Docente", tipo: "Decreto ley", entidad: "Presidencia de la República / Función Pública", anio: 2002,
     fuenteUrl: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=5353", fuenteConsultada: true,
     descripcion: "Regula relaciones del Estado con los educadores a su servicio y aborda ingreso, permanencia, ascenso, evaluación y retiro dentro de su ámbito de aplicación.",
@@ -199,6 +204,11 @@ export const libraryDocs: LibraryDoc[] = [
     descripcion: "Rigió el proceso 2025-2026: prueba pedagógica escrita, autoevaluación del desempeño, valoración de experiencia, zona de desempeño y movimientos en el escalafón. Según el MEN, más de 26.300 educadores aprobaron esa evaluación.", notas: MEN_NOTE + "Referente del proceso anterior. Para 2026-2027 el MEN publicó un proyecto de resolución; a la fecha de consulta no se había verificado una resolución definitiva. No uses fechas del proyecto como si fueran oficiales.", categoria: "Carrera docente", shelf: L, related: ["/concursos/ascenso-reubicacion", "/simulacros/ascenso-reubicacion"],
   },
   {
+    id: "ley-1952-2019", title: "Ley 1952 de 2019", nombreOficial: "Ley 1952 de 2019 — Código General Disciplinario", tipo: "Ley", entidad: "Congreso de la República / Función Pública", anio: 2019,
+    fuenteUrl: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=90324", fuenteConsultada: true,
+    descripcion: "Régimen disciplinario de los servidores públicos, incluidos docentes y directivos docentes oficiales. Derogó la Ley 734 de 2002 y fue reformado por la Ley 2094 de 2021.", notas: FP_NOTE + " Función Pública registra su entrada en vigencia el 9 de diciembre de 2021 y la reforma de la Ley 2094 de 2021.", categoria: "Carrera docente", shelf: L, related: ["/concursos/ingreso-docente", "/concursos/rector", "/concursos/coordinador"],
+  },
+  {
     id: "ley-115-1994", title: "Ley 115 de 1994", nombreOficial: "Ley 115 de 1994 — Ley General de Educación", tipo: "Ley", entidad: "Congreso de la República / Función Pública", anio: 1994,
     fuenteUrl: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=292", fuenteConsultada: true,
     descripcion: "Expone la regulación general del servicio educativo, sus fines, niveles, organización, comunidad educativa e instituciones.", notas: FP_NOTE, categoria: "Legislación educativa", shelf: L, related: ["/formacion/actualizacion-normativa", "/concursos/ingreso-docente", "/concursos/rector"],
@@ -227,6 +237,11 @@ export const libraryDocs: LibraryDoc[] = [
     id: "decreto-1290-2009", title: "Decreto 1290 de 2009", nombreOficial: "Decreto 1290 de 2009 — reglamenta la evaluación del aprendizaje y promoción de los estudiantes de básica y media", tipo: "Decreto reglamentario", entidad: "Ministerio de Educación Nacional / Función Pública", anio: 2009,
     fuenteUrl: "https://www1.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=35954", fuenteConsultada: true,
     descripcion: "Establece los ámbitos y propósitos de la evaluación de estudiantes, la escala de valoración nacional y el Sistema Institucional de Evaluación de los Estudiantes (SIEE), que cada establecimiento construye con su comunidad.", notas: FP_NOTE + "Expedido el 16 de abril de 2009 y compilado en el Decreto 1075 de 2015. Derogó el Decreto 230 de 2002.", categoria: "Legislación educativa", shelf: L, related: ["/formacion/evaluacion-formativa", "/concursos/ingreso-docente", "/concursos/coordinador"],
+  },
+  {
+    id: "guia-31", title: "Guía 31: evaluación anual de desempeño", nombreOficial: "Guía N.° 31 — Guía metodológica de evaluación anual de desempeño laboral de docentes y directivos docentes (Decreto Ley 1278 de 2002)", tipo: "Guía institucional", entidad: "Ministerio de Educación Nacional", anio: 2008,
+    fuenteUrl: "https://www.mineducacion.gov.co/1780/w3-article-397376.html", fuenteConsultada: true,
+    descripcion: "Orienta la evaluación anual de desempeño de los educadores del Decreto Ley 1278 de 2002, reglamentada por el Decreto 3782 de 2007 (compilado en el Decreto 1075 de 2015): proceso continuo, sistemático y basado en evidencias, con contribuciones individuales pactadas al inicio del año.", notas: MEN_NOTE + " La página del MEN reúne la Guía 31, los instrumentos y las directrices vigentes (actualizada en julio de 2026).", categoria: "Evaluación docente", shelf: G, related: ["/concursos/ascenso-reubicacion", "/concursos/ingreso-docente", "/concursos/rector"],
   },
   {
     id: "guia-34", title: "Guía 34 y Ruta de Mejoramiento Institucional", nombreOficial: "Referentes de calidad — índice institucional del MEN", tipo: "Índice de guías y orientaciones", entidad: "Ministerio de Educación Nacional", anio: null,
@@ -277,6 +292,11 @@ export const libraryDocs: LibraryDoc[] = [
     id: "orientaciones-inclusion", title: "Orientaciones del MEN sobre inclusión", nombreOficial: "Documento de orientaciones técnicas, administrativas y pedagógicas para la atención educativa a estudiantes con discapacidad en el marco de la educación inclusiva", tipo: "Guía institucional", entidad: "Ministerio de Educación Nacional", anio: 2017,
     fuenteUrl: "https://www.mineducacion.gov.co/portal/men/Publicaciones/Guias/360293:Documento-de-orientaciones-tecnicas-administrativas-y-pedagogicas-para-la-atencion-educativa-a-estudiantes-con-discapacidad-en-el-marco-de-la-educacion-inclusiva", fuenteConsultada: true,
     descripcion: "Documento del MEN que desarrolla el esquema de atención educativa para estudiantes con discapacidad: fundamentos normativos, caracterización, ajustes razonables y apoyos.", notas: MEN_NOTE + "El propio documento sugiere citarlo como Ministerio de Educación Nacional (2017).", categoria: "Inclusión", shelf: L, related: ["/formacion/inclusion-dua-piar"],
+  },
+  {
+    id: "ley-1098-2006", title: "Ley 1098 de 2006", nombreOficial: "Ley 1098 de 2006 — Código de la Infancia y la Adolescencia", tipo: "Ley", entidad: "Congreso de la República / Función Pública", anio: 2006,
+    fuenteUrl: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=22106", fuenteConsultada: true,
+    descripcion: "Establece la protección integral de niños, niñas y adolescentes: interés superior, corresponsabilidad de familia, sociedad y Estado, y obligaciones de las instituciones educativas.", notas: FP_NOTE + " Ha tenido modificaciones posteriores; revisa el texto actualizado antes de citar artículos.", categoria: "Convivencia", shelf: L, related: ["/formacion/ruta-atencion-integral", "/formacion/convivencia-escolar", "/concursos/coordinador"],
   },
   {
     id: "ley-1620-2013", title: "Ley 1620 de 2013", nombreOficial: "Ley 1620 de 2013 — Sistema Nacional de Convivencia Escolar", tipo: "Ley", entidad: "Congreso de la República / Función Pública", anio: 2013,

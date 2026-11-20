@@ -6,6 +6,33 @@ export type KeyPoint = { label: string; text: string; source: string };
 export type DocKeyPoints = { points: KeyPoint[]; forExam: string[] };
 
 export const docKeyPoints: Record<string, DocKeyPoints> = {
+  "constitucion-1991": {
+    points: [
+      { label: "Derecho y servicio público", text: "La educación es un derecho de la persona y un servicio público con función social.", source: "Art. 67" },
+      { label: "Idoneidad docente", text: "La enseñanza estará a cargo de personas de reconocida idoneidad ética y pedagógica.", source: "Art. 68" },
+      { label: "Derechos de los niños", text: "Los derechos de los niños prevalecen sobre los derechos de los demás.", source: "Art. 44" },
+      { label: "Carrera y mérito", text: "Los empleos del Estado son de carrera; el ingreso y el ascenso dependen del mérito.", source: "Art. 125" },
+    ],
+    forExam: ["Relacionar el concurso de méritos con el artículo 125 y la idoneidad del artículo 68."],
+  },
+  "ley-1098-2006": {
+    points: [
+      { label: "Interés superior", text: "Imperativo de garantizar la satisfacción integral y simultánea de todos los derechos de niños, niñas y adolescentes.", source: "Art. 8" },
+      { label: "Corresponsabilidad", text: "Familia, sociedad y Estado concurren para garantizar los derechos.", source: "Art. 10" },
+      { label: "Instituciones educativas", text: "Obligaciones especiales, éticas y complementarias, como proteger contra el maltrato y el acoso.", source: "Arts. 42 a 44" },
+      { label: "Sin sanciones crueles", text: "Se prohíben sanciones que afecten la dignidad o la integridad física, psicológica o moral.", source: "Art. 45" },
+    ],
+    forExam: ["Ante un caso con menores, el interés superior orienta la decisión."],
+  },
+  "guia-31": {
+    points: [
+      { label: "Quiénes", text: "Docentes y directivos docentes regidos por el Decreto Ley 1278 de 2002.", source: "Guía 31" },
+      { label: "Cómo", text: "Proceso continuo, sistemático y basado en evidencias durante todo el año escolar.", source: "Guía 31" },
+      { label: "Contribuciones individuales", text: "Se pactan con el evaluado al iniciar el proceso.", source: "Guía 31, anexo 5" },
+      { label: "Norma", text: "Reglamentada por el Decreto 3782 de 2007, compilado en el Decreto 1075 de 2015.", source: "MEN" },
+    ],
+    forExam: ["Distinguir evaluación anual de desempeño, periodo de prueba y evaluación para ascenso."],
+  },
   "ley-115-1994": {
     points: [
       { label: "Fines", text: "Trece fines de la educación, entre ellos la conciencia para conservar, proteger y mejorar el medio ambiente.", source: "Art. 5" },
