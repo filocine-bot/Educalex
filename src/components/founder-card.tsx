@@ -14,7 +14,7 @@ const highlights = [
 
 export function FounderCard({ compact = false }: { compact?: boolean }) {
   return <section className={`founder ${compact ? "founder-compact" : ""}`} aria-labelledby="founder-title">
-    <img src={photo} width={600} height={578} loading="lazy" alt="Dra. Enadis Ester Vargas Hernández, fundadora de EDUCALEX" className="founder-photo" />
+    <img src={photo} width={600} height={757} loading="lazy" alt="Dra. Enadis Ester Vargas Hernández, fundadora de EDUCALEX" className="founder-photo" />
     <div className="founder-body">
       <p className="founder-kicker">Quién crea EDUCALEX</p>
       <h2 id="founder-title">Dra. Enadis Ester Vargas Hernández</h2>

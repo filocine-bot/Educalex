@@ -1,7 +1,7 @@
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Menu, ChevronDown, UserRound, LogOut } from 'lucide-react';
+import { Menu, ChevronDown, UserRound, LogOut, Home } from 'lucide-react';
 import { useAccount } from './account-session';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from './ui/dropdown-menu';
@@ -51,7 +51,7 @@ export function SiteHeader() {
         <DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" className="profile-menu-trigger" data-active={headerNavigation.some(item => item.compact && active(item.to)) || institutionalLinks.some(item => active(item.to))}>Más<ChevronDown aria-hidden="true" /></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="header-menu-content"><div className="header-overflow-links">{headerNavigation.filter(item => item.compact).map(item => <MenuLink key={item.to} item={item} />)}<DropdownMenuSeparator /></div>{institutionalLinks.map(item => <MenuLink key={item.to} item={item} />)}</DropdownMenuContent></DropdownMenu>
       </nav>
       <div className="header-actions">{user ? <DropdownMenu><DropdownMenuTrigger asChild><Button variant="hero" aria-label="Opciones de Mi cuenta"><UserRound aria-hidden="true" /><span>Mi cuenta</span><ChevronDown aria-hidden="true" /></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="header-menu-content"><DropdownMenuLabel className="max-w-60 break-words">{query.data?.profile?.display_name || 'Mi cuenta'}</DropdownMenuLabel>{sessionItems}</DropdownMenuContent></DropdownMenu> : <><Button asChild variant="ghost" className="header-login"><Link to="/ingresar">Ingresar</Link></Button><Button asChild variant="hero"><Link to="/registro">Registrarse</Link></Button></>}</div>
-      <Link className="nav-item header-home-link" to="/" activeOptions={{ exact: true }}>Inicio</Link>
+      <Link className="nav-item header-home-link" to="/" activeOptions={{ exact: true }}><Home aria-hidden="true" className="header-home-icon" />Inicio</Link>
       <DropdownMenu><DropdownMenuTrigger asChild><Button className="mobile-menu-button" variant="heroOutline" aria-label="Abrir menú general"><Menu aria-hidden="true" /><span>Menú</span></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="header-menu-content mobile-header-menu"><DropdownMenuLabel>EDUCALEX</DropdownMenuLabel>{navItems.map(item => <MenuSection key={item.to} item={item} />)}{institutionalLinks.map(item => <MenuLink key={item.to} item={item} />)}<DropdownMenuSeparator />{sessionItems}</DropdownMenuContent></DropdownMenu>
     </div></div>
     <div className="profile-bar"><div className="site-container profile-bar-inner">

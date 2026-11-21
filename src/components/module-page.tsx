@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, CheckCircle2, Clock3, Lock } from "lucide-react";
+import { Home, ArrowRight, CheckCircle2, Clock3, Lock } from "lucide-react";
 import type { ReactNode } from "react";
 import { getPage, type PagePath } from "@/lib/educalex-sitemap";
 
@@ -9,7 +9,7 @@ export function ModulePage({ path, children, showItems = true, compact = false, 
   const parent = page.parent ? getPage(page.parent) : undefined;
   const content = <>
     <div className="subpage-header"><div className="site-container">
-      <nav className="crumbs" aria-label="Ruta de navegación"><Link to="/"><ArrowLeft /> Inicio</Link>{parent && page.parent && <> / <Link to={page.parent as PagePath}>{parent.title}</Link></>}</nav>
+      <nav className="crumbs" aria-label="Ruta de navegación"><Link to="/"><Home aria-hidden="true" /> Inicio</Link>{parent && page.parent && <> / <Link to={page.parent as PagePath}>{parent.title}</Link></>}</nav>
       <div className="eyebrow text-gold">{page.section.toUpperCase()}</div>
       <h1>{page.title}</h1>
       <p className="section-description">{page.description}</p>

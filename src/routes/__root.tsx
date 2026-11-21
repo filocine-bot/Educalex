@@ -12,6 +12,7 @@ import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { SiteHeader, SiteFooter } from "@/components/site-shell";
+import { HomeLauncher } from "@/components/home-launcher";
 import { AccountProvider } from "@/components/account-session";
 import { PracticeSessionProvider } from "@/components/practice-session";
 import { RecoveryNavigation } from '@/components/recovery-navigation';
@@ -137,7 +138,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <AccountProvider><SiteHeader />
       <PracticeSessionProvider><main><Outlet /></main></PracticeSessionProvider>
-      <SiteFooter /><EducatiaLauncher /></AccountProvider>
+      <SiteFooter /><HomeLauncher /><EducatiaLauncher /></AccountProvider>
     </QueryClientProvider>
   );
 }
