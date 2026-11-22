@@ -1328,3 +1328,6 @@ html { scroll-padding-top: 170px; }
 .whatsapp-launcher:focus-visible { outline: 3px solid #f2b705; outline-offset: 3px; }
 @media (max-width: 640px) { .whatsapp-launcher { width: 3.5rem; min-height: 3.5rem; padding: 0; justify-content: center; bottom: 5.5rem; } .whatsapp-launcher span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 @media print { .whatsapp-launcher { display: none; } }
+.certificate-footer { align-items: flex-end; }
+.certificate-signer { justify-items: center; }
+.certificate-signature { width: 13rem; height: auto; margin-bottom: -.6rem; }

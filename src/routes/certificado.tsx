@@ -8,6 +8,7 @@ import { useGameProgress } from "@/lib/game-progress";
 import { CERT_BANK_NAMES, certificateCode, isGameBankKey, passedLevels } from "@/lib/certificate";
 import { useAccount } from "@/components/account-session";
 import logo from "@/assets/educalex-logo-horizontal.webp";
+import firma from "@/assets/firma-enadis.png";
 
 const page = pages["/certificado"];
 export const Route = createFileRoute("/certificado")({
@@ -53,7 +54,7 @@ function Certificate() {
       <ul className="certificate-levels">{levels.map(l => <li key={l.number}><Award aria-hidden="true" /> {l.name} · mejor resultado {l.best} %</li>)}</ul>
       <p className="certificate-date">Expedida el {date}</p>
       <div className="certificate-footer">
-        <div><span className="certificate-sign">EDUCALEX</span><small>Academia Inteligente de Educación</small></div>
+        <div className="certificate-signer"><img src={firma} alt="Firma de la Dra. Enadis Ester Vargas Hernández" width={900} height={333} className="certificate-signature" /><span className="certificate-sign">Dra. Enadis Ester Vargas Hernández</span><small>Directora académica · EDUCALEX</small></div>
         <div><span className="certificate-code">{code}</span><small>Código de referencia</small></div>
       </div>
       <p className="certificate-note">Constancia de participación en prácticas originales no oficiales. No es un certificado académico ni acredita horas, títulos o competencias ante la CNSC, el MEN, el ICFES o las entidades territoriales.</p>
