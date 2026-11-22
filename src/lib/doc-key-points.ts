@@ -24,6 +24,24 @@ export const docKeyPoints: Record<string, DocKeyPoints> = {
     ],
     forExam: ["Ante un caso con menores, el interés superior orienta la decisión."],
   },
+  "ley-2383-2024": {
+    points: [
+      { label: "Objeto", text: "Promover de manera transversal la educación socioemocional en preescolar, primaria, básica y media.", source: "Ley 2383 de 2024, art. 1" },
+      { label: "Líneas", text: "Estudiantes, formación de educadores, relaciones institucionales y escuela socioemocional para familias.", source: "Art. 4" },
+      { label: "Etapas", text: "Diagnóstico, diseño de lineamientos, implementación y evaluación, a cargo del Comité Nacional de Convivencia Escolar.", source: "Arts. 5 y 6" },
+      { label: "Ley 1620", text: "Adiciona los numerales 11 a 14 al artículo 8 de la Ley 1620 de 2013.", source: "Art. 7" },
+    ],
+    forExam: ["Relacionar la educación socioemocional con la convivencia escolar y la participación de las familias."],
+  },
+  "conpes-4188-2026": {
+    points: [
+      { label: "Qué es", text: "Declara de importancia estratégica el Plan Nacional de Formación Integral 2026–2036.", source: "MEN, 6 abr. 2026" },
+      { label: "Inversión", text: "$2,04 billones durante diez años.", source: "MEN" },
+      { label: "Líneas", text: "Centros de interés, PTAFI 3.0, formación docente, tiempo escolar y fortalecimiento institucional.", source: "MEN" },
+      { label: "Metas", text: "5.500 colegios, 3,65 millones de estudiantes y 82.000 docentes.", source: "MEN" },
+    ],
+    forExam: ["Distinguir un documento CONPES (política pública) de una ley o un decreto."],
+  },
   "guia-31": {
     points: [
       { label: "Quiénes", text: "Docentes y directivos docentes regidos por el Decreto Ley 1278 de 2002.", source: "Guía 31" },
