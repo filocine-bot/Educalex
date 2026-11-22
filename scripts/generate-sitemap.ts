@@ -5,7 +5,7 @@ import { libraryDocs, pages } from "../src/lib/educalex-sitemap";
 
 const SITE = "https://www.educalex.co";
 // Páginas personales, de administración o de acceso: no se indexan.
-const PRIVATE = /^\/(mi-|mis-|admin|ingresar|registro|certificado|pago|reset-password)/;
+const PRIVATE = /^\/(mi-|mis-|admin|ingresar|registro|certificado|verificar|pago|reset-password)/;
 
 export function sitemapPaths(): string[] {
   const sections = ["/", "/nosotros", "/docente-ia", ...Object.keys(pages)].filter(p => !PRIVATE.test(p));

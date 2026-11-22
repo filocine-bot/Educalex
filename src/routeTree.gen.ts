@@ -27,6 +27,7 @@ import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as TerminosRouteImport } from './routes/terminos'
+import { Route as VerificarRouteImport } from './routes/verificar'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedMiCuentaRouteImport } from './routes/_authenticated/mi-cuenta'
 import { Route as AuthenticatedMiPanelRouteImport } from './routes/_authenticated/mi-panel'
@@ -173,6 +174,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const TerminosRoute = TerminosRouteImport.update({
   id: '/terminos',
   path: '/terminos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerificarRoute = VerificarRouteImport.update({
+  id: '/verificar',
+  path: '/verificar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -510,6 +516,7 @@ export interface FileRoutesByFullPath {
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terminos': typeof TerminosRoute
+  '/verificar': typeof VerificarRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/mi-cuenta': typeof AuthenticatedMiCuentaRoute
   '/mi-panel': typeof AuthenticatedMiPanelRoute
@@ -587,6 +594,7 @@ export interface FileRoutesByTo {
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terminos': typeof TerminosRoute
+  '/verificar': typeof VerificarRoute
   '/mi-cuenta': typeof AuthenticatedMiCuentaRoute
   '/mi-panel': typeof AuthenticatedMiPanelRoute
   '/mi-progreso': typeof AuthenticatedMiProgresoRoute
@@ -665,6 +673,7 @@ export interface FileRoutesById {
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terminos': typeof TerminosRoute
+  '/verificar': typeof VerificarRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/mi-cuenta': typeof AuthenticatedMiCuentaRoute
   '/_authenticated/mi-panel': typeof AuthenticatedMiPanelRoute
@@ -744,6 +753,7 @@ export interface FileRouteTypes {
     | '/registro'
     | '/reset-password'
     | '/terminos'
+    | '/verificar'
     | '/admin'
     | '/mi-cuenta'
     | '/mi-panel'
@@ -821,6 +831,7 @@ export interface FileRouteTypes {
     | '/registro'
     | '/reset-password'
     | '/terminos'
+    | '/verificar'
     | '/mi-cuenta'
     | '/mi-panel'
     | '/mi-progreso'
@@ -898,6 +909,7 @@ export interface FileRouteTypes {
     | '/registro'
     | '/reset-password'
     | '/terminos'
+    | '/verificar'
     | '/_authenticated/admin'
     | '/_authenticated/mi-cuenta'
     | '/_authenticated/mi-panel'
@@ -977,6 +989,7 @@ export interface RootRouteChildren {
   RegistroRoute: typeof RegistroRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   TerminosRoute: typeof TerminosRoute
+  VerificarRoute: typeof VerificarRoute
   ApiDocenteIaRoute: typeof ApiDocenteIaRoute
   BibliotecaGuiasMenRoute: typeof BibliotecaGuiasMenRoute
   BibliotecaLegislacionRoute: typeof BibliotecaLegislacionRoute
@@ -1146,6 +1159,13 @@ declare module '@tanstack/react-router' {
       path: '/terminos'
       fullPath: '/terminos'
       preLoaderRoute: typeof TerminosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verificar': {
+      id: '/verificar'
+      path: '/verificar'
+      fullPath: '/verificar'
+      preLoaderRoute: typeof VerificarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -1628,6 +1648,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegistroRoute: RegistroRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   TerminosRoute: TerminosRoute,
+  VerificarRoute: VerificarRoute,
   ApiDocenteIaRoute: ApiDocenteIaRoute,
   BibliotecaGuiasMenRoute: BibliotecaGuiasMenRoute,
   BibliotecaLegislacionRoute: BibliotecaLegislacionRoute,
