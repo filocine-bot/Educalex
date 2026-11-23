@@ -1344,3 +1344,14 @@ html { scroll-padding-top: 170px; }
 .verify-card dt { font-weight: 700; color: var(--brand-blue); }
 .verify-card dd { margin: 0; }
 .verify-card ul { margin: 0; padding-left: 18px; }
+
+/* QR para compartir la página */
+.share-qr { display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: center; margin-top: 48px; margin-bottom: 48px; padding: 28px; border-radius: 20px; background: color-mix(in oklab, var(--brand-blue) 5%, white); border: 1px solid color-mix(in oklab, var(--brand-blue) 18%, white); }
+.share-qr-img { width: 220px; height: 220px; padding: 12px; background: #fff; border-radius: 16px; box-shadow: 0 10px 24px -18px rgb(0 0 0 / .5); }
+.share-qr h2 { font-family: Poppins, sans-serif; font-size: clamp(20px, 2.4vw, 26px); color: var(--brand-blue); margin: 4px 0 8px; }
+.share-qr p { margin: 0 0 12px; line-height: 1.55; }
+.share-qr .hx-kicker { display: inline-flex; align-items: center; gap: 6px; color: #8a5d00; font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; margin: 0; }
+.share-qr .hx-kicker svg { width: 16px; height: 16px; }
+.share-qr-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.share-qr-actions svg { width: 18px; height: 18px; }
+@media (max-width: 700px) { .share-qr { grid-template-columns: 1fr; justify-items: center; text-align: center; } .share-qr-actions { justify-content: center; } .share-qr-img { width: 200px; height: 200px; } }

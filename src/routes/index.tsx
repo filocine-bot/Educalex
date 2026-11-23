@@ -11,6 +11,7 @@ import { videoThemes } from "@/lib/official-videos";
 import { trainingCourses } from "@/lib/training-courses";
 import { LAUNCH_BUYERS, PRICES, UPGRADE_PRICE } from "@/lib/payments";
 import { FounderCard } from "@/components/founder-card";
+import { ShareQr } from "@/components/share-qr";
 import { dilemmas } from "@/lib/dilemmas";
 
 export const Route = createFileRoute("/")({ head: () => pageHead("Preparación para el concurso docente 2026 en Colombia", "Simulacros tipo ICFES por niveles, normas verificadas en fuentes oficiales y cursos para docentes, coordinadores y rectores. Concurso CNSC, ascenso y reubicación. Empieza gratis."), component: Index });
@@ -153,6 +154,7 @@ function Index() {
       <ol className="hx-steps-list">{steps.map((st, i) => <li key={st.title}><span className="hx-step-num">{i + 1}</span><st.icon aria-hidden="true" className="hx-step-icon" /><strong>{st.title}</strong><span>{st.text}</span></li>)}</ol>
     </section>
 
+    <ShareQr />
     <section className="hx-banner"><div className="site-container hx-banner-inner"><p>En EDUCALEX, tu vocación se potencia con <span className="text-gold">conocimiento</span></p><Button variant="hero" asChild><Link to="/registro"><Rocket /> Transforma tu futuro y el de la educación en Colombia</Link></Button></div></section>
   </>;
 }
