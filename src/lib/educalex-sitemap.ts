@@ -105,7 +105,7 @@ export const pages = {
   "/admin/usuarios": { section: "Administración", parent: "/admin", title: "Usuarios", description: "Gestión de usuarios y roles.", restricted: "admin", notice: ADMIN },
   "/admin/cursos": { section: "Administración", parent: "/admin", title: "Cursos", description: "Gestión del catálogo de cursos.", restricted: "admin", notice: ADMIN },
   "/admin/contenidos": { section: "Administración", parent: "/admin", title: "Contenidos y lecciones", description: "Gestión de unidades, lecciones, videos y recursos.", restricted: "admin", notice: ADMIN },
-  "/admin/preguntas": { section: "Administración", parent: "/admin", title: "Banco de preguntas", description: "Gestión de preguntas y respuestas protegidas.", restricted: "admin", notice: ADMIN },
+  "/admin/preguntas": { section: "Administración", parent: "/admin", title: "Revisión del banco de preguntas", description: "Las 200 preguntas por perfil y nivel, con respuesta, explicación y norma, para aprobarlas o marcar ajustes.", restricted: "admin" },
   "/admin/simulacros": { section: "Administración", parent: "/admin", title: "Simulacros", description: "Configuración de simulacros por concurso.", restricted: "admin", notice: ADMIN },
   "/admin/biblioteca": { section: "Administración", parent: "/admin", title: "Documentos", description: "Gestión y verificación de documentos de la biblioteca.", restricted: "admin", notice: ADMIN },
   "/admin/certificados": { section: "Administración", parent: "/admin", title: "Certificados", description: "Emisión y consulta de certificados.", restricted: "admin", notice: ADMIN },
