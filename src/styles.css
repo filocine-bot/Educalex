@@ -1463,3 +1463,8 @@ html { scroll-padding-top: 170px; }
 .hx-goals-free svg { width: 18px; height: 18px; color: #8a5d00; flex: none; }
 /* WhatsApp flotante: visible en celular; en pantallas grandes ya está en el encabezado */
 @media (min-width: 1060px) { .whatsapp-launcher { display: none; } }
+/* Redes del pie más visibles y sin quedar tapadas por los botones flotantes */
+.footer-social-wrap { flex-basis: 100%; display: grid; gap: 10px; padding-top: 18px; border-top: 1px solid rgb(255 255 255 / .18); }
+.footer-social-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: #f2b705; }
+.footer-social a { background: rgb(255 255 255 / .08); font-size: 14px; }
+@media (max-width: 1059px) { .site-footer { padding-bottom: 170px; } }
