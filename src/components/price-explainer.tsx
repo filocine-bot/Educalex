@@ -1,7 +1,7 @@
 import { ArrowRight, Info } from "lucide-react";
 import { LAUNCH_BUYERS, PRICES, UPGRADE_PRICE } from "@/lib/payments";
 
-const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
+const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }) + " COP";
 
 /** Explica en lenguaje sencillo cómo funcionan los precios y la mejora al Plan Completo. */
 export function PriceExplainer() {
@@ -10,14 +10,14 @@ export function PriceExplainer() {
     <ul>
       <li><strong>Cada plan es para un perfil:</strong> Ingreso docente, Ascenso, Rector o Coordinador. Siempre incluye el núcleo común (lectura crítica, razonamiento cuantitativo y competencias).</li>
       <li><strong>Pagas una sola vez.</strong> No es una suscripción y no se renueva.</li>
-      <li><strong>Precio de lanzamiento</strong> para las primeras {LAUNCH_BUYERS} compras. Quien compra conserva su acceso aunque después cambie el precio.</li>
+      <li><strong>Precios en pesos colombianos (COP).</strong> Son de lanzamiento: válidos para las primeras {LAUNCH_BUYERS} compras. Quien compra conserva su acceso aunque después cambie el precio.</li>
     </ul>
     <div className="price-upgrade">
-      <p className="price-upgrade-title">¿Ya tienes el Plan Intermedio? Mejora al Completo pagando solo la diferencia</p>
+      <p className="price-upgrade-title">¿Ya tienes el Intermedio? Pasa al Completo pagando solo {cop(UPGRADE_PRICE)} más</p>
       <div className="price-upgrade-steps" aria-label="Ejemplo de la mejora">
         <span>Plan Intermedio<br /><strong>{cop(PRICES.intermedio)}</strong></span>
         <ArrowRight aria-hidden="true" />
-        <span>Mejora<br /><strong>+ {cop(UPGRADE_PRICE)}</strong></span>
+        <span>Pasas al Completo<br /><strong>+ {cop(UPGRADE_PRICE)}</strong></span>
         <ArrowRight aria-hidden="true" />
         <span>Plan Completo<br /><strong>{cop(PRICES.completo)} en total</strong></span>
       </div>

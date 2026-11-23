@@ -16,7 +16,7 @@ export function SampleQuestion() {
   const done = picked !== null;
   const right = picked === SAMPLE.correct;
   return <>
-    <button type="button" className="hx-hero-ghost" onClick={() => { setPicked(null); setOpen(true); }} aria-haspopup="dialog"><Play aria-hidden="true" /> Haz una pregunta de prueba</button>
+    <button type="button" className="hx-hero-ghost" onClick={() => { setPicked(null); setOpen(true); }} aria-haspopup="dialog"><Play aria-hidden="true" /> Prueba una pregunta gratis</button>
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sample-q">
         <p className="sample-q-tag">Pregunta de prueba · Nivel Básico · {SAMPLE.competency}</p>

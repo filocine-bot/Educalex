@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
+import { META_PIXEL_ID } from "@/lib/site-config";
 
 /**
  * Espacio para el píxel de Meta (Facebook/Instagram).
  * No hace nada hasta que se configure VITE_META_PIXEL_ID en Vercel.
  * Cuando está configurado, solo se carga si la persona acepta las cookies de medición.
  */
-const PIXEL_ID = (import.meta.env["VITE_META_PIXEL_ID"] as string | undefined)?.trim() ?? "";
+const PIXEL_ID = (META_PIXEL_ID || (import.meta.env["VITE_META_PIXEL_ID"] as string | undefined) || "").trim();
 const KEY = "educalex-cookies-medicion";
 
 type Fbq = ((...args: unknown[]) => void) & { queue?: unknown[]; loaded?: boolean; version?: string; callMethod?: (...a: unknown[]) => void; push?: unknown };

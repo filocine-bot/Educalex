@@ -16,6 +16,7 @@ import { PriceExplainer } from "@/components/price-explainer";
 import { FaqList } from "@/components/faq-list";
 import { faqs } from "@/lib/faq";
 import { SampleQuestion } from "@/components/sample-question";
+import { PresentationVideo } from "@/components/presentation-video";
 import { dilemmas } from "@/lib/dilemmas";
 
 export const Route = createFileRoute("/")({ head: () => pageHead("Preparación para el concurso docente 2026 en Colombia", "Simulacros tipo ICFES por niveles, normas verificadas en fuentes oficiales y cursos para docentes, coordinadores y rectores. Concurso CNSC, ascenso y reubicación. Empieza gratis."), component: Index });
@@ -41,11 +42,11 @@ const tryNow = [
   { to: "/formacion/dilemas-educativos", icon: Compass, tag: `${dilemmas.length} dilemas`, title: "Dilemas educativos", text: "Decide y mira las consecuencias de cada opción.", tone: "green" },
   { to: "/docente-ia", icon: Bot, tag: "Con voz", title: "Pregúntale a EducatIA", text: "Resuelve dudas de normas y pedagogía.", tone: "gold" },
 ] as const;
-const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
+const cop = (n: number) => `${n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 })} COP`;
 const priceCards = [
-  { name: "Gratis", price: "$0", note: "Para empezar hoy", items: ["Nivel Básico de todos los perfiles", "Simulacro completo con tiempo", "Biblioteca, cursos, videos y dilemas", "Constancia de participación"], cta: "Empieza gratis", to: "/registro", featured: false },
+  { name: "Gratis", price: "$0 COP", note: "Para empezar hoy", items: ["Nivel Básico de todos los perfiles", "Simulacro completo con tiempo", "Biblioteca, cursos, videos y dilemas", "Constancia de participación"], cta: "Empieza gratis", to: "/registro", featured: false },
   { name: "Plan Intermedio", price: cop(PRICES.intermedio), note: "Pago único por perfil", items: ["Todo lo gratuito", "Nivel Intermedio del perfil y del núcleo común", "Mapa de errores e insignias"], cta: "Ver planes", to: "/planes", featured: false },
-  { name: "Plan Completo", price: cop(PRICES.completo), note: "Pago único por perfil", items: ["Niveles Intermedio, Avanzado y Experto", "Del perfil y del núcleo común", `¿Ya tienes el Intermedio? Mejora por ${cop(UPGRADE_PRICE)}`], cta: "Ver planes", to: "/planes", featured: true },
+  { name: "Plan Completo", price: cop(PRICES.completo), note: "Pago único por perfil", items: ["Niveles Intermedio, Avanzado y Experto", "Del perfil y del núcleo común", `¿Ya tienes el Intermedio? Pasa al Completo pagando solo ${cop(UPGRADE_PRICE)} más`], cta: "Ver planes", to: "/planes", featured: true },
   { name: "Paquete directivo", price: cop(PRICES.directivo), note: "Rector + Coordinador", items: ["Plan Completo de los dos perfiles", `Ahorras ${cop(2 * PRICES.completo - PRICES.directivo)}`, "Pago único, sin renovación"], cta: "Ver planes", to: "/planes", featured: false },
 ] as const;
 const steps = [
@@ -91,10 +92,13 @@ function Index() {
       </div>
     </section>
 
+    <PresentationVideo />
+
     <section className="site-container hx-goals" aria-labelledby="hx-goals-title">
       <h2 id="hx-goals-title" className="sr-only">Elige tu preparación</h2>
+      <p className="hx-goals-free"><Sparkles aria-hidden="true" /> El nivel Básico de los cuatro perfiles es gratis. Elige el tuyo:</p>
       {routes.map(r => <article key={r.title} className={`hx-goal hx-tone-${r.tone}`}>
-        <div className="hx-goal-band"><span className="hx-goal-icon"><r.icon aria-hidden="true" /></span><span className="hx-goal-badge">Nivel Básico gratis</span></div>
+        <div className="hx-goal-band"><span className="hx-goal-icon"><r.icon aria-hidden="true" /></span></div>
         <div className="hx-goal-body">
           <h3><Link to={r.to}>{r.title}</Link></h3>
           <p>{r.text}</p>
@@ -137,7 +141,7 @@ function Index() {
     </section>
 
     <section className="site-container hx-prices" aria-labelledby="hx-prices-title">
-      <div className="hx-section-head"><Award className="text-gold" aria-hidden="true" /><div><h2 id="hx-prices-title">Planes y precios</h2><p>Precios de lanzamiento para las primeras {LAUNCH_BUYERS} compras. Pago único con Wompi, sin suscripción.</p></div></div>
+      <div className="hx-section-head"><Award className="text-gold" aria-hidden="true" /><div><h2 id="hx-prices-title">Planes y precios</h2><p>Precios de lanzamiento en pesos colombianos (COP), válidos para las primeras {LAUNCH_BUYERS} compras. Pago único con Wompi, sin suscripción.</p></div></div>
       <div className="hx-price-grid">{priceCards.map(c => <article key={c.name} className={`hx-price ${c.featured ? "is-featured" : ""}`}>
         {c.featured && <span className="hx-price-flag">Más completo</span>}
         <h3>{c.name}</h3>
@@ -159,12 +163,12 @@ function Index() {
       <ol className="hx-steps-list">{steps.map((st, i) => <li key={st.title}><span className="hx-step-num">{i + 1}</span><st.icon aria-hidden="true" className="hx-step-icon" /><strong>{st.title}</strong><span>{st.text}</span></li>)}</ol>
     </section>
 
+    <ShareQr />
     <section className="site-container hx-faq" aria-labelledby="hx-faq-title">
       <div className="hx-section-head"><HelpCircle className="text-gold" aria-hidden="true" /><div><h2 id="hx-faq-title">Preguntas frecuentes</h2><p>Lo que más nos preguntan antes de empezar.</p></div></div>
       <FaqList items={faqs.filter(f => f.home)} />
       <Link to="/preguntas-frecuentes" className="hx-faq-more">Ver todas las preguntas <ArrowRight aria-hidden="true" /></Link>
     </section>
-    <ShareQr />
     <section className="hx-banner"><div className="site-container hx-banner-inner"><p>En EDUCALEX, tu vocación se potencia con <span className="text-gold">conocimiento</span></p><Button variant="hero" asChild><Link to="/registro"><Rocket /> Transforma tu futuro y el de la educación en Colombia</Link></Button></div></section>
   </>;
 }
