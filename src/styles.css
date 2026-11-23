@@ -1562,3 +1562,7 @@ html { scroll-padding-top: 170px; }
 .site-search-results small { font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: #8a5d00; font-weight: 700; }
 .site-search-results strong { color: var(--brand-blue); }
 .site-search-results span { font-size: 13.5px; color: var(--muted-foreground); line-height: 1.4; }
+.competency-card.is-link { cursor: pointer; transition: transform .15s, box-shadow .15s, border-color .15s; }
+.competency-card.is-link:hover, .competency-card.is-link:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15,47,92,.14); border-color: var(--brand-blue); outline: none; }
+.competency-go { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 8px 12px; border-radius: 10px; background: var(--brand-blue); color: #fff; font-weight: 700; font-size: 13.5px; }
+.competency-go svg { width: 16px; height: 16px; }
