@@ -1,3 +1,4 @@
+import { ExamInfographic } from "@/components/exam-infographic";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowRight, Trophy, ChartNoAxesCombined, Users, Settings, GraduationCap, FileText, CheckCircle2, BookOpen, ClipboardCheck, Scale, Rocket, Video, CalendarClock, ExternalLink, Play, Bot, Compass, UserPlus, Award, Sparkles, HelpCircle } from "lucide-react";
@@ -155,6 +156,7 @@ function Index() {
 
     <section className="site-container hx-news" aria-labelledby="hx-news-title">
       <div className="hx-news-head"><CalendarClock className="text-gold" /><div><h2 id="hx-news-title">Novedades verificadas del concurso 2026</h2><p>Revisadas en fuentes oficiales el 14 de noviembre de 2026. Confirma siempre en SIMO y en el micrositio de la CNSC.</p></div></div>
+      <ExamInfographic />
       <div className="hx-news-grid">{news.map(n => <a key={n.title} href={n.href} target="_blank" rel="noopener noreferrer" className="hx-news-item"><span className="hx-news-meta">{n.source} · {n.date}</span><strong>{n.title}</strong><span>{n.text}</span><span className="hx-news-link">Ver fuente oficial <ExternalLink className="size-3.5" /></span></a>)}</div>
     </section>
 
