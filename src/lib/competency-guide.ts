@@ -7,7 +7,7 @@ export type CompetencyGuide = { process: string; blocks: TestBlock[]; sources: s
 // Información verificada el 19 nov 2026. Concurso de ingreso: Decreto 2038 de 2016 (prueba eliminatoria 60/70) y
 // proyecto de Anexo Técnico / proyecto de decreto 2026 publicados para comentarios (componentes mínimos).
 // Ascenso: Resolución MEN 018987 de 2025 (instrumentos y puntajes).
-const PEDAGOGIA_NORMAS = "Las 40 situaciones de este simulacro (legislación educativa, evaluación, inclusión, convivencia, gestión), en 4 niveles.";
+const PEDAGOGIA_NORMAS = "Las situaciones de este simulacro (legislación educativa, evaluación, inclusión, convivencia, gestión), en 4 niveles.";
 const concurso = (cargo: "docente" | "directivo"): CompetencyGuide => ({
   process: `Concurso de méritos de la CNSC para ${cargo === "docente" ? "docentes de aula" : "directivos docentes (rector y coordinador)"}`,
   blocks: [

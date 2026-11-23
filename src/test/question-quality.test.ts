@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { getLibraryDoc, getPage } from "@/lib/educalex-sitemap";
 import { ingresoDocenteV3 } from "@/lib/bank-v3/ingreso-docente";
 import { ascensoReubicacionV3 } from "@/lib/bank-v3/ascenso-reubicacion";
 import { rectorV3 } from "@/lib/bank-v3/rector";
 import { coordinadorV3 } from "@/lib/bank-v3/coordinador";
 import { nucleoComunV3 } from "@/lib/bank-v3/nucleo-comun";
-import { levelsFor } from "@/lib/game-engine";
+import { levelsFor, questionsFor } from "@/lib/game-engine";
+import { ingresoDocenteAmpliacion } from "@/lib/bank-v3/ampliacion-ingreso-docente";
 
 // Control de calidad tipo ICFES: contexto + tarea + cuatro opciones homogéneas; complejidad creciente por nivel.
 const banks = { "ingreso-docente": ingresoDocenteV3, "ascenso-reubicacion": ascensoReubicacionV3, rector: rectorV3, coordinador: coordinadorV3, "nucleo-comun": nucleoComunV3 };
@@ -41,8 +43,43 @@ describe.each(Object.entries(banks))("calidad del banco %s", (_, qs) => {
   });
 });
 
+// Niveles del modo juego: los perfiles ampliados tienen 10 · 20 · 30 · 40 preguntas; los demás, 10 por nivel.
+const SIZES: Record<string, number[]> = { "ingreso-docente": [10, 20, 30, 40] };
 it.each(["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador", "nucleo-comun"] as const)("el juego arma cada nivel de %s con su complejidad", profile => {
   const levels = levelsFor(profile);
   expect(levels).toHaveLength(4);
-  levels.forEach(l => { expect(l.questions).toHaveLength(10); expect(l.questions.every(q => q.level === l.number)).toBe(true); });
+  const sizes = SIZES[profile] ?? [10, 10, 10, 10];
+  levels.forEach((l, i) => { expect(l.questions).toHaveLength(sizes[i]!); expect(l.questions.every(q => q.level === l.number)).toBe(true); });
+});
+
+describe.each([["ingreso-docente", ingresoDocenteAmpliacion]] as const)("ampliación de %s", (profile, extra) => {
+  const all = questionsFor(profile);
+  it("no repite códigos ni enunciados", () => {
+    expect(new Set(all.map(q => q.id)).size).toBe(all.length);
+    expect(new Set(all.map(q => q.prompt)).size).toBe(all.length);
+  });
+  it("cada pregunta nueva cumple la estructura tipo ICFES y cita una norma verificada", () => {
+    for (const q of extra) {
+      expect(q.context!.length, q.id).toBeGreaterThan(120);
+      expect(q.prompt.trim().endsWith("?"), q.id).toBe(true);
+      expect(new Set(q.options).size, q.id).toBe(4);
+      expect(getPage(q.course), q.id).toBeDefined();
+      expect(getLibraryDoc(q.documentId)?.fuenteConsultada, q.id).toBe(true);
+    }
+  });
+  it("la correcta no se delata por su longitud en el banco completo", () => {
+    let longest = 0;
+    for (const q of all) {
+      const lens = q.options.map(o => o.length); const others = lens.filter((_, i) => i !== q.correct);
+      const ratio = lens[q.correct]! / avg(others);
+      expect(ratio, q.id).toBeLessThanOrEqual(1.35); expect(ratio, q.id).toBeGreaterThanOrEqual(0.65);
+      if (others.every(l => lens[q.correct]! > l)) longest++;
+    }
+    expect(longest / all.length).toBeLessThanOrEqual(0.4);
+    for (const k of [0, 1, 2, 3]) expect(all.filter(q => q.correct === k).length).toBeGreaterThanOrEqual(all.length / 5);
+  });
+  it("los contextos se vuelven más exigentes al subir de nivel", () => {
+    const byLevel = [1, 2, 3, 4].map(l => avg(all.filter(q => q.level === l).map(q => q.context!.length)));
+    for (let i = 1; i < 4; i++) expect(byLevel[i]!).toBeGreaterThanOrEqual(byLevel[i - 1]! * 0.97);
+  });
 });

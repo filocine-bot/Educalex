@@ -20,6 +20,6 @@ function SimulacrosIndex() {
     {" "}<Button variant="link" className="px-1" onClick={() => setShowAll(v => !v)}>{filtering ? "Ver todos los perfiles" : "Ver solo mi perfil"}</Button>
   </p>;
   return <ModulePage path="/simulacros" showItems={false} childNote={note} childFilter={c => !filtering || mine.some(m => c === `/simulacros/${m}`)}>
-    <p>Cuatro prácticas de 40 preguntas originales, con modo juego por niveles y simulacro completo con tiempo. {profile ? "Abajo encuentras la de tu perfil." : "Elige tu perfil."}</p>
+    <p>Cuatro prácticas con preguntas originales: modo juego en 4 niveles de dificultad creciente y simulacro completo de 40 preguntas con tiempo. {profile ? "Abajo encuentras la de tu perfil." : "Elige tu perfil."}</p>
   </ModulePage>;
 }
