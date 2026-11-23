@@ -13,6 +13,9 @@ import { isArtifact } from '@/lib/runtime-mode';
 import { profileGroups, resolveEducationalProfile, simulacrosFor } from '@/lib/profile-navigation';
 import { headerNavigation, institutionalLinks, type HeaderItem, type HeaderLink } from '@/lib/header-navigation';
 import logo from '@/assets/educalex-logo-horizontal.webp';
+import { HeaderQuick } from './header-quick';
+import { InstagramIcon, FacebookIcon } from './brand-icons';
+import { SOCIAL } from '@/lib/social';
 
 function MenuLink({ item }: { item: HeaderLink }) {
   return <DropdownMenuItem asChild className="min-h-11"><Link to={item.to} activeOptions={{ exact: item.to === '/' }}>{item.label}</Link></DropdownMenuItem>;
@@ -51,6 +54,7 @@ export function SiteHeader() {
         <DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" className="profile-menu-trigger" data-active={headerNavigation.some(item => item.compact && active(item.to)) || institutionalLinks.some(item => active(item.to))}>Más<ChevronDown aria-hidden="true" /></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="header-menu-content"><div className="header-overflow-links">{headerNavigation.filter(item => item.compact).map(item => <MenuLink key={item.to} item={item} />)}<DropdownMenuSeparator /></div>{institutionalLinks.map(item => <MenuLink key={item.to} item={item} />)}</DropdownMenuContent></DropdownMenu>
       </nav>
       <div className="header-actions">{user ? <DropdownMenu><DropdownMenuTrigger asChild><Button variant="hero" aria-label="Opciones de Mi cuenta"><UserRound aria-hidden="true" /><span>Mi cuenta</span><ChevronDown aria-hidden="true" /></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="header-menu-content"><DropdownMenuLabel className="max-w-60 break-words">{query.data?.profile?.display_name || 'Mi cuenta'}</DropdownMenuLabel>{sessionItems}</DropdownMenuContent></DropdownMenu> : <><Button asChild variant="ghost" className="header-login"><Link to="/ingresar">Ingresar</Link></Button><Button asChild variant="hero"><Link to="/registro">Registrarse</Link></Button></>}</div>
+      <HeaderQuick />
       <Link className="nav-item header-home-link" to="/" activeOptions={{ exact: true }}><Home aria-hidden="true" className="header-home-icon" />Inicio</Link>
       <DropdownMenu><DropdownMenuTrigger asChild><Button className="mobile-menu-button" variant="heroOutline" aria-label="Abrir menú general"><Menu aria-hidden="true" /><span>Menú</span></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="header-menu-content mobile-header-menu"><DropdownMenuLabel>EDUCALEX</DropdownMenuLabel>{navItems.map(item => <MenuSection key={item.to} item={item} />)}{institutionalLinks.map(item => <MenuLink key={item.to} item={item} />)}<DropdownMenuSeparator />{sessionItems}</DropdownMenuContent></DropdownMenu>
     </div></div>
@@ -66,5 +70,5 @@ export function SiteHeader() {
 
 
 export function SiteFooter() {
-  return <footer className="site-footer"><div className="site-container footer-inner"><div><Link to="/" className="footer-name">EDUCA<span>LEX</span></Link><p className="footer-note">ACADEMIA INTELIGENTE DE EDUCACIÓN</p></div><p>Aprende. Avanza. Transforma.</p><nav className="footer-links" aria-label="Enlaces del sitio"><Link to="/guia-de-uso">Cómo usar</Link><Link to="/planes">Planes</Link><Link to="/nosotros">Nosotros</Link><Link to="/asesoria-investigacion">Asesoría en investigación</Link><Link to="/contacto">Contacto</Link><Link to="/privacidad">Privacidad</Link><Link to="/terminos">Términos</Link></nav></div></footer>;
+  return <footer className="site-footer"><div className="site-container footer-inner"><div><Link to="/" className="footer-name">EDUCA<span>LEX</span></Link><p className="footer-note">ACADEMIA INTELIGENTE DE EDUCACIÓN</p></div><p>Aprende. Avanza. Transforma.</p><nav className="footer-links" aria-label="Enlaces del sitio"><Link to="/guia-de-uso">Cómo usar</Link><Link to="/planes">Planes</Link><Link to="/nosotros">Nosotros</Link><Link to="/asesoria-investigacion">Asesoría en investigación</Link><Link to="/contacto">Contacto</Link><Link to="/privacidad">Privacidad</Link><Link to="/terminos">Términos</Link><Link to="/preguntas-frecuentes">Preguntas frecuentes</Link></nav><div className="footer-social" aria-label="Redes sociales de EDUCALEX"><a href={SOCIAL.instagram.url} target="_blank" rel="noopener noreferrer" aria-label={`Instagram ${SOCIAL.instagram.handle} (se abre en una pestaña nueva)`}><InstagramIcon /><span>{SOCIAL.instagram.handle}</span></a><a href={SOCIAL.facebook.url} target="_blank" rel="noopener noreferrer" aria-label={`Facebook ${SOCIAL.facebook.handle} (se abre en una pestaña nueva)`}><FacebookIcon /><span>{SOCIAL.facebook.handle}</span></a></div></div></footer>;
 }

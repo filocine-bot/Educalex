@@ -3,6 +3,7 @@ import { CheckCircle2, Crown, Star, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PREMIUM_LOCKED } from '@/lib/game-engine';
 import { LAUNCH_BUYERS, PRICES, UPGRADE_PRICE } from '@/lib/payments';
+import { PriceExplainer } from '@/components/price-explainer';
 
 const cop = (n: number) => n.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 
@@ -23,6 +24,7 @@ export function PreparationPlans() {
       <p className="font-semibold">{p.price}</p>
       <ul className="list-disc pl-5 space-y-1 text-sm">{p.items.map(i => <li key={i}>{i}</li>)}</ul>
     </article>)}</div>
+    <PriceExplainer />
     <p>El acceso Premium se compra dentro de cada simulacro, en el <strong>modo juego por niveles</strong>, con pago seguro por Wompi (tarjetas, PSE, Nequi). Derecho de retracto de 5 días hábiles; consulta los <Link to="/terminos" className="underline">términos</Link>.</p>
     <div className="flex flex-wrap gap-3">
       <Button asChild variant="navy"><Link to="/simulacros">Ir a los simulacros</Link></Button>

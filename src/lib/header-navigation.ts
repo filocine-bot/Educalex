@@ -34,5 +34,6 @@ export const institutionalLinks: HeaderLink[] = [
   { label: 'Cómo usar EDUCALEX', to: '/guia-de-uso' },
   { label: 'Nuestra Academia', to: '/nosotros' },
   { label: 'Asesoría en investigación', to: '/asesoria-investigacion' },
+  { label: 'Preguntas frecuentes', to: '/preguntas-frecuentes' },
   { label: 'Contacto', to: '/contacto' },
 ];

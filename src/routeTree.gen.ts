@@ -23,6 +23,7 @@ import { Route as GuiaDeUsoRouteImport } from './routes/guia-de-uso'
 import { Route as IngresarRouteImport } from './routes/ingresar'
 import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as PlanesRouteImport } from './routes/planes'
+import { Route as PreguntasFrecuentesRouteImport } from './routes/preguntas-frecuentes'
 import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
@@ -154,6 +155,11 @@ const NosotrosRoute = NosotrosRouteImport.update({
 const PlanesRoute = PlanesRouteImport.update({
   id: '/planes',
   path: '/planes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PreguntasFrecuentesRoute = PreguntasFrecuentesRouteImport.update({
+  id: '/preguntas-frecuentes',
+  path: '/preguntas-frecuentes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacidadRoute = PrivacidadRouteImport.update({
@@ -512,6 +518,7 @@ export interface FileRoutesByFullPath {
   '/ingresar': typeof IngresarRoute
   '/nosotros': typeof NosotrosRoute
   '/planes': typeof PlanesRoute
+  '/preguntas-frecuentes': typeof PreguntasFrecuentesRoute
   '/privacidad': typeof PrivacidadRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -590,6 +597,7 @@ export interface FileRoutesByTo {
   '/ingresar': typeof IngresarRoute
   '/nosotros': typeof NosotrosRoute
   '/planes': typeof PlanesRoute
+  '/preguntas-frecuentes': typeof PreguntasFrecuentesRoute
   '/privacidad': typeof PrivacidadRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -669,6 +677,7 @@ export interface FileRoutesById {
   '/ingresar': typeof IngresarRoute
   '/nosotros': typeof NosotrosRoute
   '/planes': typeof PlanesRoute
+  '/preguntas-frecuentes': typeof PreguntasFrecuentesRoute
   '/privacidad': typeof PrivacidadRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -749,6 +758,7 @@ export interface FileRouteTypes {
     | '/ingresar'
     | '/nosotros'
     | '/planes'
+    | '/preguntas-frecuentes'
     | '/privacidad'
     | '/registro'
     | '/reset-password'
@@ -827,6 +837,7 @@ export interface FileRouteTypes {
     | '/ingresar'
     | '/nosotros'
     | '/planes'
+    | '/preguntas-frecuentes'
     | '/privacidad'
     | '/registro'
     | '/reset-password'
@@ -905,6 +916,7 @@ export interface FileRouteTypes {
     | '/ingresar'
     | '/nosotros'
     | '/planes'
+    | '/preguntas-frecuentes'
     | '/privacidad'
     | '/registro'
     | '/reset-password'
@@ -985,6 +997,7 @@ export interface RootRouteChildren {
   IngresarRoute: typeof IngresarRoute
   NosotrosRoute: typeof NosotrosRoute
   PlanesRoute: typeof PlanesRoute
+  PreguntasFrecuentesRoute: typeof PreguntasFrecuentesRoute
   PrivacidadRoute: typeof PrivacidadRoute
   RegistroRoute: typeof RegistroRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -1131,6 +1144,13 @@ declare module '@tanstack/react-router' {
       path: '/planes'
       fullPath: '/planes'
       preLoaderRoute: typeof PlanesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/preguntas-frecuentes': {
+      id: '/preguntas-frecuentes'
+      path: '/preguntas-frecuentes'
+      fullPath: '/preguntas-frecuentes'
+      preLoaderRoute: typeof PreguntasFrecuentesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacidad': {
@@ -1644,6 +1664,7 @@ const rootRouteChildren: RootRouteChildren = {
   IngresarRoute: IngresarRoute,
   NosotrosRoute: NosotrosRoute,
   PlanesRoute: PlanesRoute,
+  PreguntasFrecuentesRoute: PreguntasFrecuentesRoute,
   PrivacidadRoute: PrivacidadRoute,
   RegistroRoute: RegistroRoute,
   ResetPasswordRoute: ResetPasswordRoute,
