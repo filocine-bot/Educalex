@@ -4,7 +4,7 @@ import { simulationBank } from "@/lib/simulation-bank";
 
 describe("modo juego", () => {
   it("divide cada perfil en cuatro niveles (ingreso ampliado a 10 · 20 · 30 · 40)", () => {
-    const sizes: Record<string, number[]> = { "ingreso-docente": [10, 20, 30, 40], coordinador: [10, 20, 30, 40] };
+    const sizes: Record<string, number[]> = { "ingreso-docente": [10, 20, 30, 40], coordinador: [10, 20, 30, 40], rector: [10, 20, 30, 40], "ascenso-reubicacion": [10, 20, 30, 40] };
     for (const p of ["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador"] as const) {
       const levels = levelsFor(p);
       expect(levels.map(l => l.questions.length)).toEqual(sizes[p] ?? [10, 10, 10, 10]);
