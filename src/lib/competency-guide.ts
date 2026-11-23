@@ -18,7 +18,12 @@ const concurso = (cargo: "docente" | "directivo"): CompetencyGuide => ({
         { name: "Lectura crítica", what: "Comprender, interpretar y evaluar textos, y tomar posición argumentada frente a ellos.", inEducalex: "Pestaña «Núcleo común»: 10 preguntas con textos originales, en 4 niveles.", status: "cubierta" },
         { name: "Razonamiento cuantitativo", what: "Usar conocimientos matemáticos para interpretar datos y resolver problemas de la vida cotidiana y escolar.", inEducalex: "Pestaña «Núcleo común»: 10 problemas de porcentajes, proporciones, conteo e interpretación de datos.", status: "cubierta" },
         { name: "Competencias blandas", what: "Liderazgo, ética, trabajo en equipo y ciudadanía.", inEducalex: "Pestaña «Núcleo común»: 10 situaciones de liderazgo, ética, trabajo en equipo y ciudadanía, más las de este simulacro.", status: "cubierta" },
-        { name: cargo === "docente" ? "Conocimientos disciplinares y competencias pedagógicas" : "Conocimientos requeridos para el cargo directivo", what: cargo === "docente" ? "Saberes del área del empleo y capacidad para enseñar, evaluar e incluir." : "Saberes de gestión escolar, gobierno escolar, normativa y liderazgo pedagógico.", inEducalex: PEDAGOGIA_NORMAS, status: "cubierta" },
+        ...(cargo === "docente"
+          ? [{ name: "Conocimientos disciplinares y competencias pedagógicas", what: "Saberes del área del empleo y capacidad para enseñar, evaluar e incluir.", inEducalex: PEDAGOGIA_NORMAS, status: "cubierta" as const }]
+          : [
+            { name: "Gestión directiva, administrativa y financiera", what: "Orientar la institución: PEI, gobierno escolar, planeación, talento humano, presupuesto y Fondo de Servicios Educativos.", inEducalex: PEDAGOGIA_NORMAS, status: "cubierta" as const },
+            { name: "Gestión académica", what: "Liderar los procesos pedagógicos: currículo, evaluación (SIEE), acompañamiento docente, inclusión y convivencia.", inEducalex: PEDAGOGIA_NORMAS, status: "cubierta" as const },
+          ]),
       ],
     },
     {
@@ -32,8 +37,8 @@ const concurso = (cargo: "docente" | "directivo"): CompetencyGuide => ({
       areas: [{ name: "Formación, experiencia y entrevista", what: "Títulos, experiencia certificada y desempeño en la entrevista, según el acuerdo de la convocatoria.", inEducalex: "Orientación en la ruta del concurso de tu perfil.", status: "parcial" }],
     },
   ],
-  sources: ["Decreto 2038 de 2016 (modifica el artículo 2.4.1.1.11 del Decreto 1075 de 2015).", "Proyecto de Acuerdo y Anexo Técnico del concurso docente 2026 (CNSC) y proyecto de decreto del MEN, publicados para comentarios."],
-  caution: "Los componentes y pesos definitivos los fijan el Acuerdo y el Anexo Técnico de cada convocatoria de la CNSC. Confírmalos en www.cnsc.gov.co antes de presentarte.",
+  sources: ["Decreto 2038 de 2016 (modifica el artículo 2.4.1.1.11 del Decreto 1075 de 2015).", "Anexo Técnico del concurso docente 2026 (CNSC), numeral 2.1: componentes de la prueba.", "Proyecto de Acuerdo y Anexo Técnico del concurso docente 2026 (CNSC) y proyecto de decreto del MEN, publicados para comentarios."],
+  caution: "El número de preguntas y el tiempo aún no son oficiales: el Anexo Técnico 2026 los remite a la Guía de orientación al aspirante. Los componentes y pesos definitivos los fijan el Acuerdo y el Anexo Técnico de cada convocatoria de la CNSC. Confírmalos en www.cnsc.gov.co antes de presentarte.",
 });
 
 const ascenso: CompetencyGuide = {

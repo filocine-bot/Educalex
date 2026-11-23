@@ -1506,3 +1506,15 @@ html { scroll-padding-top: 170px; }
 .aqr-note textarea { font: inherit; font-weight: 400; padding: 8px 10px; border: 1px solid var(--border); border-radius: 10px; }
 .acr-body ul { margin: 4px 0 8px; padding-left: 20px; line-height: 1.5; }
 .acr-row { margin: 0 0 6px; font-size: 14.5px; line-height: 1.55; overflow-wrap: anywhere; }
+/* Estructura de la prueba del concurso */
+.exam-structure { margin: 24px 0; }
+.exam-structure h2 { font-family: Poppins, sans-serif; color: var(--brand-blue); margin: 0 0 6px; }
+.exam-table-wrap { overflow-x: auto; margin: 12px 0 16px; border: 1px solid var(--border); border-radius: 14px; }
+.exam-table { width: 100%; border-collapse: collapse; min-width: 560px; font-size: 14.5px; line-height: 1.5; }
+.exam-table th, .exam-table td { padding: 10px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+.exam-table thead th { background: var(--brand-blue); color: #fff; }
+.exam-table tbody th { width: 24%; color: var(--brand-blue); background: color-mix(in oklab, var(--brand-blue) 5%, white); }
+.exam-table tbody th small { display: block; font-weight: 500; color: var(--muted-foreground); font-size: 12px; margin-top: 2px; }
+.exam-pending { padding: 14px 18px; border-radius: 14px; background: #fff8e6; border: 1px solid #f2d38a; margin-bottom: 12px; }
+.exam-pending h3 { margin: 0 0 6px; color: #8a5d00; font-size: 1.05rem; }
+.exam-pending ul { margin: 0; padding-left: 20px; line-height: 1.55; }
