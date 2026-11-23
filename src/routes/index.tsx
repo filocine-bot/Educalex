@@ -60,7 +60,7 @@ function useSimoNotice() {
   const [text, setText] = useState("Inscripciones en SIMO del 23 de noviembre de 2026 al 15 de enero de 2027");
   useEffect(() => {
     const now = Date.now(), day = 86_400_000;
-    if (now < SIMO_OPEN) setText(`Inscripciones en SIMO abren el 23 de noviembre · faltan ${Math.ceil((SIMO_OPEN - now) / day)} días`);
+    if (now < SIMO_OPEN) { const n = Math.ceil((SIMO_OPEN - now) / day); setText(`Inscripciones en SIMO abren el 23 de noviembre · ${n === 1 ? "falta 1 día" : `faltan ${n} días`}`); }
     else if (now < SIMO_CLOSE) setText(`Inscripciones abiertas en SIMO · cierran el 15 de enero de 2027 (quedan ${Math.ceil((SIMO_CLOSE - now) / day)} días)`);
     else setText("Consulta en SIMO el estado de las inscripciones del concurso 2026");
   }, []);

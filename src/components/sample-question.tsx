@@ -20,8 +20,8 @@ export function SampleQuestion() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sample-q">
         <p className="sample-q-tag">Pregunta de prueba · Nivel Básico · {SAMPLE.competency}</p>
-        <DialogTitle className="sample-q-title">{SAMPLE.prompt}</DialogTitle>
         {SAMPLE.context && <DialogDescription className="sample-q-context">{SAMPLE.context}</DialogDescription>}
+        <DialogTitle className="sample-q-title">{SAMPLE.prompt}</DialogTitle>
         {!SAMPLE.context && <DialogDescription className="sr-only">Elige una opción para ver la explicación.</DialogDescription>}
         <div className="sample-q-options" role="group" aria-label="Opciones de respuesta">
           {SAMPLE.options.map((o, i) => {
