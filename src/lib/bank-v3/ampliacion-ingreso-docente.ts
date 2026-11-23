@@ -137,8 +137,8 @@ export const ingresoDocenteAmpliacion: Q[] = [
     context: "En un colegio de Chimá, el informe de período que reciben las familias trae solo la valoración de cada área: Bajo, Básico, Alto o Superior. Varios padres dicen en la reunión que no saben en qué debe mejorar su hijo ni cómo pueden ayudarle en casa.",
     prompt: "¿Qué exige el Decreto 1290 de 2009 a los informes que no se está cumpliendo?",
     options: ["Que incluyan una nota numérica de uno a cinco además de la escala de valoración nacional.", "Que se entreguen de manera personal y con firma del rector y del docente.", "Que se entreguen al terminar cada mes y no al final de cada período académico.", "Que acompañen la escala con una descripción clara de los avances y las dificultades."], correct: 3,
-    explanation: "El artículo 16 del Decreto 1290 dispone que los informes incluyan la valoración en la escala nacional y una descripción explicativa en lenguaje claro y comprensible sobre las fortalezas y dificultades del estudiante, con recomendaciones de mejoramiento.",
-    reference: "Decreto 1290 de 2009, artículo 16: estructura de los informes de los estudiantes.", documentId: D1290, course: EVA,
+    explanation: "El artículo 4 del Decreto 1290 exige que el SIEE defina la estructura de los informes para que sean claros, comprensibles y den información integral del avance del estudiante. Una lista de valoraciones sin descripción no permite a las familias saber qué mejorar ni cómo apoyar.",
+    reference: "Decreto 1290 de 2009, artículo 4, numeral 9: estructura de los informes de los estudiantes.", documentId: D1290, course: EVA,
   },
   {
     id: "ing-57", level: 3, competency: "Inclusión",

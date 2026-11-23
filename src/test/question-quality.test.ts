@@ -7,6 +7,7 @@ import { coordinadorV3 } from "@/lib/bank-v3/coordinador";
 import { nucleoComunV3 } from "@/lib/bank-v3/nucleo-comun";
 import { levelsFor, questionsFor } from "@/lib/game-engine";
 import { ingresoDocenteAmpliacion } from "@/lib/bank-v3/ampliacion-ingreso-docente";
+import { coordinadorAmpliacion } from "@/lib/bank-v3/ampliacion-coordinador";
 
 // Control de calidad tipo ICFES: contexto + tarea + cuatro opciones homogéneas; complejidad creciente por nivel.
 const banks = { "ingreso-docente": ingresoDocenteV3, "ascenso-reubicacion": ascensoReubicacionV3, rector: rectorV3, coordinador: coordinadorV3, "nucleo-comun": nucleoComunV3 };
@@ -44,7 +45,7 @@ describe.each(Object.entries(banks))("calidad del banco %s", (_, qs) => {
 });
 
 // Niveles del modo juego: los perfiles ampliados tienen 10 · 20 · 30 · 40 preguntas; los demás, 10 por nivel.
-const SIZES: Record<string, number[]> = { "ingreso-docente": [10, 20, 30, 40] };
+const SIZES: Record<string, number[]> = { "ingreso-docente": [10, 20, 30, 40], coordinador: [10, 20, 30, 40] };
 it.each(["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador", "nucleo-comun"] as const)("el juego arma cada nivel de %s con su complejidad", profile => {
   const levels = levelsFor(profile);
   expect(levels).toHaveLength(4);
@@ -52,7 +53,7 @@ it.each(["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador", "nuc
   levels.forEach((l, i) => { expect(l.questions).toHaveLength(sizes[i]!); expect(l.questions.every(q => q.level === l.number)).toBe(true); });
 });
 
-describe.each([["ingreso-docente", ingresoDocenteAmpliacion]] as const)("ampliación de %s", (profile, extra) => {
+describe.each([["ingreso-docente", ingresoDocenteAmpliacion], ["coordinador", coordinadorAmpliacion]] as const)("ampliación de %s", (profile, extra) => {
   const all = questionsFor(profile);
   it("no repite códigos ni enunciados", () => {
     expect(new Set(all.map(q => q.id)).size).toBe(all.length);

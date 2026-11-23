@@ -3,6 +3,7 @@
 import { simulationBank, type PracticeQuestion, type SimulationProfile } from "@/lib/simulation-bank";
 import { nucleoComunV3 } from "@/lib/bank-v3/nucleo-comun";
 import { ingresoDocenteAmpliacion } from "@/lib/bank-v3/ampliacion-ingreso-docente";
+import { coordinadorAmpliacion } from "@/lib/bank-v3/ampliacion-coordinador";
 
 /** Banco del modo juego: el específico de cada perfil o el núcleo común (lectura, razonamiento, blandas, pedagógicas). */
 export type GameBankKey = SimulationProfile | "nucleo-comun";
@@ -12,7 +13,7 @@ const NUCLEO = byLevel(nucleoComunV3);
  * Preguntas adicionales del modo juego por perfil (niveles de 10 · 20 · 30 · 40).
  * No entran al simulacro completo con tiempo, que conserva sus 40 preguntas originales.
  */
-const AMPLIACION: Partial<Record<SimulationProfile, PracticeQuestion[]>> = { "ingreso-docente": ingresoDocenteAmpliacion };
+const AMPLIACION: Partial<Record<SimulationProfile, PracticeQuestion[]>> = { "ingreso-docente": ingresoDocenteAmpliacion, coordinador: coordinadorAmpliacion };
 const GAME_BANK = new Map<GameBankKey, PracticeQuestion[]>();
 
 export function questionsFor(bank: GameBankKey): PracticeQuestion[] {
