@@ -39,6 +39,13 @@ export function DocInfographic({ doc }: { doc: LibraryDoc }) {
       <section className="info-branch b2"><h4><Lightbulb aria-hidden="true" /> ¿De qué trata?</h4><p>{doc.descripcion}</p></section>
       {key && <section className="info-branch info-keys"><h4><ListChecks aria-hidden="true" /> Ideas clave</h4>
         <ol className="info-keylist">{key.points.map(p => <li key={p.label}><strong>{p.label}</strong><span>{p.text}</span><small>{p.source}</small></li>)}</ol></section>}
+      {key?.groups && <section className="info-branch info-map" aria-label="Mapa del documento">
+        {key.groups.map(g => <div key={g.title} className="info-group"><h4>{g.title} <small>{g.source}</small></h4>
+          {g.ordered
+            ? <ol className="info-steps">{g.items.map((it, i) => <li key={it.name}><span className="info-step-n">{i + 1}</span><span><strong>{it.name}</strong>{it.text && <span>{it.text}</span>}</span></li>)}</ol>
+            : <ul className={g.items.some(it => it.text) ? 'info-cards' : 'info-chips'}>{g.items.map(it => <li key={it.name}><strong>{it.name}</strong>{it.text && <span>{it.text}</span>}</li>)}</ul>}
+        </div>)}
+      </section>}
       {key && <section className="info-branch info-exam"><h4><Target aria-hidden="true" /> Para el concurso</h4><ul>{key.forExam.map(t => <li key={t}>{t}</li>)}</ul></section>}
       <section className="info-branch b3"><h4><Compass aria-hidden="true" /> ¿Cómo usarlo en la práctica?</h4><p>{notes.application}</p></section>
       <section className="info-branch b4"><h4><BookOpen aria-hidden="true" /> ¿Dónde estudiarlo en EDUCALEX?</h4>

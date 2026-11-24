@@ -3,7 +3,8 @@
 // Las normas que no aparecen aquí muestran el organizador gráfico general, sin ideas clave adicionales.
 
 export type KeyPoint = { label: string; text: string; source: string };
-export type DocKeyPoints = { points: KeyPoint[]; forExam: string[] };
+export type KeyGroup = { title: string; source: string; ordered?: boolean; items: { name: string; text?: string }[] };
+export type DocKeyPoints = { points: KeyPoint[]; forExam: string[]; groups?: KeyGroup[] };
 
 export const docKeyPoints: Record<string, DocKeyPoints> = {
   "constitucion-1991": {
@@ -32,6 +33,95 @@ export const docKeyPoints: Record<string, DocKeyPoints> = {
       { label: "Ley 1620", text: "Adiciona los numerales 11 a 14 al artículo 8 de la Ley 1620 de 2013.", source: "Art. 7" },
     ],
     forExam: ["Relacionar la educación socioemocional con la convivencia escolar y la participación de las familias."],
+  },
+  "lineamientos-formacion-integral": {
+    points: [
+      { label: "Qué son", text: "Referentes del MEN para el currículo de la educación inicial, básica y media. Subtítulo: «Un viaje curricular: rutas para la transformación del ser y el saber».", source: "Primera versión, feb. 2026" },
+      { label: "Formación integral", text: "Propósito central de la educación: el desarrollo pleno del ser humano en todas sus dimensiones, más allá de transmitir saberes.", source: "Secc. 2.1" },
+      { label: "Enfoque de procesos", text: "Las capacidades garantizan aprendizajes esenciales que se convierten en competencias, en experiencias educativas en contexto.", source: "Secc. 2.1 y 2.5" },
+      { label: "Evaluación", text: "Formativa y continua: acompaña el aprendizaje, retroalimenta y fortalece la autorregulación del estudiante.", source: "Secc. 2.7" },
+      { label: "Qué no cambia", text: "No crean asignaturas, no eliminan áreas, no imponen un currículo único ni reemplazan el PEI.", source: "ABC, MEN" },
+      { label: "Construcción", text: "Proceso participativo de tres años con apoyo de la Universidad de Antioquia y validación con cerca de 3.000 establecimientos.", source: "ABC, MEN" },
+    ],
+    groups: [
+      { title: "Cuatro ejes curriculares relacionales", source: "Secc. 2.1", items: [
+        { name: "Consigo mismo/a", text: "Identidad, autonomía y competencias socioemocionales." },
+        { name: "Con los otros", text: "Vínculos éticos y empáticos con saberes familiares y comunitarios." },
+        { name: "Con la vida y el entorno", text: "El territorio y la conciencia ecológica." },
+        { name: "Con el mundo y las tecnologías", text: "Herramientas críticas para los retos globales y digitales." },
+      ] },
+      { title: "Nueve dimensiones del ser", source: "Secc. 2.4", items: [
+        { name: "Ambiental" }, { name: "Ciudadana y política" }, { name: "Cognitiva" }, { name: "Comunicativa y creativa" }, { name: "Corporal" },
+        { name: "Cultural" }, { name: "Ética" }, { name: "Histórica y de memoria histórica" }, { name: "Socioemocional" },
+      ] },
+      { title: "Cuatro principios de organización curricular", source: "Cap. 3", items: [
+        { name: "Coherencia", text: "Fines, competencias, didáctica y evaluación alineados." },
+        { name: "Transversalidad", text: "Saberes integrados en torno a problemas o proyectos comunes." },
+        { name: "Flexibilidad", text: "Currículo adaptado a los estudiantes y al territorio." },
+        { name: "Armonización", text: "Transiciones sin rupturas entre niveles." },
+      ] },
+      { title: "Criterios de la evaluación", source: "Secc. 2.7.3", items: [
+        { name: "Pertinencia" }, { name: "Coherencia" }, { name: "Pluralidad" }, { name: "Transparencia" }, { name: "Inclusión" }, { name: "Participación" }, { name: "Integralidad" },
+      ] },
+      { title: "Ruta para construir ejes curriculares integradores", source: "Secc. 3.2", ordered: true, items: [
+        { name: "Indagación", text: "Diagnóstico formativo y territorial." },
+        { name: "Análisis", text: "Potencialidades y necesidades frente a las dimensiones del ser." },
+        { name: "Construcción", text: "Acción pedagógica y comunitaria." },
+        { name: "Validación", text: "Diálogo pedagógico y comunitario." },
+        { name: "Institucionalización", text: "Los ejes pasan a la cultura institucional." },
+      ] },
+      { title: "Niveles de apropiación en el colegio", source: "Secc. 3.3", ordered: true, items: [
+        { name: "Compromiso educativo", text: "Visión compartida y compromiso explícito en el PEI." },
+        { name: "Autogestión", text: "La comunidad planea, ejecuta y evalúa estrategias de formación integral." },
+        { name: "Liderazgo distribuido", text: "Directivos, docentes, estudiantes y familias lideran juntos." },
+        { name: "Cultura escolar", text: "La formación integral hace parte de la identidad del colegio." },
+      ] },
+    ],
+    forExam: [
+      "Los lineamientos orientan; la institución decide su currículo en el PEI con autonomía escolar (Ley 115, art. 77).",
+      "Ante un caso de rediseño curricular, una propuesta por proyectos o problemas del territorio responde a la transversalidad y la flexibilidad.",
+    ],
+  },
+  "ley-2555-2025": {
+    points: [
+      { label: "Qué es", text: "Ley «Artes al Aula», del 2 de diciembre de 2025.", source: "MEN" },
+      { label: "Objeto", text: "Política pública de educación artística y cultural, intercultural e interdisciplinaria, transversal al currículo.", source: "ABC, MEN" },
+      { label: "Prioridad", text: "Colegios oficiales, zonas rurales, grupos étnicos y territorios de difícil acceso.", source: "ABC, MEN" },
+      { label: "Quiénes", text: "MEN y Ministerio de las Culturas, con el SINEFAC (Decreto 458 de 2024).", source: "ABC, MEN" },
+      { label: "Área obligatoria", text: "La educación artística sigue siendo área obligatoria y fundamental (Ley 115, art. 23).", source: "ABC, MEN" },
+    ],
+    forExam: ["Distinguir el área obligatoria de educación artística de su uso transversal en otras áreas."],
+  },
+  "ley-1804-2016": {
+    points: [
+      { label: "Población", text: "Niñas y niños de 0 a 6 años y mujeres gestantes.", source: "Art. 1" },
+      { label: "Desarrollo integral", text: "Proceso singular, no lineal ni idéntico para todos, por el que el niño estructura su identidad y su autonomía.", source: "Art. 4" },
+      { label: "Atención integral", text: "Acciones intersectoriales pertinentes, oportunas, flexibles, diferenciales, continuas y complementarias.", source: "Art. 4" },
+      { label: "Educación inicial", text: "Derecho de los menores de seis años; se vive con el juego, el arte, la literatura y la exploración del medio.", source: "Art. 5" },
+      { label: "Coordinación", text: "Comisión Intersectorial para la Atención Integral de la Primera Infancia (CIPI).", source: "Arts. 10 y 11" },
+      { label: "Recursos", text: "La inversión anual no puede ser menor que la del año anterior.", source: "Art. 25" },
+    ],
+    forExam: ["Reconocer el juego, el arte, la literatura y la exploración como actividades rectoras de la educación inicial."],
+  },
+  "decreto-2105-2017": {
+    points: [
+      { label: "Definición", text: "Tiempo diario que el colegio oficial dedica a actividades académicas, descanso y alimentación, cinco días a la semana.", source: "Art. 2.3.3.6.1.3" },
+      { label: "Reconocimiento", text: "Lo otorga la entidad territorial certificada a cada institución que cumple las condiciones.", source: "Art. 2.3.3.6.1.4" },
+      { label: "Objetivos", text: "Más tiempo académico, fortalecer las áreas obligatorias, mejorar la calidad y promover derechos humanos, paz, deporte, arte, cultura y ambiente.", source: "Art. 2.3.3.6.1.5" },
+      { label: "Duración", text: "Preescolar 25 h semanales; primaria 30; secundaria y media académica 35 (horas de 60 minutos).", source: "Art. 2.3.3.6.1.6" },
+    ],
+    forExam: ["Distinguir la Jornada Única de la jornada escolar ordinaria y de las jornadas complementarias."],
+  },
+  "decreto-277-2025": {
+    points: [
+      { label: "Qué modifica", text: "Tres artículos del Decreto 1075 de 2015: jornada escolar, asignación académica y jornada laboral.", source: "Arts. 1 a 3" },
+      { label: "Jornada escolar", text: "Mínimo semanal: preescolar 20 h; primaria 25; secundaria y media académica 30; media técnica 37.", source: "Art. 2.4.3.1.2" },
+      { label: "Áreas obligatorias", text: "Al menos el 80 % de las horas se dedica a las áreas obligatorias y fundamentales.", source: "Art. 2.4.3.1.2" },
+      { label: "Descanso pedagógico", text: "Hace parte de la jornada escolar y se orienta al bienestar de los estudiantes.", source: "Art. 2.4.3.1.2" },
+      { label: "Asignación académica", text: "Preescolar 20 h semanales; primaria 25; secundaria y media 22.", source: "Art. 2.4.3.2.1" },
+      { label: "Jornada laboral", text: "Ocho horas: seis en el establecimiento y dos fuera de él.", source: "Art. 2.4.3.3.3" },
+    ],
+    forExam: ["Diferenciar jornada escolar (estudiantes), asignación académica y jornada laboral (docentes)."],
   },
   "conpes-4188-2026": {
     points: [

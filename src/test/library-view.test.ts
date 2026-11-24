@@ -3,10 +3,10 @@ import { libraryDocs } from '@/lib/educalex-sitemap';
 import { filterLibrary, librarySource, LIBRARY_PAGE_SIZE } from '@/lib/library-view';
 
 describe('Biblioteca compacta', () => {
-  it('conserva las 38 fichas y las alcanza sin duplicar entre páginas', () => {
-    expect(libraryDocs).toHaveLength(40);
+  it('conserva las 45 fichas y las alcanza sin duplicar entre páginas', () => {
+    expect(libraryDocs).toHaveLength(45);
     const ids = Array.from({ length: Math.ceil(libraryDocs.length / LIBRARY_PAGE_SIZE) }, (_, page) => libraryDocs.slice(page * LIBRARY_PAGE_SIZE, (page + 1) * LIBRARY_PAGE_SIZE).map(d => d.id)).flat();
-    expect(new Set(ids).size).toBe(40);
+    expect(new Set(ids).size).toBe(45);
   });
   it('busca por año y entidad y combina categoría y estado', () => {
     expect(filterLibrary(libraryDocs, '1994', '', '').map(d => d.id)).toEqual(expect.arrayContaining(['ley-115-1994', 'decreto-1860-1994']));
@@ -19,7 +19,7 @@ describe('Biblioteca compacta', () => {
   });
   it('distingue PDF oficiales de páginas HTML sin convertir unas en otras', () => {
     const sources = libraryDocs.map(librarySource).filter(Boolean);
-    expect(sources.length).toBe(38);
+    expect(sources.length).toBe(43);
     for (const source of sources) {
       const isPdf = /\.pdf($|[?#])|norma_pdf\.php/i.test(source!.url);
       expect(source!.kind).toBe(isPdf ? 'pdf' : 'html');
@@ -29,7 +29,7 @@ describe('Biblioteca compacta', () => {
 });
 describe('Biblioteca: dominios oficiales', () => {
   it('solo enlaza dominios gubernamentales verificados', () => {
-    const allowed = /^https:\/\/(www1?\.)?(funcionpublica\.gov\.co|mineducacion\.gov\.co|contenidos\.mineducacion\.gov\.co|cnsc\.gov\.co|normograma\.icfes\.gov\.co)\//;
+    const allowed = /^https:\/\/(www1?\.)?(funcionpublica\.gov\.co|mineducacion\.gov\.co|contenidos\.mineducacion\.gov\.co|cnsc\.gov\.co|suin-juriscol\.gov\.co|normograma\.icfes\.gov\.co)\//;
     for (const doc of libraryDocs.filter(d => d.fuenteUrl)) expect(doc.fuenteUrl, doc.id).toMatch(allowed);
   });
 });
