@@ -440,7 +440,7 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0; }
 .header-error { background: var(--background); color: var(--destructive); padding: 8px 16px; }
 html { scroll-padding-top: 120px; }
 [id] { scroll-margin-top: 120px; }
-@container site-navigation (max-width: 1439px) {
+@container site-navigation (max-width: 1535px) {
  .header-secondary-link { display: none; }
  .header-overflow-links { display: block; }
  .profile-header .desktop-nav { justify-content: center; }
@@ -448,7 +448,7 @@ html { scroll-padding-top: 120px; }
  .profile-bar-inner:has(.profile-selector) { grid-template-columns: minmax(0,1fr) auto; }
  .profile-bar-inner:has(.profile-selector) .profile-mobile-button { display: inline-flex; }
 }
-@container site-navigation (max-width: 1059px) {
+@container site-navigation (max-width: 1139px) {
  .profile-header .header-inner { grid-template-columns: minmax(0,1fr) auto auto; gap: 6px; min-height: 64px; }
  .profile-header .desktop-nav, .profile-header .header-actions { display: none; }
  .profile-header .header-brand { width: fit-content; }
@@ -1370,7 +1370,7 @@ html { scroll-padding-top: 170px; }
 .hq-educatia:hover { background: #fff8e1; }
 .hq-educatia img { width: 36px; height: 36px; border-radius: 999px; object-fit: contain; }
 .header-quick a:focus-visible { outline: 2px solid #f2b705; outline-offset: 2px; }
-@container site-navigation (max-width: 1439px) {
+@container site-navigation (max-width: 1535px) {
  .hq-educatia span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
  .hq-educatia { width: 44px; padding: 0; justify-content: center; }
 }
@@ -1378,7 +1378,7 @@ html { scroll-padding-top: 170px; }
  .hq-whatsapp span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
  .hq-whatsapp { width: 44px; padding: 0; justify-content: center; }
 }
-@container site-navigation (max-width: 1059px) {
+@container site-navigation (max-width: 1139px) {
  .profile-header .header-inner { grid-template-columns: minmax(0,1fr) auto auto auto; }
  .header-quick { grid-column: 2; }
  .profile-header .header-home-link { grid-column: 3; }
