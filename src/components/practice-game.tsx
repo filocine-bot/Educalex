@@ -19,7 +19,7 @@ const LETTERS = ["A", "B", "C", "D"];
 type Answer = { id: string; chosen: number; correct: boolean };
 type Run = { level: GameLevel; review: boolean; questions: PracticeQuestion[]; index: number; answers: Answer[]; streak: number; bestStreak: number; points: number };
 
-export function PracticeGame({ profile, bank = profile, trialOnly = false }: { profile: SimulationProfile; bank?: GameBankKey; trialOnly?: boolean }) {
+export function PracticeGame({ profile, bank = profile, trialOnly = false, intro }: { profile: SimulationProfile; bank?: GameBankKey; trialOnly?: boolean; intro?: React.ReactNode }) {
   const allLevels = useMemo(() => levelsFor(bank), [bank]);
   const levels = trialOnly ? allLevels.filter(l => l.number === 1) : allLevels;
   const { progress, save, ready, signedIn } = useGameProgress();
@@ -180,7 +180,7 @@ export function PracticeGame({ profile, bank = profile, trialOnly = false }: { p
   }
 
   // ---- Mapa de niveles ----
-  return <section className="game game-map" aria-labelledby="game-levels-title">
+  return <>{intro}<section className="game game-map" aria-labelledby="game-levels-title">
     <div className="game-intro">
       <div className="game-intro-row"><h2 id="game-levels-title">Elige tu nivel</h2><p className="game-stats"><span><Star aria-hidden="true" /> {mine.points} puntos</span><span><Flame aria-hidden="true" /> Mejor racha {mine.bestStreak}</span><span><Medal aria-hidden="true" /> {mine.badges.length} insignias</span></p></div>
       <p className="game-hint">{trialOnly ? "Explicación y norma después de cada respuesta. Al final verás tu resultado y tu mapa de errores." : `Explicación inmediata en cada respuesta. Supera un nivel con ${Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.`}{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
@@ -215,7 +215,7 @@ export function PracticeGame({ profile, bank = profile, trialOnly = false }: { p
       <h3><Medal aria-hidden="true" /> Mis insignias</h3>
       <ul>{mine.badges.map(id => { const b = describeBadge(id); return <li key={id} title={b.description}><Award aria-hidden="true" /> {b.title}</li>; })}</ul>
     </div>}
-  </section>;
+  </section></>;
 }
 
 /** Selector entre el modo juego y el simulacro completo cronometrado. */
