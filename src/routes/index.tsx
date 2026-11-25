@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BookMarked, Bot, ChartNoAxesCombined, CheckCircle2, ClipboardCheck, Compass, FileText, GraduationCap, Library, Mail, Scale, Settings, ShieldCheck, Trophy, Users, Video } from "lucide-react";
 import { pageHead } from "@/lib/educalex-content";
-import hero from "@/assets/educalex-hero-docentes.webp";
+import fotoIngreso from "@/assets/perfil-ingreso-docente.webp";
+import fotoAscenso from "@/assets/perfil-ascenso-reubicacion.webp";
+import fotoCoordinador from "@/assets/perfil-coordinador.webp";
+import fotoRector from "@/assets/perfil-rector.webp";
 import robot from "@/assets/educalex-robot.webp";
 import { FounderSpotlight } from "@/components/founder-card";
 import { ShareQr } from "@/components/share-qr";
@@ -12,10 +15,10 @@ export const Route = createFileRoute("/")({ head: () => pageHead("Preparación p
 
 
 const programs = [
-  { profile: "ingreso-docente", icon: Trophy, tone: "blue", name: "Ingreso a la carrera docente", desc: "Para licenciados y profesionales que aspiran a ser docentes.", to: "/concursos/ingreso-docente", sim: "/simulacros/ingreso-docente" },
-  { profile: "ascenso-reubicacion", icon: ChartNoAxesCombined, tone: "green", name: "Ascenso y reubicación", desc: "Para docentes que buscan avanzar en su carrera.", to: "/concursos/ascenso-reubicacion", sim: "/simulacros/ascenso-reubicacion" },
-  { profile: "coordinador", icon: Settings, tone: "red", name: "Concurso para coordinador", desc: "Liderazgo pedagógico, convivencia y gestión académica.", to: "/concursos/coordinador", sim: "/simulacros/coordinador" },
-  { profile: "rector", icon: Users, tone: "navy", name: "Concurso para rector", desc: "Dirección, gestión institucional y liderazgo educativo.", to: "/concursos/rector", sim: "/simulacros/rector" },
+  { profile: "ingreso-docente", icon: Trophy, tone: "blue", photo: fotoIngreso, alt: "Docente con su cuaderno, sonriendo", name: "Ingreso a la carrera docente", desc: "Para licenciados y profesionales que aspiran a ser docentes.", to: "/concursos/ingreso-docente", sim: "/simulacros/ingreso-docente" },
+  { profile: "ascenso-reubicacion", icon: ChartNoAxesCombined, tone: "green", photo: fotoAscenso, alt: "Docente con su maletín frente a la institución educativa", name: "Ascenso y reubicación", desc: "Para docentes que buscan avanzar en su carrera.", to: "/concursos/ascenso-reubicacion", sim: "/simulacros/ascenso-reubicacion" },
+  { profile: "coordinador", icon: Settings, tone: "red", photo: fotoCoordinador, alt: "Coordinadora con los brazos cruzados frente al colegio", name: "Concurso para coordinador", desc: "Liderazgo pedagógico, convivencia y gestión académica.", to: "/concursos/coordinador", sim: "/simulacros/coordinador" },
+  { profile: "rector", icon: Users, tone: "navy", photo: fotoRector, alt: "Rector con su carpeta frente a la institución, junto a la bandera de Colombia", name: "Concurso para rector", desc: "Dirección, gestión institucional y liderazgo educativo.", to: "/concursos/rector", sim: "/simulacros/rector" },
 ] as const;
 
 const ejes = [
@@ -41,9 +44,7 @@ const topics = ["Ley 115 de 1994", "Decreto 1278", "Ley 1620 y convivencia", "PI
 
 function Index() {
   return <div className="home2">
-    <section className="h2-hero" aria-labelledby="h2-hero-title">
-      <img className="h2-hero-img" src={hero} width={1920} height={768} alt="Docentes colombianos frente a una institución educativa, junto a la bandera de Colombia" fetchPriority="high" />
-      <div className="h2-hero-fade" aria-hidden="true" />
+    <section className="h2-hero h2-hero-plain" aria-labelledby="h2-hero-title">
       <div className="site-container h2-hero-inner">
         <p className="h2-kicker">EDUCALEX · Academia Inteligente de Educación</p>
         <h1 id="h2-hero-title">Tu próximo paso profesional comienza con una <span>buena preparación</span></h1>
@@ -59,12 +60,12 @@ function Index() {
       <div className="site-container h2-section">
         <h2 id="h2-prof-title">¿Cuál es tu objetivo profesional?</h2>
         <div className="h2-profiles">{programs.map(p => <article key={p.profile} className={`h2-prof h2-prof-${p.tone}`}>
-          <div className="h2-prof-media" aria-hidden="true"><p.icon /></div>
+          <div className="h2-prof-media"><img src={p.photo} alt={p.alt} width={640} height={480} loading="lazy" /><span className="h2-prof-badge" aria-hidden="true"><p.icon /></span></div>
           <div className="h2-prof-body">
             <h3>{p.name}</h3>
             <p>{p.desc}</p>
             <div className="h2-prof-actions">
-              <Link to={p.sim} className="h2-btn h2-btn-outline">Prueba gratis</Link>
+              <Link to={p.sim} search={{ empezar: 1 }} className="h2-btn h2-btn-outline">Prueba gratis</Link>
               <Link to={p.to} className="h2-btn h2-btn-gold">Comenzar <ArrowRight aria-hidden="true" /></Link>
             </div>
           </div>

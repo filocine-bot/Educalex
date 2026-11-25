@@ -1998,3 +1998,19 @@ html { scroll-padding-top: 170px; }
 .h2-prof-actions .h2-btn{justify-content:center;padding-left:.5rem;padding-right:.5rem}
 .h2-profiles-band #h2-prof-title{text-align:center}
 .h2-prof{border-top:4px solid #FFC928}
+/* Banner sin foto grande y tarjetas de perfil con fotografía */
+.h2-hero.h2-hero-plain{min-height:0;background:linear-gradient(160deg,#102B50 0%,#163a6b 100%);padding:2.6rem 0 2.4rem}
+.h2-hero.h2-hero-plain .h2-hero-inner{max-width:52rem;text-align:center;margin:0 auto}
+.h2-hero.h2-hero-plain .h2-hero-actions{justify-content:center}
+.h2-hero.h2-hero-plain h1{font-size:clamp(1.8rem,4vw,2.9rem)}
+.h2-prof-media{position:relative;height:auto!important;aspect-ratio:4/3;background:#102B50;overflow:hidden}
+.h2-prof-media img{width:100%;height:100%;object-fit:cover;display:block}
+.h2-prof-badge{position:absolute;left:12px;bottom:12px;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:#102B50;border:2px solid #FFC928}
+.h2-prof-badge svg{width:24px!important;height:24px!important;color:#FFC928}
+.timed-locked{display:grid;gap:.6rem;padding:1.2rem;border:2px solid #FFC928;border-radius:14px;background:#fffdf3}
+.timed-locked svg{display:inline;width:1.1rem;height:1.1rem;vertical-align:-2px}
+@media (max-width:640px){.h2-hero.h2-hero-plain{padding:1.6rem 0 1.6rem}.h2-profiles{grid-template-columns:1fr 1fr;gap:.7rem}.h2-prof-body{padding:.8rem}.h2-prof-body h3{font-size:1rem}.h2-prof-body p{font-size:.85rem}.h2-prof-actions{grid-template-columns:1fr}.h2-prof-actions .h2-btn{min-height:44px;font-size:.85rem}.h2-prof-badge{width:34px;height:34px}.h2-prof-badge svg{width:18px!important;height:18px!important}}
+.h2-hero.h2-hero-plain .h2-hero-inner{padding-top:0!important;padding-bottom:0!important;min-height:0!important}
+.h2-hero.h2-hero-plain .h2-hero-inner>*{margin-inline:auto;max-width:46rem}
+.h2-hero.h2-hero-plain .h2-hero-inner{gap:14px}
+.game{scroll-margin-top:140px}

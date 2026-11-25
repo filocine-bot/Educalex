@@ -74,6 +74,22 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
     setSummary({ run: r, newBadges, passed: ok });
   }
 
+  // Desde «Prueba gratis» (enlace con ?empezar=1) se abre de inmediato el nivel Básico.
+  const autoStarted = useRef(false);
+  useEffect(() => {
+    if (!ready || autoStarted.current || bank !== profile) return;
+    autoStarted.current = true;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("empezar") !== "1") return;
+      const basic = levels.find(l => l.number === 1);
+      if (basic) { void start(basic); setTimeout(() => document.querySelector(".game")?.scrollIntoView({ behavior: "smooth", block: "start" }), 350); }
+      params.delete("empezar");
+      const q = params.toString();
+      window.history.replaceState(null, "", window.location.pathname + (q ? `?${q}` : ""));
+    } catch { /* sin acceso a la URL */ }
+  }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
+
   if (!ready) return <p className="section-description">Cargando tu progreso…</p>;
 
   // ---- Pregunta en juego ----
@@ -194,17 +210,19 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
 
 /** Selector entre el modo juego y el simulacro completo cronometrado. */
 export function SimulationModes({ profile, children }: { profile: SimulationProfile; children: React.ReactNode }) {
+  const premiumSim = useMyPremium();
+  const timedLocked = PREMIUM_LOCKED && premiumSim.level(profile) < 3;
   const [mode, setMode] = useState<"juego" | "nucleo" | "simulacro" | "psico" | "competencias">("juego");
   const tabsRef = useRef<HTMLDivElement>(null);
   return <div className="sim-layout"><div className="sim-main">
     <div ref={tabsRef} className="game-modes" role="tablist" aria-label="Forma de practicar">
       <button type="button" role="tab" aria-selected={mode === "juego"} className={mode === "juego" ? "active" : ""} onClick={() => setMode("juego")}><Trophy aria-hidden="true" /> Modo juego por niveles</button>
       <button type="button" role="tab" aria-selected={mode === "nucleo"} className={mode === "nucleo" ? "active" : ""} onClick={() => setMode("nucleo")}><BookOpen aria-hidden="true" /> Núcleo común</button>
-      <button type="button" role="tab" aria-selected={mode === "simulacro"} className={mode === "simulacro" ? "active" : ""} onClick={() => setMode("simulacro")}>Simulacro completo con tiempo</button>
+      <button type="button" role="tab" aria-selected={mode === "simulacro"} className={mode === "simulacro" ? "active" : ""} onClick={() => setMode("simulacro")}>{timedLocked && <Lock aria-hidden="true" />} Simulacro completo con tiempo</button>
       <button type="button" role="tab" aria-selected={mode === "psico"} className={mode === "psico" ? "active" : ""} onClick={() => setMode("psico")}><Brain aria-hidden="true" /> Psicotécnica</button>
       <button type="button" role="tab" aria-selected={mode === "competencias"} className={mode === "competencias" ? "active" : ""} onClick={() => setMode("competencias")}><ListChecks aria-hidden="true" /> Competencias evaluadas</button>
     </div>
-    <div role="tabpanel">{mode === "juego" ? <PracticeGame key="perfil" profile={profile} /> : mode === "nucleo" ? <><p className="game-hint nucleo-hint">Núcleo común para todos los cargos: lectura crítica, razonamiento cuantitativo, competencias blandas y pedagógicas (40 preguntas, 3 niveles).</p><PracticeGame key="nucleo" profile={profile} bank="nucleo-comun" /></> : mode === "competencias" ? <CompetencyGuide profile={profile} onPractice={t => { setMode(t); requestAnimationFrame(() => tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })); }} /> : mode === "psico" ? <PsychoPractice /> : children}</div>
+    <div role="tabpanel">{mode === "juego" ? <PracticeGame key="perfil" profile={profile} /> : mode === "nucleo" ? <><p className="game-hint nucleo-hint">Núcleo común para todos los cargos: lectura crítica, razonamiento cuantitativo, competencias blandas y pedagógicas (40 preguntas, 3 niveles).</p><PracticeGame key="nucleo" profile={profile} bank="nucleo-comun" /></> : mode === "competencias" ? <CompetencyGuide profile={profile} onPractice={t => { setMode(t); requestAnimationFrame(() => tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })); }} /> : mode === "psico" ? <PsychoPractice /> : timedLocked ? <div className="game-launch timed-locked"><p><Lock aria-hidden="true" /> <strong>El simulacro completo con tiempo (40 preguntas) está incluido en la preparación completa.</strong></p><p>Gratis tienes el nivel Básico de 10 preguntas en «Modo juego por niveles».</p><BuyLevelButton profile={profile} level={3} owned={premiumSim.owned} returnPath={`/simulacros/${profile}`} /></div> : children}</div>
   </div><PaySidebar profile={profile} /></div>;
 }
 

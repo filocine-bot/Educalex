@@ -22,7 +22,7 @@ export type PageDef = {
 };
 
 const VERIFY = "Los requisitos, pruebas y fechas de cada convocatoria deben confirmarse en las fuentes oficiales vigentes antes de tomar decisiones.";
-const PRACTICE_SIM = "Preguntas tipo ICFES por perfil en modo juego de 3 niveles, más un simulacro completo de 40 preguntas con tiempo.";
+const PRACTICE_SIM = "Preguntas tipo ICFES por perfil en modo juego de 3 niveles (el Básico, de 10 preguntas, es gratis) y simulacro completo de 40 preguntas con tiempo en la preparación completa.";
 const DOCS = "Las fichas distinguen enlaces institucionales consultados de fuentes pendientes. Consultar un enlace no equivale a confirmar la vigencia ni a haber leído el documento completo; revisa siempre el texto oficial y sus modificaciones.";
 const COURSE = ["Objetivos de aprendizaje", "Unidades", "Lecciones", "Videos", "Documentos", "Recursos descargables", "Talleres", "Actividades", "Evaluaciones", "Seguimiento del aprendizaje", "Certificado, al cumplir las condiciones de aprobación"];
 const SIM_PARTS = ["Instrucciones", "Número de preguntas", "Tiempo disponible", "Preguntas de selección múltiple con opciones A, B, C y D", "Temporizador", "Navegación entre preguntas", "Marcación para revisión", "Finalización y calificación", "Retroalimentación argumentada", "Resultados y recomendaciones"];
