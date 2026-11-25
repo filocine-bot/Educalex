@@ -15,7 +15,7 @@ const PENDING_MAX_MS = 30 * 60 * 1000;
 
 type Pending = { product: string; returnPath: string; at: number };
 
-function savePending(p: Omit<Pending, "at">) {
+export function savePending(p: Omit<Pending, "at">) {
   try { sessionStorage.setItem(PENDING_KEY, JSON.stringify({ ...p, at: Date.now() })); } catch { /* sin almacenamiento */ }
 }
 function takePending(): Pending | null {
@@ -29,16 +29,16 @@ function takePending(): Pending | null {
   } catch { return null; }
 }
 
-/** Inicia el pago en Wompi. Sin sesión, guarda la compra y lleva a ingresar; al entrar, el pago se abre solo. */
+/** Inicia el pago en Wompi. Sin sesión, lleva al pago con solo el correo (la cuenta se crea con el pago). */
 export function useDirectPay() {
   const { user } = useAccount();
   const checkout = useServerFn(startCheckout);
   const navigate = useNavigate();
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
-  async function pay(product: string, returnPath: string, to: "/ingresar" | "/registro" = "/ingresar") {
+  async function pay(product: string, returnPath: string) {
     setError("");
-    if (!user) { savePending({ product, returnPath }); await navigate({ to }); return; }
+    if (!user) { await navigate({ to: "/pagar", search: { producto: product, volver: returnPath } }); return; }
     setBusy(product);
     try { const { url } = await checkout({ data: { product, returnPath } }); window.location.href = url; }
     catch (e) { setError((e as Error).message || "No se pudo abrir el pago."); setBusy(null); }

@@ -22,6 +22,7 @@ import { Route as EducatiaRouteImport } from './routes/educatia'
 import { Route as GuiaDeUsoRouteImport } from './routes/guia-de-uso'
 import { Route as IngresarRouteImport } from './routes/ingresar'
 import { Route as NosotrosRouteImport } from './routes/nosotros'
+import { Route as PagarRouteImport } from './routes/pagar'
 import { Route as PlanesRouteImport } from './routes/planes'
 import { Route as PreguntasFrecuentesRouteImport } from './routes/preguntas-frecuentes'
 import { Route as PrivacidadRouteImport } from './routes/privacidad'
@@ -150,6 +151,11 @@ const IngresarRoute = IngresarRouteImport.update({
 const NosotrosRoute = NosotrosRouteImport.update({
   id: '/nosotros',
   path: '/nosotros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PagarRoute = PagarRouteImport.update({
+  id: '/pagar',
+  path: '/pagar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlanesRoute = PlanesRouteImport.update({
@@ -517,6 +523,7 @@ export interface FileRoutesByFullPath {
   '/guia-de-uso': typeof GuiaDeUsoRoute
   '/ingresar': typeof IngresarRoute
   '/nosotros': typeof NosotrosRoute
+  '/pagar': typeof PagarRoute
   '/planes': typeof PlanesRoute
   '/preguntas-frecuentes': typeof PreguntasFrecuentesRoute
   '/privacidad': typeof PrivacidadRoute
@@ -596,6 +603,7 @@ export interface FileRoutesByTo {
   '/guia-de-uso': typeof GuiaDeUsoRoute
   '/ingresar': typeof IngresarRoute
   '/nosotros': typeof NosotrosRoute
+  '/pagar': typeof PagarRoute
   '/planes': typeof PlanesRoute
   '/preguntas-frecuentes': typeof PreguntasFrecuentesRoute
   '/privacidad': typeof PrivacidadRoute
@@ -676,6 +684,7 @@ export interface FileRoutesById {
   '/guia-de-uso': typeof GuiaDeUsoRoute
   '/ingresar': typeof IngresarRoute
   '/nosotros': typeof NosotrosRoute
+  '/pagar': typeof PagarRoute
   '/planes': typeof PlanesRoute
   '/preguntas-frecuentes': typeof PreguntasFrecuentesRoute
   '/privacidad': typeof PrivacidadRoute
@@ -757,6 +766,7 @@ export interface FileRouteTypes {
     | '/guia-de-uso'
     | '/ingresar'
     | '/nosotros'
+    | '/pagar'
     | '/planes'
     | '/preguntas-frecuentes'
     | '/privacidad'
@@ -836,6 +846,7 @@ export interface FileRouteTypes {
     | '/guia-de-uso'
     | '/ingresar'
     | '/nosotros'
+    | '/pagar'
     | '/planes'
     | '/preguntas-frecuentes'
     | '/privacidad'
@@ -915,6 +926,7 @@ export interface FileRouteTypes {
     | '/guia-de-uso'
     | '/ingresar'
     | '/nosotros'
+    | '/pagar'
     | '/planes'
     | '/preguntas-frecuentes'
     | '/privacidad'
@@ -996,6 +1008,7 @@ export interface RootRouteChildren {
   GuiaDeUsoRoute: typeof GuiaDeUsoRoute
   IngresarRoute: typeof IngresarRoute
   NosotrosRoute: typeof NosotrosRoute
+  PagarRoute: typeof PagarRoute
   PlanesRoute: typeof PlanesRoute
   PreguntasFrecuentesRoute: typeof PreguntasFrecuentesRoute
   PrivacidadRoute: typeof PrivacidadRoute
@@ -1137,6 +1150,13 @@ declare module '@tanstack/react-router' {
       path: '/nosotros'
       fullPath: '/nosotros'
       preLoaderRoute: typeof NosotrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pagar': {
+      id: '/pagar'
+      path: '/pagar'
+      fullPath: '/pagar'
+      preLoaderRoute: typeof PagarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/planes': {
@@ -1663,6 +1683,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuiaDeUsoRoute: GuiaDeUsoRoute,
   IngresarRoute: IngresarRoute,
   NosotrosRoute: NosotrosRoute,
+  PagarRoute: PagarRoute,
   PlanesRoute: PlanesRoute,
   PreguntasFrecuentesRoute: PreguntasFrecuentesRoute,
   PrivacidadRoute: PrivacidadRoute,

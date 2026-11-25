@@ -3,7 +3,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { CheckCircle2, Clock, XCircle } from "lucide-react";
 import { useAccount } from "@/components/account-session";
-import { confirmTransaction } from "@/lib/payments.functions";
+import { confirmGuestTransaction, confirmTransaction } from "@/lib/payments.functions";
+import { supabase } from "@/integrations/supabase/client";
+import { GuestPassword } from "@/components/guest-password";
 import { pageHead } from "@/lib/educalex-content";
 
 export const Route = createFileRoute("/pago/resultado")({
@@ -16,19 +18,28 @@ function Resultado() {
   const { id, volver } = Route.useSearch();
   const { user, loading } = useAccount();
   const confirm = useServerFn(confirmTransaction);
-  const [state, setState] = useState<{ status: string; message?: string } | null>(null);
+  const confirmGuest = useServerFn(confirmGuestTransaction);
+  const [state, setState] = useState<{ status: string; message?: string; needsLogin?: boolean; guestLogin?: boolean } | null>(null);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    if (loading || !user || !id) return;
-    let alive = true;
-    confirm({ data: { id } }).then(r => { if (alive) setState({ status: r.status }); }).catch(e => { if (alive) setState({ status: "ERROR", message: (e as Error).message }); });
-    return () => { alive = false; };
-  }, [id, user, loading, confirm]);
+    if (loading || !id || started) return;
+    setStarted(true);
+    const fail = (e: unknown) => setState({ status: "ERROR", message: (e as Error).message });
+    if (user) { confirm({ data: { id } }).then(r => setState({ status: r.status })).catch(fail); return; }
+    // Sin sesión: pago hecho solo con el correo. Si la cuenta nació con este pago, se entra sin contraseña.
+    confirmGuest({ data: { id } }).then(async r => {
+      if ("tokenHash" in r && r.tokenHash) {
+        const { error } = await supabase.auth.verifyOtp({ token_hash: r.tokenHash, type: "magiclink" });
+        setState(error ? { status: "APPROVED", needsLogin: true } : { status: "APPROVED", guestLogin: true });
+      } else setState({ status: r.status, needsLogin: "needsLogin" in r && r.needsLogin });
+    }).catch(fail);
+  }, [id, user, loading, started, confirm, confirmGuest]);
 
   const view = !id ? { icon: <XCircle />, title: "No recibimos datos del pago", text: "Si pagaste, escríbenos a educalexcolombia@gmail.com con el comprobante." }
-    : !loading && !user ? { icon: <Clock />, title: "Inicia sesión para confirmar tu pago", text: "Ingresa con la misma cuenta con la que compraste." }
     : !state ? { icon: <Clock />, title: "Confirmando tu pago…", text: "Esto toma unos segundos." }
-    : state.status === "APPROVED" ? { icon: <CheckCircle2 />, title: "¡Pago aprobado!", text: "Tu acceso premium ya está activo. ¡Gracias por apoyar EDUCALEX!" }
+    : state.status === "APPROVED" && state.needsLogin ? { icon: <CheckCircle2 />, title: "¡Pago aprobado!", text: "Tu acceso quedó activo en la cuenta de ese correo. Ingresa con tu correo y contraseña para usarlo." }
+    : state.status === "APPROVED" ? { icon: <CheckCircle2 />, title: "¡Pago aprobado!", text: "Tu acceso ya está activo y ya ingresaste a EDUCALEX. ¡Gracias por apoyar EDUCALEX!" }
     : state.status === "PENDING" ? { icon: <Clock />, title: "Pago en proceso", text: "Wompi aún está confirmando tu pago. Cuando se apruebe, el acceso se activará solo; vuelve en unos minutos." }
     : { icon: <XCircle />, title: "El pago no se completó", text: state.message || "La transacción fue rechazada o anulada. No se hizo ningún cobro aprobado; puedes intentarlo de nuevo." };
 
@@ -38,7 +49,8 @@ function Resultado() {
       <h1>{view.title}</h1>
       <p>{view.text}</p>
       {id && <p className="section-description">Referencia de la transacción en Wompi: {id}</p>}
-      <p className="game-links"><Link to={volver}>Volver a la práctica</Link>{!user && <Link to="/ingresar">Iniciar sesión</Link>}<Link to="/contacto">Contacto</Link></p>
+      {state?.guestLogin && <GuestPassword />}
+      <p className="game-links"><Link to={volver}>{state?.status === "APPROVED" ? "Ir a mis simulacros" : "Volver a la práctica"}</Link>{!user && <Link to="/ingresar">Iniciar sesión</Link>}<Link to="/contacto">Contacto</Link></p>
     </div>
   </section>;
 }
