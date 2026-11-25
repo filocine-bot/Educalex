@@ -9,8 +9,8 @@ const cop = (n: number) => n.toLocaleString('es-CO', { style: 'currency', curren
 
 const plans = [
   { icon: CheckCircle2, name: 'Gratuito', price: 'Sin costo', items: ['Biblioteca normativa y videoteca del MEN', 'Cursos de autoestudio', 'EducatIA con voz', 'Simulacro completo con tiempo (40 preguntas por perfil)', 'Modo juego: nivel Básico de cada perfil y del núcleo común', 'Psicotécnica, competencias evaluadas y dilemas educativos', 'Constancia de participación al superar el nivel Básico'] },
-  { icon: Star, tier: 'docente' as const, name: 'Acceso docente', price: `${cop(PRICES.docente)} · pago único por perfil`, items: ['Para Ingreso a la carrera docente o Ascenso y reubicación', 'Todos los niveles del perfil: Intermedio (40 preguntas) y Avanzado (50 preguntas)', 'Núcleo común completo, insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
-  { icon: Crown, tier: 'directivo' as const, name: 'Acceso directivo', price: `${cop(PRICES.directivo)} · pago único por perfil`, items: ['Para Rector o Coordinador', 'Todos los niveles del perfil: Intermedio (40 preguntas) y Avanzado (50 preguntas)', 'Núcleo común completo, insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
+  { icon: Star, tier: 'docente' as const, name: 'Acceso docente', price: `${cop(PRICES.docente)} · pago único por perfil`, items: ['Para Ingreso a la carrera docente o Ascenso y reubicación', 'Simulacro completo del perfil: 100 preguntas por niveles (10 gratis + 90 con el pago)', 'Núcleo común completo, insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
+  { icon: Crown, tier: 'directivo' as const, name: 'Acceso directivo', price: `${cop(PRICES.directivo)} · pago único por perfil`, items: ['Para Rector o Coordinador', 'Simulacro completo del perfil: 100 preguntas por niveles (10 gratis + 90 con el pago)', 'Núcleo común completo, insignias, rachas y mapa de errores', 'Sin suscripción ni renovación automática'] },
 ];
 
 export function PreparationPlans() {

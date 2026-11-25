@@ -45,8 +45,8 @@ const tryNow = [
 const cop = (n: number) => `${n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 })} COP`;
 const priceCards = [
   { name: "Gratis", price: "$0 COP", note: "Para empezar hoy", items: ["Nivel Básico de todos los perfiles", "Simulacro completo con tiempo", "Biblioteca, cursos, videos y dilemas", "Constancia de participación"], cta: "Empieza gratis", to: "/registro", featured: false },
-  { name: "Acceso docente", price: cop(PRICES.docente), note: "Pago único por perfil", items: ["Ingreso docente o Ascenso y reubicación", "Todos los niveles: Intermedio (40) y Avanzado (50 preguntas)", "Núcleo común completo y mapa de errores"], cta: "Pagar ahora", to: "/planes", featured: true },
-  { name: "Acceso directivo", price: cop(PRICES.directivo), note: "Pago único por perfil", items: ["Rector o Coordinador", "Todos los niveles: Intermedio (40) y Avanzado (50 preguntas)", "Núcleo común completo y mapa de errores"], cta: "Pagar ahora", to: "/planes", featured: true },
+  { name: "Acceso docente", price: cop(PRICES.docente), note: "Pago único por perfil", items: ["Ingreso docente o Ascenso y reubicación", "Simulacro completo: 100 preguntas por niveles", "Núcleo común completo y mapa de errores"], cta: "Pagar ahora", to: "/planes", featured: true },
+  { name: "Acceso directivo", price: cop(PRICES.directivo), note: "Pago único por perfil", items: ["Rector o Coordinador", "Simulacro completo: 100 preguntas por niveles", "Núcleo común completo y mapa de errores"], cta: "Pagar ahora", to: "/planes", featured: true },
 ] as const;
 const steps = [
   { icon: UserPlus, title: "Elige tu perfil", text: "Docente, ascenso, coordinador o rector: la plataforma se organiza según tu meta." },

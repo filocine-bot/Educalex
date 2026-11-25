@@ -14,7 +14,7 @@ export const startCheckout = createServerFn({ method: "POST" })
     if (!product || !purchasable(product)) throw new Error("Este producto todavía no está a la venta.");
     if (product.requires) {
       const { data: own } = await context.supabase.from("premium_access").select("product").eq("user_id", context.userId).eq("product", product.requires).maybeSingle();
-      if (!own) throw new Error("Este pago es solo para quienes ya tienen el Plan Intermedio de este perfil.");
+      if (!own) throw new Error("Este producto ya no está a la venta.");
     }
     const secret = process.env["WOMPI_INTEGRITY_SECRET"]?.trim();
     if (!secret) throw new Error("Los pagos aún no están configurados.");

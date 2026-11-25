@@ -147,7 +147,7 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
     <div className="game-intro">
       <div className="game-intro-row"><h2 id="game-levels-title">Elige tu nivel</h2><p className="game-stats"><span><Star aria-hidden="true" /> {mine.points} puntos</span><span><Flame aria-hidden="true" /> Mejor racha {mine.bestStreak}</span><span><Medal aria-hidden="true" /> {mine.badges.length} insignias</span></p></div>
       <p className="game-hint">Explicación inmediata en cada respuesta. Supera un nivel con {Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
-      {PREMIUM_LOCKED && myLevel > 1 && <p className="game-launch">Tienes desbloqueado hasta el nivel {["Básico", "Intermedio", "Avanzado"].at(Math.min(myLevel, 3) - 1)} en este perfil. ¡Gracias por apoyar EDUCALEX!</p>}
+      {PREMIUM_LOCKED && myLevel > 1 && <p className="game-launch">{myLevel >= 3 ? "Tienes el simulacro completo de este perfil." : "Tienes parte del simulacro de este perfil; con el acceso completo se abren las demás preguntas."} ¡Gracias por apoyar EDUCALEX!</p>}
       {!PREMIUM_LOCKED && <p className="game-launch">Lanzamiento: todos los niveles están abiertos gratis por tiempo limitado.</p>}
     </div>
     <ol className="game-levels">

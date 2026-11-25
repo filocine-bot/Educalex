@@ -10,7 +10,6 @@ import { DIRECTIVE_PROFILES, getProduct, LAUNCH_BUYERS, offersFor, PROFILE_LABEL
 import type { SimulationProfile } from "@/lib/simulation-bank";
 
 const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
-const LEVELS = ["Básico", "Intermedio", "Avanzado"];
 const PENDING_KEY = "educalex-compra-pendiente";
 const PENDING_MAX_MS = 30 * 60 * 1000;
 
@@ -77,7 +76,7 @@ export function PaySidebar({ profile }: { profile: SimulationProfile }) {
   const returnPath = `/simulacros/${profile}`;
   return <aside className="pay-side" aria-labelledby="pay-side-title">
     <h2 id="pay-side-title"><CreditCard aria-hidden="true" /> Desbloquea {PROFILE_LABEL[profile]}</h2>
-    <p className="pay-side-status">Tienes: <strong>{mine >= 3 ? "todos los niveles" : `nivel ${LEVELS[mine - 1]}${mine === 1 ? " (gratis)" : ""}`}</strong></p>
+    <p className="pay-side-status">Tienes: <strong>{mine >= 3 ? "el simulacro completo" : "la prueba gratis (10 preguntas)"}</strong></p>
     {mine >= 3
       ? <p className="pay-side-done"><CheckCircle2 aria-hidden="true" /> Ya tienes acceso completo a este perfil.</p>
       : <ul className="pay-side-list">{offers.map(o => <li key={o.id}>
