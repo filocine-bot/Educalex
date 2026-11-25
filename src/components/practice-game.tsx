@@ -19,8 +19,9 @@ const LETTERS = ["A", "B", "C", "D"];
 type Answer = { id: string; chosen: number; correct: boolean };
 type Run = { level: GameLevel; review: boolean; questions: PracticeQuestion[]; index: number; answers: Answer[]; streak: number; bestStreak: number; points: number };
 
-export function PracticeGame({ profile, bank = profile }: { profile: SimulationProfile; bank?: GameBankKey }) {
-  const levels = useMemo(() => levelsFor(bank), [bank]);
+export function PracticeGame({ profile, bank = profile, trialOnly = false }: { profile: SimulationProfile; bank?: GameBankKey; trialOnly?: boolean }) {
+  const allLevels = useMemo(() => levelsFor(bank), [bank]);
+  const levels = trialOnly ? allLevels.filter(l => l.number === 1) : allLevels;
   const { progress, save, ready, signedIn } = useGameProgress();
   const premium = useMyPremium();
   const myLevel = premium.level(profile);
@@ -160,10 +161,18 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
         <p className="section-description">Estos son los temas donde fallaste. Repásalos antes de volver a intentarlo.</p>
         <ul>{map.map(g => <li key={g.competency}><strong>{g.competency}</strong> ({g.items.length})<ul>{g.items.map(q => <li key={q.id}>{q.reference}</li>)}</ul></li>)}</ul>
       </div>}
+      {r.level.number === 1 && !r.review && bank === profile && PREMIUM_LOCKED && (myLevel >= 3
+        ? <div className="trial-offer owned"><h3>Tienes la preparación completa</h3><p>Sigue con los niveles Intermedio y Avanzado, el núcleo común y el simulacro con tiempo.</p><Link to={`/simulacros/${profile}`} className="h2-btn h2-btn-gold">Ir a mi preparación completa</Link></div>
+        : <div className="trial-offer" role="region" aria-label="Continúa tu preparación">
+          <h3>¡Ya conoces tu punto de partida!</h3>
+          <p>Continúa con los niveles de preparación y fortalece tus competencias para alcanzar tu objetivo profesional: 90 preguntas más por niveles, núcleo común, simulacro con tiempo de 40 preguntas y mapa de errores.</p>
+          <BuyLevelButton profile={profile} level={2} owned={premium.owned} returnPath={`/simulacros/${profile}`} />
+          <Link to="/planes" className="trial-offer-link">Ver planes y beneficios</Link>
+        </div>)}
       <div className="practice-actions">
         {wrongIds.length > 0 && <Button variant="navy" onClick={() => void start(r.level, true, r.questions.filter(q => wrongIds.includes(q.id)))}><RotateCcw /> Repasar mis {wrongIds.length} errores</Button>}
         {!r.review && (!r.level.premium || attemptsQ.unlimited || remainingAttempts(attemptsQ.used, bank, r.level.number) > 0) && <Button variant="outline" onClick={() => start(r.level)}>Repetir el nivel{r.level.premium && !attemptsQ.unlimited ? ` (te quedan ${remainingAttempts(attemptsQ.used, bank, r.level.number)})` : ""}</Button>}
-        {nextLevel && nextPlayable?.playable && !r.review && summary.passed && <Button variant="navy" onClick={() => void start(nextLevel)}>Ir al nivel {nextLevel.name}</Button>}
+        {!trialOnly && nextLevel && nextPlayable?.playable && !r.review && summary.passed && <Button variant="navy" onClick={() => void start(nextLevel)}>Ir al nivel {nextLevel.name}</Button>}
         <Button variant="ghost" onClick={() => setSummary(null)}>Volver a los niveles</Button>
       </div>
     </section>;
@@ -173,7 +182,7 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
   return <section className="game game-map" aria-labelledby="game-levels-title">
     <div className="game-intro">
       <div className="game-intro-row"><h2 id="game-levels-title">Elige tu nivel</h2><p className="game-stats"><span><Star aria-hidden="true" /> {mine.points} puntos</span><span><Flame aria-hidden="true" /> Mejor racha {mine.bestStreak}</span><span><Medal aria-hidden="true" /> {mine.badges.length} insignias</span></p></div>
-      <p className="game-hint">Explicación inmediata en cada respuesta. Supera un nivel con {Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
+      <p className="game-hint">{trialOnly ? "Explicación y norma después de cada respuesta. Al final verás tu resultado y tu mapa de errores." : `Explicación inmediata en cada respuesta. Supera un nivel con ${Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.`}{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
       {PREMIUM_LOCKED && myLevel > 1 && <p className="game-launch">{myLevel >= 3 ? "Tienes el simulacro completo de este perfil." : "Tienes parte del simulacro de este perfil; con el acceso completo se abren las demás preguntas."} ¡Gracias por apoyar EDUCALEX!</p>}
       {attemptsQ.error && <p role="alert" className="game-launch">{attemptsQ.error}</p>}
       {!PREMIUM_LOCKED && <p className="game-launch">Lanzamiento: todos los niveles están abiertos gratis por tiempo limitado.</p>}
