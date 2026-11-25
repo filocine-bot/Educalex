@@ -5,7 +5,6 @@ import { CheckCircle2, Clock, XCircle } from "lucide-react";
 import { useAccount } from "@/components/account-session";
 import { confirmGuestTransaction, confirmTransaction } from "@/lib/payments.functions";
 import { supabase } from "@/integrations/supabase/client";
-import { GuestPassword } from "@/components/guest-password";
 import { pageHead } from "@/lib/educalex-content";
 
 export const Route = createFileRoute("/pago/resultado")({
@@ -38,7 +37,7 @@ function Resultado() {
 
   const view = !id ? { icon: <XCircle />, title: "No recibimos datos del pago", text: "Si pagaste, escríbenos a educalexcolombia@gmail.com con el comprobante." }
     : !state ? { icon: <Clock />, title: "Confirmando tu pago…", text: "Esto toma unos segundos." }
-    : state.status === "APPROVED" && state.needsLogin ? { icon: <CheckCircle2 />, title: "¡Pago aprobado!", text: "Tu acceso quedó activo en la cuenta de ese correo. Ingresa con tu correo y contraseña para usarlo." }
+    : state.status === "APPROVED" && state.needsLogin ? { icon: <CheckCircle2 />, title: "¡Pago aprobado!", text: "Tu acceso quedó activo en la cuenta de ese correo. Ve a «Ingresar», escribe ese correo y te enviaremos un enlace para entrar." }
     : state.status === "APPROVED" ? { icon: <CheckCircle2 />, title: "¡Pago aprobado!", text: "Tu acceso ya está activo y ya ingresaste a EDUCALEX. ¡Gracias por apoyar EDUCALEX!" }
     : state.status === "PENDING" ? { icon: <Clock />, title: "Pago en proceso", text: "Wompi aún está confirmando tu pago. Cuando se apruebe, el acceso se activará solo; vuelve en unos minutos." }
     : { icon: <XCircle />, title: "El pago no se completó", text: state.message || "La transacción fue rechazada o anulada. No se hizo ningún cobro aprobado; puedes intentarlo de nuevo." };
@@ -49,7 +48,7 @@ function Resultado() {
       <h1>{view.title}</h1>
       <p>{view.text}</p>
       {id && <p className="section-description">Referencia de la transacción en Wompi: {id}</p>}
-      {state?.guestLogin && <GuestPassword />}
+      {state?.status === "APPROVED" && <p className="guest-pass-ok">Para volver a entrar otro día, ve a «Ingresar», escribe este mismo correo y te llegará un enlace de acceso. No necesitas contraseña.</p>}
       <p className="game-links"><Link to={volver}>{state?.status === "APPROVED" ? "Ir a mis simulacros" : "Volver a la práctica"}</Link>{!user && <Link to="/ingresar">Iniciar sesión</Link>}<Link to="/contacto">Contacto</Link></p>
     </div>
   </section>;

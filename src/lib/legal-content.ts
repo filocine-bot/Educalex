@@ -35,7 +35,7 @@ export const privacySections: LegalSection[] = [
     title: "2. Datos que tratamos",
     paragraphs: ["Solo pedimos los datos necesarios para que la plataforma funcione:"],
     items: [
-      "Datos de la cuenta: correo electrónico y contraseña. La contraseña se guarda cifrada por el proveedor de autenticación; EDUCALEX no puede leerla.",
+      "Datos de la cuenta: correo electrónico. Se ingresa con enlaces de acceso de un solo uso enviados a ese correo; si en algún momento creaste una contraseña, la guarda cifrada el proveedor de autenticación y EDUCALEX no puede leerla.",
       "Perfil educativo: la ruta de preparación que eliges (por ejemplo, ingreso docente, ascenso, coordinador, rector o directivo en ejercicio) y, si lo escribes, un nombre visible.",
       "Actividad de aprendizaje: cursos en los que te inscribes, unidades completadas y resultados de los simulacros (respuestas, aciertos, tiempo y fecha).",
       "Registro de tu autorización: versión de esta política que aceptaste y la fecha.",
@@ -61,7 +61,7 @@ export const privacySections: LegalSection[] = [
       "Responder tus preguntas en EducatIA.",
       "Atender tus consultas, reclamos y solicitudes sobre tus datos.",
       "Elaborar estadísticas agregadas y anónimas de uso para mejorar la plataforma.",
-      "Enviarte comunicaciones necesarias sobre tu cuenta (por ejemplo, confirmación o recuperación de contraseña). No enviamos publicidad sin tu autorización adicional.",
+      "Enviarte comunicaciones necesarias sobre tu cuenta (por ejemplo, enlaces de acceso o confirmación de pagos). No enviamos publicidad sin tu autorización adicional.",
     ],
     closing: "No vendemos, alquilamos ni cedemos tus datos personales a terceros con fines comerciales.",
   },
@@ -142,7 +142,7 @@ export const termsSections: LegalSection[] = [
     title: "4. Tu cuenta",
     items: [
       "Debes ser mayor de 18 años y suministrar un correo que te pertenezca.",
-      "Eres responsable de mantener tu contraseña en reserva y de la actividad realizada con tu cuenta.",
+      "Eres responsable de mantener en reserva el acceso a tu correo electrónico, porque con él se ingresa a tu cuenta, y de la actividad realizada con ella.",
       "Puedes solicitar la eliminación de tu cuenta en cualquier momento, como indica la Política de privacidad.",
     ],
   },
