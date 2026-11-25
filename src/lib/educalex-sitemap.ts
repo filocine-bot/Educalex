@@ -34,7 +34,7 @@ const ADMIN = "Área reservada a administradores autorizados. La edición de con
 
 export const pages = {
   "/mi-panel": { section: "Mi preparación", title: "Mi panel", description: "Tu ruta de estudio según el perfil educativo activo.", related: ["/mi-cuenta", "/mi-progreso", "/planes"], notice: "Las recomendaciones no limitan el acceso gratuito a los contenidos existentes." },
-  "/guia-de-uso": { section: "EDUCALEX", title: "Cómo usar EDUCALEX", description: "Guía rápida en seis pasos para estudiar, practicar y prepararte con EDUCALEX.", related: ["/simulacros", "/biblioteca", "/planes"] },
+  "/guia-de-uso": { section: "EDUCALEX", title: "Cómo usar EDUCALEX", description: "Paso a paso: crea tu cuenta solo con tu correo, entra con un enlace, haz el simulacro gratis y paga en Wompi para desbloquear el completo.", related: ["/simulacros", "/biblioteca", "/planes"] },
   "/planes": { section: "Preparación", title: "Planes: Gratuito y Premium", description: "Qué es gratis en EDUCALEX y qué incluye el acceso Premium del modo juego.", related: ["/simulacros", "/formacion", "/mi-cuenta"] },
   "/concursos": { section: "Concursos", title: "Concursos docentes", description: "Rutas de preparación para los concursos de mérito del sector educativo en Colombia.", children: ["/concursos/ingreso-docente", "/concursos/ascenso-reubicacion", "/concursos/rector", "/concursos/coordinador"], related: ["/simulacros", "/formacion", "/biblioteca"], notice: VERIFY },
   "/concursos/ingreso-docente": {
