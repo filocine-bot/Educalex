@@ -2043,3 +2043,17 @@ html { scroll-padding-top: 170px; }
   .h2-prof-portrait{width:92px;height:92px;border-width:3px}
   .h2-prof-badge{right:calc(50% - 56px);bottom:8px!important}
 }
+/* Banner tipo franja (propuesta 25 nov.) */
+.h2-hero.h2-hero-plain{background:linear-gradient(180deg,#102B50 0%,#14335f 100%);padding:1.2rem 0 1.2rem}
+.h2-hero.h2-hero-plain .h2-hero-inner{text-align:left;max-width:none}
+.h2-hero.h2-hero-plain .h2-hero-inner>*{margin-inline:0;max-width:none}
+.h2-hero.h2-hero-plain .h2-kicker{display:block!important;color:#FFC928;font:800 1.35rem Poppins,sans-serif;letter-spacing:.02em;text-transform:none}
+.h2-hero.h2-hero-plain h1{font-size:clamp(1.25rem,2.3vw,1.75rem);font-weight:700}
+.h2-hero.h2-hero-plain .h2-hero-text{font-size:clamp(.9rem,1.2vw,1rem);color:#e6eef9}
+.h2-hero.h2-hero-plain .h2-hero-actions{justify-content:stretch}
+.h2-hero-cta{width:100%;justify-content:center;background:#FFC928!important;color:#102B50!important;font-size:1rem!important;padding:.9rem 1rem!important;border-radius:10px!important;letter-spacing:.03em}
+/* Botón de Inicio grande y amarillo en la barra superior */
+.header-home-link{background:#FFC928!important;color:#102B50!important;border-radius:10px!important;font-weight:800!important;padding:.55rem 1rem!important;font-size:1rem!important;box-shadow:none!important}
+.header-home-link .header-home-icon{color:#102B50!important;width:1.25rem;height:1.25rem}
+@media (max-width:640px){.h2-hero.h2-hero-plain{padding:.9rem 0 1rem}.h2-hero.h2-hero-plain .h2-kicker{font-size:1.1rem}.h2-hero.h2-hero-plain h1{font-size:1.2rem}.h2-hero.h2-hero-plain .h2-hero-text{font-size:.85rem}.h2-hero-cta{font-size:.9rem!important}}
+@media (max-width:640px){.header-home-link{font-size:0!important;padding:.55rem .7rem!important}.header-home-link .header-home-icon{width:1.4rem;height:1.4rem}}

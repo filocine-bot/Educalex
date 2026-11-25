@@ -46,13 +46,12 @@ function Index() {
   return <div className="home2">
     <section className="h2-hero h2-hero-plain" aria-labelledby="h2-hero-title">
       <div className="site-container h2-hero-inner">
-        <p className="h2-kicker">EDUCALEX · Academia Inteligente de Educación</p>
-        <h1 id="h2-hero-title">Tu próximo paso profesional comienza con una <span>buena preparación</span></h1>
-        <p className="h2-hero-text">Prepárate para ingresar a la carrera docente, ascender o asumir un cargo directivo en instituciones educativas de Colombia.</p>
+        <p className="h2-kicker">EDUCALEX</p>
+        <h1 id="h2-hero-title">Preparación para Concursos Docentes y Directivos en Colombia</h1>
+        <p className="h2-hero-text">Simulacros, legislación educativa, competencias pedagógicas y formación especializada para ingresar, ascender y convertirte en coordinador o rector.</p>
         <div className="h2-hero-actions">
-          <a href="#perfiles" className="h2-btn h2-btn-gold">Elige tu perfil y comienza gratis <ArrowRight aria-hidden="true" /></a>
+          <a href="#perfiles" className="h2-btn h2-btn-gold h2-hero-cta">Comienza tu preparación gratis</a>
         </div>
-        <p className="h2-hero-tags">Simulacros · Legislación educativa · Normatividad · Casos pedagógicos</p>
       </div>
     </section>
 
