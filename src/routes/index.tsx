@@ -5,28 +5,15 @@ import { Button } from "@/components/ui/button";
 import { pageHead } from "@/lib/educalex-content";
 import hero from "@/assets/educalex-hero-docentes.webp";
 import robot from "@/assets/educalex-robot.webp";
-import { ProfilePayButton } from "@/components/direct-pay";
+import { PrepConfigurator } from "@/components/prep-configurator";
 import { FounderCard } from "@/components/founder-card";
 import { ShareQr } from "@/components/share-qr";
 import { FaqList } from "@/components/faq-list";
 import { faqs } from "@/lib/faq";
 import { PresentationVideo } from "@/components/presentation-video";
-import { dilemmas } from "@/lib/dilemmas";
 
 export const Route = createFileRoute("/")({ head: () => pageHead("Preparación para el concurso docente 2026 en Colombia", "Simulacros tipo ICFES por niveles, normas verificadas en fuentes oficiales y cursos para docentes, coordinadores y rectores. Concurso CNSC, ascenso y reubicación. Empieza gratis."), component: Index });
 
-const routes = [
-  { to: "/concursos/ingreso-docente", profile: "ingreso-docente" as const, sim: "/simulacros/ingreso-docente", icon: Trophy, title: "Ingreso a la Carrera Docente", text: "Prepárate y alcanza tu meta", tone: "blue", perks: ["Ruta de estudio por competencias", "Simulacro tipo ICFES en 3 niveles", "Núcleo común y prueba psicotécnica"] },
-  { to: "/concursos/ascenso-reubicacion", profile: "ascenso-reubicacion" as const, sim: "/simulacros/ascenso-reubicacion", icon: ChartNoAxesCombined, title: "Ascenso y Reubicación Salarial", text: "Mejora tu perfil profesional", tone: "green", perks: ["Decreto Ley 1278 y evaluación", "Simulacro tipo ICFES en 3 niveles", "Guía 31 y desempeño docente"] },
-  { to: "/concursos/rector", profile: "rector" as const, sim: "/simulacros/rector", icon: Users, title: "Concurso para Rector", text: "Lidera con excelencia", tone: "gold", perks: ["Gestión directiva y Guía 34", "Simulacro tipo ICFES en 3 niveles", "Dilemas de liderazgo escolar"] },
-  { to: "/concursos/coordinador", profile: "coordinador" as const, sim: "/simulacros/coordinador", icon: Settings, title: "Concurso para Coordinador", text: "Gestiona y acompaña", tone: "red", perks: ["Convivencia y Ruta de Atención", "Simulacro tipo ICFES en 3 niveles", "Evaluación y SIEE"] },
-] as const;
-const tryNow = [
-  { to: "/simulacros", icon: Play, tag: "10 preguntas", title: "Simulacro nivel Básico", text: "Mide tu punto de partida con preguntas tipo ICFES.", tone: "blue" },
-  { to: "/formacion/ruta-atencion-integral", icon: Scale, tag: "6 casos", title: "Ruta de Atención Integral", text: "Clasifica situaciones tipo I, II y III.", tone: "red" },
-  { to: "/formacion/dilemas-educativos", icon: Compass, tag: `${dilemmas.length} dilemas`, title: "Dilemas educativos", text: "Decide y mira las consecuencias de cada opción.", tone: "green" },
-  { to: "/docente-ia", icon: Bot, tag: "Con voz", title: "Pregúntale a EducatIA", text: "Resuelve dudas de normas y pedagogía.", tone: "gold" },
-] as const;
 const steps = [
   { icon: UserPlus, title: "Elige tu perfil", text: "Docente, ascenso, coordinador o rector: la plataforma se organiza según tu meta." },
   { icon: BookOpen, title: "Estudia", text: "Biblioteca normativa con infografías, cursos de autoestudio y videos oficiales." },
@@ -61,16 +48,7 @@ function Index() {
       <div className="site-container hx-hero-content">
         <p className="hx-hero-brand">EDUCALEX · Academia Inteligente de Educación</p>
         <h1 className="hx-hero-title">Prepárate para el <span className="text-gold">concurso docente</span> con simulacros que te explican cada respuesta</h1>
-        <nav className="hx-profiles" aria-labelledby="hx-profiles-title">
-          <p id="hx-profiles-title" className="hx-profiles-title">Elige tu perfil · las primeras 10 preguntas son gratis</p>
-          <ul>{routes.map(r => <li key={r.title} className={`hx-profile hx-tone-${r.tone}`}>
-            <Link to={r.sim} className="hx-profile-name"><span className="hx-profile-icon"><r.icon aria-hidden="true" /></span>{r.title}</Link>
-            <div className="hx-profile-actions">
-              <Link to={r.sim} className="hx-profile-free">Prueba gratis</Link>
-              <ProfilePayButton profile={r.profile} className="hx-profile-pay" />
-            </div>
-          </li>)}</ul>
-        </nav>
+        <PrepConfigurator title="Arma tu preparación" />
         <a className="hx-simo" href="https://www.cnsc.gov.co/convocatorias/docentes-y-directivos-docentes-2026" target="_blank" rel="noopener noreferrer"><CalendarClock aria-hidden="true" /><span><strong>Concurso docente 2026 · vacantes reservadas para personas con discapacidad.</strong> {simo}</span></a>
       </div>
     </section>
@@ -79,10 +57,6 @@ function Index() {
 
     <div className="site-container"><FounderCard compact /></div>
 
-    <section className="site-container hx-try" aria-labelledby="hx-try-title">
-      <div className="hx-section-head"><Sparkles className="text-gold" aria-hidden="true" /><div><h2 id="hx-try-title">Empieza hoy, sin pagar</h2><p>Herramientas interactivas abiertas para todos los perfiles.</p></div></div>
-      <div className="hx-try-grid">{tryNow.map(t => <Link key={t.title} to={t.to} className={`hx-try-item hx-tone-${t.tone}`}><span className="hx-try-icon"><t.icon aria-hidden="true" /></span><span className="hx-try-tag">{t.tag}</span><strong>{t.title}</strong><span>{t.text}</span><span className="hx-try-go">Empezar <ArrowRight aria-hidden="true" /></span></Link>)}</div>
-    </section>
 
     <section className="site-container hx-cards">
       <article className="hx-card hx-card-light">

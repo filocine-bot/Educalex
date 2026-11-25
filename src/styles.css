@@ -1669,3 +1669,57 @@ html { scroll-padding-top: 170px; }
 .ps-pay { background: #f2b705; color: #0f2f5c; border: 0; }
 .ps-pay svg { width: 18px; height: 18px; }
 .ps-free:focus-visible, .ps-pay:focus-visible { outline: 3px solid #f2b705; outline-offset: 2px; }
+/* Arma tu preparación (configurador de precios) */
+.cfg { background: #fff; color: var(--foreground); border-radius: 18px; padding: 20px; box-shadow: 0 22px 48px -24px rgb(0 0 0 / .6); display: grid; gap: 14px; max-width: 560px; }
+.cfg-title { display: flex; align-items: center; gap: 8px; font-family: Poppins, sans-serif; font-weight: 700; font-size: 19px; color: var(--brand-blue); margin: 0; }
+.cfg-title svg { width: 20px; height: 20px; color: #c98a06; }
+.cfg-group { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; min-width: 0; }
+.cfg-step { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; color: var(--foreground); padding: 0; }
+.cfg-step span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 999px; background: #1e4e8c; color: #fff; font-size: 12px; }
+.cfg-profiles { display: grid; gap: 8px; }
+.cfg-profile { position: relative; display: grid; grid-template-columns: 36px 1fr; grid-template-rows: auto auto; column-gap: 10px; align-items: center; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; transition: border-color .15s, box-shadow .15s, background .15s; }
+.cfg-profile:hover { border-color: var(--tone); }
+.cfg-profile.is-on { border-color: var(--tone); background: color-mix(in oklab, var(--tone) 7%, white); box-shadow: 0 0 0 3px color-mix(in oklab, var(--tone) 18%, transparent); }
+.cfg-profile input, .cfg-mode input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.cfg-profile:has(input:focus-visible), .cfg-mode:has(input:focus-visible) { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.cfg-profile-icon { grid-row: 1 / 3; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: color-mix(in oklab, var(--tone) 14%, white); color: var(--tone); }
+.cfg-profile-icon svg { width: 19px; height: 19px; }
+.cfg-profile-name { font-family: Poppins, sans-serif; font-weight: 600; font-size: 14.5px; color: var(--brand-blue); line-height: 1.2; }
+.cfg-profile-price { font-size: 12px; color: var(--muted-foreground); }
+.cfg-profile.is-on::after { content: "✓"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 999px; background: var(--tone); color: #fff; font-size: 13px; font-weight: 700; display: grid; place-items: center; }
+.cfg-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cfg-mode { position: relative; display: grid; gap: 2px; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; }
+.cfg-mode strong { font-size: 14px; color: var(--brand-blue); }
+.cfg-mode span { font-size: 12px; color: var(--muted-foreground); line-height: 1.35; }
+.cfg-mode em { font-style: normal; font-weight: 800; font-size: 16px; color: var(--foreground); margin-top: 4px; }
+.cfg-mode:hover { border-color: #1e4e8c; }
+.cfg-mode.is-on { border-color: #1e4e8c; background: #eef4fc; box-shadow: 0 0 0 3px rgb(30 78 140 / .15); }
+.cfg-includes { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted-foreground); }
+.cfg-includes li { display: flex; gap: 5px; align-items: center; }
+.cfg-includes svg { width: 14px; height: 14px; color: #1b7f3b; }
+.cfg-total { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 12px 18px; border: 0; border-radius: 12px; background: linear-gradient(135deg, #1e4e8c, #0f2f5c); color: #fff; cursor: pointer; text-align: left; min-height: 64px; transition: filter .15s; }
+.cfg-total:hover { filter: brightness(1.12); }
+.cfg-total:focus-visible { outline: 3px solid #f2b705; outline-offset: 2px; }
+.cfg-total-amount { display: grid; }
+.cfg-total-amount small { font-size: 11.5px; opacity: .85; }
+.cfg-total-amount strong { font-family: Poppins, sans-serif; font-size: 24px; line-height: 1.1; }
+.cfg-total-cta { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: .02em; color: #f2b705; text-align: right; }
+.cfg-total-cta svg { width: 18px; height: 18px; flex: none; }
+@media (max-width: 480px) { .cfg-modes { grid-template-columns: 1fr; } .cfg-total { flex-direction: column; align-items: flex-start; } .cfg-total-cta { text-align: left; } }
+/* Inicio de cada perfil en Concursos */
+.profile-home { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: 28px; align-items: center; padding: 26px; margin-bottom: 8px; border-radius: 20px; background: linear-gradient(135deg, #0f2f5c, #1e4e8c); color: #fff; }
+.profile-home-kicker { color: #f2b705; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 6px; }
+.profile-home h2 { font-family: Poppins, sans-serif; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.2; margin: 0 0 14px; color: #fff; }
+.profile-home-text ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 15px; }
+.profile-home-text li { display: flex; gap: 8px; align-items: flex-start; }
+.profile-home-text li svg { width: 18px; height: 18px; color: #f2b705; flex: none; margin-top: 2px; }
+.profile-home .cfg { max-width: none; }
+.free-tools { margin-top: 28px; }
+@media (max-width: 900px) { .profile-home { grid-template-columns: 1fr; padding: 18px; } }
+.cfg-profile { grid-template-columns: 32px 1fr auto; grid-template-rows: auto; padding: 7px 40px 7px 10px; }
+.cfg-profile-icon { grid-row: auto; width: 32px; height: 32px; }
+.cfg-profile-price { text-align: right; white-space: nowrap; font-weight: 700; color: var(--brand-blue); font-size: 13px; }
+.cfg { gap: 12px; padding: 18px; }
+.hx-hero-v2 .hx-hero-content { padding: 26px 0 32px; }
+.hx-hero-v2 h1.hx-hero-title { font-size: clamp(22px, 2.1vw, 30px); margin-bottom: 14px; }
+@media (max-width: 480px) { .cfg-profile { grid-template-columns: 32px 1fr; } .cfg-profile-price { grid-column: 2; text-align: left; } }
