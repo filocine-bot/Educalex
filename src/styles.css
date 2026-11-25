@@ -79,8 +79,9 @@
 
 :root {
   --radius: 0.5rem;
-  --brand-blue: oklch(0.407 0.109 255.8);
-  --gold: oklch(0.805 0.161 84.3);
+  --brand-blue: #102B50;
+  --gold: #FFC928;
+  --brand-light: #EAF1F8;
   --on-brand: oklch(1 0 0);
   --background: oklch(1 0 0);
   --foreground: oklch(0.29 0.087 260.8);
@@ -88,7 +89,7 @@
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.805 0.161 84.3);
+  --primary: #FFC928;
   --primary-foreground: oklch(0.29 0.087 260.8);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
@@ -1944,3 +1945,115 @@ html { scroll-padding-top: 170px; }
   .mobile-register{display:inline-flex;align-items:center;background:#f2b81c;color:#0f2c57;font-weight:800;font-size:.85rem;border-radius:999px;padding:.4rem .85rem;white-space:nowrap;text-decoration:none;box-shadow:0 0 0 2px rgba(255,255,255,.25)}
   .profile-bar-start:has(.mobile-register) .preparation-label{display:none}
 }
+
+/* Portada: accesos directos «¿Qué necesitas hoy?» */
+.h2-quick{position:relative;z-index:2;margin-top:1.6rem;margin-bottom:.5rem}
+.h2-quick h2{font:800 1.35rem Poppins,sans-serif;color:#0f2c57;margin:0 0 .7rem}
+.h2-quick-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.7rem}
+.h2-quick-item{display:flex;align-items:center;gap:.6rem;background:#fff;border-radius:14px;padding:.85rem .9rem;font-weight:700;color:#0f2c57;text-decoration:none;box-shadow:0 10px 24px -14px rgba(15,44,87,.55);border:1px solid #dbe2ee;line-height:1.2;min-height:4.2rem}
+.h2-quick-item:hover{transform:translateY(-2px);border-color:#f2b81c}
+.h2-quick-icon{flex:none;display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:11px;color:#fff}
+.h2-quick-icon svg{width:1.3rem;height:1.3rem}
+.h2-quick-item.h2-tone-blue .h2-quick-icon{background:#1d4f9a}.h2-quick-item.h2-tone-gold .h2-quick-icon{background:#d99a00}.h2-quick-item.h2-tone-red .h2-quick-icon{background:#c23a3a}.h2-quick-item.h2-tone-teal .h2-quick-icon{background:#11808a}.h2-quick-item.h2-tone-navy .h2-quick-icon{background:#0f2c57}.h2-quick-item.h2-tone-green .h2-quick-icon{background:#1f8a4c}
+.h2-quick-go{display:none}
+@media (max-width:1100px){.h2-quick-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:640px){
+  .h2-quick{margin-top:1.1rem}
+  .h2-hero-guide,.h2-kicker{display:none}
+  .h2-quick-grid{grid-template-columns:1fr 1fr;gap:.55rem}
+  .h2-quick-item{font-size:.92rem;padding:.7rem;min-height:3.8rem}
+  /* Portada más corta en el celular: lo esencial primero */
+  .h2-trust,.h2-hero-actions .h2-btn-ghost{display:none}
+  .h2-program-body>p,.h2-program-body ul{display:none}
+  .h2-tool p{display:none}
+}
+
+/* Portada: Elige tu perfil profesional */
+.h2-profiles-band{background:var(--brand-light,#EAF1F8)}
+.h2-profiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:1.4rem}
+.h2-prof{background:#fff;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 14px 34px -20px rgba(16,43,80,.55);border:1px solid #d6e0ee}
+.h2-prof-media{height:120px;display:grid;place-items:center;color:#fff}
+.h2-prof-media svg{width:56px;height:56px}
+.h2-prof-blue .h2-prof-media{background:linear-gradient(135deg,#102B50,#1d4f9a)}
+.h2-prof-green .h2-prof-media{background:linear-gradient(135deg,#0f5132,#1f8a4c)}
+.h2-prof-red .h2-prof-media{background:linear-gradient(135deg,#7a1f1f,#c23a3a)}
+.h2-prof-navy .h2-prof-media{background:linear-gradient(135deg,#0b1d36,#102B50)}
+.h2-prof-media svg{color:#FFC928}
+.h2-prof-body{padding:1.2rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
+.h2-prof-body h3{font:800 1.25rem/1.2 Poppins,sans-serif;color:#102B50}
+.h2-prof-who{font-weight:700;color:#334155;font-size:.95rem}
+.h2-prof-body p{line-height:1.45;color:#3b4658}
+.h2-prof-price{margin-top:auto;font-size:.88rem;font-weight:700;color:#102B50!important;background:#EAF1F8;border-radius:10px;padding:.45rem .6rem}
+.h2-ejes h2{text-align:center}
+.h2-ejes ul{list-style:none;padding:0;margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.h2-ejes li{display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid #d6e0ee;border-radius:14px;padding:.9rem 1rem;font-weight:700;color:#102B50}
+.h2-ejes li span{flex:none;display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:11px;background:#102B50;color:#FFC928}
+.h2-ejes li svg{width:1.25rem;height:1.25rem}
+.header-start{font-weight:800!important;text-transform:uppercase;letter-spacing:.02em}
+@media (max-width:1100px){.h2-profiles{grid-template-columns:1fr 1fr}.h2-ejes ul{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.h2-profiles{grid-template-columns:1fr}.h2-prof-media{height:84px}.h2-ejes ul{grid-template-columns:1fr}.h2-hero-sub{display:none}}
+#perfiles{scroll-margin-top:130px}
+.h2-hero-tags{margin-top:1rem;color:#cfe0f5;font-weight:600;letter-spacing:.02em}
+.h2-prof-actions{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.h2-prof-actions .h2-btn{justify-content:center;padding-left:.5rem;padding-right:.5rem}
+.h2-profiles-band #h2-prof-title{text-align:center}
+.h2-prof{border-top:4px solid #FFC928}
+/* Banner sin foto grande y tarjetas de perfil con fotografía */
+.h2-hero.h2-hero-plain{min-height:0;background:linear-gradient(160deg,#102B50 0%,#163a6b 100%);padding:2.6rem 0 2.4rem}
+.h2-hero.h2-hero-plain .h2-hero-inner{max-width:52rem;text-align:center;margin:0 auto}
+.h2-hero.h2-hero-plain .h2-hero-actions{justify-content:center}
+.h2-hero.h2-hero-plain h1{font-size:clamp(1.8rem,4vw,2.9rem)}
+.h2-prof-media{position:relative;height:auto!important;aspect-ratio:4/3;background:#102B50;overflow:hidden}
+.h2-prof-media img{width:100%;height:100%;object-fit:cover;display:block}
+.h2-prof-badge{position:absolute;left:12px;bottom:12px;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:#102B50;border:2px solid #FFC928}
+.h2-prof-badge svg{width:24px!important;height:24px!important;color:#FFC928}
+.timed-locked{display:grid;gap:.6rem;padding:1.2rem;border:2px solid #FFC928;border-radius:14px;background:#fffdf3}
+.timed-locked svg{display:inline;width:1.1rem;height:1.1rem;vertical-align:-2px}
+@media (max-width:640px){.h2-hero.h2-hero-plain{padding:1.6rem 0 1.6rem}.h2-profiles{grid-template-columns:1fr 1fr;gap:.7rem}.h2-prof-body{padding:.8rem}.h2-prof-body h3{font-size:1rem}.h2-prof-body p{font-size:.85rem}.h2-prof-actions{grid-template-columns:1fr}.h2-prof-actions .h2-btn{min-height:44px;font-size:.85rem}.h2-prof-badge{width:34px;height:34px}.h2-prof-badge svg{width:18px!important;height:18px!important}}
+.h2-hero.h2-hero-plain .h2-hero-inner{padding-top:0!important;padding-bottom:0!important;min-height:0!important}
+.h2-hero.h2-hero-plain .h2-hero-inner>*{margin-inline:auto;max-width:46rem}
+.h2-hero.h2-hero-plain .h2-hero-inner{gap:14px}
+.game{scroll-margin-top:140px}
+/* Ajuste: banner compacto y retratos circulares nítidos */
+.h2-hero.h2-hero-plain{padding:1.5rem 0 1.4rem}
+.h2-hero.h2-hero-plain .h2-kicker{display:none}
+.h2-hero.h2-hero-plain h1{font-size:clamp(1.35rem,2.6vw,2rem);line-height:1.18}
+.h2-hero.h2-hero-plain .h2-hero-text{font-size:clamp(.9rem,1.3vw,1.02rem)}
+.h2-hero.h2-hero-plain .h2-btn{padding:.7rem 1.2rem;font-size:.9rem}
+.h2-hero.h2-hero-plain .h2-hero-tags{font-size:.82rem;margin-top:.2rem}
+.h2-hero.h2-hero-plain .h2-hero-inner{gap:10px}
+.h2-profiles-band .h2-section{padding-top:1.4rem}
+.h2-profiles-band #h2-prof-title{font-size:clamp(1.25rem,2.4vw,1.7rem)}
+.h2-profiles{margin-top:.9rem}
+.h2-prof-media{aspect-ratio:auto!important;height:150px!important;display:grid;place-items:center}
+.h2-prof-blue .h2-prof-media{background:radial-gradient(circle at 50% 110%,#2a64b8,#102B50 70%)}
+.h2-prof-green .h2-prof-media{background:radial-gradient(circle at 50% 110%,#2aa05e,#0f4d30 70%)}
+.h2-prof-red .h2-prof-media{background:radial-gradient(circle at 50% 110%,#d9534f,#6e1c1c 70%)}
+.h2-prof-navy .h2-prof-media{background:radial-gradient(circle at 50% 110%,#3a5f95,#0b1d36 70%)}
+.h2-prof-portrait{width:124px;height:124px;border-radius:50%;overflow:hidden;border:4px solid #FFC928;box-shadow:0 10px 24px -8px rgba(0,0,0,.55);background:#fff}
+.h2-prof-portrait img{width:100%;height:100%;object-fit:cover}
+.h2-prof-badge{left:auto!important;right:calc(50% - 74px);bottom:14px!important}
+@media (max-width:640px){
+  .h2-hero.h2-hero-plain{padding:1rem 0 1rem}
+  .h2-hero.h2-hero-plain h1{font-size:1.3rem}
+  .h2-hero.h2-hero-plain .h2-hero-text{font-size:.86rem}
+  .h2-hero.h2-hero-plain .h2-hero-tags{display:none}
+  .h2-profiles-band .h2-section{padding-top:1rem}
+  .h2-prof-media{height:118px!important}
+  .h2-prof-portrait{width:92px;height:92px;border-width:3px}
+  .h2-prof-badge{right:calc(50% - 56px);bottom:8px!important}
+}
+/* Banner tipo franja (propuesta 25 nov.) */
+.h2-hero.h2-hero-plain{background:linear-gradient(180deg,#102B50 0%,#14335f 100%);padding:1.2rem 0 1.2rem}
+.h2-hero.h2-hero-plain .h2-hero-inner{text-align:left;max-width:none}
+.h2-hero.h2-hero-plain .h2-hero-inner>*{margin-inline:0;max-width:none}
+.h2-hero.h2-hero-plain .h2-kicker{display:block!important;color:#FFC928;font:800 1.35rem Poppins,sans-serif;letter-spacing:.02em;text-transform:none}
+.h2-hero.h2-hero-plain h1{font-size:clamp(1.25rem,2.3vw,1.75rem);font-weight:700}
+.h2-hero.h2-hero-plain .h2-hero-text{font-size:clamp(.9rem,1.2vw,1rem);color:#e6eef9}
+.h2-hero.h2-hero-plain .h2-hero-actions{justify-content:stretch}
+.h2-hero-cta{width:100%;justify-content:center;background:#FFC928!important;color:#102B50!important;font-size:1rem!important;padding:.9rem 1rem!important;border-radius:10px!important;letter-spacing:.03em}
+/* Botón de Inicio grande y amarillo en la barra superior */
+.header-home-link{background:#FFC928!important;color:#102B50!important;border-radius:10px!important;font-weight:800!important;padding:.55rem 1rem!important;font-size:1rem!important;box-shadow:none!important}
+.header-home-link .header-home-icon{color:#102B50!important;width:1.25rem;height:1.25rem}
+@media (max-width:640px){.h2-hero.h2-hero-plain{padding:.9rem 0 1rem}.h2-hero.h2-hero-plain .h2-kicker{font-size:1.1rem}.h2-hero.h2-hero-plain h1{font-size:1.2rem}.h2-hero.h2-hero-plain .h2-hero-text{font-size:.85rem}.h2-hero-cta{font-size:.9rem!important}}
+@media (max-width:640px){.header-home-link{font-size:0!important;padding:.55rem .7rem!important}.header-home-link .header-home-icon{width:1.4rem;height:1.4rem}}

@@ -26,7 +26,7 @@ export const LAUNCH_BUYERS = 100;
 
 export const products: Product[] = [
   // A la venta: acceso completo de un perfil (todos los niveles). Se conserva el identificador «completo-*».
-  ...PROFILES.map(p => ({ id: `completo-${p}` as ProductId, title: `Acceso completo · ${PROFILE_LABEL[p]}`, description: `Simulacro completo del perfil ${PROFILE_LABEL[p]}: las 100 preguntas por niveles (10 gratis + 90 con el pago) y el núcleo común completo. Cada nivel pagado se puede presentar hasta 3 veces.`, profiles: [p], priceCOP: priceFor(p), level: MAX_LEVEL })),
+  ...PROFILES.map(p => ({ id: `completo-${p}` as ProductId, title: `Acceso completo · ${PROFILE_LABEL[p]}`, description: `Simulacro completo del perfil ${PROFILE_LABEL[p]}: las 100 preguntas por niveles (10 gratis + 90 con el pago), el simulacro con tiempo de 40 preguntas y el núcleo común completo. Cada nivel pagado se puede presentar hasta 3 veces.`, profiles: [p], priceCOP: priceFor(p), level: MAX_LEVEL })),
   // Productos anteriores: ya no se venden, pero conservan el acceso de quienes los compraron.
   ...PROFILES.flatMap(p => [
     { id: `intermedio-${p}` as ProductId, title: `Plan Intermedio · ${PROFILE_LABEL[p]} (anterior)`, description: `Nivel Intermedio del perfil ${PROFILE_LABEL[p]}.`, profiles: [p], priceCOP: null, level: 2 },

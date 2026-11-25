@@ -1,34 +1,33 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookMarked, Bot, ChartNoAxesCombined, CheckCircle2, ClipboardCheck, Compass, FileText, GraduationCap, Library, Mail, Play, Scale, Settings, ShieldCheck, Trophy, Users, Video } from "lucide-react";
+import { ArrowRight, BookMarked, Bot, ChartNoAxesCombined, CheckCircle2, ClipboardCheck, Compass, FileText, GraduationCap, Library, Mail, Scale, Settings, ShieldCheck, Trophy, Users, Video } from "lucide-react";
 import { pageHead } from "@/lib/educalex-content";
-import hero from "@/assets/educalex-hero-docentes.webp";
+import fotoIngreso from "@/assets/perfil-ingreso-docente.webp";
+import fotoAscenso from "@/assets/perfil-ascenso-reubicacion.webp";
+import fotoCoordinador from "@/assets/perfil-coordinador.webp";
+import fotoRector from "@/assets/perfil-rector.webp";
 import robot from "@/assets/educalex-robot.webp";
 import { FounderSpotlight } from "@/components/founder-card";
 import { ShareQr } from "@/components/share-qr";
-import { ProfilePayButton } from "@/components/direct-pay";
 import { WHATSAPP_NUMBER } from "@/components/whatsapp-launcher";
-import { dilemmas } from "@/lib/dilemmas";
-import { getProduct } from "@/lib/payments";
 import { SOCIAL } from "@/lib/social";
-import type { SimulationProfile } from "@/lib/simulation-bank";
 
 export const Route = createFileRoute("/")({ head: () => pageHead("Preparación para el concurso docente 2026 en Colombia", "Simulacros tipo ICFES por niveles, normas verificadas en fuentes oficiales y cursos para docentes, coordinadores y rectores. Concurso CNSC, ascenso y reubicación. Empieza gratis."), component: Index });
 
-const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
-const priceOf = (p: SimulationProfile) => getProduct(`completo-${p}`)?.priceCOP ?? 0;
-
-const freeTools = [
-  { to: "/simulacros", icon: Play, tag: "10 preguntas", title: "Simulacro nivel Básico", text: "Mide tu punto de partida con preguntas tipo ICFES.", tone: "blue" },
-  { to: "/formacion/ruta-atencion-integral", icon: Scale, tag: "6 casos", title: "Ruta de Atención Integral", text: "Clasifica situaciones tipo I, II y III.", tone: "red" },
-  { to: "/formacion/dilemas-educativos", icon: Compass, tag: `${dilemmas.length} dilemas`, title: "Dilemas educativos", text: "Decide y mira las consecuencias de cada opción.", tone: "green" },
-  { to: "/docente-ia", icon: Bot, tag: "Con voz", title: "Pregúntale a EducatIA", text: "Resuelve dudas de normas y pedagogía.", tone: "gold" },
-] as const;
 
 const programs = [
-  { profile: "ingreso-docente", icon: Trophy, name: "Ingreso a la Carrera Docente", desc: "Para el concurso de méritos de la CNSC como docente de aula u orientador.", to: "/concursos/ingreso-docente", sim: "/simulacros/ingreso-docente" },
-  { profile: "ascenso-reubicacion", icon: ChartNoAxesCombined, name: "Ascenso y Reubicación Salarial", desc: "Para docentes del Decreto Ley 1278 que suben de grado o de nivel salarial.", to: "/concursos/ascenso-reubicacion", sim: "/simulacros/ascenso-reubicacion" },
-  { profile: "rector", icon: Users, name: "Concurso para Rector", desc: "Liderazgo y gestión directiva, administrativa, académica y comunitaria.", to: "/concursos/rector", sim: "/simulacros/rector" },
-  { profile: "coordinador", icon: Settings, name: "Concurso para Coordinador", desc: "Convivencia, Ruta de Atención Integral, evaluación y acompañamiento.", to: "/concursos/coordinador", sim: "/simulacros/coordinador" },
+  { profile: "ingreso-docente", icon: Trophy, tone: "blue", photo: fotoIngreso, alt: "Docente con su cuaderno, sonriendo", name: "Ingreso a la carrera docente", desc: "Para licenciados y profesionales que aspiran a ser docentes.", to: "/concursos/ingreso-docente", sim: "/simulacros/ingreso-docente" },
+  { profile: "ascenso-reubicacion", icon: ChartNoAxesCombined, tone: "green", photo: fotoAscenso, alt: "Docente con su maletín frente a la institución educativa", name: "Ascenso y reubicación", desc: "Para docentes que buscan avanzar en su carrera.", to: "/concursos/ascenso-reubicacion", sim: "/simulacros/ascenso-reubicacion" },
+  { profile: "coordinador", icon: Settings, tone: "red", photo: fotoCoordinador, alt: "Coordinadora con los brazos cruzados frente al colegio", name: "Concurso para coordinador", desc: "Liderazgo pedagógico, convivencia y gestión académica.", to: "/concursos/coordinador", sim: "/simulacros/coordinador" },
+  { profile: "rector", icon: Users, tone: "navy", photo: fotoRector, alt: "Rector con su carpeta frente a la institución, junto a la bandera de Colombia", name: "Concurso para rector", desc: "Dirección, gestión institucional y liderazgo educativo.", to: "/concursos/rector", sim: "/simulacros/rector" },
+] as const;
+
+const ejes = [
+  { icon: Scale, text: "Legislación y normatividad educativa colombiana" },
+  { icon: GraduationCap, text: "Competencias pedagógicas" },
+  { icon: FileText, text: "Gestión académica y administrativa" },
+  { icon: Users, text: "Liderazgo y gestión institucional" },
+  { icon: Compass, text: "Análisis de situaciones y casos educativos" },
+  { icon: ClipboardCheck, text: "Simulacros y evaluación del desempeño" },
 ] as const;
 
 const sections = [
@@ -45,54 +44,38 @@ const topics = ["Ley 115 de 1994", "Decreto 1278", "Ley 1620 y convivencia", "PI
 
 function Index() {
   return <div className="home2">
-    <section className="h2-hero" aria-labelledby="h2-hero-title">
-      <img className="h2-hero-img" src={hero} width={1920} height={768} alt="Docentes colombianos frente a una institución educativa, junto a la bandera de Colombia" fetchPriority="high" />
-      <div className="h2-hero-fade" aria-hidden="true" />
+    <section className="h2-hero h2-hero-plain" aria-labelledby="h2-hero-title">
       <div className="site-container h2-hero-inner">
-        <p className="h2-kicker">EDUCALEX · Academia Inteligente de Educación</p>
-        <h1 id="h2-hero-title">Tu próximo logro profesional comienza con una <span>buena preparación</span></h1>
-        <p className="h2-hero-text">Prepárate para los concursos docentes, asciende en el escalafón y fortalece tu desarrollo profesional con simulacros explicados, formación especializada e inteligencia artificial.</p>
+        <p className="h2-kicker">EDUCALEX</p>
+        <h1 id="h2-hero-title">Preparación para Concursos Docentes y Directivos en Colombia</h1>
+        <p className="h2-hero-text">Simulacros, legislación educativa, competencias pedagógicas y formación especializada para ingresar, ascender y convertirte en coordinador o rector.</p>
         <div className="h2-hero-actions">
-          <a href="#gratis" className="h2-btn h2-btn-gold">Comenzar gratis <ArrowRight aria-hidden="true" /></a>
-          <a href="#programas" className="h2-btn h2-btn-ghost">Conocer nuestros programas</a>
+          <a href="#perfiles" className="h2-btn h2-btn-gold h2-hero-cta">Comienza tu preparación gratis</a>
         </div>
-        <Link to="/guia-de-uso" className="h2-hero-guide">¿Primera vez? Mira cómo funciona en 6 pasos <ArrowRight aria-hidden="true" /></Link>
-        <ul className="h2-trust"><li><CheckCircle2 aria-hidden="true" /> Normas con fuente oficial</li><li><CheckCircle2 aria-hidden="true" /> Explicación en cada respuesta</li><li><CheckCircle2 aria-hidden="true" /> Pago único con Wompi</li></ul>
       </div>
     </section>
 
-    <section id="gratis" className="site-container h2-section" aria-labelledby="h2-free-title">
-      <p className="h2-eyebrow">Sin tarjeta, sin compromiso</p>
-      <h2 id="h2-free-title">Empieza hoy, sin pagar</h2>
-      <p className="h2-lead">Herramientas interactivas abiertas para todos los perfiles.</p>
-      <div className="h2-tools">{freeTools.map(t => <article key={t.title} className={`h2-tool h2-tone-${t.tone}`}>
-        <div className="h2-tool-top"><span className="h2-tool-icon"><t.icon aria-hidden="true" /></span><span className="h2-tool-tag">{t.tag}</span></div>
-        <h3>{t.title}</h3>
-        <p>{t.text}</p>
-        <Link to={t.to} className="h2-tool-go">Empezar <ArrowRight aria-hidden="true" /></Link>
-      </article>)}</div>
-    </section>
-
-    <section id="programas" className="h2-band" aria-labelledby="h2-prog-title">
+    <section id="perfiles" className="h2-profiles-band" aria-labelledby="h2-prof-title">
       <div className="site-container h2-section">
-        <p className="h2-eyebrow">Programas de preparación</p>
-        <h2 id="h2-prog-title">Elige tu camino profesional</h2>
-        <p className="h2-lead">Empieza gratis con 10 preguntas. Con un solo pago abres el simulacro completo del perfil: 100 preguntas por niveles y el núcleo común.</p>
-        <div className="h2-programs">{programs.map(p => <article key={p.profile} className="h2-program">
-          <div className="h2-program-head"><span><p.icon aria-hidden="true" /></span><h3><Link to={p.to}>{p.name}</Link></h3></div>
-          <div className="h2-program-body">
+        <h2 id="h2-prof-title">¿Cuál es tu objetivo profesional?</h2>
+        <div className="h2-profiles">{programs.map(p => <article key={p.profile} className={`h2-prof h2-prof-${p.tone}`}>
+          <div className="h2-prof-media"><span className="h2-prof-portrait"><img src={p.photo} alt={p.alt} width={320} height={320} loading="lazy" /></span><span className="h2-prof-badge" aria-hidden="true"><p.icon /></span></div>
+          <div className="h2-prof-body">
+            <h3>{p.name}</h3>
             <p>{p.desc}</p>
-            <ul><li><CheckCircle2 aria-hidden="true" /> Simulacro tipo ICFES por niveles</li><li><CheckCircle2 aria-hidden="true" /> Explicación y norma en cada respuesta</li><li><CheckCircle2 aria-hidden="true" /> Núcleo común y psicotécnica</li></ul>
-            <div className="h2-program-price">
-              <small>Acceso completo · pago único</small>
-              <strong>{cop(priceOf(p.profile))} <span>COP</span></strong>
-              <ProfilePayButton profile={p.profile} className="h2-btn h2-btn-gold h2-btn-block" />
-              <Link to={p.sim} className="h2-btn h2-btn-outline h2-btn-block">Prueba gratis</Link>
+            <div className="h2-prof-actions">
+              <Link to={p.sim} search={{ empezar: 1 }} className="h2-btn h2-btn-outline">Prueba gratis</Link>
+              <Link to={p.to} className="h2-btn h2-btn-gold">Comenzar <ArrowRight aria-hidden="true" /></Link>
             </div>
           </div>
         </article>)}</div>
-        <p className="h2-note">También ofrecemos <Link to="/formacion">cursos de autoestudio gratuitos</Link> y <Link to="/asesoria-investigacion">asesoría en investigación</Link> (servicio aparte). Detalles de cada plan en <Link to="/planes">Planes</Link>.</p>
+        <p className="h2-note">¿Primera vez? <Link to="/guia-de-uso">Mira cómo funciona en 6 pasos</Link> · Compara precios en <Link to="/planes">Planes</Link>.</p>
       </div>
+    </section>
+
+    <section className="site-container h2-section h2-ejes" aria-labelledby="h2-ejes-title">
+      <h2 id="h2-ejes-title">Prepárate con conocimiento, estrategia y práctica</h2>
+      <ul>{ejes.map(e => <li key={e.text}><span><e.icon aria-hidden="true" /></span>{e.text}</li>)}</ul>
     </section>
 
     <section className="h2-ia" aria-labelledby="h2-ia-title">
