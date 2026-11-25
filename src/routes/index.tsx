@@ -1,102 +1,141 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { ArrowRight, Trophy, ChartNoAxesCombined, Users, Settings, GraduationCap, FileText, CheckCircle2, BookOpen, ClipboardCheck, Scale, Rocket, Video, CalendarClock, ExternalLink, Play, Bot, Compass, UserPlus, Award, Sparkles, HelpCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, BookMarked, Bot, ChartNoAxesCombined, CheckCircle2, ClipboardCheck, Compass, FileText, GraduationCap, Library, Mail, Play, Scale, Settings, ShieldCheck, Trophy, Users, Video } from "lucide-react";
 import { pageHead } from "@/lib/educalex-content";
 import hero from "@/assets/educalex-hero-docentes.webp";
 import robot from "@/assets/educalex-robot.webp";
-import { PrepConfigurator } from "@/components/prep-configurator";
-import { FounderCard } from "@/components/founder-card";
+import { FounderSpotlight } from "@/components/founder-card";
 import { ShareQr } from "@/components/share-qr";
-import { FaqList } from "@/components/faq-list";
-import { faqs } from "@/lib/faq";
-import { PresentationVideo } from "@/components/presentation-video";
+import { ProfilePayButton } from "@/components/direct-pay";
+import { WHATSAPP_NUMBER } from "@/components/whatsapp-launcher";
+import { dilemmas } from "@/lib/dilemmas";
+import { getProduct } from "@/lib/payments";
+import { SOCIAL } from "@/lib/social";
+import type { SimulationProfile } from "@/lib/simulation-bank";
 
 export const Route = createFileRoute("/")({ head: () => pageHead("Preparación para el concurso docente 2026 en Colombia", "Simulacros tipo ICFES por niveles, normas verificadas en fuentes oficiales y cursos para docentes, coordinadores y rectores. Concurso CNSC, ascenso y reubicación. Empieza gratis."), component: Index });
 
-const steps = [
-  { icon: UserPlus, title: "Elige tu perfil", text: "Docente, ascenso, coordinador o rector: la plataforma se organiza según tu meta." },
-  { icon: BookOpen, title: "Estudia", text: "Biblioteca normativa con infografías, cursos de autoestudio y videos oficiales." },
-  { icon: ClipboardCheck, title: "Practica", text: "Simulacros por niveles de dificultad, con la explicación y la norma de cada respuesta." },
-  { icon: Award, title: "Recibe tu constancia", text: "Al superar el nivel Básico descarga tu constancia de participación." },
-] as const;
-// Inscripción SIMO de vacantes reservadas (Resolución 11673 de 2026, CNSC).
-const SIMO_OPEN = Date.UTC(2026, 10, 23, 5), SIMO_CLOSE = Date.UTC(2027, 0, 16, 5);
-function useSimoNotice() {
-  const [text, setText] = useState("Inscripciones en SIMO del 23 de noviembre de 2026 al 15 de enero de 2027");
-  useEffect(() => {
-    const now = Date.now(), day = 86_400_000;
-    if (now < SIMO_OPEN) { const n = Math.ceil((SIMO_OPEN - now) / day); setText(`Inscripciones en SIMO abren el 23 de noviembre · ${n === 1 ? "falta 1 día" : `faltan ${n} días`}`); }
-    else if (now < SIMO_CLOSE) setText(`Inscripciones abiertas en SIMO hasta el 15 de enero de 2027 (quedan ${Math.ceil((SIMO_CLOSE - now) / day)} días). Población general: febrero de 2027, fecha preliminar`);
-    else setText("Consulta en SIMO el estado de las inscripciones del concurso 2026");
-  }, []);
-  return text;
-}
-const school = [{ t: "Guía 34 y autoevaluación institucional", to: "/formacion/guia-34-pmi" }, { t: "Educación inclusiva y DUA", to: "/formacion/inclusion-dua-piar" }, { t: "Convivencia y educación emocional", to: "/formacion/convivencia-escolar" }, { t: "STEAM e innovación educativa", to: "/formacion/steam-robotica" }, { t: "Liderazgo y gestión escolar", to: "/formacion/liderazgo-directivo" }] as const;
-// Novedades verificadas en fuentes oficiales (CNSC y MEN). Actualizar cuando cambie el proceso.
-const news = [
-  { date: "19 nov. 2026", source: "CNSC", title: "La oferta definitiva sube a 31.211 vacantes", text: "El Acuerdo 325 del 19 de noviembre de 2026 modifica el Acuerdo 303 del 21 de octubre, a solicitud de Riohacha y Malambo. La oferta pasa de 31.163 a 31.211 vacantes. Consulta la OPEC de tu entidad en SIMO.", href: "https://www.cnsc.gov.co/convocatorias/docentes-y-directivos-docentes-2026" },
-  { date: "6 nov. 2026", source: "CNSC", title: "Inscripciones para vacantes reservadas a personas con discapacidad", text: "Resolución 11673: 2.255 vacantes de los Procesos de Selección 2917 a 3006 de 2026. Inscripción gratuita en SIMO, con certificado de discapacidad, del 23 de noviembre de 2026 al 15 de enero de 2027. Las demás vacantes se abren después (febrero de 2027, fecha preliminar).", href: "https://www.cnsc.gov.co/convocatorias/docentes-y-directivos-docentes-2026" },
-  { date: "Vigente", source: "Decreto 2038/2016", title: "Puntaje mínimo de la prueba eliminatoria", text: "La prueba de aptitudes y competencias básicas es la única eliminatoria: 60/100 para docentes y 70/100 para directivos docentes.", href: "https://normograma.icfes.gov.co/docs/pdf/decreto_2038_2016.pdf" },
+const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
+const priceOf = (p: SimulationProfile) => getProduct(`completo-${p}`)?.priceCOP ?? 0;
+
+const freeTools = [
+  { to: "/simulacros", icon: Play, tag: "10 preguntas", title: "Simulacro nivel Básico", text: "Mide tu punto de partida con preguntas tipo ICFES.", tone: "blue" },
+  { to: "/formacion/ruta-atencion-integral", icon: Scale, tag: "6 casos", title: "Ruta de Atención Integral", text: "Clasifica situaciones tipo I, II y III.", tone: "red" },
+  { to: "/formacion/dilemas-educativos", icon: Compass, tag: `${dilemmas.length} dilemas`, title: "Dilemas educativos", text: "Decide y mira las consecuencias de cada opción.", tone: "green" },
+  { to: "/docente-ia", icon: Bot, tag: "Con voz", title: "Pregúntale a EducatIA", text: "Resuelve dudas de normas y pedagogía.", tone: "gold" },
 ] as const;
 
+const programs = [
+  { profile: "ingreso-docente", icon: Trophy, name: "Ingreso a la Carrera Docente", desc: "Para el concurso de méritos de la CNSC como docente de aula u orientador.", to: "/concursos/ingreso-docente", sim: "/simulacros/ingreso-docente" },
+  { profile: "ascenso-reubicacion", icon: ChartNoAxesCombined, name: "Ascenso y Reubicación Salarial", desc: "Para docentes del Decreto Ley 1278 que suben de grado o de nivel salarial.", to: "/concursos/ascenso-reubicacion", sim: "/simulacros/ascenso-reubicacion" },
+  { profile: "rector", icon: Users, name: "Concurso para Rector", desc: "Liderazgo y gestión directiva, administrativa, académica y comunitaria.", to: "/concursos/rector", sim: "/simulacros/rector" },
+  { profile: "coordinador", icon: Settings, name: "Concurso para Coordinador", desc: "Convivencia, Ruta de Atención Integral, evaluación y acompañamiento.", to: "/concursos/coordinador", sim: "/simulacros/coordinador" },
+] as const;
+
+const sections = [
+  { icon: GraduationCap, title: "Escuela de Formación Docente", text: "Cursos de autoestudio: inclusión, convivencia, evaluación, STEAM y más.", to: "/formacion" },
+  { icon: FileText, title: "Guía 34 y Plan de Mejoramiento", text: "Autoevaluación institucional, diseño y seguimiento del PMI.", to: "/formacion/guia-34-pmi" },
+  { icon: Scale, title: "Legislación educativa", text: "Normas con infografía y enlace a la fuente oficial.", to: "/biblioteca/legislacion" },
+  { icon: BookMarked, title: "Guías del MEN", text: "Guías y orientaciones del Ministerio de Educación Nacional.", to: "/biblioteca/guias-men" },
+  { icon: Library, title: "Bibliografía y recursos", text: "Políticas, lineamientos y documentos de consulta.", to: "/biblioteca/recursos" },
+  { icon: Video, title: "Videos educativos", text: "Videos oficiales del MEN por temática, con Lengua de Señas Colombiana.", to: "/biblioteca/videos" },
+  { icon: ClipboardCheck, title: "Simulacros", text: "Modo juego por niveles y simulacro completo con tiempo.", to: "/simulacros" },
+] as const;
+
+const topics = ["Ley 115 de 1994", "Decreto 1278", "Ley 1620 y convivencia", "PIAR e inclusión", "Guía 34 y PMI", "Evaluación y SIEE"];
+
 function Index() {
-  const simo = useSimoNotice();
-  return <>
-    <section className="hx-hero hx-hero-v2">
-      <img className="hx-hero-img" src={hero} width={1920} height={768} alt="Docentes colombianos sonrientes frente a una institución educativa, junto a la bandera de Colombia" fetchPriority="high" />
-      <div className="site-container hx-hero-content">
-        <p className="hx-hero-brand">EDUCALEX · Academia Inteligente de Educación</p>
-        <h1 className="hx-hero-title">Prepárate para el <span className="text-gold">concurso docente</span> con simulacros que te explican cada respuesta</h1>
-        <PrepConfigurator title="Arma tu preparación" />
-        <a className="hx-simo" href="https://www.cnsc.gov.co/convocatorias/docentes-y-directivos-docentes-2026" target="_blank" rel="noopener noreferrer"><CalendarClock aria-hidden="true" /><span><strong>Concurso docente 2026 · vacantes reservadas para personas con discapacidad.</strong> {simo}</span></a>
+  return <div className="home2">
+    <section className="h2-hero" aria-labelledby="h2-hero-title">
+      <img className="h2-hero-img" src={hero} width={1920} height={768} alt="Docentes colombianos frente a una institución educativa, junto a la bandera de Colombia" fetchPriority="high" />
+      <div className="h2-hero-fade" aria-hidden="true" />
+      <div className="site-container h2-hero-inner">
+        <p className="h2-kicker">EDUCALEX · Academia Inteligente de Educación</p>
+        <h1 id="h2-hero-title">Tu próximo logro profesional comienza con una <span>buena preparación</span></h1>
+        <p className="h2-hero-text">Prepárate para los concursos docentes, asciende en el escalafón y fortalece tu desarrollo profesional con simulacros explicados, formación especializada e inteligencia artificial.</p>
+        <div className="h2-hero-actions">
+          <a href="#gratis" className="h2-btn h2-btn-gold">Comenzar gratis <ArrowRight aria-hidden="true" /></a>
+          <a href="#programas" className="h2-btn h2-btn-ghost">Conocer nuestros programas</a>
+        </div>
+        <ul className="h2-trust"><li><CheckCircle2 aria-hidden="true" /> Normas con fuente oficial</li><li><CheckCircle2 aria-hidden="true" /> Explicación en cada respuesta</li><li><CheckCircle2 aria-hidden="true" /> Pago único con Wompi</li></ul>
       </div>
     </section>
 
-    <PresentationVideo />
+    <section id="gratis" className="site-container h2-section" aria-labelledby="h2-free-title">
+      <p className="h2-eyebrow">Sin tarjeta, sin compromiso</p>
+      <h2 id="h2-free-title">Empieza hoy, sin pagar</h2>
+      <p className="h2-lead">Herramientas interactivas abiertas para todos los perfiles.</p>
+      <div className="h2-tools">{freeTools.map(t => <article key={t.title} className={`h2-tool h2-tone-${t.tone}`}>
+        <div className="h2-tool-top"><span className="h2-tool-icon"><t.icon aria-hidden="true" /></span><span className="h2-tool-tag">{t.tag}</span></div>
+        <h3>{t.title}</h3>
+        <p>{t.text}</p>
+        <Link to={t.to} className="h2-tool-go">Empezar <ArrowRight aria-hidden="true" /></Link>
+      </article>)}</div>
+    </section>
 
-    <div className="site-container"><FounderCard compact /></div>
+    <section id="programas" className="h2-band" aria-labelledby="h2-prog-title">
+      <div className="site-container h2-section">
+        <p className="h2-eyebrow">Programas de preparación</p>
+        <h2 id="h2-prog-title">Elige tu camino profesional</h2>
+        <p className="h2-lead">Empieza gratis con 10 preguntas. Con un solo pago abres el simulacro completo del perfil: 100 preguntas por niveles y el núcleo común.</p>
+        <div className="h2-programs">{programs.map(p => <article key={p.profile} className="h2-program">
+          <div className="h2-program-head"><span><p.icon aria-hidden="true" /></span><h3><Link to={p.to}>{p.name}</Link></h3></div>
+          <div className="h2-program-body">
+            <p>{p.desc}</p>
+            <ul><li><CheckCircle2 aria-hidden="true" /> Simulacro tipo ICFES por niveles</li><li><CheckCircle2 aria-hidden="true" /> Explicación y norma en cada respuesta</li><li><CheckCircle2 aria-hidden="true" /> Núcleo común y psicotécnica</li></ul>
+            <div className="h2-program-price">
+              <small>Acceso completo · pago único</small>
+              <strong>{cop(priceOf(p.profile))} <span>COP</span></strong>
+              <ProfilePayButton profile={p.profile} className="h2-btn h2-btn-gold h2-btn-block" />
+              <Link to={p.sim} className="h2-btn h2-btn-outline h2-btn-block">Prueba gratis</Link>
+            </div>
+          </div>
+        </article>)}</div>
+        <p className="h2-note">También ofrecemos <Link to="/formacion">cursos de autoestudio gratuitos</Link> y <Link to="/asesoria-investigacion">asesoría en investigación</Link> (servicio aparte). Detalles de cada plan en <Link to="/planes">Planes</Link>.</p>
+      </div>
+    </section>
 
-
-    <section className="site-container hx-cards">
-      <article className="hx-card hx-card-light">
-        <div className="hx-card-head"><GraduationCap className="hx-card-icon" /><div><h2>Escuela de Formación Docente</h2><p>Cursos y talleres para tu desarrollo profesional</p></div></div>
-        <ul className="hx-checks">{school.map(s => <li key={s.t}><CheckCircle2 className="text-gold" /><Link to={s.to} className="hover:underline">{s.t}</Link></li>)}</ul>
-        <Button variant="navy" asChild><Link to="/formacion">Explorar cursos <ArrowRight /></Link></Button>
-      </article>
-      <article className="hx-card hx-card-dark">
-        <div className="hx-card-head"><FileText className="hx-card-icon text-gold" /><div><h2>Guía 34 y Plan de Mejoramiento</h2><p>Gestiona con calidad y mejora continuamente</p></div></div>
-        <ul className="hx-checks">{["Autoevaluación institucional", "Diseño del PMI", "Seguimiento y evaluación"].map(s => <li key={s}><CheckCircle2 className="text-gold" />{s}</li>)}</ul>
-        <Button variant="hero" asChild><Link to="/formacion/guia-34-pmi">Acceder al módulo <ArrowRight /></Link></Button>
-        <ClipboardCheck className="hx-card-deco" />
-      </article>
-      <article className="hx-card hx-card-ia">
-        <img src={robot} width={400} height={400} loading="lazy" alt="EducatIA, robot asistente de EDUCALEX con birrete" className="hx-robot" />
-        <div className="hx-ia-body">
-          <h2 className="hx-ia-title">EducatIA</h2>
-          <p className="hx-ia-sub">Tu asistente pedagógico y normativo</p>
-          <ul className="hx-checks">{["Resuelve tus dudas", "Consulta normatividad", "Te responde en voz alta"].map(s => <li key={s}><CheckCircle2 className="text-brand-blue" />{s}</li>)}</ul>
-          <Button variant="navy" asChild><Link to="/docente-ia">Preguntar ahora <ArrowRight /></Link></Button>
+    <section className="h2-ia" aria-labelledby="h2-ia-title">
+      <div className="site-container h2-ia-inner">
+        <div className="h2-ia-robot"><img src={robot} width={400} height={400} loading="lazy" alt="EducatIA, robot asistente de EDUCALEX con birrete" /></div>
+        <div className="h2-ia-body">
+          <p className="h2-eyebrow h2-eyebrow-gold">EducatIA · con voz</p>
+          <h2 id="h2-ia-title">Tu asistente inteligente para la educación</h2>
+          <p className="h2-ia-text">Consulta, aprende y resuelve tus dudas sobre legislación educativa, pedagogía, normativa y desarrollo institucional con el acompañamiento de EducatIA.</p>
+          <ul className="h2-ia-benefits"><li><CheckCircle2 aria-hidden="true" /> Pregunta escribiendo o con tu voz</li><li><CheckCircle2 aria-hidden="true" /> Escucha la respuesta en voz alta</li><li><CheckCircle2 aria-hidden="true" /> Responde con la biblioteca de fuentes verificadas</li></ul>
+          <ul className="h2-ia-topics" aria-label="Temas que puedes consultar">{topics.map(t => <li key={t}>{t}</li>)}</ul>
+          <Link to="/docente-ia" className="h2-btn h2-btn-gold">Pregúntale a EducatIA <ArrowRight aria-hidden="true" /></Link>
         </div>
-      </article>
+      </div>
     </section>
 
-    <section className="site-container hx-news" aria-labelledby="hx-news-title">
-      <div className="hx-news-head"><CalendarClock className="text-gold" /><div><h2 id="hx-news-title">Novedades verificadas del concurso 2026</h2><p>Actualizadas el 23 de noviembre de 2026. Confirma siempre en SIMO y en el micrositio de la CNSC.</p></div></div>
-      <div className="hx-news-grid">{news.map(n => <a key={n.title} href={n.href} target="_blank" rel="noopener noreferrer" className="hx-news-item"><span className="hx-news-meta">{n.source} · {n.date}</span><strong>{n.title}</strong><span>{n.text}</span><span className="hx-news-link">Ver fuente oficial <ExternalLink className="size-3.5" /></span></a>)}</div>
+    <section className="site-container h2-section" aria-labelledby="h2-sec-title">
+      <h2 id="h2-sec-title">Todo para tu desarrollo profesional</h2>
+      <p className="h2-lead">Formación, normas y recursos verificados, en un solo lugar.</p>
+      <div className="h2-tiles">{sections.map(s => <Link key={s.title} to={s.to} className="h2-tile">
+        <span className="h2-tile-icon"><s.icon aria-hidden="true" /></span>
+        <strong>{s.title}</strong>
+        <span>{s.text}</span>
+        <span className="h2-tile-go">Ver <ArrowRight aria-hidden="true" /></span>
+      </Link>)}</div>
     </section>
 
-    <section className="site-container hx-steps" aria-labelledby="hx-steps-title">
-      <div className="hx-section-head"><Rocket className="text-gold" aria-hidden="true" /><div><h2 id="hx-steps-title">Cómo funciona</h2><p>Cuatro pasos para prepararte con orden. <Link to="/guia-de-uso" className="hx-inline-link">Ver la guía de uso</Link></p></div></div>
-      <ol className="hx-steps-list">{steps.map((st, i) => <li key={st.title}><span className="hx-step-num">{i + 1}</span><st.icon aria-hidden="true" className="hx-step-icon" /><strong>{st.title}</strong><span>{st.text}</span></li>)}</ol>
-    </section>
+    <FounderSpotlight />
 
-    <ShareQr />
-    <section className="site-container hx-faq" aria-labelledby="hx-faq-title">
-      <div className="hx-section-head"><HelpCircle className="text-gold" aria-hidden="true" /><div><h2 id="hx-faq-title">Preguntas frecuentes</h2><p>Lo que más nos preguntan antes de empezar.</p></div></div>
-      <FaqList items={faqs.filter(f => f.home)} />
-      <Link to="/preguntas-frecuentes" className="hx-faq-more">Ver todas las preguntas <ArrowRight aria-hidden="true" /></Link>
+    <section id="contacto" className="h2-band" aria-labelledby="h2-contact-title">
+      <div className="site-container h2-section h2-contact">
+        <div className="h2-contact-text">
+          <h2 id="h2-contact-title">Contacto institucional</h2>
+          <p className="h2-lead">EDUCALEX · San Pelayo, Córdoba. Te respondemos por WhatsApp y correo.</p>
+          <div className="h2-contact-links">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="h2-btn h2-btn-wa">WhatsApp +57 301 874 7379</a>
+            <a href="mailto:educalexcolombia@gmail.com" className="h2-btn h2-btn-light"><Mail aria-hidden="true" /> educalexcolombia@gmail.com</a>
+            <a href={SOCIAL.instagram.url} target="_blank" rel="noopener noreferrer" className="h2-btn h2-btn-light">Instagram {SOCIAL.instagram.handle}</a>
+            <a href={SOCIAL.facebook.url} target="_blank" rel="noopener noreferrer" className="h2-btn h2-btn-light">Facebook {SOCIAL.facebook.handle}</a>
+            <Link to="/contacto" className="h2-btn h2-btn-light"><ShieldCheck aria-hidden="true" /> Formulario de contacto</Link>
+          </div>
+        </div>
+        <ShareQr />
+      </div>
     </section>
-    <section className="hx-banner"><div className="site-container hx-banner-inner"><p>En EDUCALEX, tu vocación se potencia con <span className="text-gold">conocimiento</span></p><Button variant="hero" asChild><Link to="/registro"><Rocket /> Transforma tu futuro y el de la educación en Colombia</Link></Button></div></section>
-  </>;
+  </div>;
 }

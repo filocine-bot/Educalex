@@ -25,8 +25,13 @@ export const headerNavigation: HeaderItem[] = [
     { label: 'Herramientas de IA', to: '/formacion/herramientas-ia' },
   ] },
   { label: 'Simulacros', to: '/simulacros', children: profileLinks('simulacros') },
-  { label: 'Biblioteca', to: '/biblioteca', compact: true },
-  { label: 'Planes', to: '/planes', compact: true },
+  { label: 'Recursos', to: '/biblioteca', children: [
+    { label: 'Legislación educativa', to: '/biblioteca/legislacion' },
+    { label: 'Guías del MEN', to: '/biblioteca/guias-men' },
+    { label: 'Bibliografía y recursos', to: '/biblioteca/recursos' },
+    { label: 'Videos educativos', to: '/biblioteca/videos' },
+  ] },
+  { label: 'Planes', to: '/planes' },
   { label: 'EducatIA', to: '/docente-ia', compact: true },
   { label: 'Mi cuenta', to: '/mi-cuenta', compact: true },
 ];
