@@ -1889,3 +1889,46 @@ html { scroll-padding-top: 170px; }
 .guest-pass-ok{margin-top:1rem;font-weight:600;color:#14623a}
 .magic-login{display:grid;gap:.5rem;padding:.9rem 1rem;border:1px solid #d6dce8;border-radius:12px;background:#f7f9fc}
 .game-attempts{font-size:.85rem;font-weight:600;color:#123f7a;margin-top:.2rem}
+.code-login{display:grid;gap:.5rem;padding:1rem;border:1px solid #d6dce8;border-radius:12px;background:#f7f9fc}
+
+/* Recorrido guiado «Cómo usar EDUCALEX» */
+.tour{max-width:56rem;margin:0 auto;display:grid;gap:1rem}
+.tour-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.tour-count{font-weight:700;color:#123f7a}
+.tour-dots{display:flex;gap:.45rem}
+.tour-dots button{width:.8rem;height:.8rem;border-radius:999px;border:0;background:#cfd8e6;cursor:pointer;padding:0}
+.tour-dots button.done{background:#7d98c4}
+.tour-dots button.on{background:#e3a91b;width:2rem}
+.tour-card{display:grid;grid-template-columns:1.1fr 1fr;gap:1.5rem;align-items:center;background:#fff;border:1px solid #dbe2ee;border-radius:18px;padding:1.5rem;box-shadow:0 10px 30px -18px rgba(18,63,122,.45);animation:tourIn .35s ease}
+@keyframes tourIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.tour-card{animation:none}}
+.tour-text h2{font-size:1.35rem;font-weight:800;color:#0f2c57;margin:.6rem 0 .4rem}
+.tour-text p{line-height:1.55}
+.tour-ico{display:inline-grid;place-items:center;width:3rem;height:3rem;border-radius:14px;color:#fff}
+.tour-ico svg{width:1.6rem;height:1.6rem}
+.tone-blue{background:#1d4f9a}.tone-gold{background:#d99a00}.tone-green{background:#1f8a4c}.tone-red{background:#c23a3a}.tone-purple{background:#6b45b5}.tone-teal{background:#11808a}
+.tour-action{display:inline-flex;align-items:center;gap:.35rem;margin-top:.8rem;font-weight:700;color:#1d4f9a;text-decoration:underline}
+.tour-action svg{width:1rem;height:1rem}
+.tour-demo{background:linear-gradient(160deg,#eef3fb,#f8fafc);border-radius:14px;padding:1rem;min-height:12rem;display:grid;place-items:center}
+.tour-mock{width:100%;max-width:19rem;background:#fff;border-radius:12px;padding:1rem;display:grid;gap:.55rem;box-shadow:0 6px 18px -10px rgba(0,0,0,.35);font-size:.9rem}
+.tour-field{border:1px solid #cfd8e6;border-radius:8px;padding:.45rem .6rem;color:#4a5568}
+.tour-btn{background:#e3a91b;color:#1a1a1a;border-radius:8px;padding:.5rem .6rem;text-align:center;font-weight:700}
+.tour-mail small{color:#5a6577}
+.tour-code{font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.08em;text-align:center;color:#0f2c57}
+.tour-level{display:flex;justify-content:space-between;gap:.5rem;border-radius:8px;padding:.45rem .6rem;background:#eef6f0}
+.tour-level b{color:#1f8a4c}
+.tour-level.lock{background:#f1f2f5;color:#6b7280}
+.tour-price{font-size:1.5rem;font-weight:800;color:#0f2c57}
+.tour-chat .tour-q{align-self:end;background:#1d4f9a;color:#fff;border-radius:12px 12px 2px 12px;padding:.45rem .6rem}
+.tour-chat .tour-a{background:#f1f5fb;border-radius:12px 12px 12px 2px;padding:.45rem .6rem}
+.tour-nav{display:flex;justify-content:space-between;gap:1rem}
+.tour-prev,.tour-next{display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.7rem 1.3rem;font-weight:700;cursor:pointer;border:0}
+.tour-prev{background:#eef2f8;color:#123f7a}.tour-prev:disabled{opacity:.4;cursor:default}
+.tour-next{background:#123f7a;color:#fff;text-decoration:none}
+.tour-prev svg,.tour-next svg{width:1.1rem;height:1.1rem}
+.tour-link{justify-self:center;background:none;border:0;color:#1d4f9a;text-decoration:underline;cursor:pointer;font-size:.9rem}
+.tour-all{display:grid;gap:1rem;list-style:none;padding:0}
+.tour-all li{display:flex;gap:1rem;align-items:flex-start;background:#fff;border:1px solid #dbe2ee;border-radius:14px;padding:1rem}
+.tour-all h2{font-weight:800;color:#0f2c57;margin-bottom:.25rem}
+.h2-hero-guide{display:inline-flex;align-items:center;gap:.4rem;margin-top:.9rem;color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+@media (max-width:720px){.tour-card{grid-template-columns:1fr;padding:1.1rem}.tour-demo{min-height:auto}}

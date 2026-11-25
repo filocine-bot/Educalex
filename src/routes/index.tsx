@@ -56,6 +56,7 @@ function Index() {
           <a href="#gratis" className="h2-btn h2-btn-gold">Comenzar gratis <ArrowRight aria-hidden="true" /></a>
           <a href="#programas" className="h2-btn h2-btn-ghost">Conocer nuestros programas</a>
         </div>
+        <Link to="/guia-de-uso" className="h2-hero-guide">¿Primera vez? Mira cómo funciona en 6 pasos <ArrowRight aria-hidden="true" /></Link>
         <ul className="h2-trust"><li><CheckCircle2 aria-hidden="true" /> Normas con fuente oficial</li><li><CheckCircle2 aria-hidden="true" /> Explicación en cada respuesta</li><li><CheckCircle2 aria-hidden="true" /> Pago único con Wompi</li></ul>
       </div>
     </section>
