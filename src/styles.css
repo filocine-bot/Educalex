@@ -2085,3 +2085,17 @@ html { scroll-padding-top: 170px; }
 .educatia-launcher{bottom:9.5rem!important}
 .whatsapp-launcher{bottom:14rem!important}
 @media (max-width:640px){.educatia-launcher{bottom:8.5rem!important}.whatsapp-launcher{bottom:12.5rem!important}}
+.game-result.is-trial{padding:1rem}
+.game-result.is-trial svg{width:2rem;height:2rem}
+.game-result.is-trial h2{font-size:1.15rem}
+.game-result.is-trial p{font-size:.9rem}
+.trial-topics{margin:.8rem 0}
+.trial-topics h3{font:800 1.05rem Poppins,sans-serif;color:#102B50;margin-bottom:.5rem}
+.trial-topic-list{display:flex;flex-wrap:wrap;gap:.5rem}
+.trial-topic{display:inline-flex;align-items:center;gap:.3rem;background:#102B50;color:#fff;border-radius:999px;padding:.55rem .9rem;font-weight:700;font-size:.88rem;text-decoration:none;min-height:44px}
+.trial-topic span{color:#FFC928}
+.trial-offer-note{font-size:.9rem;color:#334155}
+/* EducatIA más arriba que WhatsApp */
+.educatia-launcher{bottom:15rem!important}
+.whatsapp-launcher{bottom:10rem!important}
+@media (max-width:640px){.educatia-launcher{bottom:13.5rem!important}.whatsapp-launcher{bottom:9rem!important}}
