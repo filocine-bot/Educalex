@@ -5,7 +5,7 @@ import { CreditCard, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "@/components/account-session";
 import { getMyPurchases, startCheckout } from "@/lib/payments.functions";
-import { LAUNCH_BUYERS, offersFor, unlockedLevel } from "@/lib/payments";
+import { LAUNCH_BUYERS, offerForLevel, offersFor, unlockedLevel } from "@/lib/payments";
 import type { SimulationProfile } from "@/lib/simulation-bank";
 
 const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
@@ -22,6 +22,32 @@ export function useMyPremium() {
     return () => { alive = false; };
   }, [user, fetchPurchases]);
   return { owned, level: (profile: SimulationProfile) => unlockedLevel(owned, profile) };
+}
+
+/** Botón de pago de un nivel: abre Wompi con el plan más económico que desbloquea ese nivel. */
+export function BuyLevelButton({ profile, level, owned, returnPath }: { profile: SimulationProfile; level: number; owned: readonly string[]; returnPath: string }) {
+  const { user } = useAccount();
+  const checkout = useServerFn(startCheckout);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const offer = offerForLevel(owned, profile, level);
+  if (!offer) return null;
+  if (!user) return <div className="level-buy">
+    <Button asChild><Link to="/ingresar"><CreditCard aria-hidden="true" /> Desbloquear · {cop(offer.priceCOP!)}</Link></Button>
+    <small>Inicia sesión o <Link to="/registro">crea tu cuenta</Link> para pagar.</small>
+  </div>;
+  async function buy() {
+    setBusy(true); setError("");
+    try { const { url } = await checkout({ data: { product: offer!.id, returnPath } }); window.location.href = url; }
+    catch (e) { setError((e as Error).message || "No se pudo iniciar el pago."); setBusy(false); }
+  }
+  return <div className="level-buy">
+    <Button disabled={busy} onClick={buy} aria-label={`Comprar ${offer.title} por ${cop(offer.priceCOP!)} con Wompi`}>
+      <CreditCard aria-hidden="true" /> {busy ? "Abriendo Wompi…" : `Desbloquear · ${cop(offer.priceCOP!)}`}
+    </Button>
+    <small>{offer.title.replace(/ · .*/, "")}{offer.level > level ? ` (hasta el nivel ${["Básico", "Intermedio", "Avanzado", "Experto"][offer.level - 1]})` : ""}</small>
+    {error && <span role="alert" className="text-destructive">{error}</span>}
+  </div>;
 }
 
 /** Opciones de compra para desbloquear los niveles premium de un perfil. */

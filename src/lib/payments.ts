@@ -52,6 +52,16 @@ export function offersFor(owned: readonly string[], profile: SimulationProfile):
   });
 }
 
+/**
+ * Compra más económica que desbloquea un nivel concreto de un perfil (para el botón de cada nivel).
+ * Solo planes de un perfil; null si el nivel ya está desbloqueado o no hay plan a la venta.
+ */
+export function offerForLevel(owned: readonly string[], profile: SimulationProfile, level: number): Product | null {
+  if (level <= unlockedLevel(owned, profile)) return null;
+  const options = offersFor(owned, profile).filter(p => p.profiles.length === 1 && p.level >= level);
+  return options.sort((a, b) => (a.priceCOP ?? 0) - (b.priceCOP ?? 0))[0] ?? null;
+}
+
 export function wompiApiBase(publicKey: string) {
   return publicKey.startsWith("pub_test_") ? "https://sandbox.wompi.co/v1" : "https://production.wompi.co/v1";
 }

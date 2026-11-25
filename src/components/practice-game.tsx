@@ -8,7 +8,7 @@ import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank"
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
 import { applyOutcome, describeBadge, emptyProfile, errorMap, isLevelPlayable, levelsFor, PASS_RATIO, type GameBankKey, pointsFor, PREMIUM_LOCKED, type GameLevel } from "@/lib/game-engine";
 import { useGameProgress } from "@/lib/game-progress";
-import { BuyPremium, useMyPremium } from "@/components/premium-purchase";
+import { BuyLevelButton, BuyPremium, useMyPremium } from "@/components/premium-purchase";
 import { useAccount } from "@/components/account-session";
 
 const LETTERS = ["A", "B", "C", "D"];
@@ -165,7 +165,9 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
           </div>
           {status.playable
             ? <Button variant={done ? "outline" : "navy"} onClick={() => start(level)}>{done ? "Jugar de nuevo" : best !== undefined ? "Reintentar" : "Jugar"}</Button>
-            : <span className="game-lock"><Lock aria-hidden="true" /> {status.reason === "premium" ? "Requiere plan" : `Supera el nivel ${level.number - 1}`}</span>}
+            : lockedAt(level.number) && level.premium
+              ? <div className="game-level-buy"><span className="game-lock"><Lock aria-hidden="true" /> Nivel premium</span><BuyLevelButton profile={profile} level={level.number} owned={premium.owned} returnPath={`/simulacros/${profile}`} /></div>
+              : <span className="game-lock"><Lock aria-hidden="true" /> {status.reason === "premium" ? "Requiere plan" : `Supera el nivel ${level.number - 1}`}</span>}
         </li>;
       })}
     </ol>
