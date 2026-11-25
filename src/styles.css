@@ -2081,3 +2081,7 @@ html { scroll-padding-top: 170px; }
 .mod-notice,.profile-home,.module-page *{min-width:0}
 @media (max-width:640px){.trial-ex-grid{grid-template-columns:1fr}.trial-head{padding:1rem}}
 .exam-table-wrap{max-width:calc(100vw - 32px)}
+/* Botones flotantes de WhatsApp y EducatIA más arriba para no tapar los botones de la página */
+.educatia-launcher{bottom:9.5rem!important}
+.whatsapp-launcher{bottom:14rem!important}
+@media (max-width:640px){.educatia-launcher{bottom:8.5rem!important}.whatsapp-launcher{bottom:12.5rem!important}}

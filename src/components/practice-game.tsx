@@ -156,7 +156,7 @@ export function PracticeGame({ profile, bank = profile, trialOnly = false }: { p
         <h3><Medal aria-hidden="true" /> Nuevas insignias</h3>
         <ul>{summary.newBadges.map(id => { const b = describeBadge(id); return <li key={id}><Award aria-hidden="true" /> <strong>{b.title}</strong> <small>{b.description}</small></li>; })}</ul>
       </div>}
-      {map.length > 0 && <div className="game-errors">
+      {!trialOnly && map.length > 0 && <div className="game-errors">
         <h3>Mapa de errores</h3>
         <p className="section-description">Estos son los temas donde fallaste. Repásalos antes de volver a intentarlo.</p>
         <ul>{map.map(g => <li key={g.competency}><strong>{g.competency}</strong> ({g.items.length})<ul>{g.items.map(q => <li key={q.id}>{q.reference}</li>)}</ul></li>)}</ul>
