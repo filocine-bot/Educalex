@@ -90,15 +90,31 @@ export const confirmGuestTransaction = createServerFn({ method: "POST" })
     if (result.status === "UNKNOWN") throw new Error("Este pago no corresponde a EDUCALEX.");
     if (result.status !== "APPROVED") return { status: result.status };
     const { data: order } = await supabaseAdmin.from("payment_orders").select("user_id,created_at").eq("reference", tx.reference).maybeSingle();
-    if (!order) return { status: "APPROVED", needsLogin: true as const };
+    if (!order) return { status: "APPROVED", needsLogin: true as const, product: result.product ?? null };
     const { data: u } = await supabaseAdmin.auth.admin.getUserById(order.user_id);
     const user = u.user;
     const fresh = Date.now() - new Date(order.created_at).getTime() < GUEST_LOGIN_WINDOW_MS;
     if (!user?.email || user.app_metadata?.["guest_checkout"] !== true || user.last_sign_in_at || !fresh) {
-      return { status: "APPROVED", needsLogin: true as const };
+      return { status: "APPROVED", needsLogin: true as const, product: result.product ?? null };
     }
     const link = await supabaseAdmin.auth.admin.generateLink({ type: "magiclink", email: user.email });
     const tokenHash = link.data.properties?.hashed_token;
-    if (!tokenHash) return { status: "APPROVED", needsLogin: true as const };
-    return { status: "APPROVED", tokenHash, email: user.email };
+    if (!tokenHash) return { status: "APPROVED", needsLogin: true as const, product: result.product ?? null };
+    return { status: "APPROVED", tokenHash, email: user.email, product: result.product ?? null };
+  });
+
+/** Administración: revisar un pago de Wompi por su ID y activar el acceso si está aprobado. */
+export const adminSettleTransaction = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(input => z.object({ id: z.string().trim().regex(/^[A-Za-z0-9_-]{5,80}$/) }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: admin } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
+    if (admin !== true) throw new Error("Solo administradoras.");
+    const res = await fetch(`${wompiApiBase(WOMPI_PUBLIC_KEY)}/transactions/${data.id}`);
+    if (!res.ok) throw new Error("Wompi no encontró esa transacción. Revisa el ID (aparece en el correo del comprobante).");
+    const tx = ((await res.json()) as { data?: { id: string; status: string; reference: string; amount_in_cents: number; currency: string; customer_email?: string } }).data;
+    if (!tx) throw new Error("Transacción no encontrada.");
+    const { settlePayment } = await import("@/lib/payments.server");
+    const r = await settlePayment(tx);
+    return { status: r.status, product: r.product ?? null, email: tx.customer_email ?? null, reference: tx.reference, wompiStatus: tx.status };
   });

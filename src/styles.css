@@ -1932,3 +1932,4 @@ html { scroll-padding-top: 170px; }
 .tour-all h2{font-weight:800;color:#0f2c57;margin-bottom:.25rem}
 .h2-hero-guide{display:inline-flex;align-items:center;gap:.4rem;margin-top:.9rem;color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 @media (max-width:720px){.tour-card{grid-template-columns:1fr;padding:1.1rem}.tour-demo{min-height:auto}}
+.pay-start{display:inline-flex;margin:1rem auto .5rem;font-size:1.1rem}

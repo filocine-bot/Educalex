@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { adminLookupAccount, adminResetAccount } from "@/lib/devices.functions";
+import { adminSettleTransaction } from "@/lib/payments.functions";
 
 type Info = Awaited<ReturnType<typeof adminLookupAccount>>;
 const fmt = (iso: string) => new Date(iso).toLocaleDateString("es-CO", { day: "numeric", month: "short", year: "numeric" });
@@ -47,5 +48,30 @@ export function AdminAccountTools() {
         <Button variant="outline" disabled={busy || !Object.keys(info.attempts).length} onClick={() => void doReset("attempts")}>Reiniciar intentos</Button>
       </div>
     </div>}
+  </section>;
+}
+
+/** Revisar y activar un pago de Wompi por su ID. */
+export function AdminPaymentFix() {
+  const settle = useServerFn(adminSettleTransaction);
+  const [id, setId] = useState("");
+  const [msg, setMsg] = useState("");
+  const [busy, setBusy] = useState(false);
+  async function run(e: FormEvent) {
+    e.preventDefault(); setBusy(true); setMsg("");
+    try {
+      const r = await settle({ data: { id } });
+      setMsg(r.status === "APPROVED" ? `Pago aprobado y acceso activo (${r.product ?? "producto"}) para ${r.email ?? "el correo del pago"}. Se le envió el enlace de acceso.` : `Wompi reporta el pago como ${r.wompiStatus}. Resultado: ${r.status}.`);
+    } catch (err) { setMsg((err as Error).message); } finally { setBusy(false); }
+  }
+  return <section className="admin-tools space-y-3" aria-labelledby="admin-pay-title">
+    <h2 id="admin-pay-title" className="text-xl font-bold">Activar un pago de Wompi</h2>
+    <p className="text-sm">Si alguien pagó y no se le activó el acceso, pega aquí el ID de la transacción (está en el comprobante de Wompi, por ejemplo 12345-1795…-67890).</p>
+    <form onSubmit={run} className="flex flex-wrap gap-2">
+      <label htmlFor="admin-tx" className="sr-only">ID de la transacción</label>
+      <Input id="admin-tx" required placeholder="ID de la transacción" value={id} onChange={e => setId(e.target.value)} className="max-w-sm" />
+      <Button type="submit" disabled={busy}>{busy ? "Revisando…" : "Revisar y activar"}</Button>
+    </form>
+    {msg && <p role="status">{msg}</p>}
   </section>;
 }

@@ -36,7 +36,7 @@ export async function settlePayment(tx: Tx): Promise<{ status: string; product?:
   const product = getProduct(productId);
   const email = tx.customer_email?.trim().toLowerCase();
   if (!product || !purchasable(product) || tx.currency !== "COP" || tx.amount_in_cents !== Math.round(product.priceCOP! * 100) || !email) {
-    console.error("wompi: pago sin sesión no válido", tx.reference);
+    console.error("wompi: pago sin sesión no válido", tx.reference, { status: tx.status, amount: tx.amount_in_cents, hasEmail: Boolean(email), product: productId });
     return { status: "ERROR" };
   }
   const { LEGAL_VERSION } = await import("@/lib/legal-content");
@@ -51,14 +51,15 @@ export async function settlePayment(tx: Tx): Promise<{ status: string; product?:
     const link = await supabaseAdmin.auth.admin.generateLink({ type: "magiclink", email });
     userId = link.data.user?.id;
   }
-  if (!userId) throw new Error("no se pudo preparar la cuenta");
+  if (!userId) { console.error("wompi: no se pudo preparar la cuenta", tx.reference, created.error?.message); throw new Error("no se pudo preparar la cuenta"); }
   const { error } = await supabaseAdmin.from("payment_orders").insert({ reference: tx.reference, user_id: userId, product: product.id, amount_in_cents: tx.amount_in_cents });
-  if (error && error.code !== "23505") throw new Error("no se pudo registrar la orden");
+  if (error && error.code !== "23505") { console.error("wompi: orden no registrada", tx.reference, error.message); throw new Error("no se pudo registrar la orden"); }
   const result = await grantIfApproved(tx);
   if (created.data.user) {
     // Enlace al correo para terminar de crear el perfil. Si el SMTP aún no está configurado, falla sin afectar el pago.
-    const { error: mailError } = await supabaseAdmin.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: `${SITE}/mi-cuenta` } });
+    const { error: mailError } = await supabaseAdmin.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: `${SITE}/simulacros/${product.profiles[0] ?? ""}` } });
     if (mailError) console.error("correo de acceso no enviado", mailError.message);
+    else console.info("correo de acceso enviado", tx.reference);
   }
   return result;
 }
