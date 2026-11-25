@@ -1993,3 +1993,8 @@ html { scroll-padding-top: 170px; }
 @media (max-width:1100px){.h2-profiles{grid-template-columns:1fr 1fr}.h2-ejes ul{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.h2-profiles{grid-template-columns:1fr}.h2-prof-media{height:84px}.h2-ejes ul{grid-template-columns:1fr}.h2-hero-sub{display:none}}
 #perfiles{scroll-margin-top:130px}
+.h2-hero-tags{margin-top:1rem;color:#cfe0f5;font-weight:600;letter-spacing:.02em}
+.h2-prof-actions{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.h2-prof-actions .h2-btn{justify-content:center;padding-left:.5rem;padding-right:.5rem}
+.h2-profiles-band #h2-prof-title{text-align:center}
+.h2-prof{border-top:4px solid #FFC928}
