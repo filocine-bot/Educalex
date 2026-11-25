@@ -10,7 +10,7 @@ import { getProduct, LAUNCH_BUYERS, offersFor, PROFILE_LABEL, PROFILES, purchasa
 import type { SimulationProfile } from "@/lib/simulation-bank";
 
 const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
-const LEVELS = ["Básico", "Intermedio", "Avanzado", "Experto"];
+const LEVELS = ["Básico", "Intermedio", "Avanzado"];
 const PENDING_KEY = "educalex-compra-pendiente";
 const PENDING_MAX_MS = 30 * 60 * 1000;
 
@@ -77,8 +77,8 @@ export function PaySidebar({ profile }: { profile: SimulationProfile }) {
   const returnPath = `/simulacros/${profile}`;
   return <aside className="pay-side" aria-labelledby="pay-side-title">
     <h2 id="pay-side-title"><CreditCard aria-hidden="true" /> Desbloquea {PROFILE_LABEL[profile]}</h2>
-    <p className="pay-side-status">Tienes: <strong>{mine >= 4 ? "todos los niveles" : `nivel ${LEVELS[mine - 1]}${mine === 1 ? " (gratis)" : ""}`}</strong></p>
-    {mine >= 4
+    <p className="pay-side-status">Tienes: <strong>{mine >= 3 ? "todos los niveles" : `nivel ${LEVELS[mine - 1]}${mine === 1 ? " (gratis)" : ""}`}</strong></p>
+    {mine >= 3
       ? <p className="pay-side-done"><CheckCircle2 aria-hidden="true" /> Ya tienes acceso completo a este perfil.</p>
       : <ul className="pay-side-list">{offers.map(o => <li key={o.id}>
           <strong>{o.title.replace(` · ${PROFILE_LABEL[profile]}`, "")}</strong>
@@ -87,7 +87,7 @@ export function PaySidebar({ profile }: { profile: SimulationProfile }) {
           <Button disabled={busy !== null} onClick={() => pay(o.id, returnPath)}>{busy === o.id ? "Abriendo Wompi…" : "Pagar ahora"}</Button>
         </li>)}</ul>}
     {error && <p role="alert" className="text-destructive">{error}</p>}
-    {!signedIn && mine < 4 && <p className="pay-side-note">Te pediremos ingresar para asociar el pago a tu cuenta; luego se abre Wompi. ¿No tienes cuenta? <Link to="/registro">Créala gratis</Link>.</p>}
+    {!signedIn && mine < 3 && <p className="pay-side-note">Te pediremos ingresar para asociar el pago a tu cuenta; luego se abre Wompi. ¿No tienes cuenta? <Link to="/registro">Créala gratis</Link>.</p>}
     <p className="pay-side-note"><ShieldCheck aria-hidden="true" /> Pago único y seguro con Wompi: tarjeta, PSE, Nequi y más. Precios de lanzamiento para las primeras {LAUNCH_BUYERS} compras. <Link to="/terminos">Términos</Link>.</p>
   </aside>;
 }

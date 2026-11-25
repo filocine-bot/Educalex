@@ -23,10 +23,10 @@ import { dilemmas } from "@/lib/dilemmas";
 export const Route = createFileRoute("/")({ head: () => pageHead("Preparación para el concurso docente 2026 en Colombia", "Simulacros tipo ICFES por niveles, normas verificadas en fuentes oficiales y cursos para docentes, coordinadores y rectores. Concurso CNSC, ascenso y reubicación. Empieza gratis."), component: Index });
 
 const routes = [
-  { to: "/concursos/ingreso-docente", sim: "/simulacros/ingreso-docente", icon: Trophy, title: "Ingreso a la Carrera Docente", text: "Prepárate y alcanza tu meta", tone: "blue", perks: ["Ruta de estudio por competencias", "Simulacro tipo ICFES en 4 niveles", "Núcleo común y prueba psicotécnica"] },
-  { to: "/concursos/ascenso-reubicacion", sim: "/simulacros/ascenso-reubicacion", icon: ChartNoAxesCombined, title: "Ascenso y Reubicación Salarial", text: "Mejora tu perfil profesional", tone: "green", perks: ["Decreto Ley 1278 y evaluación", "Simulacro tipo ICFES en 4 niveles", "Guía 31 y desempeño docente"] },
-  { to: "/concursos/rector", sim: "/simulacros/rector", icon: Users, title: "Concurso para Rector", text: "Lidera con excelencia", tone: "gold", perks: ["Gestión directiva y Guía 34", "Simulacro tipo ICFES en 4 niveles", "Dilemas de liderazgo escolar"] },
-  { to: "/concursos/coordinador", sim: "/simulacros/coordinador", icon: Settings, title: "Concurso para Coordinador", text: "Gestiona y acompaña", tone: "red", perks: ["Convivencia y Ruta de Atención", "Simulacro tipo ICFES en 4 niveles", "Evaluación y SIEE"] },
+  { to: "/concursos/ingreso-docente", sim: "/simulacros/ingreso-docente", icon: Trophy, title: "Ingreso a la Carrera Docente", text: "Prepárate y alcanza tu meta", tone: "blue", perks: ["Ruta de estudio por competencias", "Simulacro tipo ICFES en 3 niveles", "Núcleo común y prueba psicotécnica"] },
+  { to: "/concursos/ascenso-reubicacion", sim: "/simulacros/ascenso-reubicacion", icon: ChartNoAxesCombined, title: "Ascenso y Reubicación Salarial", text: "Mejora tu perfil profesional", tone: "green", perks: ["Decreto Ley 1278 y evaluación", "Simulacro tipo ICFES en 3 niveles", "Guía 31 y desempeño docente"] },
+  { to: "/concursos/rector", sim: "/simulacros/rector", icon: Users, title: "Concurso para Rector", text: "Lidera con excelencia", tone: "gold", perks: ["Gestión directiva y Guía 34", "Simulacro tipo ICFES en 3 niveles", "Dilemas de liderazgo escolar"] },
+  { to: "/concursos/coordinador", sim: "/simulacros/coordinador", icon: Settings, title: "Concurso para Coordinador", text: "Gestiona y acompaña", tone: "red", perks: ["Convivencia y Ruta de Atención", "Simulacro tipo ICFES en 3 niveles", "Evaluación y SIEE"] },
 ] as const;
 const totalQuestions = (["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador", "nucleo-comun"] as const).reduce((n, b) => n + questionsFor(b).length, 0);
 const totalVideos = videoThemes.reduce((n, t) => n + t.videos.length, 0);
@@ -46,9 +46,9 @@ const tryNow = [
 const cop = (n: number) => `${n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 })} COP`;
 const priceCards = [
   { name: "Gratis", price: "$0 COP", note: "Para empezar hoy", items: ["Nivel Básico de todos los perfiles", "Simulacro completo con tiempo", "Biblioteca, cursos, videos y dilemas", "Constancia de participación"], cta: "Empieza gratis", to: "/registro", featured: false },
-  { name: "Plan Intermedio", price: cop(PRICES.intermedio), note: "Pago único por perfil", items: ["Todo lo gratuito", "Nivel Intermedio del perfil y del núcleo común", "Mapa de errores e insignias"], cta: "Ver planes", to: "/planes", featured: false },
-  { name: "Plan Completo", price: cop(PRICES.completo), note: "Pago único por perfil", items: ["Niveles Intermedio, Avanzado y Experto", "Del perfil y del núcleo común", `¿Ya tienes el Intermedio? Pasa al Completo pagando solo ${cop(UPGRADE_PRICE)} más`], cta: "Ver planes", to: "/planes", featured: true },
-  { name: "Paquete directivo", price: cop(PRICES.directivo), note: "Rector + Coordinador", items: ["Plan Completo de los dos perfiles", `Ahorras ${cop(2 * PRICES.completo - PRICES.directivo)}`, "Pago único, sin renovación"], cta: "Ver planes", to: "/planes", featured: false },
+  { name: "Plan Intermedio", price: cop(PRICES.intermedio), note: "Pago único por perfil", items: ["Todo lo gratuito", "Nivel Intermedio: 40 preguntas del perfil y del núcleo común", "Mapa de errores e insignias"], cta: "Ver planes", to: "/planes", featured: false },
+  { name: "Plan Avanzado", price: cop(PRICES.avanzado), note: "Pago único por perfil", items: ["Niveles Intermedio (40) y Avanzado (50 preguntas)", "Del perfil y del núcleo común", `¿Ya tienes el Intermedio? Pasa al Avanzado pagando solo ${cop(UPGRADE_PRICE)} más`], cta: "Ver planes", to: "/planes", featured: true },
+  { name: "Paquete directivo", price: cop(PRICES.directivo), note: "Rector + Coordinador", items: ["Plan Avanzado de los dos perfiles", `Ahorras ${cop(2 * PRICES.avanzado - PRICES.directivo)}`, "Pago único, sin renovación"], cta: "Ver planes", to: "/planes", featured: false },
 ] as const;
 const steps = [
   { icon: UserPlus, title: "Elige tu perfil", text: "Docente, ascenso, coordinador o rector: la plataforma se organiza según tu meta." },

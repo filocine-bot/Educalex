@@ -14,7 +14,7 @@ const steps: { icon: typeof BookOpen; title: string; body: ReactNode }[] = [
   { icon: GraduationCap, title: "Profundiza con cursos, videos y dilemas", body: <>Los <Link to="/formacion">cursos de autoestudio</Link>, los <Link to="/biblioteca/videos">videos del MEN</Link> por temática y los <Link to="/formacion/dilemas-educativos">dilemas educativos</Link> te ayudan a llevar la norma a casos reales.</> },
   { icon: ClipboardCheck, title: "Practica con los simulacros", body: <>En <Link to="/simulacros">Simulacros</Link> encuentras el modo juego por niveles (Básico gratis), el núcleo común de lectura crítica y razonamiento, el simulacro completo con tiempo, la psicotécnica y las competencias que evalúa la prueba. Revisa la explicación y el fundamento de cada respuesta.</> },
   { icon: Bot, title: "Pregunta a EducatIA", body: <>Si tienes dudas sobre una norma o un caso, abre <Link to="/docente-ia">EducatIA</Link>: responde con voz y cita la fuente. Contrasta siempre con el texto oficial.</> },
-  { icon: Star, title: "Avanza a Premium y descarga tu constancia", body: <>Los niveles Intermedio, Avanzado y Experto se habilitan con un <Link to="/planes">pago único</Link>. Al superar el nivel Básico puedes descargar tu constancia de participación (no oficial).</> },
+  { icon: Star, title: "Avanza a Premium y descarga tu constancia", body: <>Los niveles Intermedio (40 preguntas) y Avanzado (50 preguntas) se habilitan con un <Link to="/planes">pago único</Link>. Al superar el nivel Básico puedes descargar tu constancia de participación (no oficial).</> },
 ];
 
 function Guide() {

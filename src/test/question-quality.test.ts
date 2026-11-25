@@ -46,13 +46,16 @@ describe.each(Object.entries(banks))("calidad del banco %s", (_, qs) => {
   });
 });
 
-// Niveles del modo juego: los perfiles ampliados tienen 10 · 20 · 30 · 40 preguntas; los demás, 10 por nivel.
-const SIZES: Record<string, number[]> = { "ingreso-docente": [10, 20, 30, 40], coordinador: [10, 20, 30, 40], rector: [10, 20, 30, 40], "ascenso-reubicacion": [10, 20, 30, 40] };
+// Niveles del modo juego: los perfiles tienen 10 · 40 · 50 preguntas; el núcleo común, 10 · 15 · 15.
+const SIZES: Record<string, number[]> = { "ingreso-docente": [10, 40, 50], coordinador: [10, 40, 50], rector: [10, 40, 50], "ascenso-reubicacion": [10, 40, 50], "nucleo-comun": [10, 15, 15] };
 it.each(["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador", "nucleo-comun"] as const)("el juego arma cada nivel de %s con su complejidad", profile => {
   const levels = levelsFor(profile);
-  expect(levels).toHaveLength(4);
-  const sizes = SIZES[profile] ?? [10, 10, 10, 10];
-  levels.forEach((l, i) => { expect(l.questions).toHaveLength(sizes[i]!); expect(l.questions.every(q => q.level === l.number)).toBe(true); });
+  expect(levels).toHaveLength(3);
+  const sizes = SIZES[profile]!;
+  levels.forEach((l, i) => { expect(l.questions).toHaveLength(sizes[i]!); });
+  // El Básico reúne las preguntas de complejidad 1 y la dificultad nunca baja de un nivel al siguiente.
+  expect(levels[0]!.questions.every(q => q.level === 1)).toBe(true);
+  for (let i = 1; i < levels.length; i++) expect(Math.min(...levels[i]!.questions.map(q => q.level ?? 0))).toBeGreaterThanOrEqual(Math.max(...levels[i - 1]!.questions.map(q => q.level ?? 0)));
 });
 
 describe.each([["ingreso-docente", ingresoDocenteAmpliacion], ["coordinador", coordinadorAmpliacion], ["rector", rectorAmpliacion], ["ascenso-reubicacion", ascensoReubicacionAmpliacion]] as const)("ampliación de %s", (profile, extra) => {

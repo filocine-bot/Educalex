@@ -7,7 +7,7 @@ export type CompetencyGuide = { process: string; blocks: TestBlock[]; sources: s
 // Información verificada el 19 nov 2026. Concurso de ingreso: Decreto 2038 de 2016 (prueba eliminatoria 60/70) y
 // proyecto de Anexo Técnico / proyecto de decreto 2026 publicados para comentarios (componentes mínimos).
 // Ascenso: Resolución MEN 018987 de 2025 (instrumentos y puntajes).
-const PEDAGOGIA_NORMAS = "Las situaciones de este simulacro (legislación educativa, evaluación, inclusión, convivencia, gestión), en 4 niveles.";
+const PEDAGOGIA_NORMAS = "Las situaciones de este simulacro (legislación educativa, evaluación, inclusión, convivencia, gestión), en 3 niveles.";
 const concurso = (cargo: "docente" | "directivo"): CompetencyGuide => ({
   process: `Concurso de méritos de la CNSC para ${cargo === "docente" ? "docentes de aula" : "directivos docentes (rector y coordinador)"}`,
   blocks: [
@@ -15,7 +15,7 @@ const concurso = (cargo: "docente" | "directivo"): CompetencyGuide => ({
       name: "Prueba de aptitudes y competencias básicas",
       character: `Eliminatoria: mínimo ${cargo === "docente" ? "60" : "70"} sobre 100. Es la única prueba eliminatoria del concurso.`,
       areas: [
-        { name: "Lectura crítica", what: "Comprender, interpretar y evaluar textos, y tomar posición argumentada frente a ellos.", inEducalex: "Pestaña «Núcleo común»: 10 preguntas con textos originales, en 4 niveles.", status: "cubierta" },
+        { name: "Lectura crítica", what: "Comprender, interpretar y evaluar textos, y tomar posición argumentada frente a ellos.", inEducalex: "Pestaña «Núcleo común»: 10 preguntas con textos originales, en 3 niveles.", status: "cubierta" },
         { name: "Razonamiento cuantitativo", what: "Usar conocimientos matemáticos para interpretar datos y resolver problemas de la vida cotidiana y escolar.", inEducalex: "Pestaña «Núcleo común»: 10 problemas de porcentajes, proporciones, conteo e interpretación de datos.", status: "cubierta" },
         { name: "Competencias blandas", what: "Liderazgo, ética, trabajo en equipo y ciudadanía.", inEducalex: "Pestaña «Núcleo común»: 10 situaciones de liderazgo, ética, trabajo en equipo y ciudadanía, más las de este simulacro.", status: "cubierta" },
         ...(cargo === "docente"

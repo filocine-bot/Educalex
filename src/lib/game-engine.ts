@@ -12,7 +12,7 @@ export type GameBankKey = SimulationProfile | "nucleo-comun";
 const byLevel = (qs: PracticeQuestion[]) => [...qs].sort((a, b) => (a.level ?? 0) - (b.level ?? 0));
 const NUCLEO = byLevel(nucleoComunV3);
 /**
- * Preguntas adicionales del modo juego por perfil (niveles de 10 · 20 · 30 · 40).
+ * Preguntas adicionales del modo juego por perfil (100 en total: niveles de 10 · 40 · 50).
  * No entran al simulacro completo con tiempo, que conserva sus 40 preguntas originales.
  */
 const AMPLIACION: Partial<Record<SimulationProfile, PracticeQuestion[]>> = { "ingreso-docente": ingresoDocenteAmpliacion, coordinador: coordinadorAmpliacion, rector: rectorAmpliacion, "ascenso-reubicacion": ascensoReubicacionAmpliacion };
@@ -37,23 +37,26 @@ export const BASE_POINTS = 10;
 export const PREMIUM_FROM_LEVEL = 2;
 export const PREMIUM_LOCKED = true;
 
-export const LEVEL_NAMES = ["Básico", "Intermedio", "Avanzado", "Experto"] as const;
+export const LEVEL_NAMES = ["Básico", "Intermedio", "Avanzado"] as const;
+/** Tamaño de los niveles Intermedio y Avanzado en los perfiles de 100 preguntas (decisión de Enadis, 24 nov 2026). */
+export const PAID_LEVEL_SIZES = [40, 50] as const;
 
 export type GameLevel = { number: number; name: string; questions: PracticeQuestion[]; premium: boolean };
 
 export function levelsFor(profile: GameBankKey): GameLevel[] {
   const qs = questionsFor(profile);
-  const levels: GameLevel[] = [];
-  // Si el banco declara niveles de complejidad, cada nivel reúne sus propias preguntas; si no, se reparte en bloques.
+  // Las preguntas vienen ordenadas por complejidad. Básico = las de nivel 1 (o las 10 primeras);
+  // el resto se reparte en Intermedio y Avanzado (40 y 50 en los perfiles; mitad y mitad en el núcleo común).
   const leveled = qs.length > 0 && qs.every(q => q.level !== undefined);
-  const count = leveled ? Math.max(...qs.map(q => q.level ?? 1)) : Math.ceil(qs.length / QUESTIONS_PER_LEVEL);
-  for (let i = 0; i < count; i++) {
-    levels.push({
-      number: i + 1,
-      name: LEVEL_NAMES[i] ?? `Nivel ${i + 1}`,
-      questions: leveled ? qs.filter(q => q.level === i + 1) : qs.slice(i * QUESTIONS_PER_LEVEL, (i + 1) * QUESTIONS_PER_LEVEL),
-      premium: i + 1 >= PREMIUM_FROM_LEVEL,
-    });
+  const basic = leveled ? qs.filter(q => q.level === 1).length : Math.min(QUESTIONS_PER_LEVEL, qs.length);
+  const rest = qs.length - basic;
+  const [mid] = rest === PAID_LEVEL_SIZES[0] + PAID_LEVEL_SIZES[1] ? PAID_LEVEL_SIZES : [Math.floor(rest / 2)];
+  const cuts = [0, basic, basic + mid, qs.length];
+  const levels: GameLevel[] = [];
+  for (let i = 0; i < LEVEL_NAMES.length; i++) {
+    const questions = qs.slice(cuts[i], cuts[i + 1]);
+    if (!questions.length) continue;
+    levels.push({ number: i + 1, name: LEVEL_NAMES[i] ?? `Nivel ${i + 1}`, questions, premium: i + 1 >= PREMIUM_FROM_LEVEL });
   }
   return levels;
 }

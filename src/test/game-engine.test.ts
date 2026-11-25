@@ -3,11 +3,11 @@ import { applyOutcome, emptyProfile, errorMap, isLevelPlayable, levelsFor, merge
 import { simulationBank } from "@/lib/simulation-bank";
 
 describe("modo juego", () => {
-  it("divide cada perfil en cuatro niveles (ingreso ampliado a 10 · 20 · 30 · 40)", () => {
-    const sizes: Record<string, number[]> = { "ingreso-docente": [10, 20, 30, 40], coordinador: [10, 20, 30, 40], rector: [10, 20, 30, 40], "ascenso-reubicacion": [10, 20, 30, 40] };
+  it("divide cada perfil en tres niveles: Básico 10, Intermedio 40 y Avanzado 50", () => {
+    const sizes: Record<string, number[]> = { "ingreso-docente": [10, 40, 50], coordinador: [10, 40, 50], rector: [10, 40, 50], "ascenso-reubicacion": [10, 40, 50] };
     for (const p of ["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador"] as const) {
       const levels = levelsFor(p);
-      expect(levels.map(l => l.questions.length)).toEqual(sizes[p] ?? [10, 10, 10, 10]);
+      expect(levels.map(l => l.questions.length)).toEqual(sizes[p]);
       expect(levels[0]!.premium).toBe(false);
       expect(levels[1]!.premium).toBe(true);
     }

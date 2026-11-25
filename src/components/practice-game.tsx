@@ -147,7 +147,7 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
     <div className="game-intro">
       <div className="game-intro-row"><h2 id="game-levels-title">Elige tu nivel</h2><p className="game-stats"><span><Star aria-hidden="true" /> {mine.points} puntos</span><span><Flame aria-hidden="true" /> Mejor racha {mine.bestStreak}</span><span><Medal aria-hidden="true" /> {mine.badges.length} insignias</span></p></div>
       <p className="game-hint">Explicación inmediata en cada respuesta. Supera un nivel con {Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
-      {PREMIUM_LOCKED && myLevel > 1 && <p className="game-launch">Tienes desbloqueado hasta el nivel {["Básico", "Intermedio", "Avanzado", "Experto"].at(myLevel - 1)} en este perfil. ¡Gracias por apoyar EDUCALEX!</p>}
+      {PREMIUM_LOCKED && myLevel > 1 && <p className="game-launch">Tienes desbloqueado hasta el nivel {["Básico", "Intermedio", "Avanzado"].at(Math.min(myLevel, 3) - 1)} en este perfil. ¡Gracias por apoyar EDUCALEX!</p>}
       {!PREMIUM_LOCKED && <p className="game-launch">Lanzamiento: todos los niveles están abiertos gratis por tiempo limitado.</p>}
     </div>
     <ol className="game-levels">
@@ -189,6 +189,6 @@ export function SimulationModes({ profile, children }: { profile: SimulationProf
       <button type="button" role="tab" aria-selected={mode === "psico"} className={mode === "psico" ? "active" : ""} onClick={() => setMode("psico")}><Brain aria-hidden="true" /> Psicotécnica</button>
       <button type="button" role="tab" aria-selected={mode === "competencias"} className={mode === "competencias" ? "active" : ""} onClick={() => setMode("competencias")}><ListChecks aria-hidden="true" /> Competencias evaluadas</button>
     </div>
-    <div role="tabpanel">{mode === "juego" ? <PracticeGame key="perfil" profile={profile} /> : mode === "nucleo" ? <><p className="game-hint nucleo-hint">Núcleo común para todos los cargos: lectura crítica, razonamiento cuantitativo, competencias blandas y pedagógicas (40 preguntas, 4 niveles).</p><PracticeGame key="nucleo" profile={profile} bank="nucleo-comun" /></> : mode === "competencias" ? <CompetencyGuide profile={profile} onPractice={t => { setMode(t); requestAnimationFrame(() => tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })); }} /> : mode === "psico" ? <PsychoPractice /> : children}</div>
+    <div role="tabpanel">{mode === "juego" ? <PracticeGame key="perfil" profile={profile} /> : mode === "nucleo" ? <><p className="game-hint nucleo-hint">Núcleo común para todos los cargos: lectura crítica, razonamiento cuantitativo, competencias blandas y pedagógicas (40 preguntas, 3 niveles).</p><PracticeGame key="nucleo" profile={profile} bank="nucleo-comun" /></> : mode === "competencias" ? <CompetencyGuide profile={profile} onPractice={t => { setMode(t); requestAnimationFrame(() => tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })); }} /> : mode === "psico" ? <PsychoPractice /> : children}</div>
   </div><PaySidebar profile={profile} /></div>;
 }
