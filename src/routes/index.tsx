@@ -4,6 +4,7 @@ import { pageHead } from "@/lib/educalex-content";
 import hero from "@/assets/educalex-hero-docentes.webp";
 import robot from "@/assets/educalex-robot.webp";
 import { FounderSpotlight } from "@/components/founder-card";
+import { useAccount } from "@/components/account-session";
 import { ShareQr } from "@/components/share-qr";
 import { ProfilePayButton } from "@/components/direct-pay";
 import { WHATSAPP_NUMBER } from "@/components/whatsapp-launcher";
@@ -41,9 +42,20 @@ const sections = [
   { icon: ClipboardCheck, title: "Simulacros", text: "Modo juego por niveles y simulacro completo con tiempo.", to: "/simulacros", tone: "navy" },
 ] as const;
 
+const quick = [
+  { to: "/simulacros", icon: Play, title: "Hacer el simulacro gratis", tone: "blue" },
+  { to: "/", hash: "programas", icon: Trophy, title: "Elegir mi concurso", tone: "gold" },
+  { to: "/biblioteca/legislacion", icon: Scale, title: "Consultar una norma", tone: "red" },
+  { to: "/docente-ia", icon: Bot, title: "Preguntar a EducatIA", tone: "teal" },
+  { to: "/ingresar", icon: Mail, title: "Entrar a mi cuenta", tone: "navy" },
+  { to: "/guia-de-uso", icon: Compass, title: "¿Cómo funciona?", tone: "green" },
+] as const;
+
 const topics = ["Ley 115 de 1994", "Decreto 1278", "Ley 1620 y convivencia", "PIAR e inclusión", "Guía 34 y PMI", "Evaluación y SIEE"];
 
 function Index() {
+  const { user } = useAccount();
+  const items = quick.map(q => q.to === "/ingresar" && user ? { ...q, to: "/mis-simulacros" as const, title: "Mis simulacros" } : q);
   return <div className="home2">
     <section className="h2-hero" aria-labelledby="h2-hero-title">
       <img className="h2-hero-img" src={hero} width={1920} height={768} alt="Docentes colombianos frente a una institución educativa, junto a la bandera de Colombia" fetchPriority="high" />
@@ -60,6 +72,11 @@ function Index() {
         <ul className="h2-trust"><li><CheckCircle2 aria-hidden="true" /> Normas con fuente oficial</li><li><CheckCircle2 aria-hidden="true" /> Explicación en cada respuesta</li><li><CheckCircle2 aria-hidden="true" /> Pago único con Wompi</li></ul>
       </div>
     </section>
+
+    <nav className="site-container h2-quick" aria-labelledby="h2-quick-title">
+      <h2 id="h2-quick-title">¿Qué necesitas hoy?</h2>
+      <div className="h2-quick-grid">{items.map(q => <Link key={q.title} to={q.to} {...("hash" in q ? { hash: q.hash } : {})} className={`h2-quick-item h2-tone-${q.tone}`}><span className="h2-quick-icon"><q.icon aria-hidden="true" /></span><span>{q.title}</span><ArrowRight aria-hidden="true" className="h2-quick-go" /></Link>)}</div>
+    </nav>
 
     <section id="gratis" className="site-container h2-section" aria-labelledby="h2-free-title">
       <p className="h2-eyebrow">Sin tarjeta, sin compromiso</p>
