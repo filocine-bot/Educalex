@@ -10,10 +10,9 @@ import { libraryDocs } from "@/lib/educalex-sitemap";
 import { questionsFor } from "@/lib/game-engine";
 import { videoThemes } from "@/lib/official-videos";
 import { trainingCourses } from "@/lib/training-courses";
-import { LAUNCH_BUYERS, PRICES, UPGRADE_PRICE } from "@/lib/payments";
+import { LAUNCH_BUYERS, PRICES } from "@/lib/payments";
 import { FounderCard } from "@/components/founder-card";
 import { ShareQr } from "@/components/share-qr";
-import { PriceExplainer } from "@/components/price-explainer";
 import { FaqList } from "@/components/faq-list";
 import { faqs } from "@/lib/faq";
 import { SampleQuestion } from "@/components/sample-question";
@@ -46,9 +45,8 @@ const tryNow = [
 const cop = (n: number) => `${n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 })} COP`;
 const priceCards = [
   { name: "Gratis", price: "$0 COP", note: "Para empezar hoy", items: ["Nivel Básico de todos los perfiles", "Simulacro completo con tiempo", "Biblioteca, cursos, videos y dilemas", "Constancia de participación"], cta: "Empieza gratis", to: "/registro", featured: false },
-  { name: "Plan Intermedio", price: cop(PRICES.intermedio), note: "Pago único por perfil", items: ["Todo lo gratuito", "Nivel Intermedio: 40 preguntas del perfil y del núcleo común", "Mapa de errores e insignias"], cta: "Ver planes", to: "/planes", featured: false },
-  { name: "Plan Avanzado", price: cop(PRICES.avanzado), note: "Pago único por perfil", items: ["Niveles Intermedio (40) y Avanzado (50 preguntas)", "Del perfil y del núcleo común", `¿Ya tienes el Intermedio? Pasa al Avanzado pagando solo ${cop(UPGRADE_PRICE)} más`], cta: "Ver planes", to: "/planes", featured: true },
-  { name: "Paquete directivo", price: cop(PRICES.directivo), note: "Rector + Coordinador", items: ["Plan Avanzado de los dos perfiles", `Ahorras ${cop(2 * PRICES.avanzado - PRICES.directivo)}`, "Pago único, sin renovación"], cta: "Ver planes", to: "/planes", featured: false },
+  { name: "Acceso docente", price: cop(PRICES.docente), note: "Pago único por perfil", items: ["Ingreso docente o Ascenso y reubicación", "Todos los niveles: Intermedio (40) y Avanzado (50 preguntas)", "Núcleo común completo y mapa de errores"], cta: "Pagar ahora", to: "/planes", featured: true },
+  { name: "Acceso directivo", price: cop(PRICES.directivo), note: "Pago único por perfil", items: ["Rector o Coordinador", "Todos los niveles: Intermedio (40) y Avanzado (50 preguntas)", "Núcleo común completo y mapa de errores"], cta: "Pagar ahora", to: "/planes", featured: true },
 ] as const;
 const steps = [
   { icon: UserPlus, title: "Elige tu perfil", text: "Docente, ascenso, coordinador o rector: la plataforma se organiza según tu meta." },
@@ -144,14 +142,13 @@ function Index() {
     <section className="site-container hx-prices" aria-labelledby="hx-prices-title">
       <div className="hx-section-head"><Award className="text-gold" aria-hidden="true" /><div><h2 id="hx-prices-title">Planes y precios</h2><p>Precios de lanzamiento en pesos colombianos (COP), válidos para las primeras {LAUNCH_BUYERS} compras. Pago único con Wompi, sin suscripción.</p></div></div>
       <div className="hx-price-grid">{priceCards.map(c => <article key={c.name} className={`hx-price ${c.featured ? "is-featured" : ""}`}>
-        {c.featured && <span className="hx-price-flag">Más completo</span>}
+        {c.featured && <span className="hx-price-flag">Todos los niveles</span>}
         <h3>{c.name}</h3>
         <p className="hx-price-value">{c.price}</p>
         <p className="hx-price-note">{c.note}</p>
         <ul>{c.items.map(i => <li key={i}><CheckCircle2 aria-hidden="true" />{i}</li>)}</ul>
         <Button variant={c.featured ? "hero" : "outline"} asChild><Link to={c.to}>{c.cta}</Link></Button>
       </article>)}</div>
-      <PriceExplainer />
     </section>
 
     <section className="site-container hx-news" aria-labelledby="hx-news-title">

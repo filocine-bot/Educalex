@@ -12,26 +12,29 @@ export const PROFILES: SimulationProfile[] = ["ingreso-docente", "ascenso-reubic
 export const PROFILE_LABEL: Record<SimulationProfile, string> = { "ingreso-docente": "Ingreso docente", "ascenso-reubicacion": "Ascenso y reubicación", rector: "Rector", coordinador: "Coordinador" };
 
 /**
- * Precios de lanzamiento en pesos colombianos (decisión de Enadis, 24 nov 2026: dos planes por perfil).
+ * Precio único por perfil (decisión de Enadis, 24 nov 2026): el nivel Básico es gratis y un solo pago
+ * abre todos los niveles del perfil. Docentes (Ingreso o Ascenso): $59.900. Directivos (Rector o Coordinador): $79.900.
  * Aplican a las primeras 100 compras; después se actualizan aquí y en Planes y Términos.
- * El nivel Básico es gratis. Cada plan incluye los niveles anteriores.
  */
-export const PRICES = { intermedio: 39900, avanzado: 59900, directivo: 79900 } as const;
-export const UPGRADE_PRICE = PRICES.avanzado - PRICES.intermedio;
+export const PRICES = { docente: 59900, directivo: 79900 } as const;
+export const DIRECTIVE_PROFILES: SimulationProfile[] = ["rector", "coordinador"];
+export const TEACHER_PROFILES: SimulationProfile[] = ["ingreso-docente", "ascenso-reubicacion"];
+export const priceFor = (p: SimulationProfile) => (DIRECTIVE_PROFILES.includes(p) ? PRICES.directivo : PRICES.docente);
 /** Nivel más alto del modo juego (Básico, Intermedio, Avanzado). */
 export const MAX_LEVEL = 3;
 export const LAUNCH_BUYERS = 100;
 
 export const products: Product[] = [
-  ...PROFILES.flatMap(p => [
-    { id: `intermedio-${p}` as ProductId, title: `Plan Intermedio · ${PROFILE_LABEL[p]}`, description: `Nivel Intermedio (40 preguntas) del perfil ${PROFILE_LABEL[p]} y del núcleo común. El Básico es gratis.`, profiles: [p], priceCOP: PRICES.intermedio, level: 2 },
-    { id: `completo-${p}` as ProductId, title: `Plan Avanzado · ${PROFILE_LABEL[p]}`, description: `Niveles Intermedio (40 preguntas) y Avanzado (50 preguntas) del perfil ${PROFILE_LABEL[p]} y del núcleo común.`, profiles: [p], priceCOP: PRICES.avanzado, level: 3 },
-    { id: `mejora-${p}` as ProductId, title: `Pasar a Avanzado · ${PROFILE_LABEL[p]}`, description: `Si ya tienes el Plan Intermedio: suma el nivel Avanzado pagando solo la diferencia.`, profiles: [p], priceCOP: UPGRADE_PRICE, level: 3, requires: `intermedio-${p}` as ProductId },
-  ]),
-  { id: "directivo-completo", title: "Paquete directivo · Rector + Coordinador", description: "Plan Avanzado de los perfiles Rector y Coordinador y del núcleo común.", profiles: ["rector", "coordinador"], priceCOP: PRICES.directivo, level: 3 },
+  // A la venta: acceso completo de un perfil (todos los niveles). Se conserva el identificador «completo-*».
+  ...PROFILES.map(p => ({ id: `completo-${p}` as ProductId, title: `Acceso completo · ${PROFILE_LABEL[p]}`, description: `Todos los niveles del perfil ${PROFILE_LABEL[p]} (Intermedio, 40 preguntas, y Avanzado, 50) y del núcleo común. El Básico es gratis.`, profiles: [p], priceCOP: priceFor(p), level: MAX_LEVEL })),
   // Productos anteriores: ya no se venden, pero conservan el acceso de quienes los compraron.
-  { id: "premium-todos", title: "Acceso Premium completo (anterior)", description: "Todos los niveles de los cuatro perfiles.", profiles: PROFILES, priceCOP: null, level: 3 },
-  ...PROFILES.map(p => ({ id: `premium-${p}` as ProductId, title: `Premium · ${PROFILE_LABEL[p]} (anterior)`, description: `Todos los niveles del perfil ${PROFILE_LABEL[p]}.`, profiles: [p], priceCOP: null, level: 3 })),
+  ...PROFILES.flatMap(p => [
+    { id: `intermedio-${p}` as ProductId, title: `Plan Intermedio · ${PROFILE_LABEL[p]} (anterior)`, description: `Nivel Intermedio del perfil ${PROFILE_LABEL[p]}.`, profiles: [p], priceCOP: null, level: 2 },
+    { id: `mejora-${p}` as ProductId, title: `Mejora · ${PROFILE_LABEL[p]} (anterior)`, description: `Todos los niveles del perfil ${PROFILE_LABEL[p]}.`, profiles: [p], priceCOP: null, level: MAX_LEVEL },
+  ]),
+  { id: "directivo-completo", title: "Paquete directivo (anterior)", description: "Todos los niveles de Rector y Coordinador.", profiles: ["rector", "coordinador"], priceCOP: null, level: MAX_LEVEL },
+  { id: "premium-todos", title: "Acceso Premium completo (anterior)", description: "Todos los niveles de los cuatro perfiles.", profiles: PROFILES, priceCOP: null, level: MAX_LEVEL },
+  ...PROFILES.map(p => ({ id: `premium-${p}` as ProductId, title: `Premium · ${PROFILE_LABEL[p]} (anterior)`, description: `Todos los niveles del perfil ${PROFILE_LABEL[p]}.`, profiles: [p], priceCOP: null, level: MAX_LEVEL })),
 ];
 
 export const getProduct = (id: string) => products.find(p => p.id === id);
@@ -45,13 +48,7 @@ export function unlockedLevel(owned: readonly string[], profile: SimulationProfi
 /** Opciones de compra que tienen sentido para alguien con este nivel desbloqueado. */
 export function offersFor(owned: readonly string[], profile: SimulationProfile): Product[] {
   const level = unlockedLevel(owned, profile);
-  return products.filter(p => {
-    if (!purchasable(p) || !p.profiles.includes(profile) || p.level <= level) return false;
-    // Paquete de varios perfiles: solo si aún no tiene ningún plan en esos perfiles (si no, le sale más barato comprar por separado).
-    if (p.profiles.length > 1) return p.profiles.every(q => unlockedLevel(owned, q) === 1);
-    if (p.requires) return owned.includes(p.requires);
-    return !(level >= 2 && p.id.startsWith("completo-"));
-  });
+  return products.filter(p => purchasable(p) && p.profiles.includes(profile) && p.level > level);
 }
 
 /**

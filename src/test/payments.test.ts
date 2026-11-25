@@ -29,29 +29,26 @@ describe("pagos Wompi", () => {
     expect(wompiApiBase("pub_test_x")).toContain("sandbox");
     expect(wompiApiBase("pub_prod_x")).toContain("production");
   });
-  it("precios de lanzamiento: Intermedio $39.900, Avanzado $59.900 y mejora por la diferencia", () => {
+  it("precio único por perfil: docentes $59.900 y directivos $79.900", () => {
     const forSale = products.filter(purchasable);
-    expect(forSale).toHaveLength(13);
-    expect(products.find(p => p.id === "directivo-completo")?.priceCOP).toBe(79900);
-    expect(products.find(p => p.id === "intermedio-rector")?.priceCOP).toBe(39900);
-    expect(products.find(p => p.id === "completo-rector")?.priceCOP).toBe(59900);
-    expect(products.find(p => p.id === "mejora-rector")?.priceCOP).toBe(20000);
+    expect(forSale.map(p => p.id).sort()).toEqual(["completo-ascenso-reubicacion", "completo-coordinador", "completo-ingreso-docente", "completo-rector"]);
+    expect(products.find(p => p.id === "completo-ingreso-docente")?.priceCOP).toBe(59900);
+    expect(products.find(p => p.id === "completo-ascenso-reubicacion")?.priceCOP).toBe(59900);
+    expect(products.find(p => p.id === "completo-rector")?.priceCOP).toBe(79900);
+    expect(products.find(p => p.id === "completo-coordinador")?.priceCOP).toBe(79900);
     expect(purchasable(products.find(p => p.id === "premium-todos")!)).toBe(false);
   });
-  it("cada plan desbloquea hasta su nivel y conserva compras anteriores", () => {
+  it("el pago abre todos los niveles y se conservan las compras anteriores", () => {
     expect(unlockedLevel([], "rector")).toBe(1);
-    expect(unlockedLevel(["intermedio-rector"], "rector")).toBe(2);
-    expect(unlockedLevel(["intermedio-rector"], "coordinador")).toBe(1);
     expect(unlockedLevel(["completo-rector"], "rector")).toBe(3);
+    expect(unlockedLevel(["completo-rector"], "coordinador")).toBe(1);
+    expect(unlockedLevel(["intermedio-rector"], "rector")).toBe(2);
     expect(unlockedLevel(["premium-todos"], "coordinador")).toBe(3);
-    expect(unlockedLevel(["premium-rector"], "rector")).toBe(3);
-  });
-  it("ofrece solo lo que tiene sentido comprar", () => {
-    expect(offersFor([], "rector").map(p => p.id)).toEqual(["intermedio-rector", "completo-rector", "directivo-completo"]);
-    expect(offersFor([], "ingreso-docente").map(p => p.id)).toEqual(["intermedio-ingreso-docente", "completo-ingreso-docente"]);
-    expect(offersFor(["completo-coordinador"], "rector").map(p => p.id)).toEqual(["intermedio-rector", "completo-rector"]);
     expect(unlockedLevel(["directivo-completo"], "coordinador")).toBe(3);
-    expect(offersFor(["intermedio-rector"], "rector").map(p => p.id)).toEqual(["mejora-rector"]);
+  });
+  it("ofrece solo el acceso completo del perfil mientras no lo tenga", () => {
+    expect(offersFor([], "rector").map(p => p.id)).toEqual(["completo-rector"]);
+    expect(offersFor(["intermedio-rector"], "rector").map(p => p.id)).toEqual(["completo-rector"]);
     expect(offersFor(["completo-rector"], "rector")).toEqual([]);
   });
 });

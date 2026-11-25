@@ -45,7 +45,7 @@ export function BuyLevelButton({ profile, level, owned, returnPath }: { profile:
     <Button disabled={busy} onClick={buy} aria-label={`Comprar ${offer.title} por ${cop(offer.priceCOP!)} con Wompi`}>
       <CreditCard aria-hidden="true" /> {busy ? "Abriendo Wompi…" : `Pagar ${cop(offer.priceCOP!)}`}
     </Button>
-    <small>{offer.title.replace(/ · .*/, "")}{offer.level > level ? ` (hasta el nivel ${["Básico", "Intermedio", "Avanzado"][offer.level - 1]})` : ""}</small>
+    <small>Acceso completo: todos los niveles</small>
     {error && <span role="alert" className="text-destructive">{error}</span>}
   </div>;
 }

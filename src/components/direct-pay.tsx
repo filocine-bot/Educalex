@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useAccount } from "@/components/account-session";
 import { useMyPremium } from "@/components/premium-purchase";
 import { startCheckout } from "@/lib/payments.functions";
-import { getProduct, LAUNCH_BUYERS, offersFor, PROFILE_LABEL, PROFILES, purchasable } from "@/lib/payments";
+import { DIRECTIVE_PROFILES, getProduct, LAUNCH_BUYERS, offersFor, PROFILE_LABEL, purchasable, TEACHER_PROFILES } from "@/lib/payments";
 import type { SimulationProfile } from "@/lib/simulation-bank";
 
 const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
@@ -81,7 +81,7 @@ export function PaySidebar({ profile }: { profile: SimulationProfile }) {
     {mine >= 3
       ? <p className="pay-side-done"><CheckCircle2 aria-hidden="true" /> Ya tienes acceso completo a este perfil.</p>
       : <ul className="pay-side-list">{offers.map(o => <li key={o.id}>
-          <strong>{o.title.replace(` · ${PROFILE_LABEL[profile]}`, "")}</strong>
+          <strong>Acceso completo</strong>
           <span className="pay-side-price">{cop(o.priceCOP!)}</span>
           <small>{o.description}</small>
           <Button disabled={busy !== null} onClick={() => pay(o.id, returnPath)}>{busy === o.id ? "Abriendo Wompi…" : "Pagar ahora"}</Button>
@@ -93,17 +93,18 @@ export function PaySidebar({ profile }: { profile: SimulationProfile }) {
 }
 
 /** Pago directo desde la página de Planes: la persona elige el perfil y paga. */
-export function PlanPayButton({ tier }: { tier: "intermedio" | "completo" | "directivo" }) {
+export function PlanPayButton({ tier }: { tier: "docente" | "directivo" }) {
   const { pay, busy, error } = useDirectPay();
-  const [profile, setProfile] = useState<SimulationProfile>("ingreso-docente");
-  const id = tier === "directivo" ? "directivo-completo" : `${tier}-${profile}`;
+  const options = tier === "directivo" ? DIRECTIVE_PROFILES : TEACHER_PROFILES;
+  const [profile, setProfile] = useState<SimulationProfile>(options[0]!);
+  const id = `completo-${profile}`;
   const product = getProduct(id);
   if (!product || !purchasable(product)) return null;
   return <div className="plan-pay">
-    {tier !== "directivo" && <label>Perfil
+    <label>Perfil
       <select value={profile} onChange={e => setProfile(e.target.value as SimulationProfile)}>
-        {PROFILES.map(p => <option key={p} value={p}>{PROFILE_LABEL[p]}</option>)}
-      </select></label>}
+        {options.map(p => <option key={p} value={p}>{PROFILE_LABEL[p]}</option>)}
+      </select></label>
     <Button disabled={busy !== null} onClick={() => pay(id, "/planes")}><CreditCard aria-hidden="true" /> {busy === id ? "Abriendo Wompi…" : `Pagar ahora · ${cop(product.priceCOP!)}`}</Button>
     {error && <p role="alert" className="text-destructive">{error}</p>}
   </div>;
