@@ -108,3 +108,35 @@ export function PlanPayButton({ tier }: { tier: "docente" | "directivo" }) {
     {error && <p role="alert" className="text-destructive">{error}</p>}
   </div>;
 }
+
+const SIM_PATH = { "ingreso-docente": "/simulacros/ingreso-docente", "ascenso-reubicacion": "/simulacros/ascenso-reubicacion", rector: "/simulacros/rector", coordinador: "/simulacros/coordinador" } as const;
+
+/** Botón «Pagar» del acceso completo de un perfil (o «Ir al simulacro» si ya lo tiene). */
+export function ProfilePayButton({ profile, className }: { profile: SimulationProfile; className?: string }) {
+  const { level } = useMyPremium();
+  const { pay, busy, error } = useDirectPay();
+  const id = `completo-${profile}`;
+  const product = getProduct(id);
+  if (level(profile) >= 3) return <Link to={SIM_PATH[profile]} className={className}>Simulacro completo <CheckCircle2 aria-hidden="true" /></Link>;
+  if (!product || !purchasable(product)) return null;
+  return <>
+    <button type="button" className={className} disabled={busy !== null} onClick={() => pay(id, SIM_PATH[profile])}>
+      <CreditCard aria-hidden="true" /> {busy ? "Abriendo Wompi…" : `Pagar ${cop(product.priceCOP!)}`}
+    </button>
+    {error && <span role="alert" className="text-destructive">{error}</span>}
+  </>;
+}
+
+/** Inicio de cada perfil en Concursos: prueba gratis y pago, antes de cualquier otra información. */
+export function ProfileStart({ profile }: { profile: SimulationProfile }) {
+  return <section className="profile-start" aria-labelledby="profile-start-title">
+    <div>
+      <h2 id="profile-start-title">Empieza tu preparación · {PROFILE_LABEL[profile]}</h2>
+      <p>Haz gratis las primeras 10 preguntas. Con un solo pago abres el simulacro completo del perfil (100 preguntas por niveles) y el núcleo común.</p>
+    </div>
+    <div className="profile-start-actions">
+      <Link to={SIM_PATH[profile]} className="ps-free">Prueba gratis · 10 preguntas</Link>
+      <ProfilePayButton profile={profile} className="ps-pay" />
+    </div>
+  </section>;
+}
