@@ -32,13 +32,13 @@ const programs = [
 ] as const;
 
 const sections = [
-  { icon: GraduationCap, title: "Escuela de Formación Docente", text: "Cursos de autoestudio: inclusión, convivencia, evaluación, STEAM y más.", to: "/formacion" },
-  { icon: FileText, title: "Guía 34 y Plan de Mejoramiento", text: "Autoevaluación institucional, diseño y seguimiento del PMI.", to: "/formacion/guia-34-pmi" },
-  { icon: Scale, title: "Legislación educativa", text: "Normas con infografía y enlace a la fuente oficial.", to: "/biblioteca/legislacion" },
-  { icon: BookMarked, title: "Guías del MEN", text: "Guías y orientaciones del Ministerio de Educación Nacional.", to: "/biblioteca/guias-men" },
-  { icon: Library, title: "Bibliografía y recursos", text: "Políticas, lineamientos y documentos de consulta.", to: "/biblioteca/recursos" },
-  { icon: Video, title: "Videos educativos", text: "Videos oficiales del MEN por temática, con Lengua de Señas Colombiana.", to: "/biblioteca/videos" },
-  { icon: ClipboardCheck, title: "Simulacros", text: "Modo juego por niveles y simulacro completo con tiempo.", to: "/simulacros" },
+  { icon: GraduationCap, title: "Escuela de Formación Docente", text: "Cursos de autoestudio: inclusión, convivencia, evaluación, STEAM y más.", to: "/formacion", tone: "blue" },
+  { icon: FileText, title: "Guía 34 y Plan de Mejoramiento", text: "Autoevaluación institucional, diseño y seguimiento del PMI.", to: "/formacion/guia-34-pmi", tone: "gold" },
+  { icon: Scale, title: "Legislación educativa", text: "Normas con infografía y enlace a la fuente oficial.", to: "/biblioteca/legislacion", tone: "red" },
+  { icon: BookMarked, title: "Guías del MEN", text: "Guías y orientaciones del Ministerio de Educación Nacional.", to: "/biblioteca/guias-men", tone: "green" },
+  { icon: Library, title: "Bibliografía y recursos", text: "Políticas, lineamientos y documentos de consulta.", to: "/biblioteca/recursos", tone: "purple" },
+  { icon: Video, title: "Videos educativos", text: "Videos oficiales del MEN por temática, con Lengua de Señas Colombiana.", to: "/biblioteca/videos", tone: "teal" },
+  { icon: ClipboardCheck, title: "Simulacros", text: "Modo juego por niveles y simulacro completo con tiempo.", to: "/simulacros", tone: "navy" },
 ] as const;
 
 const topics = ["Ley 115 de 1994", "Decreto 1278", "Ley 1620 y convivencia", "PIAR e inclusión", "Guía 34 y PMI", "Evaluación y SIEE"];
@@ -111,11 +111,10 @@ function Index() {
     <section className="site-container h2-section" aria-labelledby="h2-sec-title">
       <h2 id="h2-sec-title">Todo para tu desarrollo profesional</h2>
       <p className="h2-lead">Formación, normas y recursos verificados, en un solo lugar.</p>
-      <div className="h2-tiles">{sections.map(s => <Link key={s.title} to={s.to} className="h2-tile">
+      <div className="h2-tiles">{sections.map(s => <Link key={s.title} to={s.to} className={`h2-tile h2-tile-${s.tone}`}>
         <span className="h2-tile-icon"><s.icon aria-hidden="true" /></span>
-        <strong>{s.title}</strong>
-        <span>{s.text}</span>
-        <span className="h2-tile-go">Ver <ArrowRight aria-hidden="true" /></span>
+        <span className="h2-tile-text"><strong>{s.title}</strong><span>{s.text}</span></span>
+        <ArrowRight aria-hidden="true" className="h2-tile-arrow" />
       </Link>)}</div>
     </section>
 
