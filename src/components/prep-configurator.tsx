@@ -92,26 +92,12 @@ export function FreeTools({ profile }: { profile: SimulationProfile }) {
 }
 
 /** Inicio de cada perfil en Concursos: arma tu preparación y herramientas gratuitas. */
-const TRIAL_TITLE: Record<SimulationProfile, string> = {
-  "ingreso-docente": "Prepárate para el ingreso a la carrera docente",
-  "ascenso-reubicacion": "Prepárate para el ascenso y la reubicación salarial",
-  coordinador: "Prepárate para el concurso de coordinador",
-  rector: "Prepárate para el concurso de rector",
-};
-
 /** Página de perfil: solo la prueba gratis activa; al terminarla aparece el pago y, con el pago, la preparación completa. */
 export function ProfileHome({ profile }: { profile: SimulationProfile }) {
   const { level } = useMyPremium();
   const owned = level(profile) >= 3;
-  const price = priceOf(profile);
   return <>
-    <section className="trial-head" aria-labelledby="trial-title">
-      <h2 id="trial-title">{TRIAL_TITLE[profile]}</h2>
-      <p>Empieza con la <strong>prueba gratis de 10 preguntas</strong>: cada respuesta trae su explicación y la norma que la sustenta. Al terminar verás tu resultado.</p>
-      {owned
-        ? <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold">Ya tienes la preparación completa: ir a mis simulacros <ArrowRight aria-hidden="true" /></Link>
-        : <p className="trial-price">Preparación completa: <strong>{cop(price)}</strong> · pago único con Wompi. La encuentras al terminar la prueba o en <Link to="/planes">Planes</Link>.</p>}
-    </section>
+    {owned && <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold trial-owned">Ya tienes la preparación completa: ir a mis simulacros <ArrowRight aria-hidden="true" /></Link>}
     <section className="trial-game" aria-label="Prueba gratis">
       <PracticeGame profile={profile} trialOnly />
     </section>

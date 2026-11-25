@@ -2099,3 +2099,4 @@ html { scroll-padding-top: 170px; }
 .educatia-launcher{bottom:15rem!important}
 .whatsapp-launcher{bottom:10rem!important}
 @media (max-width:640px){.educatia-launcher{bottom:13.5rem!important}.whatsapp-launcher{bottom:9rem!important}}
+.trial-owned{margin:0 0 1rem;display:inline-flex}
