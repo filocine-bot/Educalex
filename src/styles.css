@@ -1933,3 +1933,8 @@ html { scroll-padding-top: 170px; }
 .h2-hero-guide{display:inline-flex;align-items:center;gap:.4rem;margin-top:.9rem;color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 @media (max-width:720px){.tour-card{grid-template-columns:1fr;padding:1.1rem}.tour-demo{min-height:auto}}
 .pay-start{display:inline-flex;margin:1rem auto .5rem;font-size:1.1rem}
+.guide-video-wrap{max-width:56rem;margin:0 auto 1.5rem;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center;background:#0f2c57;color:#fff;border-radius:18px;padding:1.5rem}
+.guide-video-text h2{font-size:1.5rem;font-weight:800;margin-bottom:.5rem;color:#f3c23e}
+.guide-video-text p{color:#e3eaf6;line-height:1.5}
+.guide-video{width:min(270px,100%);aspect-ratio:9/16;border-radius:14px;background:#000;box-shadow:0 16px 40px -18px rgba(0,0,0,.7)}
+@media (max-width:720px){.guide-video-wrap{grid-template-columns:1fr;justify-items:center;text-align:center}.guide-video{width:min(320px,100%)}}
