@@ -33,7 +33,7 @@ export function BuyLevelButton({ profile, level, owned, returnPath }: { profile:
   const offer = offerForLevel(owned, profile, level);
   if (!offer) return null;
   if (!user) return <div className="level-buy">
-    <Button asChild><Link to="/ingresar"><CreditCard aria-hidden="true" /> Desbloquear · {cop(offer.priceCOP!)}</Link></Button>
+    <Button asChild><Link to="/ingresar"><CreditCard aria-hidden="true" /> Pagar {cop(offer.priceCOP!)}</Link></Button>
     <small>Inicia sesión o <Link to="/registro">crea tu cuenta</Link> para pagar.</small>
   </div>;
   async function buy() {
@@ -43,7 +43,7 @@ export function BuyLevelButton({ profile, level, owned, returnPath }: { profile:
   }
   return <div className="level-buy">
     <Button disabled={busy} onClick={buy} aria-label={`Comprar ${offer.title} por ${cop(offer.priceCOP!)} con Wompi`}>
-      <CreditCard aria-hidden="true" /> {busy ? "Abriendo Wompi…" : `Desbloquear · ${cop(offer.priceCOP!)}`}
+      <CreditCard aria-hidden="true" /> {busy ? "Abriendo Wompi…" : `Pagar ${cop(offer.priceCOP!)}`}
     </Button>
     <small>{offer.title.replace(/ · .*/, "")}{offer.level > level ? ` (hasta el nivel ${["Básico", "Intermedio", "Avanzado", "Experto"][offer.level - 1]})` : ""}</small>
     {error && <span role="alert" className="text-destructive">{error}</span>}

@@ -8,8 +8,8 @@ import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank"
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
 import { applyOutcome, describeBadge, emptyProfile, errorMap, isLevelPlayable, levelsFor, PASS_RATIO, type GameBankKey, pointsFor, PREMIUM_LOCKED, type GameLevel } from "@/lib/game-engine";
 import { useGameProgress } from "@/lib/game-progress";
-import { BuyLevelButton, BuyPremium, useMyPremium } from "@/components/premium-purchase";
-import { useAccount } from "@/components/account-session";
+import { BuyLevelButton, useMyPremium } from "@/components/premium-purchase";
+import { PaySidebar } from "@/components/direct-pay";
 
 const LETTERS = ["A", "B", "C", "D"];
 
@@ -20,10 +20,8 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
   const levels = useMemo(() => levelsFor(bank), [bank]);
   const { progress, save, ready, signedIn } = useGameProgress();
   const premium = useMyPremium();
-  const { isAdmin } = useAccount();
   const myLevel = premium.level(profile);
   const lockedAt = (n: number) => PREMIUM_LOCKED && n > myLevel;
-  const locked = lockedAt(4);
   const mine = progress[bank] ?? emptyProfile();
   const [run, setRun] = useState<Run | null>(null);
   const [chosen, setChosen] = useState<number | null>(null);
@@ -171,7 +169,6 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
         </li>;
       })}
     </ol>
-    {(locked || (isAdmin && myLevel < 4)) && <>{!locked && <p className="game-launch">Vista de administración: compra de prueba (los demás usuarios aún no ven este recuadro).</p>}<BuyPremium profile={profile} returnPath={`/simulacros/${profile}`} /></>}
     {mine.badges.includes("nivel:1") && <p className="game-certificate"><Award aria-hidden="true" /> Ya superaste el nivel Básico. <Link to="/certificado" search={{ perfil: bank }}>Descarga tu constancia de participación</Link></p>}
     {mine.badges.length > 0 && <div className="game-badges">
       <h3><Medal aria-hidden="true" /> Mis insignias</h3>
@@ -184,7 +181,7 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
 export function SimulationModes({ profile, children }: { profile: SimulationProfile; children: React.ReactNode }) {
   const [mode, setMode] = useState<"juego" | "nucleo" | "simulacro" | "psico" | "competencias">("juego");
   const tabsRef = useRef<HTMLDivElement>(null);
-  return <div>
+  return <div className="sim-layout"><div className="sim-main">
     <div ref={tabsRef} className="game-modes" role="tablist" aria-label="Forma de practicar">
       <button type="button" role="tab" aria-selected={mode === "juego"} className={mode === "juego" ? "active" : ""} onClick={() => setMode("juego")}><Trophy aria-hidden="true" /> Modo juego por niveles</button>
       <button type="button" role="tab" aria-selected={mode === "nucleo"} className={mode === "nucleo" ? "active" : ""} onClick={() => setMode("nucleo")}><BookOpen aria-hidden="true" /> Núcleo común</button>
@@ -193,5 +190,5 @@ export function SimulationModes({ profile, children }: { profile: SimulationProf
       <button type="button" role="tab" aria-selected={mode === "competencias"} className={mode === "competencias" ? "active" : ""} onClick={() => setMode("competencias")}><ListChecks aria-hidden="true" /> Competencias evaluadas</button>
     </div>
     <div role="tabpanel">{mode === "juego" ? <PracticeGame key="perfil" profile={profile} /> : mode === "nucleo" ? <><p className="game-hint nucleo-hint">Núcleo común para todos los cargos: lectura crítica, razonamiento cuantitativo, competencias blandas y pedagógicas (40 preguntas, 4 niveles).</p><PracticeGame key="nucleo" profile={profile} bank="nucleo-comun" /></> : mode === "competencias" ? <CompetencyGuide profile={profile} onPractice={t => { setMode(t); requestAnimationFrame(() => tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })); }} /> : mode === "psico" ? <PsychoPractice /> : children}</div>
-  </div>;
+  </div><PaySidebar profile={profile} /></div>;
 }

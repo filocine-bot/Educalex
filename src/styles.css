@@ -1600,3 +1600,37 @@ html { scroll-padding-top: 170px; }
 .level-buy small { font-size: 12px; color: var(--muted-foreground); }
 .level-buy a { font-weight: 700; } .level-buy small a { text-decoration: underline; color: var(--brand-blue); }
 .game-level.is-locked .level-buy { opacity: 1; }
+/* Columna de pago directo junto al simulacro */
+.sim-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+.sim-main { min-width: 0; }
+.pay-side { position: sticky; top: 172px; max-height: calc(100vh - 190px); overflow-y: auto; border: 2px solid #f2b705; border-radius: 14px; background: #fffdf5; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 8px 24px rgba(15,47,92,.08); }
+.pay-side h2 { display: flex; align-items: center; gap: 8px; font-size: 18px; color: var(--brand-blue); margin: 0; }
+.pay-side h2 svg { width: 20px; height: 20px; flex: none; }
+.pay-side-status { font-size: 14px; margin: 0; }
+.pay-side-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.pay-side-list li { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 12px; display: grid; gap: 4px; }
+.pay-side-list strong { font-size: 15px; color: var(--foreground); }
+.pay-side-price { font-size: 22px; font-weight: 800; color: var(--brand-blue); }
+.pay-side-list small { font-size: 12px; color: var(--muted-foreground); line-height: 1.4; }
+.pay-side-list button { margin-top: 6px; min-height: 44px; font-weight: 700; width: 100%; }
+.pay-side-note { font-size: 12px; color: var(--muted-foreground); margin: 0; line-height: 1.45; }
+.pay-side-note svg { width: 14px; height: 14px; display: inline; vertical-align: -2px; margin-right: 4px; color: #1b7f3b; }
+.pay-side-note a { color: var(--brand-blue); text-decoration: underline; font-weight: 700; }
+.pay-side-done { display: flex; gap: 6px; align-items: center; color: #1b7f3b; font-weight: 700; font-size: 14px; }
+.pay-side-done svg { width: 18px; height: 18px; }
+.pending-pay { background: #fff8e1; color: var(--foreground); padding: 10px 16px; text-align: center; font-weight: 700; }
+.pending-pay.is-error { background: #fdecea; color: var(--destructive); }
+.plan-pay { display: grid; gap: 8px; padding-top: 8px; }
+.plan-pay label { display: grid; gap: 4px; font-size: 13px; font-weight: 700; }
+.plan-pay select { min-height: 40px; border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; background: var(--background); }
+.plan-pay button { min-height: 44px; font-weight: 700; }
+.plan-pay button svg { width: 18px; height: 18px; }
+@media (max-width: 1023px) {
+  .sim-layout { grid-template-columns: 1fr; }
+  .pay-side { position: static; order: -1; }
+  .pay-side-list { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+}
+.game-level-buy, .level-buy { width: 100%; }
+.level-buy button, .level-buy a { width: 100%; white-space: normal; height: auto; min-height: 44px; padding: 8px 10px; font-size: 13px; line-height: 1.2; justify-content: center; text-align: center; }
+.pay-side-list li { padding: 10px 12px; }
+.pay-side-price { font-size: 20px; }
