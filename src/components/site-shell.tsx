@@ -8,6 +8,7 @@ import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from './ui/dropdown-menu';
 import { ProfileSelector } from './profile-selector';
 import { PendingPurchaseResume } from './direct-pay';
+import { DeviceGuard } from './device-guard';
 import { getLearning } from '@/lib/learning.functions';
 import { supabase } from '@/integrations/supabase/client';
 import { isArtifact } from '@/lib/runtime-mode';
@@ -65,7 +66,7 @@ export function SiteHeader() {
       <nav className="profile-desktop-nav" aria-label="Navegación de preparación">{user ? <><Link className="nav-item" to="/mi-panel">Mi panel</Link>{groups.map(group => <NavGroup key={group.label} group={group} />)}<Link className="nav-item" to="/mi-progreso">Mi progreso</Link></> : <>{institutionalLinks.map(item => <Link key={item.to} className="nav-item" to={item.to}>{item.label}</Link>)}</>}</nav>
       <DropdownMenu><DropdownMenuTrigger asChild><Button className="profile-mobile-button" variant="ghost">Mi preparación<ChevronDown aria-hidden="true" /></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="header-menu-content mobile-header-menu">{user ? <><MenuLink item={{ label: 'Mi panel', to: '/mi-panel' }} />{groups.map(group => <MenuSection key={group.label} item={{ label: group.label, to: '/mi-panel', children: group.links }} />)}<MenuLink item={{ label: 'Mi progreso', to: '/mi-progreso' }} /></> : <>{navItems.filter(item => item.children).map(item => <MenuSection key={item.to} item={item} />)}</>}</DropdownMenuContent></DropdownMenu>
     </div></div>
-    <PendingPurchaseResume />{message && <p role="alert" className="header-error">{message}</p>}
+    <PendingPurchaseResume /><DeviceGuard />{message && <p role="alert" className="header-error">{message}</p>}
   </header>;
 }
 

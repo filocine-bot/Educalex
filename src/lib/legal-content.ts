@@ -143,6 +143,9 @@ export const termsSections: LegalSection[] = [
     items: [
       "Debes ser mayor de 18 años y suministrar un correo que te pertenezca.",
       "Eres responsable de mantener en reserva el acceso a tu correo electrónico, porque con él se ingresa a tu cuenta, y de la actividad realizada con ella.",
+      "La cuenta es personal e intransferible. No puedes prestarla, venderla ni compartirla con otras personas, y el acceso pagado es para uso exclusivo de su titular.",
+      "Cada cuenta puede usarse en un máximo de tres (3) dispositivos (por ejemplo, un celular y dos computadores). Para registrar un dispositivo distinto debes solicitar la liberación de uno anterior a educalexcolombia@gmail.com o por WhatsApp. Borrar los datos del navegador o usar la navegación privada puede contar como un dispositivo nuevo.",
+      "Si detectamos que una cuenta se comparte, podemos suspenderla temporalmente o cancelarla, previo aviso al correo registrado y con la posibilidad de que expliques la situación.",
       "Puedes solicitar la eliminación de tu cuenta en cualquier momento, como indica la Política de privacidad.",
     ],
   },
