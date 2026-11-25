@@ -8,4 +8,4 @@ import { CompetitionReferences } from "@/components/competition-references";
 import { Link } from "@tanstack/react-router";
 
 const page = pages["/concursos/coordinador"];
-export const Route = createFileRoute("/concursos/coordinador")({ head: () => pageHead(page.title, page.description), component: () => <ModulePage path="/concursos/coordinador" compact><ProfileHome profile="coordinador" /><Link to="/biblioteca" className="academic-library-link">Consultar normativa y convocatorias en Biblioteca General</Link><ExamStructure /><CompetitionReferences profile="coordinador" /></ModulePage> });
+export const Route = createFileRoute("/concursos/coordinador")({ head: () => pageHead(page.title, page.description), component: () => <ModulePage path="/concursos/coordinador" compact noticeAtEnd><ProfileHome profile="coordinador" /><Link to="/biblioteca" className="academic-library-link">Consultar normativa y convocatorias en Biblioteca General</Link><ExamStructure /><CompetitionReferences profile="coordinador" /></ModulePage> });

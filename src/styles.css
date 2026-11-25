@@ -2100,3 +2100,10 @@ html { scroll-padding-top: 170px; }
 .whatsapp-launcher{bottom:10rem!important}
 @media (max-width:640px){.educatia-launcher{bottom:13.5rem!important}.whatsapp-launcher{bottom:9rem!important}}
 .trial-owned{margin:0 0 1rem;display:inline-flex}
+.trial-paybar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;background:#fffbea;border:2px solid #FFC928;border-radius:14px;padding:.8rem 1rem;margin:0 0 1rem}
+.trial-paybar p{display:grid;gap:.15rem;margin:0}
+.trial-paybar strong{color:#102B50;font-size:1.02rem}
+.trial-paybar span{font-size:.85rem;color:#3b4658}
+.trial-paybar .h2-btn{min-height:46px}
+.mod-notice-end{margin-top:1.5rem;font-size:.85rem}
+@media (max-width:640px){.trial-paybar .h2-btn{width:100%;justify-content:center}}

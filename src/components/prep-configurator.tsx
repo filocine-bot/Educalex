@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, Bot, ChartNoAxesCombined, CheckCircle2, Compass, Play, Scale, Settings, Sparkles, Trophy, Users } from "lucide-react";
-import { useDirectPay } from "@/components/direct-pay";
+import { ProfilePayButton, useDirectPay } from "@/components/direct-pay";
 import { PracticeGame } from "@/components/practice-game";
 import { useMyPremium } from "@/components/premium-purchase";
 import { dilemmas } from "@/lib/dilemmas";
@@ -97,7 +97,9 @@ export function ProfileHome({ profile }: { profile: SimulationProfile }) {
   const { level } = useMyPremium();
   const owned = level(profile) >= 3;
   return <>
-    {owned && <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold trial-owned">Ya tienes la preparación completa: ir a mis simulacros <ArrowRight aria-hidden="true" /></Link>}
+    {owned
+      ? <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold trial-owned">Ya tienes la preparación completa: ir a mis simulacros <ArrowRight aria-hidden="true" /></Link>
+      : <div className="trial-paybar"><p><strong>Preparación completa · {cop(priceOf(profile))}</strong><span>Pago único. Al pagar te llega al correo el enlace que activa tu simulacro.</span></p><ProfilePayButton profile={profile} className="h2-btn h2-btn-gold" /></div>}
     <section className="trial-game" aria-label="Prueba gratis">
       <PracticeGame profile={profile} trialOnly />
     </section>
