@@ -12,9 +12,9 @@ const steps: Step[] = [
     action: { to: "/registro", label: "Crear mi cuenta" },
   },
   {
-    icon: KeyRound, tone: "gold", title: "Entra con el enlace o el código del correo",
-    body: <>Abre el correo de <strong>EDUCALEX</strong> y pulsa <strong>«Entrar a mi cuenta»</strong>. Si el enlace se abre en otro navegador, escribe el <strong>código de 6 dígitos</strong> en la página. Para volver otro día: <strong>Ingresar</strong> → tu correo → nuevo enlace.</>,
-    demo: <div className="tour-mock tour-mail"><small>De: EDUCALEX &lt;acceso@educalex.co&gt;</small><strong>Tu acceso a EDUCALEX</strong><span className="tour-btn">Entrar a mi cuenta</span><span className="tour-code">Código: 4 8 2 9 1 7</span></div>,
+    icon: KeyRound, tone: "gold", title: "Toca el botón del correo y listo",
+    body: <>Abre el correo de <strong>EDUCALEX</strong> y toca <strong>«Entrar a mi cuenta»</strong>: vuelves a la página con tu sesión abierta y tu simulacro listo. Para volver otro día: <strong>Ingresar</strong> → tu correo → toca el nuevo enlace.</>,
+    demo: <div className="tour-mock tour-mail"><small>De: EDUCALEX &lt;acceso@educalex.co&gt;</small><strong>Tu acceso a EDUCALEX</strong><span className="tour-btn">Entrar a mi cuenta</span></div>,
     action: { to: "/ingresar", label: "Ir a Ingresar" },
   },
   {
