@@ -1,23 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { CheckCircle2, CreditCard, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "@/components/account-session";
 import { useMyPremium } from "@/components/premium-purchase";
-import { startCheckout } from "@/lib/payments.functions";
+import { startCheckout, startDirectCheckout } from "@/lib/payments.functions";
 import { DIRECTIVE_PROFILES, getProduct, LAUNCH_BUYERS, offersFor, PROFILE_LABEL, purchasable, TEACHER_PROFILES } from "@/lib/payments";
 import type { SimulationProfile } from "@/lib/simulation-bank";
 
 const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
+export const PAY_NOTE = "No necesitas registrarte: paga en Wompi y escribe allí tu correo. Con ese correo se crea tu acceso y entras al volver. Al pagar aceptas la política de datos y los términos.";
 const PENDING_KEY = "educalex-compra-pendiente";
 const PENDING_MAX_MS = 30 * 60 * 1000;
 
 type Pending = { product: string; returnPath: string; at: number };
 
-export function savePending(p: Omit<Pending, "at">) {
-  try { sessionStorage.setItem(PENDING_KEY, JSON.stringify({ ...p, at: Date.now() })); } catch { /* sin almacenamiento */ }
-}
 function takePending(): Pending | null {
   try {
     const raw = sessionStorage.getItem(PENDING_KEY);
@@ -29,18 +27,17 @@ function takePending(): Pending | null {
   } catch { return null; }
 }
 
-/** Inicia el pago en Wompi. Sin sesión, lleva al pago con solo el correo (la cuenta se crea con el pago). */
+/** Abre Wompi de inmediato. Sin sesión, el correo se escribe en Wompi y la cuenta se crea al aprobarse el pago. */
 export function useDirectPay() {
   const { user } = useAccount();
   const checkout = useServerFn(startCheckout);
-  const navigate = useNavigate();
+  const direct = useServerFn(startDirectCheckout);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
   async function pay(product: string, returnPath: string) {
     setError("");
-    if (!user) { await navigate({ to: "/pagar", search: { producto: product, volver: returnPath } }); return; }
     setBusy(product);
-    try { const { url } = await checkout({ data: { product, returnPath } }); window.location.href = url; }
+    try { const { url } = await (user ? checkout : direct)({ data: { product, returnPath } }); window.location.href = url; }
     catch (e) { setError((e as Error).message || "No se pudo abrir el pago."); setBusy(null); }
   }
   return { pay, busy, error, signedIn: !!user };
@@ -86,7 +83,7 @@ export function PaySidebar({ profile }: { profile: SimulationProfile }) {
           <Button disabled={busy !== null} onClick={() => pay(o.id, returnPath)}>{busy === o.id ? "Abriendo Wompi…" : "Pagar ahora"}</Button>
         </li>)}</ul>}
     {error && <p role="alert" className="text-destructive">{error}</p>}
-    {!signedIn && mine < 3 && <p className="pay-side-note">Te pediremos ingresar para asociar el pago a tu cuenta; luego se abre Wompi. ¿No tienes cuenta? <Link to="/registro">Créala gratis</Link>.</p>}
+    {!signedIn && mine < 3 && <p className="pay-side-note">{PAY_NOTE}</p>}
     <p className="pay-side-note"><ShieldCheck aria-hidden="true" /> Pago único y seguro con Wompi: tarjeta, PSE, Nequi y más. Precios de lanzamiento para las primeras {LAUNCH_BUYERS} compras. <Link to="/terminos">Términos</Link>.</p>
   </aside>;
 }

@@ -105,3 +105,10 @@ export async function verifyEvent(ev: WompiEvent, eventsSecret: string): Promise
 }
 
 export const newReference = () => `EDX-${crypto.randomUUID()}`;
+
+/** Referencia de un pago sin sesión: lleva el producto para crear la orden cuando Wompi confirme. */
+export const guestReference = (product: string) => `EDX-G-${product}-${crypto.randomUUID().replace(/-/g, "").slice(0, 12)}`;
+export function parseGuestReference(reference: string): string | null {
+  const m = /^EDX-G-([a-z0-9-]{3,40})-([a-f0-9]{12})$/.exec(reference);
+  return m ? m[1]! : null;
+}

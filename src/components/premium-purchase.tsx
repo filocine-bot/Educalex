@@ -1,10 +1,11 @@
+import { useDirectPay } from "@/components/direct-pay";
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { CreditCard, Lock } from "lucide-react";
+import { CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "@/components/account-session";
-import { getMyPurchases, startCheckout } from "@/lib/payments.functions";
+import { getMyPurchases } from "@/lib/payments.functions";
 import { LAUNCH_BUYERS, offerForLevel, offersFor, unlockedLevel } from "@/lib/payments";
 import type { SimulationProfile } from "@/lib/simulation-bank";
 
@@ -24,25 +25,13 @@ export function useMyPremium() {
   return { owned, level: (profile: SimulationProfile) => unlockedLevel(owned, profile) };
 }
 
-/** Botón de pago de un nivel: abre Wompi con el plan más económico que desbloquea ese nivel. */
+/** Botón de pago de un nivel: abre Wompi de inmediato (sin sesión, el correo se escribe en Wompi). */
 export function BuyLevelButton({ profile, level, owned, returnPath }: { profile: SimulationProfile; level: number; owned: readonly string[]; returnPath: string }) {
-  const { user } = useAccount();
-  const checkout = useServerFn(startCheckout);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
+  const { pay, busy, error } = useDirectPay();
   const offer = offerForLevel(owned, profile, level);
   if (!offer) return null;
-  if (!user) return <div className="level-buy">
-    <Button asChild><Link to="/ingresar"><CreditCard aria-hidden="true" /> Pagar {cop(offer.priceCOP!)}</Link></Button>
-    <small>Inicia sesión o <Link to="/registro">crea tu cuenta</Link> para pagar.</small>
-  </div>;
-  async function buy() {
-    setBusy(true); setError("");
-    try { const { url } = await checkout({ data: { product: offer!.id, returnPath } }); window.location.href = url; }
-    catch (e) { setError((e as Error).message || "No se pudo iniciar el pago."); setBusy(false); }
-  }
   return <div className="level-buy">
-    <Button disabled={busy} onClick={buy} aria-label={`Comprar ${offer.title} por ${cop(offer.priceCOP!)} con Wompi`}>
+    <Button disabled={busy !== null} onClick={() => pay(offer.id, returnPath)} aria-label={`Comprar ${offer.title} por ${cop(offer.priceCOP!)} con Wompi`}>
       <CreditCard aria-hidden="true" /> {busy ? "Abriendo Wompi…" : `Pagar ${cop(offer.priceCOP!)}`}
     </Button>
     <small>Acceso completo: todos los niveles</small>
@@ -52,21 +41,12 @@ export function BuyLevelButton({ profile, level, owned, returnPath }: { profile:
 
 /** Opciones de compra para desbloquear los niveles premium de un perfil. */
 export function BuyPremium({ profile, returnPath }: { profile: SimulationProfile; returnPath: string }) {
-  const { user } = useAccount();
-  const checkout = useServerFn(startCheckout);
-  const [busy, setBusy] = useState<string | null>(null);
-  const [error, setError] = useState("");
+  const { pay, busy, error } = useDirectPay();
   const { owned } = useMyPremium();
   const forSale = offersFor(owned, profile);
 
   if (!forSale.length) return null;
-  if (!user) return <div className="premium-box"><p><Lock aria-hidden="true" /> Para comprar el acceso premium, <Link to="/ingresar">inicia sesión</Link> o <Link to="/registro">crea una cuenta</Link>.</p></div>;
-
-  async function buy(id: string) {
-    setBusy(id); setError("");
-    try { const { url } = await checkout({ data: { product: id, returnPath } }); window.location.href = url; }
-    catch (e) { setError((e as Error).message || "No se pudo iniciar el pago."); setBusy(null); }
-  }
+  const buy = (id: string) => pay(id, returnPath);
 
   return <div className="premium-box">
     <h3><CreditCard aria-hidden="true" /> Desbloquea más niveles</h3>
