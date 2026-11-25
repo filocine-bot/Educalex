@@ -60,7 +60,7 @@ function Index() {
       <div className="site-container h2-section">
         <h2 id="h2-prof-title">¿Cuál es tu objetivo profesional?</h2>
         <div className="h2-profiles">{programs.map(p => <article key={p.profile} className={`h2-prof h2-prof-${p.tone}`}>
-          <div className="h2-prof-media"><img src={p.photo} alt={p.alt} width={640} height={480} loading="lazy" /><span className="h2-prof-badge" aria-hidden="true"><p.icon /></span></div>
+          <div className="h2-prof-media"><span className="h2-prof-portrait"><img src={p.photo} alt={p.alt} width={320} height={320} loading="lazy" /></span><span className="h2-prof-badge" aria-hidden="true"><p.icon /></span></div>
           <div className="h2-prof-body">
             <h3>{p.name}</h3>
             <p>{p.desc}</p>
