@@ -1888,3 +1888,4 @@ html { scroll-padding-top: 170px; }
 .guest-pass{margin:1.2rem auto 0;max-width:26rem;display:grid;gap:.6rem;text-align:left;padding:1rem;border:1px solid #d6dce8;border-radius:12px;background:#f7f9fc}
 .guest-pass-ok{margin-top:1rem;font-weight:600;color:#14623a}
 .magic-login{display:grid;gap:.5rem;padding:.9rem 1rem;border:1px solid #d6dce8;border-radius:12px;background:#f7f9fc}
+.game-attempts{font-size:.85rem;font-weight:600;color:#123f7a;margin-top:.2rem}

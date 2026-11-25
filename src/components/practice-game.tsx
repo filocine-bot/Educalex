@@ -1,3 +1,6 @@
+import { useServerFn } from "@tanstack/react-start";
+import { getPaidAttempts, startPaidAttempt } from "@/lib/paid-attempts.functions";
+import { MAX_PAID_ATTEMPTS, remainingAttempts, type PaidAttempts } from "@/lib/paid-attempts";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Award, BookOpen, Brain, ListChecks, CheckCircle2, Flame, Lock, Medal, RotateCcw, Star, Trophy, XCircle } from "lucide-react";
@@ -26,13 +29,21 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
   const [run, setRun] = useState<Run | null>(null);
   const [chosen, setChosen] = useState<number | null>(null);
   const [summary, setSummary] = useState<{ run: Run; newBadges: string[]; passed: boolean } | null>(null);
+  const attemptsQ = usePaidAttempts(signedIn);
   const feedbackRef = useRef<HTMLDivElement>(null);
   const questionRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => { if (run && chosen === null) questionRef.current?.focus(); }, [run?.index, run?.level.number, run?.review]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (chosen !== null) feedbackRef.current?.focus(); }, [chosen]);
 
-  function start(level: GameLevel, review = false, questions = level.questions) {
+  async function start(level: GameLevel, review = false, questions = level.questions) {
+    if (level.premium && !review && PREMIUM_LOCKED && !attemptsQ.unlimited) {
+      const left = remainingAttempts(attemptsQ.used, bank, level.number);
+      if (left <= 0) return;
+      if (!window.confirm(`Vas a iniciar el nivel ${level.name}. Cada nivel pagado se puede presentar ${MAX_PAID_ATTEMPTS} veces y este será tu intento ${MAX_PAID_ATTEMPTS - left + 1} de ${MAX_PAID_ATTEMPTS}. El intento cuenta aunque no lo termines. ¿Empezar?`)) return;
+      const ok = await attemptsQ.begin(bank, level.number);
+      if (!ok) return;
+    }
     setSummary(null); setChosen(null);
     setRun({ level, review, questions, index: 0, answers: [], streak: 0, bestStreak: 0, points: 0 });
   }
@@ -134,9 +145,9 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
         <ul>{map.map(g => <li key={g.competency}><strong>{g.competency}</strong> ({g.items.length})<ul>{g.items.map(q => <li key={q.id}>{q.reference}</li>)}</ul></li>)}</ul>
       </div>}
       <div className="practice-actions">
-        {wrongIds.length > 0 && <Button variant="navy" onClick={() => start(r.level, true, r.questions.filter(q => wrongIds.includes(q.id)))}><RotateCcw /> Repasar mis {wrongIds.length} errores</Button>}
-        {!r.review && <Button variant="outline" onClick={() => start(r.level)}>Repetir el nivel</Button>}
-        {nextLevel && nextPlayable?.playable && !r.review && summary.passed && <Button variant="navy" onClick={() => start(nextLevel)}>Ir al nivel {nextLevel.name}</Button>}
+        {wrongIds.length > 0 && <Button variant="navy" onClick={() => void start(r.level, true, r.questions.filter(q => wrongIds.includes(q.id)))}><RotateCcw /> Repasar mis {wrongIds.length} errores</Button>}
+        {!r.review && (!r.level.premium || attemptsQ.unlimited || remainingAttempts(attemptsQ.used, bank, r.level.number) > 0) && <Button variant="outline" onClick={() => start(r.level)}>Repetir el nivel{r.level.premium && !attemptsQ.unlimited ? ` (te quedan ${remainingAttempts(attemptsQ.used, bank, r.level.number)})` : ""}</Button>}
+        {nextLevel && nextPlayable?.playable && !r.review && summary.passed && <Button variant="navy" onClick={() => void start(nextLevel)}>Ir al nivel {nextLevel.name}</Button>}
         <Button variant="ghost" onClick={() => setSummary(null)}>Volver a los niveles</Button>
       </div>
     </section>;
@@ -148,6 +159,7 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
       <div className="game-intro-row"><h2 id="game-levels-title">Elige tu nivel</h2><p className="game-stats"><span><Star aria-hidden="true" /> {mine.points} puntos</span><span><Flame aria-hidden="true" /> Mejor racha {mine.bestStreak}</span><span><Medal aria-hidden="true" /> {mine.badges.length} insignias</span></p></div>
       <p className="game-hint">Explicación inmediata en cada respuesta. Supera un nivel con {Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
       {PREMIUM_LOCKED && myLevel > 1 && <p className="game-launch">{myLevel >= 3 ? "Tienes el simulacro completo de este perfil." : "Tienes parte del simulacro de este perfil; con el acceso completo se abren las demás preguntas."} ¡Gracias por apoyar EDUCALEX!</p>}
+      {attemptsQ.error && <p role="alert" className="game-launch">{attemptsQ.error}</p>}
       {!PREMIUM_LOCKED && <p className="game-launch">Lanzamiento: todos los niveles están abiertos gratis por tiempo limitado.</p>}
     </div>
     <ol className="game-levels">
@@ -160,9 +172,12 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
             <span className="course-kicker">Nivel {level.number}{level.premium ? " · Premium" : " · Gratis"}</span>
             <h3>{level.name}</h3>
             <p>{level.questions.length} preguntas{best !== undefined && <> · tu mejor resultado: {best} %</>}</p>
+            {level.premium && status.playable && PREMIUM_LOCKED && !attemptsQ.unlimited && <p className="game-attempts">Intentos usados: {MAX_PAID_ATTEMPTS - remainingAttempts(attemptsQ.used, bank, level.number)} de {MAX_PAID_ATTEMPTS}</p>}
           </div>
-          {status.playable
-            ? <Button variant={done ? "outline" : "navy"} onClick={() => start(level)}>{done ? "Jugar de nuevo" : best !== undefined ? "Reintentar" : "Jugar"}</Button>
+          {status.playable && level.premium && PREMIUM_LOCKED && !attemptsQ.unlimited && remainingAttempts(attemptsQ.used, bank, level.number) <= 0
+            ? <span className="game-lock"><Lock aria-hidden="true" /> Usaste tus {MAX_PAID_ATTEMPTS} intentos</span>
+            : status.playable
+            ? <Button variant={done ? "outline" : "navy"} disabled={attemptsQ.busy || (level.premium && PREMIUM_LOCKED && !attemptsQ.ready)} onClick={() => void start(level)}>{done ? "Jugar de nuevo" : best !== undefined ? "Reintentar" : "Jugar"}</Button>
             : lockedAt(level.number) && level.premium
               ? <div className="game-level-buy"><span className="game-lock"><Lock aria-hidden="true" /> Nivel premium</span><BuyLevelButton profile={profile} level={level.number} owned={premium.owned} returnPath={`/simulacros/${profile}`} /></div>
               : <span className="game-lock"><Lock aria-hidden="true" /> {status.reason === "premium" ? "Requiere plan" : `Supera el nivel ${level.number - 1}`}</span>}
@@ -191,4 +206,28 @@ export function SimulationModes({ profile, children }: { profile: SimulationProf
     </div>
     <div role="tabpanel">{mode === "juego" ? <PracticeGame key="perfil" profile={profile} /> : mode === "nucleo" ? <><p className="game-hint nucleo-hint">Núcleo común para todos los cargos: lectura crítica, razonamiento cuantitativo, competencias blandas y pedagógicas (40 preguntas, 3 niveles).</p><PracticeGame key="nucleo" profile={profile} bank="nucleo-comun" /></> : mode === "competencias" ? <CompetencyGuide profile={profile} onPractice={t => { setMode(t); requestAnimationFrame(() => tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })); }} /> : mode === "psico" ? <PsychoPractice /> : children}</div>
   </div><PaySidebar profile={profile} /></div>;
+}
+
+/** Intentos de los niveles pagados, contados en el servidor. */
+function usePaidAttempts(signedIn: boolean) {
+  const load = useServerFn(getPaidAttempts);
+  const beginFn = useServerFn(startPaidAttempt);
+  const [used, setUsed] = useState<PaidAttempts>({});
+  const [unlimited, setUnlimited] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    if (!signedIn) { setReady(true); return; }
+    let alive = true;
+    load().then(r => { if (alive) { setUsed(r.used); setUnlimited(r.unlimited); setReady(true); } }).catch(() => { if (alive) setReady(true); });
+    return () => { alive = false; };
+  }, [signedIn, load]);
+  async function begin(bank: string, level: number) {
+    setBusy(true); setError("");
+    try { const r = await beginFn({ data: { bank: bank as never, level } }); setUsed(r.used); setUnlimited(r.unlimited); return true; }
+    catch (e) { setError((e as Error).message || "No se pudo iniciar el intento."); return false; }
+    finally { setBusy(false); }
+  }
+  return { used, unlimited, ready, busy, error, begin };
 }
