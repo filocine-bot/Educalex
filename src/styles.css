@@ -79,8 +79,9 @@
 
 :root {
   --radius: 0.5rem;
-  --brand-blue: oklch(0.407 0.109 255.8);
-  --gold: oklch(0.805 0.161 84.3);
+  --brand-blue: #102B50;
+  --gold: #FFC928;
+  --brand-light: #EAF1F8;
   --on-brand: oklch(1 0 0);
   --background: oklch(1 0 0);
   --foreground: oklch(0.29 0.087 260.8);
@@ -88,7 +89,7 @@
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.805 0.161 84.3);
+  --primary: #FFC928;
   --primary-foreground: oklch(0.29 0.087 260.8);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
@@ -1962,7 +1963,33 @@ html { scroll-padding-top: 170px; }
   .h2-quick-grid{grid-template-columns:1fr 1fr;gap:.55rem}
   .h2-quick-item{font-size:.92rem;padding:.7rem;min-height:3.8rem}
   /* Portada más corta en el celular: lo esencial primero */
-  .h2-hero-text,.h2-trust,.h2-hero-actions .h2-btn-ghost{display:none}
+  .h2-trust,.h2-hero-actions .h2-btn-ghost{display:none}
   .h2-program-body>p,.h2-program-body ul{display:none}
   .h2-tool p{display:none}
 }
+
+/* Portada: Elige tu perfil profesional */
+.h2-profiles-band{background:var(--brand-light,#EAF1F8)}
+.h2-profiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:1.4rem}
+.h2-prof{background:#fff;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 14px 34px -20px rgba(16,43,80,.55);border:1px solid #d6e0ee}
+.h2-prof-media{height:120px;display:grid;place-items:center;color:#fff}
+.h2-prof-media svg{width:56px;height:56px}
+.h2-prof-blue .h2-prof-media{background:linear-gradient(135deg,#102B50,#1d4f9a)}
+.h2-prof-green .h2-prof-media{background:linear-gradient(135deg,#0f5132,#1f8a4c)}
+.h2-prof-red .h2-prof-media{background:linear-gradient(135deg,#7a1f1f,#c23a3a)}
+.h2-prof-navy .h2-prof-media{background:linear-gradient(135deg,#0b1d36,#102B50)}
+.h2-prof-media svg{color:#FFC928}
+.h2-prof-body{padding:1.2rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
+.h2-prof-body h3{font:800 1.25rem/1.2 Poppins,sans-serif;color:#102B50}
+.h2-prof-who{font-weight:700;color:#334155;font-size:.95rem}
+.h2-prof-body p{line-height:1.45;color:#3b4658}
+.h2-prof-price{margin-top:auto;font-size:.88rem;font-weight:700;color:#102B50!important;background:#EAF1F8;border-radius:10px;padding:.45rem .6rem}
+.h2-ejes h2{text-align:center}
+.h2-ejes ul{list-style:none;padding:0;margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.h2-ejes li{display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid #d6e0ee;border-radius:14px;padding:.9rem 1rem;font-weight:700;color:#102B50}
+.h2-ejes li span{flex:none;display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:11px;background:#102B50;color:#FFC928}
+.h2-ejes li svg{width:1.25rem;height:1.25rem}
+.header-start{font-weight:800!important;text-transform:uppercase;letter-spacing:.02em}
+@media (max-width:1100px){.h2-profiles{grid-template-columns:1fr 1fr}.h2-ejes ul{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.h2-profiles{grid-template-columns:1fr}.h2-prof-media{height:84px}.h2-ejes ul{grid-template-columns:1fr}.h2-hero-sub{display:none}}
+#perfiles{scroll-margin-top:130px}

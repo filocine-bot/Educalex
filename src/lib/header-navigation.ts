@@ -13,7 +13,14 @@ const profileLinks = (section: 'concursos' | 'simulacros'): HeaderLink[] =>
 
 export const headerNavigation: HeaderItem[] = [
   { label: 'Inicio', to: '/' },
-  { label: 'Concursos', to: '/concursos', children: profileLinks('concursos') },
+  { label: 'Mi preparación', to: '/concursos', children: profileLinks('concursos') },
+  { label: 'Simulacros', to: '/simulacros', children: profileLinks('simulacros') },
+  { label: 'Normatividad', to: '/biblioteca', children: [
+    { label: 'Legislación educativa', to: '/biblioteca/legislacion' },
+    { label: 'Guías del MEN', to: '/biblioteca/guias-men' },
+    { label: 'Bibliografía y recursos', to: '/biblioteca/recursos' },
+    { label: 'Videos educativos', to: '/biblioteca/videos' },
+  ] },
   { label: 'Formación', to: '/formacion', children: [
     { label: 'Guía 34 y PMI', to: '/formacion/guia-34-pmi' },
     { label: 'Inclusión, DUA y PIAR', to: '/formacion/inclusion-dua-piar' },
@@ -23,13 +30,6 @@ export const headerNavigation: HeaderItem[] = [
     { label: 'STEAM y robótica', to: '/formacion/steam-robotica' },
     { label: 'Dilemas educativos', to: '/formacion/dilemas-educativos' },
     { label: 'Herramientas de IA', to: '/formacion/herramientas-ia' },
-  ] },
-  { label: 'Simulacros', to: '/simulacros', children: profileLinks('simulacros') },
-  { label: 'Recursos', to: '/biblioteca', children: [
-    { label: 'Legislación educativa', to: '/biblioteca/legislacion' },
-    { label: 'Guías del MEN', to: '/biblioteca/guias-men' },
-    { label: 'Bibliografía y recursos', to: '/biblioteca/recursos' },
-    { label: 'Videos educativos', to: '/biblioteca/videos' },
   ] },
   { label: 'Planes', to: '/planes' },
   { label: 'EducatIA', to: '/docente-ia', compact: true },
