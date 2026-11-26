@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Bot, ChartNoAxesCombined, CheckCircle2, Compass, Play, Scale, Settings, Sparkles, Trophy, Users } from "lucide-react";
+import { ArrowRight, BookOpen, Bot, Calculator, ChartNoAxesCombined, CheckCircle2, Clock3, Compass, GraduationCap, HeartHandshake, LayoutList, Lock, PenLine, Play, Scale, Settings, Sparkles, Trophy, Users, type LucideIcon } from "lucide-react";
 import { ProfilePayButton, useDirectPay } from "@/components/direct-pay";
 import { PracticeGame } from "@/components/practice-game";
+import { ProfileStructure } from "@/components/profile-structure";
+import { blocksOf, examComponents, GROUP_LABEL } from "@/lib/exam-components";
 import { useMyPremium } from "@/components/premium-purchase";
 import { dilemmas } from "@/lib/dilemmas";
 import { getProduct, PROFILE_LABEL } from "@/lib/payments";
@@ -91,17 +93,21 @@ export function FreeTools({ profile }: { profile: SimulationProfile }) {
   </section>;
 }
 
-/** Inicio de cada perfil en Concursos: arma tu preparación y herramientas gratuitas. */
-/** Página de perfil: solo la prueba gratis activa; al terminarla aparece el pago y, con el pago, la preparación completa. */
+/** Página de perfil: pestañas «Prueba gratis» y «Estructura de la prueba»; al final, las competencias con candado y el pago. */
 export function ProfileHome({ profile }: { profile: SimulationProfile }) {
-  const { level } = useMyPremium();
-  const owned = level(profile) >= 3;
+  const [tab, setTab] = useState<"prueba" | "estructura">("prueba");
+  const show = (t: "prueba" | "estructura") => { setTab(t); requestAnimationFrame(() => document.getElementById("perfil-tabs")?.scrollIntoView({ behavior: "smooth", block: "start" })); };
   return <>
-    <section className="trial-game" aria-label="Prueba gratis">
-      <PracticeGame profile={profile} trialOnly intro={owned
-      ? <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold trial-owned">Ya tienes la preparación completa: ir a mis simulacros <ArrowRight aria-hidden="true" /></Link>
-      : <div className="trial-paybar"><p><strong>Preparación completa · {cop(priceOf(profile))}</strong><span>Pago único. Al pagar te llega al correo el enlace que activa tu simulacro.</span><Link to={SIM_PATH[profile]} className="trial-preview">Ver qué incluye antes de pagar</Link></p><ProfilePayButton profile={profile} className="h2-btn h2-btn-gold" /></div>} />
-    </section>
+    <div id="perfil-tabs" className="prof-tabs" role="tablist" aria-label="Contenido del perfil">
+      <button type="button" role="tab" aria-selected={tab === "prueba"} className={tab === "prueba" ? "active" : ""} onClick={() => show("prueba")}><Play aria-hidden="true" /> Prueba gratis</button>
+      <button type="button" role="tab" aria-selected={tab === "estructura"} className={tab === "estructura" ? "active" : ""} onClick={() => show("estructura")}><LayoutList aria-hidden="true" /> Estructura de la prueba</button>
+    </div>
+    <div role="tabpanel">
+      {tab === "prueba"
+        ? <section className="trial-game" aria-label="Prueba gratis"><PracticeGame profile={profile} trialOnly /></section>
+        : <><ProfileStructure profile={profile} /><button type="button" className="h2-btn h2-btn-gold pst-back" onClick={() => show("prueba")}><Play aria-hidden="true" /> Iniciar prueba gratis</button></>}
+    </div>
+    <CompetencyLocks profile={profile} />
     <section className="trial-examples" aria-labelledby="trial-ex-title">
       <h2 id="trial-ex-title">Ejemplos de práctica</h2>
       <div className="trial-ex-grid">
@@ -110,4 +116,37 @@ export function ProfileHome({ profile }: { profile: SimulationProfile }) {
       </div>
     </section>
   </>;
+}
+
+const TILE_ICON: Record<string, LucideIcon> = { lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
+
+/** Competencias que evalúa la preparación completa: con candado hasta pagar; con el pago, enlazan al simulacro. */
+function CompetencyLocks({ profile }: { profile: SimulationProfile }) {
+  const { level } = useMyPremium();
+  const owned = level(profile) >= 3;
+  const comps = examComponents(profile);
+  const labels = GROUP_LABEL[profile];
+  const groups = [
+    { label: labels.comunes, items: comps.filter(c => c.group === "comunes") },
+    { label: labels.propio, items: comps.filter(c => c.group === "pedagogicas") },
+  ].filter(g => g.items.length > 0);
+  const tile = (key: string, Icon: LucideIcon, title: string, sub: string, tone: string) => {
+    const inner = <><Icon aria-hidden="true" /><strong>{title}</strong><small>{sub}</small>{!owned && <Lock className="exam-lock" aria-label="Se habilita con el pago" />}</>;
+    return owned
+      ? <Link key={key} to={SIM_PATH[profile]} className={`exam-tile tone-${tone}`}>{inner}</Link>
+      : <div key={key} className={`exam-tile tone-${tone} is-locked`}>{inner}</div>;
+  };
+  return <section className="comp-locks" aria-labelledby="comp-locks-title">
+    <h2 id="comp-locks-title">{owned ? "Tu preparación completa" : "Pasa al siguiente nivel: competencias que se evaluarán"}</h2>
+    <p>{owned ? "Elige un componente y practica en bloques de 10 preguntas." : "Organizadas como la prueba, en bloques de 10 preguntas. Se habilitan cuando pagas."}</p>
+    {groups.map(g => <div key={g.label}>
+      <h3 className="exam-group">{g.label}</h3>
+      <div className="exam-grid">{g.items.map(c => { const n = blocksOf(c).length; return tile(c.id, TILE_ICON[c.id] ?? BookOpen, c.title, `${c.questions.length} preguntas · ${n} ${n === 1 ? "bloque" : "bloques"}`, c.group); })}</div>
+    </div>)}
+    <h3 className="exam-group">Prueba completa</h3>
+    <div className="exam-grid">{tile("timed", Clock3, "Simulacro con tiempo", "40 preguntas, como el examen", "timed")}</div>
+    {owned
+      ? <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold comp-locks-go">Ir a mi simulacro <ArrowRight aria-hidden="true" /></Link>
+      : <div className="trial-paybar comp-locks-pay"><p><strong>Preparación completa · {cop(priceOf(profile))}</strong><span>Pago único. Al pagar te llega al correo el enlace que activa tu simulacro.</span></p><ProfilePayButton profile={profile} className="h2-btn h2-btn-gold" /></div>}
+  </section>;
 }

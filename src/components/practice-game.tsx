@@ -3,7 +3,7 @@ import { getPaidAttempts, startPaidAttempt } from "@/lib/paid-attempts.functions
 import { MAX_PAID_ATTEMPTS, remainingAttempts, type PaidAttempts } from "@/lib/paid-attempts";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Award, BookOpen, Brain, ListChecks, CheckCircle2, Flame, Lock, Medal, RotateCcw, Star, Trophy, XCircle } from "lucide-react";
+import { Award, BookOpen, Play, Brain, ListChecks, CheckCircle2, Flame, Lock, Medal, RotateCcw, Star, Trophy, XCircle } from "lucide-react";
 import { CompetencyGuide } from "@/components/competency-guide";
 import { PsychoPractice } from "@/components/psycho-practice";
 import { Button } from "@/components/ui/button";
@@ -166,19 +166,20 @@ export function PracticeGame({ profile, bank = profile, trialOnly = false, intro
         {wrongIds.length > 0 && <Button variant="navy" onClick={() => void start(r.level, true, r.questions.filter(q => wrongIds.includes(q.id)))}><RotateCcw /> Repasar mis {wrongIds.length} errores</Button>}
         {!r.review && (!r.level.premium || attemptsQ.unlimited || remainingAttempts(attemptsQ.used, bank, r.level.number) > 0) && <Button variant="outline" onClick={() => start(r.level)}>Repetir el nivel{r.level.premium && !attemptsQ.unlimited ? ` (te quedan ${remainingAttempts(attemptsQ.used, bank, r.level.number)})` : ""}</Button>}
         {!trialOnly && nextLevel && nextPlayable?.playable && !r.review && summary.passed && <Button variant="navy" onClick={() => void start(nextLevel)}>Ir al nivel {nextLevel.name}</Button>}
-        <Button variant="ghost" onClick={() => setSummary(null)}>Volver a los niveles</Button>
+        {!trialOnly && <Button variant="ghost" onClick={() => setSummary(null)}>Volver a los niveles</Button>}
       </div>
-      {r.level.number === 1 && !r.review && bank === profile && PREMIUM_LOCKED && (myLevel >= 3
-        ? <div className="trial-offer owned"><h3>Tienes la preparación completa</h3><p>Sigue con los niveles Intermedio y Avanzado, el núcleo común y el simulacro con tiempo.</p><Link to={`/simulacros/${profile}`} className="h2-btn h2-btn-gold">Ir a mi preparación completa</Link></div>
-        : <div className="trial-offer" role="region" aria-label="Continúa tu preparación">
-          <h3>Pasa al siguiente nivel</h3>
-          <p>¡Ya conoces tu punto de partida! Con la preparación completa sigues con los niveles Intermedio (40) y Avanzado (50), el núcleo común, el simulacro con tiempo de 40 preguntas y el mapa de errores.</p>
-          <BuyLevelButton profile={profile} level={2} owned={premium.owned} returnPath={`/simulacros/${profile}`} />
-          <Link to={`/simulacros/${profile}`} className="trial-preview">Ver qué incluye antes de pagar</Link>
-          <p className="trial-offer-note">Es un solo pago. Al pagar te llega al correo la confirmación y el enlace que activa tu simulacro completo.</p>
-        </div>)}
+      {trialOnly && !r.review && PREMIUM_LOCKED && myLevel < 3 && <p className="trial-next-hint">¡Ya conoces tu punto de partida! Abajo ves las competencias que se habilitan al pasar al siguiente nivel.</p>}
     </section>;
   }
+
+  // ---- Prueba gratis: un solo botón que inicia el test ----
+  const basicLevel = levels.find(l => l.number === 1);
+  if (trialOnly && basicLevel) return <section className="game trial-start" aria-labelledby="trial-start-title">
+    <h2 id="trial-start-title">Prueba gratis · {basicLevel.questions.length} preguntas</h2>
+    <p>Preguntas tipo prueba, con explicación y norma después de cada respuesta. Al final ves tu resultado y los temas que debes reforzar.</p>
+    <button type="button" className="h2-btn h2-btn-gold trial-start-btn" onClick={() => void start(basicLevel)}><Play aria-hidden="true" /> Iniciar prueba gratis</button>
+    {!signedIn && <small><Link to="/registro">Crea una cuenta</Link> si quieres guardar tu progreso.</small>}
+  </section>;
 
   // ---- Mapa de niveles ----
   return <>{intro}<section className="game game-map" aria-labelledby="game-levels-title">

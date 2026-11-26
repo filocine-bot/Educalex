@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookMarked, Bot, ChartNoAxesCombined, CheckCircle2, ClipboardCheck, Compass, FileText, GraduationCap, Library, Mail, Scale, Settings, ShieldCheck, Trophy, Users, Video } from "lucide-react";
+import { ArrowRight, BookMarked, Bot, ChartNoAxesCombined, CheckCircle2, ClipboardCheck, Compass, FileText, GraduationCap, Library, Mail, Play, Scale, Settings, ShieldCheck, Trophy, Users, Video } from "lucide-react";
 import { pageHead } from "@/lib/educalex-content";
 import fotoIngreso from "@/assets/perfil-ingreso-docente.webp";
 import fotoAscenso from "@/assets/perfil-ascenso-reubicacion.webp";
@@ -64,8 +64,7 @@ function Index() {
             <h3>{p.name}</h3>
             <p>{p.desc}</p>
             <div className="h2-prof-actions">
-              <Link to={p.sim} search={{ empezar: 1 }} className="h2-btn h2-btn-outline">Prueba gratis</Link>
-              <Link to={p.to} className="h2-btn h2-btn-gold">Comenzar <ArrowRight aria-hidden="true" /></Link>
+              <Link to={p.to} search={{ empezar: 1 }} className="h2-btn h2-btn-gold h2-prof-start"><Play aria-hidden="true" /> Prueba gratis</Link>
             </div>
           </div>
         </article>)}</div>
