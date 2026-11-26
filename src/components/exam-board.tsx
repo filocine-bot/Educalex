@@ -8,14 +8,14 @@ import { useMyPremium } from "@/components/premium-purchase";
 import { ProfilePayButton } from "@/components/direct-pay";
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
 import { errorMap, PREMIUM_LOCKED } from "@/lib/game-engine";
-import { blocksOf, examComponents, type Block, type ExamComponent } from "@/lib/exam-components";
+import { blocksOf, examComponents, GROUP_LABEL, type Block, type ExamComponent } from "@/lib/exam-components";
 import { getPaidAttempts, startBlockAttempt } from "@/lib/paid-attempts.functions";
 import { MAX_PAID_ATTEMPTS, type PaidAttempts } from "@/lib/paid-attempts";
 import { PROFILE_LABEL } from "@/lib/payments";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 
 const LETTERS = ["A", "B", "C", "D"] as const;
-const ICONS: Record<string, LucideIcon> = { lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale };
+const ICONS: Record<string, LucideIcon> = { lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
 const BEST_KEY = "educalex-mejor-bloque";
 const readBest = (): Record<string, number> => { try { return JSON.parse(localStorage.getItem(BEST_KEY) ?? "{}") as Record<string, number>; } catch { return {}; } };
 const saveBest = (k: string, v: number) => { try { const b = readBest(); if ((b[k] ?? -1) < v) { b[k] = v; localStorage.setItem(BEST_KEY, JSON.stringify(b)); } } catch { /* sin almacenamiento */ } };
@@ -59,12 +59,12 @@ export function ExamBoard({ profile, timed }: { profile: SimulationProfile; time
     {view.kind === "board" && <>
       <div className="exam-board-head">
         <h2>Prepárate por componentes de la prueba</h2>
-        <p>Prueba de aptitudes y competencias básicas: elige un componente y practica en bloques de 10 preguntas.</p>
+        <p>{GROUP_LABEL[profile].intro} Elige un componente y practica en bloques de 10 preguntas.</p>
       </div>
       {!unlocked && payBox}
-      <h3 className="exam-group">Componentes comunes</h3>
-      <div className="exam-grid">{comps.filter(c => c.group === "comunes").map(c => <Tile key={c.id} c={c} locked={!unlocked} onOpen={() => go({ kind: "component", c })} />)}</div>
-      <h3 className="exam-group">Componente pedagógico del cargo</h3>
+      {comps.some(c => c.group === "comunes") && <h3 className="exam-group">{GROUP_LABEL[profile].comunes}</h3>}
+      {comps.some(c => c.group === "comunes") && <div className="exam-grid">{comps.filter(c => c.group === "comunes").map(c => <Tile key={c.id} c={c} locked={!unlocked} onOpen={() => go({ kind: "component", c })} />)}</div>}
+      <h3 className="exam-group">{GROUP_LABEL[profile].propio}</h3>
       <div className="exam-grid">{comps.filter(c => c.group === "pedagogicas").map(c => <Tile key={c.id} c={c} locked={!unlocked} onOpen={() => go({ kind: "component", c })} />)}</div>
       <h3 className="exam-group">Prueba completa</h3>
       <div className="exam-grid">
