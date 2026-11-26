@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Sparkles, Square, Info, Copy, Check, RotateCcw, Send, Volume2, VolumeX, Mic, MicOff } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { getPage, type PagePath } from "@/lib/educalex-sitemap";
+import { getPage, type PagePath, isInConstruction } from "@/lib/educalex-sitemap";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { isArtifact } from "@/lib/runtime-mode";
@@ -99,7 +99,7 @@ export function DocenteIaChat() {
     setError("");
     finishAnswer(history.length, text);
   }
-  const related = categories.find(c => c.name === category)?.related ?? [];
+  const related = (categories.find(c => c.name === category)?.related ?? []).filter(r => !isInConstruction(r));
   const ctrl = useRef<AbortController | null>(null);
   const endRef = useRef<HTMLDivElement | null>(null);
 

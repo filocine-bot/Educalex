@@ -2,7 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowRight, Star } from "lucide-react";
 import { isTrainingPath } from "@/lib/training-courses";
-import { courses, getPage, type Perfil } from "@/lib/educalex-sitemap";
+import { courses as allCourses, getPage, isInConstruction, type Perfil } from "@/lib/educalex-sitemap";
+const courses = allCourses.filter(c => !isInConstruction(c.path));
 
 const perfiles: Perfil[] = ["Aspirante a docente", "Docente en ejercicio", "Docente que busca ascender", "Aspirante a coordinador", "Aspirante a rector"];
 const temas = [...new Set(courses.map(c => c.tema))];
@@ -17,6 +18,6 @@ export function CourseCatalog() {
     <div className="cat-filters">{sel("Perfil profesional", perfil, setPerfil, perfiles)}{sel("Temática", tema, setTema, temas)}{sel("Nivel", nivel, setNivel, niveles)}</div>
     <p className="mb-4 text-sm text-muted-foreground" aria-live="polite">{list.length} {list.length === 1 ? "curso" : "cursos"}</p>
     {list.length === 0 ? <div className="mod-notice"><p>No hay cursos con esa combinación de filtros. Prueba con otra opción.</p></div> :
-    <div className="mod-cards">{list.map(c => { const p = getPage(c.path); if (!p) return null; const available = c.path === "/formacion/guia-34-pmi" || isTrainingPath(c.path); return <Link key={c.path} to={c.path} className={`mod-card${c.destacado ? " mod-card-featured" : ""}`}>{c.destacado && <span className="mod-badge"><Star /> Módulo destacado</span>}<strong>{p.title}</strong><small>{p.description}</small><span className="cat-tags"><em>{c.tema}</em><em>{c.nivel}</em></span><small className="font-semibold text-brand-blue">{available ? "Autoestudio disponible" : "En preparación"}</small><span className="pathway-link">{available ? "Leer curso" : "Ver programa"} <ArrowRight /></span></Link>; })}</div>}
+    <div className="mod-cards">{list.map(c => { const p = getPage(c.path); if (!p) return null; const available = c.path === "/formacion/guia-34-pmi" || isTrainingPath(c.path); const consulta = c.path === "/formacion/educacion-integral"; return <Link key={c.path} to={c.path} className={`mod-card${c.destacado ? " mod-card-featured" : ""}`}>{c.destacado && <span className="mod-badge"><Star /> Módulo destacado</span>}<strong>{p.title}</strong><small>{p.description}</small><span className="cat-tags"><em>{c.tema}</em><em>{c.nivel}</em></span><small className="font-semibold text-brand-blue">{available ? "Autoestudio disponible" : consulta ? "Normatividad y videos del MEN" : "En preparación"}</small><span className="pathway-link">{available ? "Leer curso" : consulta ? "Consultar" : "Ver programa"} <ArrowRight /></span></Link>; })}</div>}
   </div>;
 }
