@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowLeft, BookOpen, Brain, Calculator, CheckCircle2, Clock3, GraduationCap, HeartHandshake, Lock, PenLine, RotateCcw, ScrollText, Scale, Users, XCircle, type LucideIcon } from "lucide-react";
+import { ArrowLeft, BookOpen, Calculator, CheckCircle2, Clock3, GraduationCap, HeartHandshake, Lock, PenLine, RotateCcw, Scale, Users, XCircle, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "@/components/account-session";
 import { useMyPremium } from "@/components/premium-purchase";
 import { ProfilePayButton } from "@/components/direct-pay";
-import { PsychoPractice } from "@/components/psycho-practice";
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
 import { errorMap, PREMIUM_LOCKED } from "@/lib/game-engine";
 import { blocksOf, examComponents, type Block, type ExamComponent } from "@/lib/exam-components";
@@ -21,7 +20,7 @@ const BEST_KEY = "educalex-mejor-bloque";
 const readBest = (): Record<string, number> => { try { return JSON.parse(localStorage.getItem(BEST_KEY) ?? "{}") as Record<string, number>; } catch { return {}; } };
 const saveBest = (k: string, v: number) => { try { const b = readBest(); if ((b[k] ?? -1) < v) { b[k] = v; localStorage.setItem(BEST_KEY, JSON.stringify(b)); } } catch { /* sin almacenamiento */ } };
 
-type View = { kind: "board" } | { kind: "component"; c: ExamComponent } | { kind: "quiz"; c: ExamComponent; b: Block; review?: PracticeQuestion[] } | { kind: "timed" } | { kind: "psico" };
+type View = { kind: "board" } | { kind: "component"; c: ExamComponent } | { kind: "quiz"; c: ExamComponent; b: Block; review?: PracticeQuestion[] } | { kind: "timed" };
 
 /** Preparación completa organizada como la prueba: componentes comunes y pedagógicos, en bloques de 10 preguntas. */
 export function ExamBoard({ profile, timed }: { profile: SimulationProfile; timed: ReactNode }) {
@@ -67,11 +66,9 @@ export function ExamBoard({ profile, timed }: { profile: SimulationProfile; time
       <div className="exam-grid">{comps.filter(c => c.group === "comunes").map(c => <Tile key={c.id} c={c} locked={!unlocked} onOpen={() => go({ kind: "component", c })} />)}</div>
       <h3 className="exam-group">Componente pedagógico del cargo</h3>
       <div className="exam-grid">{comps.filter(c => c.group === "pedagogicas").map(c => <Tile key={c.id} c={c} locked={!unlocked} onOpen={() => go({ kind: "component", c })} />)}</div>
-      <h3 className="exam-group">Prueba completa y complementos</h3>
+      <h3 className="exam-group">Prueba completa</h3>
       <div className="exam-grid">
         <button type="button" className={`exam-tile tone-timed${unlocked ? "" : " is-locked"}`} onClick={() => go({ kind: "timed" })}><Clock3 aria-hidden="true" /><strong>Simulacro con tiempo</strong><small>40 preguntas, como el examen</small>{!unlocked && <Lock className="exam-lock" aria-label="Requiere la preparación completa" />}</button>
-        <button type="button" className="exam-tile tone-psico" onClick={() => go({ kind: "psico" })}><Brain aria-hidden="true" /><strong>Prueba psicotécnica</strong><small>Clasificatoria · 12 situaciones</small></button>
-        <div className="exam-tile tone-soon" aria-disabled="true"><ScrollText aria-hidden="true" /><strong>Conocimientos disciplinares</strong><small>Por área · en preparación</small></div>
       </div>
     </>}
 
@@ -94,7 +91,6 @@ export function ExamBoard({ profile, timed }: { profile: SimulationProfile; time
       onExit={() => go({ kind: "component", c: view.c })} />}
 
     {view.kind === "timed" && (unlocked ? timed : payBox)}
-    {view.kind === "psico" && <PsychoPractice />}
   </div>;
 }
 

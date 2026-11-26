@@ -2147,3 +2147,4 @@ html { scroll-padding-top: 170px; }
 @media (max-width:640px){.educatia-launcher{right:.35rem!important}.whatsapp-launcher{right:.35rem!important}}
 /* Celular: WhatsApp junto a EducatIA, a media pantalla */
 @media (max-width:640px){.whatsapp-launcher{bottom:auto!important;top:calc(42vh + 50px);width:42px!important;height:42px!important;min-height:42px!important}}
+.home-launcher{display:none!important}
