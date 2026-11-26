@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, Bot, ChartNoAxesCombined, CheckCircle2, Compass, Play, Scale, Settings, Sparkles, Trophy, Users } from "lucide-react";
-import { useDirectPay } from "@/components/direct-pay";
+import { ProfilePayButton, useDirectPay } from "@/components/direct-pay";
+import { PracticeGame } from "@/components/practice-game";
 import { useMyPremium } from "@/components/premium-purchase";
 import { dilemmas } from "@/lib/dilemmas";
 import { getProduct, PROFILE_LABEL } from "@/lib/payments";
@@ -16,6 +17,7 @@ export const PROFILE_CARDS = [
   { profile: "coordinador", title: "Concurso para Coordinador", icon: Settings, tone: "red", sim: "/simulacros/coordinador" },
 ] as const;
 type Card = (typeof PROFILE_CARDS)[number];
+const SIM_PATH: Record<SimulationProfile, "/simulacros/ingreso-docente" | "/simulacros/ascenso-reubicacion" | "/simulacros/coordinador" | "/simulacros/rector"> = { "ingreso-docente": "/simulacros/ingreso-docente", "ascenso-reubicacion": "/simulacros/ascenso-reubicacion", coordinador: "/simulacros/coordinador", rector: "/simulacros/rector" };
 const priceOf = (p: SimulationProfile) => getProduct(`completo-${p}`)?.priceCOP ?? 0;
 
 /**
@@ -90,20 +92,22 @@ export function FreeTools({ profile }: { profile: SimulationProfile }) {
 }
 
 /** Inicio de cada perfil en Concursos: arma tu preparación y herramientas gratuitas. */
+/** Página de perfil: solo la prueba gratis activa; al terminarla aparece el pago y, con el pago, la preparación completa. */
 export function ProfileHome({ profile }: { profile: SimulationProfile }) {
+  const { level } = useMyPremium();
+  const owned = level(profile) >= 3;
   return <>
-    <section className="profile-home" aria-labelledby="profile-home-title">
-      <div className="profile-home-text">
-        <p className="profile-home-kicker">Tu preparación</p>
-        <h2 id="profile-home-title">{PROFILE_LABEL[profile]}: empieza gratis o abre el simulacro completo</h2>
-        <ul>
-          <li><CheckCircle2 aria-hidden="true" /> Nivel Básico gratis: 10 preguntas tipo ICFES con explicación.</li>
-          <li><CheckCircle2 aria-hidden="true" /> Acceso completo: 100 preguntas por niveles del perfil y el núcleo común.</li>
-          <li><CheckCircle2 aria-hidden="true" /> Un solo pago con Wompi (tarjeta, PSE, Nequi), sin suscripción.</li>
-        </ul>
-      </div>
-      <PrepConfigurator profile={profile} />
+    <section className="trial-game" aria-label="Prueba gratis">
+      <PracticeGame profile={profile} trialOnly intro={owned
+      ? <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold trial-owned">Ya tienes la preparación completa: ir a mis simulacros <ArrowRight aria-hidden="true" /></Link>
+      : <div className="trial-paybar"><p><strong>Preparación completa · {cop(priceOf(profile))}</strong><span>Pago único. Al pagar te llega al correo el enlace que activa tu simulacro.</span></p><ProfilePayButton profile={profile} className="h2-btn h2-btn-gold" /></div>} />
     </section>
-    <FreeTools profile={profile} />
+    <section className="trial-examples" aria-labelledby="trial-ex-title">
+      <h2 id="trial-ex-title">Ejemplos de práctica</h2>
+      <div className="trial-ex-grid">
+        <Link to="/formacion/ruta-atencion-integral" className="trial-ex"><span><Scale aria-hidden="true" /></span><strong>Ruta de Atención Integral</strong><small>Clasifica situaciones tipo I, II y III con casos escolares.</small></Link>
+        <Link to="/formacion/dilemas-educativos" className="trial-ex"><span><Compass aria-hidden="true" /></span><strong>Dilemas educativos</strong><small>{dilemmas.length} casos: decide y mira las consecuencias de cada opción.</small></Link>
+      </div>
+    </section>
   </>;
 }

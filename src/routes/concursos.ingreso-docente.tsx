@@ -9,4 +9,4 @@ import { AcademicRouteModules } from "@/components/academic-route-modules";
 import { CompetitionReferences } from "@/components/competition-references";
 
 const page = pages["/concursos/ingreso-docente"];
-export const Route = createFileRoute("/concursos/ingreso-docente")({ head: () => pageHead(page.title, page.description), component: () => <ModulePage path="/concursos/ingreso-docente" compact showItems={false}><ProfileHome profile="ingreso-docente" /><AcademicRouteModules modules={page.academicModules} /><ExamStructure /><CompetitionReferences profile="ingreso-docente" /></ModulePage> });
+export const Route = createFileRoute("/concursos/ingreso-docente")({ head: () => pageHead(page.title, page.description), component: () => <ModulePage path="/concursos/ingreso-docente" compact showItems={false} noticeAtEnd><ProfileHome profile="ingreso-docente" /><AcademicRouteModules modules={page.academicModules} /><ExamStructure /><CompetitionReferences profile="ingreso-docente" /></ModulePage> });

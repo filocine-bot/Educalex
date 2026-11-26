@@ -19,8 +19,9 @@ const LETTERS = ["A", "B", "C", "D"];
 type Answer = { id: string; chosen: number; correct: boolean };
 type Run = { level: GameLevel; review: boolean; questions: PracticeQuestion[]; index: number; answers: Answer[]; streak: number; bestStreak: number; points: number };
 
-export function PracticeGame({ profile, bank = profile }: { profile: SimulationProfile; bank?: GameBankKey }) {
-  const levels = useMemo(() => levelsFor(bank), [bank]);
+export function PracticeGame({ profile, bank = profile, trialOnly = false, intro }: { profile: SimulationProfile; bank?: GameBankKey; trialOnly?: boolean; intro?: React.ReactNode }) {
+  const allLevels = useMemo(() => levelsFor(bank), [bank]);
+  const levels = trialOnly ? allLevels.filter(l => l.number === 1) : allLevels;
   const { progress, save, ready, signedIn } = useGameProgress();
   const premium = useMyPremium();
   const myLevel = premium.level(profile);
@@ -144,10 +145,10 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
     const nextLevel = levels.find(l => l.number === r.level.number + 1);
     const nextPlayable = nextLevel ? isLevelPlayable(nextLevel, (progress[bank] ?? mine), lockedAt(nextLevel.number)) : null;
     return <section className="game game-summary" aria-labelledby="game-summary-title">
-      <div className={`game-result ${summary.passed ? "ok" : "bad"}`}>
+      <div className={`game-result ${summary.passed ? "ok" : "bad"} ${trialOnly ? "is-trial" : ""}`}>
         {summary.passed ? <Trophy aria-hidden="true" /> : <RotateCcw aria-hidden="true" />}
         <h2 id="game-summary-title" tabIndex={-1} ref={el => el?.focus()}>
-          {r.review ? "Repaso terminado" : summary.passed ? `¡Superaste el nivel ${r.level.name}!` : `Casi: necesitas ${Math.round(PASS_RATIO * 100)} % para pasar`}
+          {r.review ? "Repaso terminado" : trialOnly ? `Tu resultado: ${right} de ${r.answers.length}` : summary.passed ? `¡Superaste el nivel ${r.level.name}!` : `Casi: necesitas ${Math.round(PASS_RATIO * 100)} % para pasar`}
         </h2>
         <p>{right} de {r.answers.length} correctas{!r.review && <> · {r.points} puntos · mejor racha {r.bestStreak}</>}</p>
       </div>
@@ -155,7 +156,8 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
         <h3><Medal aria-hidden="true" /> Nuevas insignias</h3>
         <ul>{summary.newBadges.map(id => { const b = describeBadge(id); return <li key={id}><Award aria-hidden="true" /> <strong>{b.title}</strong> <small>{b.description}</small></li>; })}</ul>
       </div>}
-      {map.length > 0 && <div className="game-errors">
+      {trialOnly && map.length > 0 && <div className="trial-topics"><h3>Temas que debes reforzar</h3><div className="trial-topic-list">{map.map(g => <Link key={g.competency} to={g.items[0]!.course} className="trial-topic">{g.competency} <span>({g.items.length})</span></Link>)}</div></div>}
+      {!trialOnly && map.length > 0 && <div className="game-errors">
         <h3>Mapa de errores</h3>
         <p className="section-description">Estos son los temas donde fallaste. Repásalos antes de volver a intentarlo.</p>
         <ul>{map.map(g => <li key={g.competency}><strong>{g.competency}</strong> ({g.items.length})<ul>{g.items.map(q => <li key={q.id}>{q.reference}</li>)}</ul></li>)}</ul>
@@ -163,17 +165,25 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
       <div className="practice-actions">
         {wrongIds.length > 0 && <Button variant="navy" onClick={() => void start(r.level, true, r.questions.filter(q => wrongIds.includes(q.id)))}><RotateCcw /> Repasar mis {wrongIds.length} errores</Button>}
         {!r.review && (!r.level.premium || attemptsQ.unlimited || remainingAttempts(attemptsQ.used, bank, r.level.number) > 0) && <Button variant="outline" onClick={() => start(r.level)}>Repetir el nivel{r.level.premium && !attemptsQ.unlimited ? ` (te quedan ${remainingAttempts(attemptsQ.used, bank, r.level.number)})` : ""}</Button>}
-        {nextLevel && nextPlayable?.playable && !r.review && summary.passed && <Button variant="navy" onClick={() => void start(nextLevel)}>Ir al nivel {nextLevel.name}</Button>}
+        {!trialOnly && nextLevel && nextPlayable?.playable && !r.review && summary.passed && <Button variant="navy" onClick={() => void start(nextLevel)}>Ir al nivel {nextLevel.name}</Button>}
         <Button variant="ghost" onClick={() => setSummary(null)}>Volver a los niveles</Button>
       </div>
+      {r.level.number === 1 && !r.review && bank === profile && PREMIUM_LOCKED && (myLevel >= 3
+        ? <div className="trial-offer owned"><h3>Tienes la preparación completa</h3><p>Sigue con los niveles Intermedio y Avanzado, el núcleo común y el simulacro con tiempo.</p><Link to={`/simulacros/${profile}`} className="h2-btn h2-btn-gold">Ir a mi preparación completa</Link></div>
+        : <div className="trial-offer" role="region" aria-label="Continúa tu preparación">
+          <h3>Pasa al siguiente nivel</h3>
+          <p>¡Ya conoces tu punto de partida! Con la preparación completa sigues con los niveles Intermedio (40) y Avanzado (50), el núcleo común, el simulacro con tiempo de 40 preguntas y el mapa de errores.</p>
+          <BuyLevelButton profile={profile} level={2} owned={premium.owned} returnPath={`/simulacros/${profile}`} />
+          <p className="trial-offer-note">Es un solo pago. Al pagar te llega al correo la confirmación y el enlace que activa tu simulacro completo.</p>
+        </div>)}
     </section>;
   }
 
   // ---- Mapa de niveles ----
-  return <section className="game game-map" aria-labelledby="game-levels-title">
+  return <>{intro}<section className="game game-map" aria-labelledby="game-levels-title">
     <div className="game-intro">
       <div className="game-intro-row"><h2 id="game-levels-title">Elige tu nivel</h2><p className="game-stats"><span><Star aria-hidden="true" /> {mine.points} puntos</span><span><Flame aria-hidden="true" /> Mejor racha {mine.bestStreak}</span><span><Medal aria-hidden="true" /> {mine.badges.length} insignias</span></p></div>
-      <p className="game-hint">Explicación inmediata en cada respuesta. Supera un nivel con {Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
+      <p className="game-hint">{trialOnly ? "Explicación y norma después de cada respuesta. Al final verás tu resultado y tu mapa de errores." : `Explicación inmediata en cada respuesta. Supera un nivel con ${Math.round(PASS_RATIO * 100)} % para desbloquear el siguiente.`}{!signedIn && <> <Link to="/registro">Crea una cuenta</Link> para guardar tu progreso.</>}</p>
       {PREMIUM_LOCKED && myLevel > 1 && <p className="game-launch">{myLevel >= 3 ? "Tienes el simulacro completo de este perfil." : "Tienes parte del simulacro de este perfil; con el acceso completo se abren las demás preguntas."} ¡Gracias por apoyar EDUCALEX!</p>}
       {attemptsQ.error && <p role="alert" className="game-launch">{attemptsQ.error}</p>}
       {!PREMIUM_LOCKED && <p className="game-launch">Lanzamiento: todos los niveles están abiertos gratis por tiempo limitado.</p>}
@@ -205,7 +215,7 @@ export function PracticeGame({ profile, bank = profile }: { profile: SimulationP
       <h3><Medal aria-hidden="true" /> Mis insignias</h3>
       <ul>{mine.badges.map(id => { const b = describeBadge(id); return <li key={id} title={b.description}><Award aria-hidden="true" /> {b.title}</li>; })}</ul>
     </div>}
-  </section>;
+  </section></>;
 }
 
 /** Selector entre el modo juego y el simulacro completo cronometrado. */
