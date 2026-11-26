@@ -385,14 +385,14 @@ const ordenOriginal: Record<SimulationProfile, PracticeQuestion[]> = {
       prompt: "La autoevaluación institucional de un colegio de Barranquilla muestra debilidades en prevención de riesgos y participación de las familias. Según la Guía 34, ¿a qué área de gestión corresponden?",
       options: ["Gestión de la comunidad.", "Gestión académica.", "Gestión administrativa y financiera.", "Gestión directiva."], correct: 0,
       explanation: "En la Guía 34, la gestión de la comunidad agrupa procesos como inclusión, proyección a la comunidad, participación y convivencia, y prevención de riesgos. Las mejoras en esos procesos se priorizan en el PMI dentro de esa área.",
-      reference: "Guía 34 del MEN (2008): áreas y procesos de gestión. Verifique su tratamiento en la actualización de 2026.", documentId: "guia-34", course: "/formacion/guia-34-pmi",
+      reference: "Guía 34 del MEN (actualización 2026): áreas y procesos de gestión (directiva y estratégica, académica y pedagógica, administrativa y financiera, de la comunidad).", documentId: "guia-34", course: "/formacion/guia-34-pmi",
     },
     {
       id: "rec-35", competency: "Guía 34 y PMI",
       prompt: "Una rectora de Neiva revisa los procesos de talento humano, planta física y apoyo financiero y contable. Según la Guía 34, ¿a qué área pertenecen?",
       options: ["Gestión de la comunidad.", "Gestión académica.", "Gestión directiva.", "Gestión administrativa y financiera."], correct: 3,
       explanation: "La gestión administrativa y financiera incluye el apoyo a la gestión académica, la administración de la planta física y los recursos, los servicios complementarios, el talento humano y el apoyo financiero y contable.",
-      reference: "Guía 34 del MEN (2008): gestión administrativa y financiera.", documentId: "guia-34", course: "/formacion/gestion-institucional",
+      reference: "Guía 34 del MEN (actualización 2026): gestión administrativa y financiera.", documentId: "guia-34", course: "/formacion/gestion-institucional",
     },
     {
       id: "rec-36", competency: "Convivencia escolar",

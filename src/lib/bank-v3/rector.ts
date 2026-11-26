@@ -35,7 +35,7 @@ export const rectorV3: PracticeQuestion[] = [
     prompt: "Según la Guía 34, ¿a qué área de gestión corresponden estos procesos?",
     options: ["Gestión directiva.", "Gestión académica.", "Gestión administrativa y financiera.", "Gestión de la comunidad."], correct: 3,
     explanation: "En la Guía 34, la gestión de la comunidad agrupa inclusión, proyección a la comunidad, participación y convivencia, y prevención de riesgos. La gestión directiva orienta el rumbo institucional; la académica, el currículo; la administrativa, los recursos.",
-    reference: "Guía 34 del MEN (2008): áreas y procesos de gestión. Verifique su tratamiento en la actualización de 2026.", documentId: "guia-34", course: "/formacion/guia-34-pmi",
+    reference: "Guía 34 del MEN (actualización 2026): áreas y procesos de gestión (directiva y estratégica, académica y pedagógica, administrativa y financiera, de la comunidad).", documentId: "guia-34", course: "/formacion/guia-34-pmi",
   },
   {
     id: "rec-35", level: 1, competency: "Guía 34 y PMI",
@@ -43,7 +43,7 @@ export const rectorV3: PracticeQuestion[] = [
     prompt: "Según la Guía 34, ¿a qué área de gestión pertenecen estos procesos?",
     options: ["Gestión administrativa y financiera, por tratarse del manejo de recursos.", "Gestión directiva, por tratarse de decisiones a cargo del rector.", "Gestión de la comunidad, por involucrar a las personas de la institución.", "Gestión académica, por ser procesos de apoyo a la labor pedagógica."], correct: 0,
     explanation: "La gestión administrativa y financiera incluye apoyo a la gestión académica, planta física y recursos, servicios complementarios, talento humano y apoyo financiero y contable.",
-    reference: "Guía 34 del MEN (2008): gestión administrativa y financiera.", documentId: "guia-34", course: "/formacion/gestion-institucional",
+    reference: "Guía 34 del MEN (actualización 2026): gestión administrativa y financiera.", documentId: "guia-34", course: "/formacion/gestion-institucional",
   },
   {
     id: "rec-24", level: 1, competency: "PEI y gobierno escolar",
@@ -175,7 +175,7 @@ export const rectorV3: PracticeQuestion[] = [
     prompt: "¿Cuál es el mejor punto de partida para decidir las prioridades del plan de mejoramiento?",
     options: ["Triangular las evidencias por áreas de gestión, contrastar interpretaciones y acordar hallazgos.", "Priorizar los resultados de las pruebas Saber, por ser el indicador externo más confiable del país.", "Elaborar una matriz con las propuestas de cada estamento y seleccionar las más votadas.", "Retomar las prioridades del plan anterior que no alcanzaron a cumplirse."], correct: 0,
     explanation: "La triangulación relaciona distintas fuentes y permite comprender problemas y fortalezas antes de decidir. La Guía 34 orienta una autoevaluación participativa basada en evidencias; un indicador aislado, una votación sin análisis o la inercia del plan anterior no la sustituyen.",
-    reference: "Guía 34 del MEN (2008): autoevaluación institucional por áreas de gestión directiva, académica, administrativa y financiera, y de la comunidad. Verifica su tratamiento en la actualización de 2026.", documentId: "guia-34", course: "/formacion/guia-34-pmi",
+    reference: "Guía 34 del MEN (actualización 2026): autoevaluación institucional por áreas de gestión.", documentId: "guia-34", course: "/formacion/guia-34-pmi",
   },
   {
     id: "rec-3", level: 3, competency: "PEI y gobierno escolar",

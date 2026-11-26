@@ -1,5 +1,6 @@
 import { levelsFor } from "@/lib/game-engine";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
+import { rectorPropias2026 } from "@/lib/bank-v3/rector-propias-2026";
 
 export type ComponentId = string;
 export type ExamComponent = { id: ComponentId; group: "comunes" | "pedagogicas"; title: string; what: string; questions: PracticeQuestion[] };
@@ -17,8 +18,10 @@ export const GROUP_LABEL: Record<SimulationProfile, { comunes: string; propio: s
 
 /** Componentes de la prueba por cargo (Anexo Técnico 2026, numeral 2.1; ascenso: Resolución MEN 018987 de 2025). */
 export function examComponents(profile: SimulationProfile): ExamComponent[] {
-  const nucleo = all("nucleo-comun");
-  const own = all(profile);
+  // Rector suma sus preguntas propias de contexto directivo a los componentes comunes y a gestión académica.
+  const extra = profile === "rector" ? rectorPropias2026 : [];
+  const nucleo = [...extra.filter(q => /^(Lectura crítica|Razonamiento cuantitativo)$/.test(q.competency)), ...extra.filter(q => q.competency === "Competencias blandas").map(q => ({ ...q, competency: "Blandas · liderazgo directivo" })), ...all("nucleo-comun")];
+  const own = [...all(profile), ...extra.filter(q => q.competency === "Gestión académica")];
   const pick = (qs: PracticeQuestion[], re: RegExp) => byLevel(qs.filter(q => re.test(q.competency)));
   const comunes: ExamComponent[] = [
     { id: "lectura", group: "comunes", title: "Lectura crítica", what: "Comprender, interpretar y evaluar textos.", questions: pick(nucleo, /^Lectura crítica$/) },
@@ -41,7 +44,7 @@ export function examComponents(profile: SimulationProfile): ExamComponent[] {
     rector: [
       { id: "directiva", group: "pedagogicas", title: "Gestión directiva", what: "PEI, gobierno escolar, liderazgo, Guía 34 y PMI.", questions: pick(own, /^(PEI y gobierno escolar|Liderazgo|Guía 34 y PMI)$/) },
       { id: "administrativa", group: "pedagogicas", title: "Gestión administrativa y financiera", what: "Fondo de Servicios Educativos, presupuesto y talento humano.", questions: pick(own, /^(Gestión financiera y talento humano|Gestión institucional)$/) },
-      { id: "convivencia", group: "pedagogicas", title: "Gestión académica y convivencia", what: "Convivencia escolar y acompañamiento institucional.", questions: pick(own, /^Convivencia escolar$/) },
+      { id: "convivencia", group: "pedagogicas", title: "Gestión académica y convivencia", what: "Gestión académica, evaluación, convivencia escolar y acompañamiento institucional.", questions: pick(own, /^(Gestión académica|Convivencia escolar)$/) },
     ],
     "ascenso-reubicacion": [
       { id: "practica", group: "pedagogicas", title: "Práctica pedagógica", what: "Planeación, praxis y ambiente de aula.", questions: pick(own, /^Práctica pedagógica$/) },

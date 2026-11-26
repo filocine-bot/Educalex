@@ -157,7 +157,7 @@ const baseBank: Record<SimulationProfile, PracticeBank> = {
         prompt: "Una institución de Córdoba realiza autoevaluación. El equipo tiene encuestas de familias, resultados académicos y registros de asistencia. ¿Cuál es el mejor punto de partida para decidir prioridades?",
         options: ["Triangular las evidencias por áreas de gestión, contrastar interpretaciones y acordar hallazgos sustentados.", "Elegir el problema mencionado por la persona con mayor autoridad.", "Usar solo los resultados académicos y descartar el contexto.", "Copiar las prioridades de un colegio urbano de otra región."], correct: 0,
         explanation: "La triangulación relaciona distintas fuentes y permite comprender problemas y fortalezas antes de decidir. La Guía 34 orienta una autoevaluación participativa; no basta la autoridad, un indicador aislado ni una lista ajena al contexto.",
-        reference: "Guía 34 del MEN (2008): autoevaluación institucional por áreas de gestión directiva, académica, administrativa y financiera, y de la comunidad. Verifica su tratamiento en la actualización de 2026.", documentId: "guia-34", course: "/formacion/guia-34-pmi",
+        reference: "Guía 34 del MEN (actualización 2026): autoevaluación institucional por áreas de gestión.", documentId: "guia-34", course: "/formacion/guia-34-pmi",
       },
       {
         id: "rec-2", competency: "Gestión institucional",
