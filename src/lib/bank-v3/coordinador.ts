@@ -19,7 +19,7 @@ export const coordinadorV3: PracticeQuestion[] = [
     prompt: "¿Cuáles procesos pertenecen a la gestión académica según la Guía 34?",
     options: ["Direccionamiento estratégico, gobierno escolar, cultura institucional y clima escolar.", "Inclusión, proyección a la comunidad, participación y prevención de riesgos.", "Diseño pedagógico, prácticas pedagógicas, gestión de aula y seguimiento académico.", "Apoyo a la gestión académica, talento humano, planta física y servicios complementarios."], correct: 2,
     explanation: "La Guía 34 agrupa en la gestión académica el diseño pedagógico o curricular, las prácticas pedagógicas, la gestión de aula y el seguimiento académico. Las demás opciones corresponden a las gestiones directiva, de la comunidad y administrativa.",
-    reference: "Guía 34 del MEN (2008): gestión académica. Verifique su tratamiento en la actualización de 2026.", documentId: "guia-34", course: "/formacion/guia-34-pmi",
+    reference: "Guía 34 del MEN (actualización 2026): gestión académica y pedagógica.", documentId: "guia-34", course: "/formacion/guia-34-pmi",
   },
   {
     id: "coo-21", level: 1, competency: "Convivencia y mediación",
