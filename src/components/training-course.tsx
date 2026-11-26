@@ -1,12 +1,22 @@
 import { useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, BookOpen, ExternalLink, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
 import { trainingCourses, type TrainingPath } from "@/lib/training-courses";
 import { UnitCompletion } from "./learning-account";
 import { TrainingWorkshop } from "@/components/training-workshop";
 import { OfficialVideos } from "@/components/official-videos";
+import { Fold } from "@/components/fold";
+import type { Organizer } from "@/lib/training-courses";
+
+function OrganizerView({ o }: { o: Organizer }) {
+  return <figure className={`org org-${o.kind}`} aria-label={o.title}>
+    <figcaption className="org-title">{o.title}</figcaption>
+    <ol>{o.items.map((it, i) => <li key={it.label} style={o.kind === "levels" ? { width: `${100 - i * (40 / Math.max(1, o.items.length - 1))}%` } : undefined}>{o.kind === "steps" && <span className="org-num">{i + 1}</span>}<strong>{it.label}</strong>{it.text && <small>{it.text}</small>}</li>)}</ol>
+    {o.note && <p className="org-note">{o.note}</p>}
+  </figure>;
+}
 
 export function TrainingCourseReader({ path }: { path: TrainingPath }) {
   const course = trainingCourses[path];
@@ -26,14 +36,15 @@ export function TrainingCourseReader({ path }: { path: TrainingPath }) {
         <span className="course-kicker">UNIDAD {active + 1} DE {course.units.length}</span>
         <h2 id="training-unit-title" tabIndex={-1} ref={heading}>{unit.title}</h2>
         <p className="training-objective"><strong>Objetivo:</strong> {unit.objective}</p>
-        {unit.explanation.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
-        <section className="training-example"><h3>Ejemplo colombiano completamente ficticio</h3><p>{unit.example}</p><small>No describe personas, instituciones o resultados reales ni representa a toda una comunidad.</small></section>
+        {unit.organizer && <OrganizerView o={unit.organizer} />}
+        <Fold key={`exp-${active}`} title="Leer la explicación">{unit.explanation.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</Fold>
+        <Fold key={`ej-${active}`} title="Ejemplo (caso ficticio)"><p>{unit.example}</p><small>No describe personas, instituciones o resultados reales ni representa a toda una comunidad.</small></Fold>
         <section className="course-application"><h3>Actividad de la unidad</h3><p>{unit.activity}</p></section>
-        <section className="training-readings"><h3><BookOpen /> Lecturas relacionadas de biblioteca</h3>{unit.readings.map(reading => {
+        <Fold key={`lec-${active}`} title={`Lecturas de la biblioteca (${unit.readings.length})`}><section className="training-readings">{unit.readings.map(reading => {
           const doc = getLibraryDoc(reading.docId);
           if (!doc) return null;
           return <div className="training-source" key={doc.id}><strong>{doc.title}</strong><p>{reading.focus}</p><div className="doc-actions-inline"><Button asChild variant="outline"><Link to={doc.shelf}>Ver en biblioteca</Link></Button>{doc.fuenteConsultada && doc.fuenteUrl ? <Button asChild variant="navy"><a href={doc.fuenteUrl} target="_blank" rel="noopener noreferrer"><ExternalLink /> Consultar fuente oficial</a></Button> : <span className="doc-source-pending">Fuente precisa pendiente de verificación · categoría de biblioteca</span>}</div>{doc.fuenteConsultada && <small>{doc.notas}</small>}</div>;
-        })}</section>
+        })}</section></Fold>
         <UnitCompletion path={path} unit={active + 1} />
         <nav className="training-unit-nav no-print" aria-label="Navegación entre unidades"><Button variant="outline" disabled={active === 0} onClick={() => select(active - 1)}><ArrowLeft /> Anterior</Button><span>{active + 1} / {course.units.length}</span><Button variant="navy" disabled={active === course.units.length - 1} onClick={() => select(active + 1)}>Siguiente <ArrowRight /></Button></nav>
       </article>

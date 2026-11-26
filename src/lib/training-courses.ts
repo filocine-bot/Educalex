@@ -1,7 +1,9 @@
 import type { PagePath } from "@/lib/educalex-sitemap";
 
 export type TrainingPath = "/formacion/actualizacion-normativa" | "/formacion/inclusion-dua-piar" | "/formacion/convivencia-escolar" | "/formacion/educacion-rural" | "/formacion/steam-robotica";
-export type TrainingUnit = { title: string; objective: string; explanation: string[]; example: string; activity: string; readings: { docId: string; focus: string }[] };
+/** Organizador gráfico de la unidad: pasos en orden, tarjetas o niveles (de mayor a menor jerarquía). */
+export type Organizer = { kind: "steps" | "cards" | "levels"; title: string; items: { label: string; text?: string }[]; note?: string };
+export type TrainingUnit = { organizer?: Organizer; title: string; objective: string; explanation: string[]; example: string; activity: string; readings: { docId: string; focus: string }[] };
 export type WorkshopField = { key: string; label: string; hint: string; example: string };
 export type TrainingCourse = { purpose: string; audience: string; units: TrainingUnit[]; workshop: { title: string; scenario: string; fields: WorkshopField[]; review: string[] }; related: PagePath[] };
 
@@ -12,6 +14,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
     related: ["/biblioteca/legislacion", "/concursos/ingreso-docente", "/concursos/rector", "/simulacros/ingreso-docente", "/simulacros/rector"],
     units: [
       {
+        organizer: { kind: "levels", title: "Jerarquía y lugar de cada norma", items: [{ label: "Constitución de 1991", text: "Derecho a la educación (art. 67), idoneidad (art. 68), mérito (art. 125), prevalencia de los niños (art. 44)" }, { label: "Leyes", text: "Ley 115 de 1994 (General de Educación) · Ley 715 de 2001 (competencias y recursos)" }, { label: "Decretos", text: "Compilados en el Decreto 1075 de 2015; los nuevos lo modifican, como el Decreto 277 de 2025" }, { label: "Resoluciones y guías", text: "Desarrollan procesos concretos: Resolución 018987 de 2025, Guía 34" }], note: "Antes de aplicar un artículo, verifica su versión vigente en una fuente oficial." },
         title: "El orden de las normas: de la Constitución al Decreto 1075",
         objective: "Reconocer el lugar de cada tipo de norma y comprobar si un artículo sigue vigente antes de aplicarlo.",
         explanation: [
@@ -24,6 +27,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "constitucion-1991", focus: "Lee los artículos 44, 67, 68 y 125 y relaciónalos con tu cargo." }, { docId: "decreto-1075-2015", focus: "Ubica cómo se organiza por libros, partes y títulos." }, { docId: "decreto-277-2025", focus: "Observa cómo un decreto nuevo modifica artículos del Decreto 1075." }],
       },
       {
+        organizer: { kind: "cards", title: "¿Quién decide qué?", items: [{ label: "PEI", text: "Lo adopta el consejo directivo, previa consulta al académico (Decreto 1860, art. 15)" }, { label: "Manual de convivencia", text: "Lo adopta el consejo directivo (Ley 115, art. 144)" }, { label: "Criterios de cupos", text: "Los fija el consejo directivo (Ley 115, art. 144)" }, { label: "Plan de estudios", text: "Lo organiza el consejo académico (Ley 115, art. 145)" }, { label: "Asignaciones académicas", text: "Las distribuye el rector (Ley 715, art. 10)" }, { label: "Fondo de Servicios Educativos", text: "Lo administra el rector (Ley 715, art. 10)" }] },
         title: "La institución educativa: PEI, gobierno escolar y funciones del rector",
         objective: "Identificar quién decide cada asunto institucional y qué documento lo respalda.",
         explanation: [
@@ -36,6 +40,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "ley-115-1994", focus: "Artículos 73, 77, 87 y 142 a 145." }, { docId: "decreto-1860-1994", focus: "Artículos 14, 15, 21, 28 y 29." }, { docId: "ley-715-2001", focus: "Artículos 9 y 10: institución, centro educativo y funciones del rector." }, { docId: "guia-34-actualizacion-2026", focus: "Presentación de la actualización de la Guía 34 (MEN, 2026)." }],
       },
       {
+        organizer: { kind: "cards", title: "Cuatro tiempos que no se deben confundir", items: [{ label: "Jornada escolar (estudiantes)", text: "Mínimo semanal: preescolar 20 h · primaria 25 · secundaria y media académica 30 · media técnica 37" }, { label: "Asignación académica (docentes)", text: "Preescolar 20 h · primaria 25 · secundaria y media 22" }, { label: "Jornada laboral (docentes)", text: "8 horas: 6 en el establecimiento y 2 fuera de él" }, { label: "Jornada Única", text: "Preescolar 25 h · primaria 30 · secundaria y media académica 35; la reconoce la entidad territorial" }], note: "Decreto 277 de 2025 (modifica el Decreto 1075) y Decreto 2105 de 2017." },
         title: "Tiempo escolar y trabajo docente: lo que cambió en 2025",
         objective: "Distinguir jornada escolar, asignación académica, jornada laboral y Jornada Única.",
         explanation: [
@@ -48,6 +53,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "decreto-277-2025", focus: "Artículos que modifican jornada escolar, asignación académica y jornada laboral." }, { docId: "decreto-2105-2017", focus: "Definición, reconocimiento y duración de la Jornada Única." }],
       },
       {
+        organizer: { kind: "steps", title: "La carrera en el Decreto 1278", items: [{ label: "Concurso de méritos", text: "Prueba eliminatoria: 60/100 docentes, 70/100 directivos (Decreto 2038 de 2016)" }, { label: "Período de prueba", text: "Se aprueba con 60 % o más (Decreto 1278, arts. 12 y 31)" }, { label: "Evaluación anual de desempeño", text: "Guía 31; dos insatisfactorias llevan a la exclusión del escalafón" }, { label: "Ascenso o reubicación", text: "Resolución 018987 de 2025: 3 años de servicio y 60 % en cada una de las dos últimas evaluaciones" }] },
         title: "Carrera docente: ingreso, evaluación y ascenso",
         objective: "Diferenciar el concurso de ingreso, las evaluaciones del Decreto 1278 y el proceso de ascenso o reubicación.",
         explanation: [
@@ -60,6 +66,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "decreto-1278-2002", focus: "Artículos 5, 6, 12, 19 a 21, 27, 31, 35 y 36." }, { docId: "decreto-2038-2016", focus: "Carácter eliminatorio de la prueba y puntajes mínimos." }, { docId: "resolucion-018987-2025", focus: "Requisitos e instrumentos del proceso de ascenso y reubicación." }, { docId: "guia-31", focus: "Evaluación anual de desempeño." }],
       },
       {
+        organizer: { kind: "cards", title: "Cuatro temas, cuatro normas", items: [{ label: "Evaluación", text: "Decreto 1290: SIEE aprobado por el consejo directivo; escala Superior, Alto, Básico y Bajo" }, { label: "Convivencia", text: "Ley 1620 y Decreto 1965: Ruta de Atención Integral; situaciones tipo I, II y III" }, { label: "Inclusión", text: "Decreto 1421: DUA para todos y PIAR con ajustes razonables" }, { label: "Protección", text: "Ley 1098: interés superior; prohibidas las sanciones que afecten la dignidad" }] },
         title: "Evaluación, convivencia, inclusión y protección de derechos",
         objective: "Aplicar las normas que orientan la evaluación de los estudiantes, la convivencia escolar y la inclusión.",
         explanation: [

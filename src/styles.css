@@ -2304,3 +2304,22 @@ html { scroll-padding-top: 170px; }
 .g34-chain{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.35rem}
 .g34-chain li{display:flex;align-items:center;gap:.35rem;background:#fff;border-radius:999px;padding:.3rem .7rem .3rem .3rem;border:1px solid #dbe4f0;font-size:.86rem;font-weight:700;color:#102B50}
 @media (max-width:760px){.g34-ruta{grid-template-columns:1fr}.g34-stage-wrap{flex-direction:column}.g34-arrow{transform:rotate(90deg)}.g34-stairs,.g34-build{grid-template-columns:1fr 1fr}.g34-step{margin-top:0!important}}
+/* Organizadores gráficos de los cursos */
+.org{margin:.8rem 0;padding:.9rem;border-radius:16px;background:#f6f8fc;border:1px solid #dbe4f0}
+.org-title{font:800 1rem Poppins,sans-serif;color:#102B50;margin-bottom:.6rem}
+.org ol{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+.org li{display:grid;gap:.2rem;background:#fff;border-radius:12px;padding:.6rem .75rem;border:1px solid #dbe4f0;border-left:5px solid #102B50}
+.org li strong{color:#102B50;font-size:.95rem}
+.org li small{font-size:.85rem;color:#374151;line-height:1.4}
+.org-cards ol{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.org-cards li:nth-child(4n+2){border-left-color:#1f6f43}.org-cards li:nth-child(4n+3){border-left-color:#c27a00}.org-cards li:nth-child(4n){border-left-color:#6b45b5}
+.org-steps li{grid-template-columns:auto 1fr;column-gap:.6rem;border-left-color:#FFC928;position:relative}
+.org-steps li small{grid-column:2}
+.org-steps li:not(:last-child)::after{content:"";position:absolute;left:1.55rem;bottom:-.5rem;width:2px;height:.5rem;background:#9aa5b5}
+.org-num{grid-row:1/3;display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;border-radius:50%;background:#102B50;color:#FFC928;font:800 .85rem Poppins,sans-serif}
+.org-levels ol{justify-items:center}
+.org-levels li{text-align:center;border-left:0;border-top:4px solid #102B50}
+.org-levels li:nth-child(2){border-top-color:#2e75b6}.org-levels li:nth-child(3){border-top-color:#1f6f43}.org-levels li:nth-child(4){border-top-color:#c27a00}
+.org-note{margin:.6rem 0 0;font-size:.83rem;font-weight:700;color:#5a4400}
+.training-reading .fold{margin:.6rem 0}
+@media (max-width:600px){.org-levels li{width:100%!important}}
