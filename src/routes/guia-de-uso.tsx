@@ -11,8 +11,8 @@ function Guide() {
   return <ModulePage path="/guia-de-uso" showItems={false} tight>
     <div className="guide-video-wrap">
       <div className="guide-video-text">
-        <h2>Mira el recorrido en menos de un minuto</h2>
-        <p>Crear tu cuenta solo con tu correo, entrar con el botón del correo, hacer el simulacro gratis y desbloquear el completo con un solo pago.</p>
+        <h2>Mira el recorrido en un minuto</h2>
+        <p>Toca «Prueba gratis», mira tu resultado y los temas a reforzar, conoce la estructura de la prueba y activa tu simulacro con un solo pago: el enlace te llega al correo.</p>
         <p className="text-sm">También puedes seguirlo paso a paso abajo.</p>
       </div>
       <video className="guide-video" controls preload="none" playsInline poster="/videos/educalex-como-usar.jpg" aria-label="Video: cómo usar EDUCALEX en 6 pasos">
