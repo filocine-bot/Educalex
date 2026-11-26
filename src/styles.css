@@ -2138,3 +2138,10 @@ html { scroll-padding-top: 170px; }
 @media (max-width:900px){.exam-grid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:640px){.exam-grid{grid-template-columns:1fr 1fr;gap:.45rem}.exam-tile{padding:.55rem .6rem;min-height:58px;column-gap:.45rem}.exam-tile>svg:first-child{width:1.9rem;height:1.9rem;padding:.35rem}.exam-tile strong{font-size:.82rem}.exam-tile small{font-size:.7rem}.exam-board-head p{display:none}}
 @media (max-width:640px){.exam-board .trial-paybar{padding:.6rem .7rem;gap:.5rem}.exam-board .trial-paybar span{display:none}.exam-board .trial-paybar .h2-btn{min-height:42px}.exam-board-head h2{font-size:1.05rem}.exam-group{font-size:.7rem}.exam-tile small{display:none}.exam-tile{min-height:50px}}
+/* Celular: EducatIA más arriba y más pequeña para no tapar el texto */
+@media (max-width:640px){
+  .educatia-launcher{bottom:auto!important;top:42vh;width:42px!important;height:42px!important;min-height:42px!important;opacity:.92}
+  .educatia-launcher img{width:34px;height:34px}
+  .whatsapp-launcher{bottom:5.5rem!important;width:46px!important;height:46px!important;min-height:46px!important}
+}
+@media (max-width:640px){.educatia-launcher{right:.35rem!important}.whatsapp-launcher{right:.35rem!important}}
