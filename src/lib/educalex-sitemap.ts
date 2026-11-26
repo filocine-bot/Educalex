@@ -39,7 +39,6 @@ export const COURSES_IN_CONSTRUCTION: Record<string, PagePath> = {
   "/formacion/gestion-institucional": "/formacion/guia-34-pmi",
   "/formacion/educacion-emocional": "/formacion/convivencia-escolar",
   "/formacion/inteligencia-artificial": "/formacion/herramientas-ia",
-  "/formacion/evaluacion-formativa": "/biblioteca/legislacion",
   "/formacion/liderazgo-pedagogico": "/formacion/guia-34-pmi",
   "/formacion/liderazgo-directivo": "/formacion/guia-34-pmi",
 };
@@ -90,7 +89,7 @@ export const pages = {
   "/formacion/educacion-integral": { section: "Formación docente", parent: "/formacion", title: "Educación integral", description: "Formación integral del estudiante en todas sus dimensiones, con su normatividad: lineamientos curriculares de 2026, CONPES 4188, Artes al Aula, educación socioemocional, primera infancia y jornada escolar.", related: ["/formacion/educacion-emocional"], notice: "Página de consulta: normatividad de la educación integral y videos oficiales del MEN." },
   "/formacion/steam-robotica": { section: "Formación docente", parent: "/formacion", title: "STEAM y robótica educativa", description: "Innovación educativa con enfoque STEAM y robótica.", related: ["/biblioteca/recursos", "/concursos/ingreso-docente", "/concursos/coordinador", "/simulacros/ingreso-docente", "/simulacros/coordinador", "/simulacros/ascenso-reubicacion"], notice: SELF_STUDY },
   "/formacion/inteligencia-artificial": { section: "Formación docente", parent: "/formacion", title: "Inteligencia artificial aplicada a la educación", description: "Uso pedagógico y responsable de la IA en el aula.", itemsTitle: "El curso incluirá", items: COURSE, related: ["/docente-ia", "/formacion/steam-robotica"], notice: COURSE_NOTE },
-  "/formacion/evaluacion-formativa": { section: "Formación docente", parent: "/formacion", title: "Evaluación formativa y curricular", description: "Evaluación de aprendizajes y planeación curricular.", itemsTitle: "El curso incluirá", items: COURSE, related: ["/concursos/ingreso-docente", "/concursos/coordinador"], notice: COURSE_NOTE },
+  "/formacion/evaluacion-formativa": { section: "Formación docente", parent: "/formacion", title: "Evaluación formativa y curricular", description: "Evaluación formativa, SIEE, escala, apoyos y promoción según el Decreto 1290 de 2009.", related: ["/concursos/ingreso-docente", "/concursos/coordinador"], notice: SELF_STUDY },
   "/formacion/liderazgo-pedagogico": { section: "Formación docente", parent: "/formacion", title: "Liderazgo pedagógico", description: "Acompañamiento docente y liderazgo de procesos de aula.", itemsTitle: "El curso incluirá", items: COURSE, related: ["/concursos/coordinador", "/concursos/rector"], notice: COURSE_NOTE },
   "/formacion/liderazgo-directivo": { section: "Formación docente", parent: "/formacion", title: "Gestión escolar para rectores y coordinadores", description: "Competencias directivas para la gestión escolar.", itemsTitle: "El curso incluirá", items: COURSE, related: ["/concursos/rector", "/concursos/coordinador", "/formacion/guia-34-pmi"], notice: COURSE_NOTE },
 

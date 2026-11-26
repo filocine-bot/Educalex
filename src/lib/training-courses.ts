@@ -1,6 +1,6 @@
 import type { PagePath } from "@/lib/educalex-sitemap";
 
-export type TrainingPath = "/formacion/actualizacion-normativa" | "/formacion/inclusion-dua-piar" | "/formacion/convivencia-escolar" | "/formacion/educacion-rural" | "/formacion/steam-robotica";
+export type TrainingPath = "/formacion/evaluacion-formativa" | "/formacion/actualizacion-normativa" | "/formacion/inclusion-dua-piar" | "/formacion/convivencia-escolar" | "/formacion/educacion-rural" | "/formacion/steam-robotica";
 /** Organizador gráfico de la unidad: pasos en orden, tarjetas o niveles (de mayor a menor jerarquía). */
 export type Organizer = { kind: "steps" | "cards" | "levels"; title: string; items: { label: string; text?: string }[]; note?: string };
 export type TrainingUnit = { organizer?: Organizer; title: string; objective: string; explanation: string[]; example: string; activity: string; readings: { docId: string; focus: string }[] };
@@ -8,6 +8,92 @@ export type WorkshopField = { key: string; label: string; hint: string; example:
 export type TrainingCourse = { purpose: string; audience: string; units: TrainingUnit[]; workshop: { title: string; scenario: string; fields: WorkshopField[]; review: string[] }; related: PagePath[] };
 
 export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
+  "/formacion/evaluacion-formativa": {
+    purpose: "Comprender la evaluación de los estudiantes como parte del aprendizaje y aplicar lo que dispone el Decreto 1290 de 2009: propósitos, Sistema Institucional de Evaluación (SIEE), escala, estrategias de apoyo, promoción y reclamaciones. El curso es una explicación pedagógica; no reemplaza el SIEE de cada institución ni el texto oficial del decreto.",
+    audience: "Aspirantes a la carrera docente, docentes en ejercicio, docentes que preparan el ascenso y coordinadores que acompañan la evaluación.",
+    related: ["/biblioteca/legislacion", "/concursos/ingreso-docente", "/concursos/coordinador", "/simulacros/ingreso-docente", "/simulacros/coordinador"],
+    units: [
+      {
+        organizer: { kind: "cards", title: "Tres ámbitos de la evaluación", items: [{ label: "Internacional", text: "Pruebas que comparan con estándares internacionales" }, { label: "Nacional", text: "Pruebas de Estado que aplica el ICFES" }, { label: "Institucional", text: "La evaluación que hace cada colegio en el aula: es la que reglamenta el decreto" }], note: "Decreto 1290 de 2009, art. 1." },
+        title: "¿Para qué se evalúa? Ámbitos y propósitos",
+        objective: "Distinguir los ámbitos de la evaluación y reconocer los propósitos de la evaluación institucional.",
+        explanation: [
+          "El Decreto 1290 de 2009 reconoce tres ámbitos de evaluación de los estudiantes: internacional, nacional e institucional (art. 1). El decreto reglamenta el ámbito institucional, es decir, la evaluación que cada establecimiento realiza de manera permanente en el aula.",
+          "Según el artículo 3, la evaluación institucional busca identificar las características, intereses, ritmos y estilos de aprendizaje; proporcionar información para reorientar los procesos educativos; diseñar estrategias de apoyo para quienes presentan debilidades o desempeños superiores; determinar la promoción, y aportar información para el plan de mejoramiento institucional.",
+          "Evaluar de manera formativa significa usar la información para ajustar la enseñanza y orientar al estudiante mientras aprende, no solo para asignar una nota al final. Por eso la evaluación se planea junto con los objetivos y las actividades, y no después.",
+        ],
+        example: "Caso ficticio en una institución de Cereté: un docente de ciencias aplica un quiz al inicio del período y descubre que la mitad del grupo confunde masa y peso. En lugar de registrar la nota, reorganiza la siguiente clase con una práctica y vuelve a preguntar al final de la semana.",
+        activity: "Elige una evaluación que hayas aplicado o que vayas a aplicar. Escribe cuál de los propósitos del artículo 3 cumple y qué decisión pedagógica tomarías con sus resultados.",
+        readings: [{ docId: "decreto-1290-2009", focus: "Artículos 1 y 3: ámbitos y propósitos de la evaluación." }],
+      },
+      {
+        organizer: { kind: "steps", title: "Cómo se crea o modifica el SIEE (art. 8)", items: [{ label: "Definir el sistema" }, { label: "Socializarlo con la comunidad educativa" }, { label: "Aprobarlo en el consejo directivo", text: "Con constancia en acta" }, { label: "Incorporarlo al PEI", text: "Articulado con el plan de estudios y el currículo" }, { label: "Divulgarlo", text: "Incluidos los mecanismos de reclamación, y explicarlo a quienes ingresan" }], note: "Cualquier modificación sigue el mismo procedimiento." },
+        title: "El Sistema Institucional de Evaluación (SIEE)",
+        objective: "Identificar qué debe contener el SIEE y cómo se construye con la comunidad.",
+        explanation: [
+          "Cada establecimiento define su Sistema Institucional de Evaluación de los Estudiantes, que hace parte del PEI. El artículo 4 fija su contenido mínimo: criterios de evaluación y promoción; escala institucional y su equivalencia con la nacional; estrategias de valoración integral; acciones de seguimiento; procesos de autoevaluación de los estudiantes; estrategias de apoyo para situaciones pedagógicas pendientes; acciones para que directivos y docentes cumplan los procesos evaluativos; periodicidad y estructura de los informes; instancias y mecanismos de reclamación, y mecanismos de participación de la comunidad.",
+          "El artículo 8 establece el procedimiento: definir el sistema, socializarlo, aprobarlo en sesión del consejo directivo con constancia en acta, incorporarlo al PEI, divulgarlo junto con los mecanismos de reclamación e informar sobre él a estudiantes, familias y docentes que ingresan. Si el SIEE se modifica, se sigue el mismo procedimiento.",
+          "Un SIEE copiado de otra institución o redactado solo por directivos no cumple el sentido del decreto, que exige participación de la comunidad educativa.",
+        ],
+        example: "Caso ficticio en Sahagún: la coordinación quiere cambiar los porcentajes de las notas a mitad de año y enviarlos por circular. El consejo académico le recuerda que modificar el SIEE exige seguir el procedimiento del artículo 8, con socialización y aprobación del consejo directivo, antes de aplicarlo.",
+        activity: "Revisa el SIEE de tu institución, o uno ficticio, y marca cuáles de los once contenidos del artículo 4 están y cuáles faltan.",
+        readings: [{ docId: "decreto-1290-2009", focus: "Artículos 4 y 8: contenido y procedimiento del SIEE." }],
+      },
+      {
+        organizer: { kind: "levels", title: "Escala de valoración nacional (art. 5)", items: [{ label: "Desempeño Superior" }, { label: "Desempeño Alto" }, { label: "Desempeño Básico", text: "Supera los desempeños necesarios en las áreas obligatorias y fundamentales" }, { label: "Desempeño Bajo", text: "No supera esos desempeños" }], note: "Cada institución define su escala propia, pero debe expresar su equivalencia con esta." },
+        title: "Escala, criterios y evidencias",
+        objective: "Formular criterios claros y relacionar la escala institucional con la escala nacional.",
+        explanation: [
+          "El artículo 5 permite que cada institución defina su escala, numérica o de otro tipo, siempre que exprese su equivalencia con la escala nacional: Desempeño Superior, Alto, Básico y Bajo. El desempeño básico significa superar los desempeños necesarios en relación con las áreas obligatorias y fundamentales; el bajo, no superarlos.",
+          "Una nota solo es útil si el estudiante sabe qué se esperaba de él. Los criterios deben describir el aprendizaje observable, no la conducta ni la presentación, salvo que sean parte del objetivo. Una rúbrica que describe qué hace un estudiante en cada nivel ayuda a que la valoración sea coherente entre docentes.",
+          "Conviene recoger más de una evidencia: una prueba escrita, una producción, una exposición o una observación. Una sola evidencia no describe todo lo que una persona sabe hacer.",
+        ],
+        example: "Caso ficticio en Lorica: en un taller de lectura, la docente acuerda con el grupo una rúbrica de tres criterios: identifica la idea principal, la sustenta con dos pistas del texto y explica su relación con el título. Cada criterio tiene descripciones para los cuatro desempeños.",
+        activity: "Escribe un criterio de evaluación para un aprendizaje de tu área y describe cómo se ve en desempeño superior, alto, básico y bajo.",
+        readings: [{ docId: "decreto-1290-2009", focus: "Artículo 5: escala nacional y equivalencias." }],
+      },
+      {
+        organizer: { kind: "steps", title: "Retroalimentación que ayuda a aprender", items: [{ label: "Lo logrado", text: "Qué hizo bien, con un ejemplo concreto" }, { label: "Una dificultad concreta", text: "Qué falta, sin calificar a la persona" }, { label: "El siguiente paso", text: "Qué hacer para mejorar y cuándo revisarlo" }], note: "Las estrategias de apoyo hacen parte del SIEE (art. 4) y se diseñan en reuniones de docentes y directivos (art. 11)." },
+        title: "Retroalimentación y estrategias de apoyo",
+        objective: "Dar retroalimentación útil y diseñar estrategias de apoyo durante el período, no solo al final.",
+        explanation: [
+          "La retroalimentación es el corazón de la evaluación formativa. Es útil cuando llega a tiempo, se refiere al criterio y le dice al estudiante qué hacer después. Comentarios como «mejore» o «buen trabajo» no orientan; en cambio, «tu conclusión no usa los datos de la tabla: compárala con la fila 3» sí lo hace.",
+          "El SIEE debe incluir acciones de seguimiento durante el año escolar y estrategias de apoyo para resolver situaciones pedagógicas pendientes (art. 4). El artículo 11 asigna al establecimiento realizar reuniones de docentes y directivos para diseñar estrategias de evaluación y apoyo, y mantener la comunicación con padres y estudiantes sobre informes, planes de apoyo y compromisos.",
+          "Un plan de apoyo no consiste en repetir la misma prueba. Debe atender la dificultad específica, ofrecer una nueva oportunidad de aprendizaje y luego una nueva evidencia.",
+        ],
+        example: "Caso ficticio en Montelíbano: al cierre del primer corte, cinco estudiantes no logran resolver problemas de proporciones. La docente organiza dos sesiones con material concreto, les entrega una guía con ejemplos resueltos y, la semana siguiente, les propone un problema nuevo para verificar el avance.",
+        activity: "Redacta una retroalimentación de tres partes (lo logrado, una dificultad y el siguiente paso) para un trabajo ficticio de un estudiante.",
+        readings: [{ docId: "decreto-1290-2009", focus: "Artículos 4 y 11: seguimiento, estrategias de apoyo y responsabilidades del establecimiento." }],
+      },
+      {
+        organizer: { kind: "cards", title: "Promoción y reclamaciones", items: [{ label: "Criterios de promoción", text: "Los define cada institución en su SIEE (art. 6)" }, { label: "Estudiante no promovido", text: "La institución debe garantizarle el cupo para que continúe (art. 6)" }, { label: "Promoción anticipada", text: "En el primer período, por rendimiento superior; la recomienda el consejo académico al directivo, con consentimiento de los padres (art. 7)" }, { label: "Reclamaciones", text: "Por las instancias y mecanismos del SIEE (art. 4); las decide el consejo directivo (art. 11)" }] },
+        title: "Promoción, reclamaciones y derechos",
+        objective: "Aplicar las reglas de promoción y orientar una reclamación según el SIEE.",
+        explanation: [
+          "Cada establecimiento determina sus criterios de promoción de acuerdo con su SIEE, incluido el porcentaje de asistencia que incide en ella; el decreto no fija un porcentaje nacional. Si un estudiante no es promovido, la institución debe garantizarle en todos los casos el cupo para que continúe su proceso formativo (art. 6).",
+          "La promoción anticipada procede durante el primer período del año escolar para el estudiante que demuestra un rendimiento superior en su grado. El consejo académico, con el consentimiento previo de los padres, la recomienda al consejo directivo, y la decisión queda en acta (art. 7). Las instituciones también deben adoptar criterios para facilitar la promoción de quienes no la obtuvieron el año anterior.",
+          "Las reclamaciones sobre evaluación y promoción siguen las instancias y mecanismos definidos en el SIEE (art. 4), y el artículo 11 asigna al consejo directivo decidirlas. Estudiantes y familias tienen derecho a conocer el SIEE desde el inicio del año y a recibir informes y acompañamiento.",
+        ],
+        example: "Caso ficticio en Tierralta: un padre pide que su hija sea promovida aunque no alcanzó los criterios del SIEE. El coordinador le explica los criterios, le muestra las evidencias y le indica el procedimiento de reclamación. También le confirma que, si no es promovida, la institución le garantiza el cupo.",
+        activity: "Escribe la ruta que seguiría una reclamación sobre una nota en una institución ficticia: a quién se dirige primero, qué instancia la revisa y quién decide.",
+        readings: [{ docId: "decreto-1290-2009", focus: "Artículos 6, 7, 11 y 12 a 15: promoción, promoción anticipada, responsabilidades y derechos." }],
+      },
+    ],
+    workshop: {
+      title: "Rúbrica y plan de retroalimentación — práctica ficticia",
+      scenario: "Diseña la evaluación de un aprendizaje de tu área para un grupo inventado. No incluyas nombres ni datos reales de estudiantes.",
+      fields: [
+        { key: "aprendizaje", label: "Aprendizaje que vas a evaluar", hint: "Redáctalo como algo que el estudiante hace.", example: "Interpreta datos de una tabla para sacar una conclusión." },
+        { key: "evidencias", label: "Evidencias", hint: "Al menos dos tipos distintos.", example: "Un informe corto y una explicación oral de dos minutos." },
+        { key: "criterios", label: "Criterios por desempeño", hint: "Qué se observa en superior, alto, básico y bajo.", example: "Superior: concluye con datos y explica una limitación. Bajo: describe la tabla sin concluir." },
+        { key: "equivalencia", label: "Equivalencia con la escala nacional", hint: "Cómo se relaciona tu escala con la del artículo 5.", example: "4,6 a 5,0 Superior; 4,0 a 4,5 Alto; 3,0 a 3,9 Básico; 1,0 a 2,9 Bajo (ejemplo ficticio)." },
+        { key: "retro", label: "Retroalimentación", hint: "Lo logrado, una dificultad y el siguiente paso.", example: "Leíste bien los datos; tu conclusión no los usa; compárala con la fila 3 y vuelve a escribirla." },
+        { key: "apoyo", label: "Estrategia de apoyo", hint: "Para quienes no alcanzan el criterio.", example: "Dos sesiones con ejemplos resueltos y una nueva tabla para verificar." },
+        { key: "familia", label: "Comunicación a la familia", hint: "Cómo y cuándo informarás.", example: "Informe del período con los criterios y el plan de apoyo, según el SIEE." },
+      ],
+      review: ["El aprendizaje es observable.", "Hay más de una evidencia.", "Los criterios describen el aprendizaje, no la conducta.", "La escala tiene equivalencia con la nacional.", "La retroalimentación dice qué hacer después."],
+    },
+  },
   "/formacion/actualizacion-normativa": {
     purpose: "Ubicar las normas que rigen la educación oficial en Colombia, leerlas en su orden y aplicarlas a situaciones de la institución. El curso explica qué dice cada norma, dónde se encuentra y cómo comprobar si sigue vigente; no reemplaza la lectura del texto oficial ni la asesoría jurídica.",
     audience: "Aspirantes a la carrera docente, docentes que preparan el ascenso, coordinadores y rectores que necesitan actualizar su conocimiento de la normativa educativa.",

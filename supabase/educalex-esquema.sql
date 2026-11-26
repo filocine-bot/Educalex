@@ -24,7 +24,7 @@ REVOKE ALL ON FUNCTION public.create_learning_profile() FROM PUBLIC;
 CREATE TRIGGER educalex_profile_created AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION public.create_learning_profile();
 INSERT INTO public.profiles(id) SELECT id FROM auth.users ON CONFLICT DO NOTHING;
 INSERT INTO public.user_roles(user_id,role) SELECT id,'member' FROM auth.users ON CONFLICT DO NOTHING;
-CREATE TABLE IF NOT EXISTS public.course_enrollments(user_id uuid NOT NULL, course_path text NOT NULL CHECK(course_path IN ('/formacion/guia-34-pmi','/formacion/inclusion-dua-piar','/formacion/convivencia-escolar','/formacion/educacion-rural','/formacion/steam-robotica','/formacion/actualizacion-normativa')), created_at timestamptz NOT NULL DEFAULT now(), PRIMARY KEY(user_id,course_path));
+CREATE TABLE IF NOT EXISTS public.course_enrollments(user_id uuid NOT NULL, course_path text NOT NULL CHECK(course_path IN ('/formacion/guia-34-pmi','/formacion/inclusion-dua-piar','/formacion/convivencia-escolar','/formacion/educacion-rural','/formacion/steam-robotica','/formacion/actualizacion-normativa','/formacion/evaluacion-formativa')), created_at timestamptz NOT NULL DEFAULT now(), PRIMARY KEY(user_id,course_path));
 GRANT SELECT,INSERT ON public.course_enrollments TO authenticated; GRANT ALL ON public.course_enrollments TO service_role;
 ALTER TABLE public.course_enrollments ENABLE ROW LEVEL SECURITY;
 CREATE POLICY enrollments_read_own ON public.course_enrollments FOR SELECT TO authenticated USING(user_id=auth.uid());
