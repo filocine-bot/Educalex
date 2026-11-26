@@ -22,7 +22,7 @@ export type PageDef = {
 };
 
 const VERIFY = "Los requisitos, pruebas y fechas de cada convocatoria deben confirmarse en las fuentes oficiales vigentes antes de tomar decisiones.";
-const PRACTICE_SIM = "Preguntas tipo ICFES por perfil en modo juego de 3 niveles (el Básico, de 10 preguntas, es gratis) y simulacro completo de 40 preguntas con tiempo en la preparación completa.";
+const PRACTICE_SIM = "Preguntas originales tipo prueba por perfil: 10 gratis y, con la preparación completa, el simulacro por componentes en bloques de 10 y el simulacro con tiempo de 40 preguntas.";
 const DOCS = "Las fichas distinguen enlaces institucionales consultados de fuentes pendientes. Consultar un enlace no equivale a confirmar la vigencia ni a haber leído el documento completo; revisa siempre el texto oficial y sus modificaciones.";
 const COURSE = ["Objetivos de aprendizaje", "Unidades", "Lecciones", "Videos", "Documentos", "Recursos descargables", "Talleres", "Actividades", "Evaluaciones", "Seguimiento del aprendizaje", "Certificado, al cumplir las condiciones de aprobación"];
 const SIM_PARTS = ["Instrucciones", "Número de preguntas", "Tiempo disponible", "Preguntas de selección múltiple con opciones A, B, C y D", "Temporizador", "Navegación entre preguntas", "Marcación para revisión", "Finalización y calificación", "Retroalimentación argumentada", "Resultados y recomendaciones"];
@@ -35,7 +35,7 @@ const ADMIN = "Área reservada a administradores autorizados. La edición de con
 export const pages = {
   "/mi-panel": { section: "Mi preparación", title: "Mi panel", description: "Tu ruta de estudio según el perfil educativo activo.", related: ["/mi-cuenta", "/mi-progreso", "/planes"], notice: "Las recomendaciones no limitan el acceso gratuito a los contenidos existentes." },
   "/guia-de-uso": { section: "EDUCALEX", title: "Cómo usar EDUCALEX", description: "Paso a paso: crea tu cuenta solo con tu correo, entra con un enlace, haz el simulacro gratis y paga en Wompi para desbloquear el completo.", related: ["/simulacros", "/biblioteca", "/planes"] },
-  "/planes": { section: "Preparación", title: "Planes: Gratuito y Premium", description: "Qué es gratis en EDUCALEX y qué incluye el acceso Premium del modo juego.", related: ["/simulacros", "/formacion", "/mi-cuenta"] },
+  "/planes": { section: "Preparación", title: "Planes: Gratuito y Premium", description: "Qué es gratis en EDUCALEX y qué incluye la preparación completa de cada perfil.", related: ["/simulacros", "/formacion", "/mi-cuenta"] },
   "/concursos": { section: "Concursos", title: "Concursos docentes", description: "Rutas de preparación para los concursos de mérito del sector educativo en Colombia.", children: ["/concursos/ingreso-docente", "/concursos/ascenso-reubicacion", "/concursos/rector", "/concursos/coordinador"], related: ["/simulacros", "/formacion", "/biblioteca"], notice: VERIFY },
   "/concursos/ingreso-docente": {
     section: "Concursos", parent: "/concursos", title: "Ingreso a la carrera docente",

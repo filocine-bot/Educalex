@@ -129,7 +129,7 @@ export function ProfileStart({ profile }: { profile: SimulationProfile }) {
   return <section className="profile-start" aria-labelledby="profile-start-title">
     <div>
       <h2 id="profile-start-title">Empieza tu preparación · {PROFILE_LABEL[profile]}</h2>
-      <p>Haz gratis las primeras 10 preguntas. Con un solo pago abres el simulacro completo del perfil (100 preguntas por niveles) y el núcleo común.</p>
+      <p>Haz gratis las primeras 10 preguntas. Con un solo pago abres el simulacro completo por componentes, el simulacro con tiempo y el refuerzo de tus temas.</p>
     </div>
     <div className="profile-start-actions">
       <Link to={SIM_PATH[profile]} className="ps-free">Prueba gratis · 10 preguntas</Link>

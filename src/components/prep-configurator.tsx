@@ -63,7 +63,7 @@ export function PrepConfigurator({ profile: fixed, title }: { profile?: Simulati
         </label>
         <label className={`cfg-mode ${mode === "completo" ? "is-on" : ""}`}>
           <input type="radio" name={`cfg-mode-${fixed ?? "home"}`} value="completo" checked={mode === "completo"} onChange={() => setMode("completo")} />
-          <strong>Acceso completo</strong><span>100 preguntas por niveles y núcleo común</span><em>{owned ? "Ya es tuyo" : cop(priceOf(profile))}</em>
+          <strong>Acceso completo</strong><span>Simulacro por componentes y con tiempo</span><em>{owned ? "Ya es tuyo" : cop(priceOf(profile))}</em>
         </label>
       </div>
     </fieldset>

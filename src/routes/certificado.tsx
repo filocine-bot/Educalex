@@ -58,7 +58,7 @@ function Certificate() {
   if (!ready) return <section className="section site-container"><p>Cargando tu progreso…</p></section>;
   if (levels.length === 0) return <section className="section site-container">
     <h1 className="mod-h2">Constancia de participación</h1>
-    <p>Para generar la constancia de <strong>{CERT_BANK_NAMES[perfil]}</strong> debes superar al menos el nivel Básico del modo juego (70 % o más).</p>
+    <p>Para generar la constancia de <strong>{CERT_BANK_NAMES[perfil]}</strong> debes superar la prueba gratis de 10 preguntas con 70 % o más.</p>
     <Button asChild variant="navy"><Link to={back}>Ir a practicar</Link></Button>
   </section>;
 
@@ -78,7 +78,7 @@ function Certificate() {
       <p className="certificate-kicker">Constancia de participación</p>
       <p>EDUCALEX hace constar que</p>
       <h1 className="certificate-name">{name.trim() || "Nombre del participante"}</h1>
-      <p>participó en la práctica de preparación <strong>{CERT_BANK_NAMES[perfil]}</strong> y superó los siguientes niveles del modo juego:</p>
+      <p>participó en la práctica de preparación <strong>{CERT_BANK_NAMES[perfil]}</strong> y superó los siguientes niveles de práctica:</p>
       <ul className="certificate-levels">{levels.map(l => <li key={l.number}><Award aria-hidden="true" /> {l.name} · mejor resultado {l.best} %</li>)}</ul>
       <p className="certificate-date">Expedida el {date}</p>
       <div className="certificate-footer">

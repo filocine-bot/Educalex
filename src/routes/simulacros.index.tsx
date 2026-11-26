@@ -20,6 +20,6 @@ function SimulacrosIndex() {
     {" "}<Button variant="link" className="px-1" onClick={() => setShowAll(v => !v)}>{filtering ? "Ver todos los perfiles" : "Ver solo mi perfil"}</Button>
   </p>;
   return <ModulePage path="/simulacros" showItems={false} childNote={note} childFilter={c => !filtering || mine.some(m => c === `/simulacros/${m}`)}>
-    <p>Cuatro prácticas con preguntas originales: modo juego en 3 niveles de dificultad creciente (10 gratis, 40 y 50 preguntas) y simulacro completo de 40 preguntas con tiempo, incluido en la preparación completa. {profile ? "Abajo encuentras la de tu perfil." : "Elige tu perfil."}</p>
+    <p>Cuatro prácticas con preguntas originales: 10 preguntas gratis por perfil y, con la preparación completa, el simulacro por componentes de la prueba en bloques de 10 preguntas y el simulacro con tiempo de 40 preguntas. {profile ? "Abajo encuentras la de tu perfil." : "Elige tu perfil."}</p>
   </ModulePage>;
 }
