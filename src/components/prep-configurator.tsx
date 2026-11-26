@@ -1,3 +1,4 @@
+import { Fold } from "@/components/fold";
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, Bot, Calculator, ChartNoAxesCombined, CheckCircle2, Clock3, Compass, GraduationCap, HeartHandshake, LayoutList, Lock, PenLine, Play, Scale, Settings, Sparkles, Trophy, Users, type LucideIcon } from "lucide-react";
@@ -108,13 +109,13 @@ export function ProfileHome({ profile }: { profile: SimulationProfile }) {
         : <><ProfileStructure profile={profile} /><button type="button" className="h2-btn h2-btn-gold pst-back" onClick={() => show("prueba")}><Play aria-hidden="true" /> Iniciar prueba gratis</button></>}
     </div>
     <CompetencyLocks profile={profile} />
-    <section className="trial-examples" aria-labelledby="trial-ex-title">
+    <Fold title="Ejemplos de práctica"><section className="trial-examples" aria-labelledby="trial-ex-title">
       <h2 id="trial-ex-title">Ejemplos de práctica</h2>
       <div className="trial-ex-grid">
         <Link to="/formacion/ruta-atencion-integral" className="trial-ex"><span><Scale aria-hidden="true" /></span><strong>Ruta de Atención Integral</strong><small>Clasifica situaciones tipo I, II y III con casos escolares.</small></Link>
         <Link to="/formacion/dilemas-educativos" className="trial-ex"><span><Compass aria-hidden="true" /></span><strong>Dilemas educativos</strong><small>{dilemmas.length} casos: decide y mira las consecuencias de cada opción.</small></Link>
       </div>
-    </section>
+    </section></Fold>
   </>;
 }
 

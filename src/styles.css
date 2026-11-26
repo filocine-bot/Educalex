@@ -2246,3 +2246,14 @@ html { scroll-padding-top: 170px; }
 .trial-start{padding:1rem .8rem;gap:.5rem}
 .trial-start p{font-size:.9rem}
 }
+/* Secciones plegables */
+.fold{margin:.5rem 0;border:1px solid #d6e0ee;border-radius:14px;background:#fff;overflow:hidden}
+.fold>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.85rem 1rem;cursor:pointer;font:800 1rem Poppins,sans-serif;color:#102B50;min-height:48px}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary svg{width:1.2rem;height:1.2rem;color:#8a6a00;transition:transform .2s;flex:none}
+.fold[open]>summary{border-bottom:1px solid #e5ebf3;background:#f7f9fc}
+.fold[open]>summary svg{transform:rotate(180deg)}
+.fold-body{padding:.6rem 1rem 1rem}
+.fold-body>section>h2:first-child,.fold-body>.academic-modules>h2:first-child,.fold-body>section.competition-references>h2{display:none}
+.fold-body>section{margin:0;border:0;box-shadow:none;padding:0}
+.academic-route>.fold,.academic-route .fold+.fold{margin-top:-.6rem}
