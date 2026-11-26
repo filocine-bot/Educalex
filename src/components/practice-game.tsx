@@ -162,20 +162,20 @@ export function PracticeGame({ profile, bank = profile, trialOnly = false, intro
         <p className="section-description">Estos son los temas donde fallaste. Repásalos antes de volver a intentarlo.</p>
         <ul>{map.map(g => <li key={g.competency}><strong>{g.competency}</strong> ({g.items.length})<ul>{g.items.map(q => <li key={q.id}>{q.reference}</li>)}</ul></li>)}</ul>
       </div>}
-      {r.level.number === 1 && !r.review && bank === profile && PREMIUM_LOCKED && (myLevel >= 3
-        ? <div className="trial-offer owned"><h3>Tienes la preparación completa</h3><p>Sigue con los niveles Intermedio y Avanzado, el núcleo común y el simulacro con tiempo.</p><Link to={`/simulacros/${profile}`} className="h2-btn h2-btn-gold">Ir a mi preparación completa</Link></div>
-        : <div className="trial-offer" role="region" aria-label="Continúa tu preparación">
-          <h3>¡Ya conoces tu punto de partida!</h3>
-          <p>Continúa con los niveles de preparación y fortalece tus competencias para alcanzar tu objetivo profesional: 90 preguntas más por niveles, núcleo común, simulacro con tiempo de 40 preguntas y mapa de errores.</p>
-          <BuyLevelButton profile={profile} level={2} owned={premium.owned} returnPath={`/simulacros/${profile}`} />
-          <p className="trial-offer-note">Es un solo pago. Al pagar te llega al correo la confirmación y el enlace que activa tu simulacro completo.</p>
-        </div>)}
       <div className="practice-actions">
         {wrongIds.length > 0 && <Button variant="navy" onClick={() => void start(r.level, true, r.questions.filter(q => wrongIds.includes(q.id)))}><RotateCcw /> Repasar mis {wrongIds.length} errores</Button>}
         {!r.review && (!r.level.premium || attemptsQ.unlimited || remainingAttempts(attemptsQ.used, bank, r.level.number) > 0) && <Button variant="outline" onClick={() => start(r.level)}>Repetir el nivel{r.level.premium && !attemptsQ.unlimited ? ` (te quedan ${remainingAttempts(attemptsQ.used, bank, r.level.number)})` : ""}</Button>}
         {!trialOnly && nextLevel && nextPlayable?.playable && !r.review && summary.passed && <Button variant="navy" onClick={() => void start(nextLevel)}>Ir al nivel {nextLevel.name}</Button>}
         <Button variant="ghost" onClick={() => setSummary(null)}>Volver a los niveles</Button>
       </div>
+      {r.level.number === 1 && !r.review && bank === profile && PREMIUM_LOCKED && (myLevel >= 3
+        ? <div className="trial-offer owned"><h3>Tienes la preparación completa</h3><p>Sigue con los niveles Intermedio y Avanzado, el núcleo común y el simulacro con tiempo.</p><Link to={`/simulacros/${profile}`} className="h2-btn h2-btn-gold">Ir a mi preparación completa</Link></div>
+        : <div className="trial-offer" role="region" aria-label="Continúa tu preparación">
+          <h3>Pasa al siguiente nivel</h3>
+          <p>¡Ya conoces tu punto de partida! Con la preparación completa sigues con los niveles Intermedio (40) y Avanzado (50), el núcleo común, el simulacro con tiempo de 40 preguntas y el mapa de errores.</p>
+          <BuyLevelButton profile={profile} level={2} owned={premium.owned} returnPath={`/simulacros/${profile}`} />
+          <p className="trial-offer-note">Es un solo pago. Al pagar te llega al correo la confirmación y el enlace que activa tu simulacro completo.</p>
+        </div>)}
     </section>;
   }
 
