@@ -100,6 +100,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
     related: ["/concursos/ingreso-docente", "/concursos/coordinador", "/simulacros/ingreso-docente", "/simulacros/coordinador", "/simulacros/ascenso-reubicacion"],
     units: [
       {
+        organizer: { kind: "steps", title: "Del obstáculo al cambio en el aula", items: [{ label: "Precisa qué se quiere aprender" }, { label: "Observa dónde se interrumpe la participación", text: "Espacios, comunicación, materiales, tecnologías o relaciones" }, { label: "Describe la barrera, no a la persona", text: "«El material no permite ampliar la letra», no «el estudiante no puede»" }, { label: "Cambia una condición y revisa su efecto" }], note: "La observación del aula no es un diagnóstico clínico." },
         title: "Accesibilidad y barreras: observar el entorno",
         objective: "Distinguir una barrera de acceso o participación de una característica individual y proponer cambios observables en una actividad.",
         explanation: [
@@ -112,6 +113,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "decreto-1421-2017", focus: "Contrasta el ámbito de atención educativa a población con discapacidad con las barreras que describiste." }, { docId: "decreto-1075-2015", focus: "Revisa la articulación reglamentaria del sector; no uses esta lectura como una revisión de vigencia." }]
       },
       {
+        organizer: { kind: "cards", title: "Tres tipos de opciones para todo el grupo", items: [{ label: "Implicación", text: "Diversas maneras de interesarse y sostener el esfuerzo" }, { label: "Representación", text: "Diversas maneras de acceder a la información" }, { label: "Acción y expresión", text: "Diversas maneras de mostrar lo aprendido, con criterios comunes" }], note: "El DUA no reemplaza el PIAR ni divide al grupo por supuestos estilos de aprendizaje." },
         title: "DUA: anticipar opciones para todo el grupo",
         objective: "Diseñar opciones de implicación, representación y acción o expresión que mantengan un propósito de aprendizaje común.",
         explanation: [
@@ -124,6 +126,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "decreto-1421-2017", focus: "Examina el contexto reglamentario de diseño universal y apoyos." }, { docId: "dua", focus: "La publicación específica de DUA está pendiente; consulta el estado de la categoría Inclusión." }]
       },
       {
+        organizer: { kind: "steps", title: "Lógica de un ajuste razonable", items: [{ label: "Valoración pedagógica", text: "Barreras que el diseño general no resuelve" }, { label: "Ajuste", text: "Qué cambia, en qué actividad y con qué apoyo" }, { label: "Acuerdo", text: "Con el estudiante, la familia y quienes intervienen" }, { label: "Seguimiento", text: "Si no mejora el acceso o el aprendizaje, revisar la barrera que persiste" }] },
         title: "PIAR y ajustes razonables individualizados",
         objective: "Relacionar valoración pedagógica, barrera, ajuste y seguimiento, diferenciando un ejercicio de aula de un PIAR institucional.",
         explanation: [
@@ -136,6 +139,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "decreto-1421-2017", focus: "Consulta el texto oficial y sus apartados sobre PIAR, valoración y responsabilidades antes de cualquier uso institucional." }, { docId: "piar", focus: "La orientación o formato específico de PIAR aún está pendiente de cotejo en la biblioteca." }]
       },
       {
+        organizer: { kind: "cards", title: "Tres cosas que no se deben confundir", items: [{ label: "Apoyo de acceso", text: "Tiempo adicional, consigna accesible, organizador" }, { label: "Cambio en el medio de respuesta", text: "Audio, dibujo o texto con el mismo criterio" }, { label: "Objetivo individualizado", text: "Se documenta su fundamento y se evalúa de forma coherente" }], note: "Retroalimentación: lo logrado, una dificultad concreta y el siguiente paso." },
         title: "Evaluación accesible y expectativas de aprendizaje",
         objective: "Proponer criterios de evaluación coherentes con el aprendizaje y apoyos que no confundan rapidez o formato con comprensión.",
         explanation: [
@@ -148,6 +152,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "decreto-1075-2015", focus: "Ubica la reglamentación de evaluación y contrástala con el sistema institucional correspondiente." }, { docId: "decreto-1421-2017", focus: "Relaciona evaluación y ajustes sin deducir reglas automáticas de promoción." }]
       },
       {
+        organizer: { kind: "cards", title: "Cuidar la información sensible", items: [{ label: "Para estudiar casos", text: "Escenarios inventados, sin nombres, fotos ni diagnósticos" }, { label: "Para compartir", text: "Solo lo necesario para cada función, por canales institucionales" }, { label: "Para hacer seguimiento", text: "Evidencias antes y después del apoyo y barreras pendientes" }] },
         title: "Confidencialidad, participación y seguimiento",
         objective: "Diseñar un seguimiento mínimo que cuide datos sensibles y permita revisar apoyos con las personas implicadas.",
         explanation: [
@@ -182,6 +187,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
     related: ["/concursos/coordinador", "/concursos/rector", "/simulacros/coordinador", "/simulacros/rector"],
     units: [
       {
+        organizer: { kind: "levels", title: "Marco de la convivencia escolar", items: [{ label: "Ley 1620 de 2013", text: "Crea el Sistema Nacional de Convivencia Escolar" }, { label: "Decreto 1965 de 2013", text: "Reglamenta la ley; compilado en el Decreto 1075 de 2015" }, { label: "Manual de convivencia y protocolos", text: "Concretan la actuación en cada institución" }], note: "Conflicto, agresión y acoso no son lo mismo." },
         title: "Marco de convivencia y responsabilidades",
         objective: "Relacionar Ley 1620, Decreto 1965 y Decreto 1075 sin tratar el taller como una actualización jurídica completa.",
         explanation: [
@@ -194,6 +200,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "ley-1620-2013", focus: "Estudia el objeto del sistema y las responsabilidades sin extrapolar atribuciones." }, { docId: "decreto-1965-2013", focus: "Relaciona la reglamentación original con la compilación y sus modificaciones." }, { docId: "decreto-1075-2015", focus: "Contrasta el marco reglamentario aplicable; no se afirma revisión integral de vigencia." }]
       },
       {
+        organizer: { kind: "cards", title: "Qué hace y qué no hace el comité", items: [{ label: "Sí hace", text: "Promueve la convivencia, analiza situaciones y apoya la ruta y su seguimiento" }, { label: "No es", text: "Un tribunal penal ni un espacio para exponer expedientes" }, { label: "Participación", text: "Diagnóstico de clima y propuestas preventivas, sin casos personales" }] },
         title: "Comité escolar y participación responsable",
         objective: "Diferenciar las funciones de promoción, análisis y seguimiento del comité de las competencias de autoridades externas.",
         explanation: [
@@ -206,6 +213,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "ley-1620-2013", focus: "Consulta composición y funciones del comité escolar de convivencia." }, { docId: "decreto-1075-2015", focus: "Coteja los procedimientos reglamentarios aplicables." }]
       },
       {
+        organizer: { kind: "steps", title: "Componentes de la Ruta de Atención Integral", items: [{ label: "Promoción", text: "Desarrollar capacidades y condiciones de convivencia" }, { label: "Prevención", text: "Reconocer riesgos y reducirlos" }, { label: "Atención", text: "Actuar ante situaciones reportadas: tipo I, II o III" }, { label: "Seguimiento", text: "Revisar la protección y el cumplimiento de medidas" }], note: "Ante riesgo, la protección no espera a que se defina el tipo." },
         title: "Ruta de Atención Integral y análisis inicial",
         objective: "Reconocer promoción, prevención, atención y seguimiento y evitar que una clasificación apresurada retrase la protección.",
         explanation: [
@@ -218,6 +226,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "decreto-1965-2013", focus: "Revisa criterios de tipos de situaciones y protocolos, no solo este resumen." }, { docId: "decreto-1075-2015", focus: "Contrasta la articulación reglamentaria actual del sector." }, { docId: "protocolos-convivencia", focus: "Los protocolos específicos pendientes no se presentan como una ruta oficial universal." }]
       },
       {
+        organizer: { kind: "cards", title: "Mediación: cuándo sí y cuándo no", items: [{ label: "Sí, en conflictos", text: "Con voluntariedad, seguridad y equilibrio" }, { label: "No, ante violencia", text: "Ni ante coerción o presuntos delitos" }, { label: "Nunca", text: "Obligar a pedir perdón o a encontrarse con quien pudo agredir" }] },
         title: "Prevención y manejo pedagógico sin revictimización",
         objective: "Diseñar una acción preventiva y reconocer cuándo la mediación no es una respuesta segura o suficiente.",
         explanation: [
@@ -230,6 +239,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "ley-1620-2013", focus: "Relaciona promoción de derechos y prevención con responsabilidades escolares." }, { docId: "protocolos-convivencia", focus: "Las orientaciones específicas de intervención permanecen pendientes de verificación." }]
       },
       {
+        organizer: { kind: "steps", title: "Seguimiento que protege", items: [{ label: "Verificar medidas acordadas" }, { label: "Escuchar de forma segura", text: "Riesgos, apoyos y posibles represalias" }, { label: "Registrar sin juicios", text: "Fecha, hechos, actuaciones y pendientes" }, { label: "Mejorar con datos agregados", text: "Sin divulgar casos" }] },
         title: "Seguimiento, confidencialidad y mejora institucional",
         objective: "Construir un seguimiento centrado en protección y aprendizaje institucional sin recopilar expedientes reales.",
         explanation: [
@@ -264,6 +274,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
     related: ["/concursos/ingreso-docente", "/concursos/ascenso-reubicacion", "/simulacros/ingreso-docente", "/simulacros/ascenso-reubicacion"],
     units: [
       {
+        organizer: { kind: "cards", title: "Leer el territorio para planear", items: [{ label: "Acceso", text: "Distancias, trayectos y tiempos viables" }, { label: "Recursos", text: "Materiales disponibles y conectividad" }, { label: "Saberes", text: "Situaciones del entorno que generan preguntas de aprendizaje" }], note: "Ruralidad no es una lista de carencias ni un contexto único." },
         title: "Territorialidad y lectura pedagógica del contexto",
         objective: "Construir una lectura del territorio que relacione recursos, trayectos y tiempos con decisiones de planeación sin estereotipos.",
         explanation: [
@@ -276,6 +287,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "ley-115-1994", focus: "Revisa el marco general de educación en contextos rurales y diversidad." }, { docId: "educacion-rural", focus: "La publicación específica está pendiente; consulta la categoría Políticas educativas." }]
       },
       {
+        organizer: { kind: "steps", title: "Una secuencia multigrado", items: [{ label: "Situación compartida", text: "Un eje común para todo el grupo" }, { label: "Estaciones con tareas diferenciadas", text: "Mientras la docente acompaña a un grupo, los otros trabajan con autonomía real" }, { label: "Socialización", text: "Productos con criterios que muestran progresión" }] },
         title: "Multigrado: propósito común y progresiones diferenciadas",
         objective: "Diseñar una secuencia común con tareas de distinta complejidad, trabajo autónomo y acompañamiento docente planificado.",
         explanation: [
@@ -288,6 +300,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "ley-115-1994", focus: "Relaciona fines y organización de la educación con una propuesta curricular pertinente." }, { docId: "educacion-rural", focus: "Los materiales oficiales de un modelo multigrado concreto aún no están verificados aquí." }]
       },
       {
+        organizer: { kind: "cards", title: "Pertinencia cultural", items: [{ label: "Dialogar", text: "Con quienes tienen participación legítima en el contexto" }, { label: "Reconocer", text: "Diversidad interna, autoría y lo que no corresponde usar" }, { label: "Evitar", text: "Reducir la etnoeducación a una fecha o a una artesanía" }] },
         title: "Etnoeducación, diálogo y pertinencia cultural",
         objective: "Reconocer participación y diversidad interna al proponer una actividad contextualizada sin apropiación de saberes culturales.",
         explanation: [
@@ -300,6 +313,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "ley-115-1994", focus: "Estudia el marco general de educación para grupos étnicos." }, { docId: "decreto-1075-2015", focus: "Consulta las disposiciones pertinentes y sus modificaciones antes de una aplicación institucional." }, { docId: "etnoeducacion", focus: "La orientación específica sigue pendiente de verificación." }]
       },
       {
+        organizer: { kind: "cards", title: "Colaborar sin cargar a las familias", items: [{ label: "Participación voluntaria", text: "Con alternativas para quien no puede participar" }, { label: "Sin conectividad", text: "Fichas legibles, instrucciones autónomas y registros en papel" }, { label: "Evaluar al estudiante", text: "Nunca por los materiales que su hogar puede aportar" }] },
         title: "Participación comunitaria y recursos accesibles",
         objective: "Organizar una colaboración voluntaria y una alternativa sin conectividad, evitando cargas injustas y generalizaciones culturales.",
         explanation: [
@@ -312,6 +326,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "ley-115-1994", focus: "Relaciona comunidad educativa, participación y diversidad con límites de la actividad." }, { docId: "etnoeducacion", focus: "Las fuentes concretas para propuestas culturales no han sido verificadas en esta ficha." }]
       },
       {
+        organizer: { kind: "cards", title: "Evaluar en contexto", items: [{ label: "Qué se observa", text: "El aprendizaje, no los recursos del hogar" }, { label: "Evidencias", text: "Explicaciones, registros, esquemas o productos" }, { label: "Sostenibilidad", text: "Carga docente, materiales, clima, seguridad y continuidad" }] },
         title: "Evaluación contextualizada y planeación sostenible",
         objective: "Revisar una secuencia multigrado con evidencias diferenciadas, respeto lingüístico y ajustes de seguridad y recursos.",
         explanation: [
@@ -346,6 +361,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
     related: ["/concursos/ingreso-docente", "/concursos/coordinador", "/simulacros/ingreso-docente", "/simulacros/coordinador", "/simulacros/ascenso-reubicacion"],
     units: [
       {
+        organizer: { kind: "cards", title: "Qué aporta cada disciplina", items: [{ label: "Ciencia", text: "Preguntas y explicación" }, { label: "Tecnología", text: "Herramientas y sus usos" }, { label: "Ingeniería", text: "Diseñar y probar soluciones" }, { label: "Arte", text: "Representación, experiencia y comunicación" }, { label: "Matemáticas", text: "Medir, modelar y argumentar" }] },
         title: "STEAM: problema compartido y aportes disciplinares",
         objective: "Formular una pregunta de proyecto y explicar qué aporta cada disciplina al aprendizaje y al producto.",
         explanation: [
@@ -358,6 +374,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "ley-115-1994", focus: "Relaciona fines educativos y formación con tu propósito, sin atribuir a la ley un método STEAM." }, { docId: "steam", focus: "La publicación oficial específica está pendiente; consulta la categoría Políticas educativas." }]
       },
       {
+        organizer: { kind: "steps", title: "Del problema al algoritmo", items: [{ label: "Descomponer el problema" }, { label: "Reconocer patrones y abstraer lo relevante" }, { label: "Escribir el algoritmo", text: "Estado inicial, instrucciones y meta" }, { label: "Ejecutar y depurar", text: "Comparar lo esperado con lo observado y corregir" }] },
         title: "Pensamiento computacional sin pantallas",
         objective: "Descomponer una tarea, expresar un algoritmo y revisar errores mediante actividades desenchufadas accesibles.",
         explanation: [
@@ -370,6 +387,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "steam", focus: "No hay aún enlace oficial preciso de pensamiento computacional en esta ficha; permanece pendiente." }, { docId: "decreto-1421-2017", focus: "Estudia el marco de inclusión al planear opciones de acceso, no como manual de programación." }]
       },
       {
+        organizer: { kind: "steps", title: "Cómo funciona un robot", items: [{ label: "Entrada", text: "Capta información" }, { label: "Procesamiento", text: "Sigue instrucciones" }, { label: "Acción", text: "Actúa sobre el entorno" }], note: "Una maqueta de cartón accionada a mano explica mecanismos, pero no es un robot autónomo." },
         title: "Robótica inclusiva y prototipos de bajo costo",
         objective: "Distinguir un modelo mecánico de un robot y diseñar roles, pruebas y condiciones seguras de participación.",
         explanation: [
@@ -382,6 +400,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "decreto-1421-2017", focus: "Relaciona participación y apoyos con la experiencia inclusiva." }, { docId: "steam", focus: "La guía institucional concreta de robótica aún no está verificada en biblioteca." }]
       },
       {
+        organizer: { kind: "steps", title: "Una prueba comparativa", items: [{ label: "Problema acotado y criterios observables" }, { label: "Cambiar una sola variable", text: "Mismas condiciones en lo demás" }, { label: "Predecir, probar y registrar" }, { label: "Reconocer límites", text: "Una muestra pequeña no permite generalizar" }] },
         title: "Proyectos sostenibles: probar sin prometer soluciones",
         objective: "Diseñar una prueba comparativa sencilla, registrar resultados y reconocer límites ambientales y de seguridad.",
         explanation: [
@@ -394,6 +413,7 @@ export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
         readings: [{ docId: "plan-decenal-2026-2035", focus: "Consulta el micrositio como contexto de política, no como validación del proyecto ni guía técnica." }, { docId: "steam", focus: "Los documentos técnicos específicos de sostenibilidad y STEAM siguen pendientes." }]
       },
       {
+        organizer: { kind: "cards", title: "IA en el aula: tres reglas", items: [{ label: "Verificar", text: "Puede producir errores, sesgos y referencias inventadas" }, { label: "Proteger datos", text: "Sin fotos, nombres ni relatos de menores" }, { label: "Reconocer autoría", text: "Decir qué hizo la herramienta y qué hizo la persona" }] },
         title: "IA ética, autoría y evaluación del proceso",
         objective: "Proponer límites para un uso hipotético de IA y evaluar evidencia propia del proyecto sin exponer datos personales.",
         explanation: [
