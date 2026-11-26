@@ -3,6 +3,8 @@ export const GUIA34_UPDATE_URL = "https://www.mineducacion.gov.co/portal/anos/20
 export const PLAN_DECENAL_URL = "https://www.mineducacion.gov.co/portal/micrositios-institucionales/Plan-Decenal-de-Educacion-2026-2035/";
 
 export type CourseUnit = {
+  /** Idea clave en una línea, visible junto a la infografía. */
+  key?: string;
   title: string;
   objective: string;
   explanation: string[];
@@ -11,28 +13,28 @@ export type CourseUnit = {
 
 export const guia34Units: CourseUnit[] = [
   {
-    title: "Guía 34 y ruta de mejoramiento institucional",
+    title: "La ruta de mejoramiento en tres etapas",
     objective: "Distinguir una guía metodológica de una disposición normativa y reconocer el mejoramiento como un ciclo continuo.",
     explanation: [
       "La Guía 34 del Ministerio de Educación Nacional es una orientación metodológica para que la comunidad educativa se autoevalúe, decida prioridades y organice su mejoramiento. No es una ley ni un decreto y, por sí sola, no crea requisitos administrativos.",
-      "La ruta de trabajo conecta autoevaluación, priorización, formulación del Plan de Mejoramiento Institucional (PMI), ejecución, seguimiento y ajustes. El PMI no debe ser un documento aislado: debe responder a los hallazgos y articularse con el PEI y con la realidad de la institución.",
+      "La ruta de trabajo conecta autoevaluación, priorización, formulación del Plan de Mejoramiento Institucional (PMI), ejecución, seguimiento y ajustes. La actualización de 2026 organiza la ruta en tres etapas: autoevaluación institucional, elaboración anual del Plan de Mejoramiento Institucional (PMI) y seguimiento de sus avances y resultados, que retroalimenta el siguiente ciclo. El PMI debe responder a los hallazgos y articularse con el PEI.",
     ],
     application: "Escribe qué decisión concreta de tu institución necesita mejorar y qué fuente consultarías para fundamentarla. Separa la orientación metodológica de la norma aplicable.",
   },
   {
-    title: "Gestión directiva",
+    title: "Gestión directiva y estratégica",
     objective: "Analizar cómo la dirección, el PEI y los acuerdos institucionales orientan el mejoramiento.",
     explanation: [
-      "La gestión directiva da sentido y coordinación al trabajo institucional. Al autoevaluarla conviene revisar si el PEI se conoce y se usa, cómo se distribuyen responsabilidades, cómo participan los estamentos y de qué manera el gobierno escolar toma y comunica decisiones.",
+      "En la actualización de 2026 esta área se llama gestión directiva y estratégica e incluye cinco procesos: direccionamiento y gestión estratégica; gobierno escolar, instancias y otros mecanismos de participación; cultura institucional; ambiente y clima escolar, y estrategias para el bienestar y la permanencia de estudiantes. Da sentido y coordinación al trabajo institucional. Al autoevaluarla conviene revisar si el PEI se conoce y se usa, cómo se distribuyen responsabilidades, cómo participan los estamentos y de qué manera el gobierno escolar toma y comunica decisiones.",
       "No basta con tener documentos: las evidencias deben mostrar su apropiación y uso. Actas, acuerdos, planes de trabajo y mecanismos de participación permiten contrastar lo que está escrito con lo que efectivamente ocurre.",
     ],
     application: "Compara una decisión reciente del consejo directivo con el PEI: identifica su propósito, los participantes, el acuerdo adoptado y la evidencia de seguimiento.",
   },
   {
-    title: "Gestión académica",
+    title: "Gestión académica y pedagógica",
     objective: "Examinar las prácticas pedagógicas y el apoyo a las trayectorias educativas a partir de evidencias.",
     explanation: [
-      "Esta área comprende la planeación, el currículo, la enseñanza, la evaluación y las acciones para que los estudiantes aprendan y permanezcan. La autoevaluación debe mirar tanto resultados como procesos, evitando reducir la calidad a una sola cifra.",
+      "En la actualización de 2026 se llama gestión académica y pedagógica y tiene tres procesos: diseño pedagógico; prácticas pedagógicas y gestión de aula, y acompañamiento y seguimiento académico. Comprende la planeación, el currículo, la enseñanza y la evaluación. La autoevaluación debe mirar tanto resultados como procesos, evitando reducir la calidad a una sola cifra.",
       "Planeaciones, trabajos de estudiantes, rúbricas, registros de acompañamiento y análisis de resultados pueden dialogar entre sí. Una misma evidencia no sirve para todas las preguntas: una planeación, por ejemplo, no demuestra por sí sola el aprendizaje.",
     ],
     application: "Selecciona un resultado de aprendizaje y contrástalo con dos evidencias distintas: producciones estudiantiles y observación o valoración de la práctica de aula.",
@@ -41,7 +43,7 @@ export const guia34Units: CourseUnit[] = [
     title: "Gestión administrativa y financiera",
     objective: "Valorar si los recursos, procesos y condiciones de operación responden a las necesidades educativas.",
     explanation: [
-      "La autoevaluación revisa cómo se administran recursos, inventarios, mantenimiento, contratación y soportes, entre otros procesos pertinentes al contexto. El propósito formativo es determinar si estas decisiones facilitan el servicio educativo y se gestionan con claridad.",
+      "En la actualización de 2026 sus procesos son: apoyo al proceso de gestión de la cobertura educativa; administración de la planta física y de los recursos; talento humano, y apoyo financiero y contable. El propósito formativo es determinar si estas decisiones facilitan el servicio educativo y se gestionan con claridad.",
       "Un hallazgo útil relaciona la condición administrativa con su efecto. En lugar de anotar «falta mantenimiento», conviene precisar qué espacio o equipo está afectado, qué evidencia lo demuestra, a quiénes impacta y qué actuación es viable.",
     ],
     application: "Elige un recurso prioritario y registra su estado, la evidencia disponible, el efecto sobre las actividades educativas y la dependencia responsable de la gestión.",
@@ -50,7 +52,7 @@ export const guia34Units: CourseUnit[] = [
     title: "Gestión de la comunidad",
     objective: "Reconocer la participación de familias, estudiantes y aliados como parte del mejoramiento institucional.",
     explanation: [
-      "La comunidad no es únicamente destinataria de información. Puede aportar al diagnóstico, priorizar necesidades, participar en acciones y valorar avances. Las estrategias deben considerar los horarios, medios de comunicación y condiciones del territorio.",
+      "En la actualización de 2026 sus procesos son: accesibilidad; proyección a la comunidad, y participación y convivencia. La comunidad no es únicamente destinataria de información. Puede aportar al diagnóstico, priorizar necesidades, participar en acciones y valorar avances. Las estrategias deben considerar los horarios, medios de comunicación y condiciones del territorio.",
       "Las evidencias pueden incluir acuerdos de encuentros, acciones conjuntas, percepciones recogidas con criterios transparentes y alianzas documentadas. El número de asistentes a una reunión, por sí solo, no demuestra participación significativa.",
     ],
     application: "Formula una pregunta breve para familias y otra para estudiantes sobre un mismo hallazgo; compara sus respuestas sin convertir opiniones aisladas en hechos generales.",
