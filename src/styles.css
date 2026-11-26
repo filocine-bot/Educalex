@@ -2257,3 +2257,6 @@ html { scroll-padding-top: 170px; }
 .fold-body>section>h2:first-child,.fold-body>.academic-modules>h2:first-child,.fold-body>section.competition-references>h2{display:none}
 .fold-body>section{margin:0;border:0;box-shadow:none;padding:0}
 .academic-route>.fold,.academic-route .fold+.fold{margin-top:-.6rem}
+/* Al tocar «Comienza tu preparación gratis»: las tarjetas de perfil se resaltan un momento */
+#perfiles.is-flash .h2-prof{animation:prof-flash 1.4s ease-out 1}
+@keyframes prof-flash{0%,100%{box-shadow:0 10px 30px -18px rgba(16,43,80,.45)}35%{box-shadow:0 0 0 4px #FFC928,0 10px 30px -12px rgba(16,43,80,.5)}}

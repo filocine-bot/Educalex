@@ -42,6 +42,17 @@ const sections = [
 
 const topics = ["Ley 115 de 1994", "Decreto 1278", "Ley 1620 y convivencia", "PIAR e inclusión", "Guía 34 y PMI", "Evaluación y SIEE"];
 
+/** Lleva a las cuatro tarjetas de perfil y las resalta un momento: ahí se elige y empieza la prueba gratis. */
+function goToProfiles(e: React.MouseEvent<HTMLAnchorElement>) {
+  const band = document.getElementById("perfiles");
+  if (!band) return;
+  e.preventDefault();
+  const header = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+  window.scrollTo({ top: band.getBoundingClientRect().top + window.scrollY - header - 4, behavior: "smooth" });
+  band.classList.remove("is-flash"); void band.offsetWidth; band.classList.add("is-flash");
+  window.setTimeout(() => (band.querySelector(".h2-prof-start") as HTMLElement | null)?.focus({ preventScroll: true }), 700);
+}
+
 function Index() {
   return <div className="home2">
     <section className="h2-hero h2-hero-plain" aria-labelledby="h2-hero-title">
@@ -50,7 +61,7 @@ function Index() {
         <h1 id="h2-hero-title">Preparación para Concursos Docentes y Directivos en Colombia</h1>
         <p className="h2-hero-text">Simulacros, legislación educativa, competencias pedagógicas y formación especializada para ingresar, ascender y convertirte en coordinador o rector.</p>
         <div className="h2-hero-actions">
-          <a href="#perfiles" className="h2-btn h2-btn-gold h2-hero-cta">Comienza tu preparación gratis</a>
+          <a href="#perfiles" className="h2-btn h2-btn-gold h2-hero-cta" onClick={goToProfiles}>Comienza tu preparación gratis</a>
         </div>
       </div>
     </section>

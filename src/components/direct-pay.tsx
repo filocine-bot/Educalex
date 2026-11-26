@@ -34,6 +34,16 @@ export function useDirectPay() {
   const direct = useServerFn(startDirectCheckout);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
+  // Si la persona vuelve desde Wompi con el botón «Atrás», el navegador restaura la página tal como quedó
+  // («Abriendo Wompi…», desactivado). Al volver a mostrarse, el botón se reactiva.
+  useEffect(() => {
+    const reset = () => setBusy(null);
+    const onShow = (e: PageTransitionEvent) => { if (e.persisted) reset(); };
+    const onVisible = () => { if (document.visibilityState === "visible") reset(); };
+    window.addEventListener("pageshow", onShow);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => { window.removeEventListener("pageshow", onShow); document.removeEventListener("visibilitychange", onVisible); };
+  }, []);
   async function pay(product: string, returnPath: string) {
     setError("");
     setBusy(product);
