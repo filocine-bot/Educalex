@@ -100,7 +100,7 @@ export function ProfileHome({ profile }: { profile: SimulationProfile }) {
     <section className="trial-game" aria-label="Prueba gratis">
       <PracticeGame profile={profile} trialOnly intro={owned
       ? <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold trial-owned">Ya tienes la preparación completa: ir a mis simulacros <ArrowRight aria-hidden="true" /></Link>
-      : <div className="trial-paybar"><p><strong>Preparación completa · {cop(priceOf(profile))}</strong><span>Pago único. Al pagar te llega al correo el enlace que activa tu simulacro.</span></p><ProfilePayButton profile={profile} className="h2-btn h2-btn-gold" /></div>} />
+      : <div className="trial-paybar"><p><strong>Preparación completa · {cop(priceOf(profile))}</strong><span>Pago único. Al pagar te llega al correo el enlace que activa tu simulacro.</span><Link to={SIM_PATH[profile]} className="trial-preview">Ver qué incluye antes de pagar</Link></p><ProfilePayButton profile={profile} className="h2-btn h2-btn-gold" /></div>} />
     </section>
     <section className="trial-examples" aria-labelledby="trial-ex-title">
       <h2 id="trial-ex-title">Ejemplos de práctica</h2>

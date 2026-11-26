@@ -174,6 +174,7 @@ export function PracticeGame({ profile, bank = profile, trialOnly = false, intro
           <h3>Pasa al siguiente nivel</h3>
           <p>¡Ya conoces tu punto de partida! Con la preparación completa sigues con los niveles Intermedio (40) y Avanzado (50), el núcleo común, el simulacro con tiempo de 40 preguntas y el mapa de errores.</p>
           <BuyLevelButton profile={profile} level={2} owned={premium.owned} returnPath={`/simulacros/${profile}`} />
+          <Link to={`/simulacros/${profile}`} className="trial-preview">Ver qué incluye antes de pagar</Link>
           <p className="trial-offer-note">Es un solo pago. Al pagar te llega al correo la confirmación y el enlace que activa tu simulacro completo.</p>
         </div>)}
     </section>;
