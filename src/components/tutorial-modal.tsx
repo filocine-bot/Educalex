@@ -48,7 +48,7 @@ export function TutorialModal() {
       </div>
       <div role="tabpanel" className="tutorial-body">
         {tab === "video"
-          ? <video className="tutorial-video" controls autoPlay playsInline preload="metadata" poster="/videos/educalex-como-usar.jpg" aria-label="Video: cómo usar EDUCALEX en 6 pasos"><source src="/videos/educalex-como-usar.mp4" type="video/mp4" /></video>
+          ? <video className="tutorial-video" controls autoPlay playsInline preload="metadata" poster="/videos/educalex-como-usar.jpg" aria-label="Video: cómo usar EDUCALEX en 6 pasos"><source src="/videos/educalex-como-usar.mp4?v=3" type="video/mp4" /></video>
           : <GuidedTour />}
       </div>
     </DialogContent>

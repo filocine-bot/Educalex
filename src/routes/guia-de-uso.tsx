@@ -16,8 +16,8 @@ function Guide() {
         <p className="text-sm">También puedes seguirlo paso a paso abajo.</p>
       </div>
       <video className="guide-video" controls preload="none" playsInline poster="/videos/educalex-como-usar.jpg" aria-label="Video: cómo usar EDUCALEX en 6 pasos">
-        <source src="/videos/educalex-como-usar.mp4" type="video/mp4" />
-        Tu navegador no puede reproducir el video. <a href="/videos/educalex-como-usar.mp4">Descárgalo aquí</a>.
+        <source src="/videos/educalex-como-usar.mp4?v=3" type="video/mp4" />
+        Tu navegador no puede reproducir el video. <a href="/videos/educalex-como-usar.mp4?v=3">Descárgalo aquí</a>.
       </video>
     </div>
     <GuidedTour />
