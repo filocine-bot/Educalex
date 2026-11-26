@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import { CheckCircle2, Crown, Star, Users } from 'lucide-react';
+import { CheckCircle2, Crown, Play, Star, Users } from 'lucide-react';
+import { openTutorial } from '@/components/tutorial-modal';
 import { Button } from '@/components/ui/button';
 import { PREMIUM_LOCKED } from '@/lib/game-engine';
 import { LAUNCH_BUYERS, PRICES } from '@/lib/payments';
@@ -16,6 +17,7 @@ const plans = [
 export function PreparationPlans() {
   return <div className="space-y-8">
     {!PREMIUM_LOCKED && <p className="game-launch">Lanzamiento: por tiempo limitado, todos los niveles están abiertos gratis.</p>}
+    <p className="plans-how">¿Quieres conocer el proceso antes de comprar? <button type="button" onClick={openTutorial}><Play aria-hidden="true" /> Mira cómo funciona en 6 pasos</button></p>
     <p className="game-launch">Precios de lanzamiento en pesos colombianos (COP) para las primeras {LAUNCH_BUYERS} compras. Después se actualizarán; quien ya compró conserva su acceso.</p>
     <div className="grid gap-5 md:grid-cols-3">{plans.map(p => <article key={p.name} className="rounded-lg border border-border bg-card p-5 space-y-3">
       <p.icon className="text-primary" aria-hidden="true" />

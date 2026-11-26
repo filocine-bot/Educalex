@@ -2323,3 +2323,28 @@ html { scroll-padding-top: 170px; }
 .org-note{margin:.6rem 0 0;font-size:.83rem;font-weight:700;color:#5a4400}
 .training-reading .fold{margin:.6rem 0}
 @media (max-width:600px){.org-levels li{width:100%!important}}
+/* Sección «¿Cómo funciona?» de la portada y ventana del tutorial */
+.hiw{background:linear-gradient(180deg,#fffaf0,#fff);border-bottom:1px solid #f0e2b6}
+.hiw-inner{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1rem;padding:1rem 0}
+.hiw-badge{display:grid;place-items:center;width:3.4rem;height:3.4rem;border-radius:16px;background:#102B50;color:#FFC928;box-shadow:0 8px 20px -10px rgba(16,43,80,.6)}
+.hiw-badge svg{width:1.9rem;height:1.9rem}
+.hiw-text h2{margin:0;font:800 1.35rem/1.2 Poppins,sans-serif;color:#102B50;text-transform:uppercase;letter-spacing:.01em}
+.hiw-text p{margin:.3rem 0 .45rem;color:#374151;font-size:.95rem;line-height:1.45}
+.hiw-steps{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.hiw-steps li{display:inline-flex;align-items:center;gap:.35rem;background:#fff;border:1px solid #f0e2b6;border-radius:999px;padding:.2rem .65rem;font-size:.8rem;font-weight:700;color:#102B50}
+.hiw-steps svg{width:.95rem;height:.95rem;color:#c27a00}
+.hiw-cta{display:inline-flex;align-items:center;gap:.5rem;min-height:52px;padding:0 1.4rem;font-size:1rem;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;box-shadow:0 10px 22px -12px rgba(194,122,0,.8)}
+.hiw-cta svg{width:1.2rem;height:1.2rem}
+@media (max-width:760px){.hiw-inner{grid-template-columns:auto 1fr;padding:.8rem 0;gap:.7rem}.hiw-badge{width:2.6rem;height:2.6rem;border-radius:12px}.hiw-badge svg{width:1.4rem;height:1.4rem}.hiw-text h2{font-size:1rem}.hiw-text p{font-size:.84rem}.hiw-steps{display:none}.hiw-cta{grid-column:1/-1;width:100%;justify-content:center;min-height:48px;font-size:.95rem}}
+.tutorial-modal{max-width:760px;width:calc(100vw - 1.5rem);max-height:92vh;overflow:auto;padding:1.1rem;border-radius:18px}
+.tutorial-title{font:800 1.2rem Poppins,sans-serif;color:#102B50;padding-right:2rem}
+.tutorial-sub{margin-top:-.2rem;color:#4b5565;font-size:.9rem}
+.tutorial-tabs{display:flex;gap:.4rem}
+.tutorial-tabs button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;min-height:42px;border-radius:10px;border:2px solid #d6e0ee;background:#fff;color:#102B50;font-weight:800;cursor:pointer}
+.tutorial-tabs button.active{background:#102B50;border-color:#102B50;color:#fff}
+.tutorial-tabs svg{width:1.1rem;height:1.1rem}
+.tutorial-body{min-height:200px}
+.tutorial-video{display:block;margin:0 auto;max-height:68vh;max-width:100%;border-radius:14px;background:#0f2c57}
+.plans-how{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;padding:.7rem 1rem;border-radius:12px;background:#f4f7fb;border:1px solid #d6e0ee;color:#102B50;font-weight:600}
+.plans-how button{display:inline-flex;align-items:center;gap:.35rem;background:#FFC928;color:#102B50;border:0;border-radius:10px;padding:.45rem .9rem;font-weight:800;cursor:pointer}
+.plans-how svg{width:1rem;height:1rem}

@@ -1,3 +1,4 @@
+import { HowItWorks } from "@/components/how-it-works";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BookMarked, Bot, ChartNoAxesCombined, CheckCircle2, ClipboardCheck, Compass, FileText, GraduationCap, Library, Mail, Play, Scale, Settings, ShieldCheck, Trophy, Users, Video } from "lucide-react";
 import { pageHead } from "@/lib/educalex-content";
@@ -51,6 +52,8 @@ function Index() {
         <p className="h2-hero-text">Simulacros, legislación educativa, competencias pedagógicas y formación especializada para ingresar, ascender y convertirte en coordinador o rector.</p>
       </div>
     </section>
+
+    <HowItWorks />
 
     <section id="perfiles" className="h2-profiles-band" aria-labelledby="h2-prof-title">
       <div className="site-container h2-section">
