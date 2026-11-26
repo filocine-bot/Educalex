@@ -1,11 +1,92 @@
 import type { PagePath } from "@/lib/educalex-sitemap";
 
-export type TrainingPath = "/formacion/inclusion-dua-piar" | "/formacion/convivencia-escolar" | "/formacion/educacion-rural" | "/formacion/steam-robotica";
+export type TrainingPath = "/formacion/actualizacion-normativa" | "/formacion/inclusion-dua-piar" | "/formacion/convivencia-escolar" | "/formacion/educacion-rural" | "/formacion/steam-robotica";
 export type TrainingUnit = { title: string; objective: string; explanation: string[]; example: string; activity: string; readings: { docId: string; focus: string }[] };
 export type WorkshopField = { key: string; label: string; hint: string; example: string };
 export type TrainingCourse = { purpose: string; audience: string; units: TrainingUnit[]; workshop: { title: string; scenario: string; fields: WorkshopField[]; review: string[] }; related: PagePath[] };
 
 export const trainingCourses: Record<TrainingPath, TrainingCourse> = {
+  "/formacion/actualizacion-normativa": {
+    purpose: "Ubicar las normas que rigen la educación oficial en Colombia, leerlas en su orden y aplicarlas a situaciones de la institución. El curso explica qué dice cada norma, dónde se encuentra y cómo comprobar si sigue vigente; no reemplaza la lectura del texto oficial ni la asesoría jurídica.",
+    audience: "Aspirantes a la carrera docente, docentes que preparan el ascenso, coordinadores y rectores que necesitan actualizar su conocimiento de la normativa educativa.",
+    related: ["/biblioteca/legislacion", "/concursos/ingreso-docente", "/concursos/rector", "/simulacros/ingreso-docente", "/simulacros/rector"],
+    units: [
+      {
+        title: "El orden de las normas: de la Constitución al Decreto 1075",
+        objective: "Reconocer el lugar de cada tipo de norma y comprobar si un artículo sigue vigente antes de aplicarlo.",
+        explanation: [
+          "La Constitución de 1991 define la educación como un derecho de la persona y un servicio público con función social (art. 67). Exige que la enseñanza esté a cargo de personas de reconocida idoneidad ética y pedagógica (art. 68) y establece que los empleos del Estado son de carrera, con ingreso y ascenso por mérito (art. 125). Los derechos de los niños prevalecen sobre los de los demás (art. 44).",
+          "Las leyes desarrollan esos mandatos: la Ley 115 de 1994 es la Ley General de Educación y la Ley 715 de 2001 organiza competencias y recursos del sector. Los decretos reglamentan las leyes. Desde 2015, la mayoría de los decretos del sector está compilada en el Decreto 1075 de 2015, el Decreto Único Reglamentario del Sector Educación.",
+          "Un decreto puede modificar artículos del Decreto 1075. Por ejemplo, el Decreto 277 de 2025 modificó tres artículos sobre jornada escolar, asignación académica y jornada laboral. Por eso, antes de citar una norma, conviene revisar su versión vigente en una fuente oficial, como el gestor normativo de Función Pública o la página del Ministerio de Educación.",
+        ],
+        example: "Caso ficticio en una institución de Montería: un docente cita en una reunión el horario de la jornada escolar con base en una fotocopia antigua del Decreto 1850 de 2002. La coordinadora revisa el Decreto 1075 de 2015 en la fuente oficial y encuentra que el artículo correspondiente fue modificado por el Decreto 277 de 2025. El equipo actualiza su referencia antes de tomar decisiones.",
+        activity: "Elige una decisión de tu institución, como un horario, la promoción de un estudiante o la elección del personero. Escribe qué norma la regula, en qué tipo de norma está (ley, decreto o resolución) y cómo comprobarías que el artículo sigue vigente.",
+        readings: [{ docId: "constitucion-1991", focus: "Lee los artículos 44, 67, 68 y 125 y relaciónalos con tu cargo." }, { docId: "decreto-1075-2015", focus: "Ubica cómo se organiza por libros, partes y títulos." }, { docId: "decreto-277-2025", focus: "Observa cómo un decreto nuevo modifica artículos del Decreto 1075." }],
+      },
+      {
+        title: "La institución educativa: PEI, gobierno escolar y funciones del rector",
+        objective: "Identificar quién decide cada asunto institucional y qué documento lo respalda.",
+        explanation: [
+          "La Ley 115 exige que cada establecimiento tenga un Proyecto Educativo Institucional que responda a las necesidades de los educandos, la comunidad local, la región y el país (art. 73). El Decreto 1860 de 1994 fija sus contenidos mínimos, entre ellos principios, objetivos, plan de estudios, manual de convivencia y gobierno escolar (art. 14), y dispone que lo adopta el consejo directivo, previa consulta al consejo académico (art. 15).",
+          "En los establecimientos estatales, el gobierno escolar lo forman el rector, el consejo directivo y el consejo académico (Ley 115, arts. 142 a 145). El consejo directivo, presidido por el rector, adopta el manual de convivencia y fija los criterios para asignar cupos. El consejo académico, con un docente por área, organiza el plan de estudios. El personero y el consejo de estudiantes son instancias de participación, no órganos del gobierno escolar.",
+          "La Ley 715 de 2001 asigna al rector, entre otras funciones, dirigir la preparación del PEI, formular planes de mejoramiento, distribuir las asignaciones académicas, administrar el Fondo de Servicios Educativos y publicar cada semestre los docentes, horarios y carga académica (art. 10). El MEN actualizó en 2026 la Guía 34, que orienta la autoevaluación y el plan de mejoramiento institucional.",
+        ],
+        example: "Caso ficticio en una institución de Cereté: un grupo de docentes propone cambiar el uniforme y lo anuncia por circular firmada solo por el coordinador. El rector explica que una modificación del manual de convivencia debe construirse con la comunidad y adoptarse en el consejo directivo. Convoca la discusión y lleva la propuesta a esa instancia.",
+        activity: "Haz una tabla con tres decisiones institucionales (adoptar el PEI, organizar el plan de estudios y fijar criterios de cupos). Para cada una escribe la instancia que decide y el artículo que lo establece.",
+        readings: [{ docId: "ley-115-1994", focus: "Artículos 73, 77, 87 y 142 a 145." }, { docId: "decreto-1860-1994", focus: "Artículos 14, 15, 21, 28 y 29." }, { docId: "ley-715-2001", focus: "Artículos 9 y 10: institución, centro educativo y funciones del rector." }, { docId: "guia-34-actualizacion-2026", focus: "Presentación de la actualización de la Guía 34 (MEN, 2026)." }],
+      },
+      {
+        title: "Tiempo escolar y trabajo docente: lo que cambió en 2025",
+        objective: "Distinguir jornada escolar, asignación académica, jornada laboral y Jornada Única.",
+        explanation: [
+          "El Decreto 277 de 2025 modificó el Decreto 1075 de 2015 en tres temas. La jornada escolar es el tiempo de los estudiantes: como mínimo, 20 horas semanales en preescolar, 25 en primaria, 30 en secundaria y media académica, y 37 en media técnica. Al menos el 80 % de esas horas se dedica a las áreas obligatorias y fundamentales, y el descanso pedagógico hace parte de la jornada.",
+          "La asignación académica es el tiempo que el docente dedica a las clases: 20 horas semanales en preescolar, 25 en primaria y 22 en secundaria y media. La jornada laboral del docente es de ocho horas: seis en el establecimiento y dos fuera de él. Confundir estos tres conceptos es un error frecuente en las preguntas de los concursos.",
+          "La Jornada Única es distinta: el Decreto 2105 de 2017 la define como el tiempo diario que el colegio oficial dedica a actividades académicas, descanso y alimentación, cinco días a la semana. La reconoce la entidad territorial certificada a cada institución que cumple las condiciones, y fija 25 horas semanales en preescolar, 30 en primaria y 35 en secundaria y media académica.",
+        ],
+        example: "Caso ficticio en una sede rural de San Pelayo: un padre reclama porque su hijo de primaria sale una hora antes que el de secundaria. La coordinadora le explica que la norma fija mínimos distintos por nivel y que la institución no está en Jornada Única, que requiere reconocimiento de la entidad territorial.",
+        activity: "Para un docente de primaria y uno de secundaria inventados, escribe su asignación académica semanal, su jornada laboral y la jornada escolar mínima de sus estudiantes. Indica en qué artículo encontraste cada dato.",
+        readings: [{ docId: "decreto-277-2025", focus: "Artículos que modifican jornada escolar, asignación académica y jornada laboral." }, { docId: "decreto-2105-2017", focus: "Definición, reconocimiento y duración de la Jornada Única." }],
+      },
+      {
+        title: "Carrera docente: ingreso, evaluación y ascenso",
+        objective: "Diferenciar el concurso de ingreso, las evaluaciones del Decreto 1278 y el proceso de ascenso o reubicación.",
+        explanation: [
+          "El Decreto Ley 1278 de 2002 rige a quienes ingresaron por concurso desde 2002; el Decreto 2277 de 1979 rige a quienes ya estaban en el escalafón anterior. El Decreto 1278 define la función docente, que incluye actividades curriculares no lectivas (art. 5), y señala como directivos docentes al director rural, al rector y al coordinador (art. 6). El escalafón tiene tres grados con niveles salariales de la A a la D (arts. 19 a 21).",
+          "El ingreso es por concurso de méritos. Según el Decreto 2038 de 2016, la prueba de aptitudes y competencias básicas es la única eliminatoria, con un mínimo de 60/100 para docentes y 70/100 para directivos docentes; la psicotécnica es clasificatoria. Tras el nombramiento viene el período de prueba, que se aprueba con 60 % o más (arts. 12 y 31).",
+          "El Decreto 1278 prevé evaluaciones de período de prueba, de desempeño anual y de competencias (arts. 27 y 35). La Resolución 018987 de 2025 del MEN reglamenta el proceso de ascenso y reubicación: exige, entre otros requisitos, tres años de servicio desde la primera posesión en período de prueba y 60 % en cada una de las dos últimas evaluaciones de desempeño (art. 7), e incluye una prueba pedagógica escrita de 0 a 45 puntos (art. 10).",
+        ],
+        example: "Caso ficticio en Sincelejo: una docente nombrada en 2022 por el Decreto 1278 obtuvo 55 % y 78 % en sus dos últimas evaluaciones de desempeño y quiere inscribirse al proceso de ascenso. Al revisar la Resolución 018987 de 2025, comprueba que no cumple el requisito, porque las evaluaciones no se promedian y una de ellas está por debajo de 60 %.",
+        activity: "Elabora una línea de tiempo de la carrera de un docente inventado: concurso, nombramiento, período de prueba, evaluaciones anuales y ascenso. Indica en cada paso la norma y el artículo que lo regula.",
+        readings: [{ docId: "decreto-1278-2002", focus: "Artículos 5, 6, 12, 19 a 21, 27, 31, 35 y 36." }, { docId: "decreto-2038-2016", focus: "Carácter eliminatorio de la prueba y puntajes mínimos." }, { docId: "resolucion-018987-2025", focus: "Requisitos e instrumentos del proceso de ascenso y reubicación." }, { docId: "guia-31", focus: "Evaluación anual de desempeño." }],
+      },
+      {
+        title: "Evaluación, convivencia, inclusión y protección de derechos",
+        objective: "Aplicar las normas que orientan la evaluación de los estudiantes, la convivencia escolar y la inclusión.",
+        explanation: [
+          "El Decreto 1290 de 2009 reglamenta la evaluación en el ámbito institucional. Cada institución define su Sistema Institucional de Evaluación de los Estudiantes (SIEE), con criterios, estrategias de apoyo, periodicidad de informes y mecanismos de reclamación, y lo aprueba el consejo directivo (arts. 4 y 8). La escala propia debe tener equivalencia con la nacional: Superior, Alto, Básico y Bajo (art. 5).",
+          "La Ley 1620 de 2013 crea el sistema de convivencia escolar y la Ruta de Atención Integral, con componentes de promoción, prevención, atención y seguimiento (arts. 29 y 30). El Decreto 1965 de 2013 clasifica las situaciones en tipo I, II y III según los hechos, y fija protocolos para cada una (arts. 40 a 44). Ante un caso con menores, la Ley 1098 de 2006 ordena atender el interés superior de niños, niñas y adolescentes (art. 8) y prohíbe sanciones que afecten su dignidad (art. 45).",
+          "El Decreto 1421 de 2017 reglamenta la atención educativa a la población con discapacidad: el Diseño Universal para el Aprendizaje orienta la planeación para todos, y el Plan Individual de Ajustes Razonables (PIAR) organiza los apoyos individuales; se elabora con la valoración pedagógica y con la participación de docentes, docente de apoyo, familia y estudiante.",
+        ],
+        example: "Caso ficticio en Lorica: dos estudiantes de séptimo se empujan en el descanso sin causar lesiones y es la primera vez. El docente lo maneja como situación tipo I: media entre ellos, deja registro y hace seguimiento. Si se hubiera tratado de agresiones reiteradas o de ciberacoso, el caso sería tipo II y tendría que ir al comité de convivencia.",
+        activity: "Escribe tres situaciones escolares inventadas, una por tipo. Para cada una indica el tipo según el Decreto 1965, el primer paso del protocolo y quién debe actuar.",
+        readings: [{ docId: "decreto-1290-2009", focus: "Artículos 3 a 8: propósitos, SIEE, escala y promoción." }, { docId: "ley-1620-2013", focus: "Comité escolar, responsabilidades y Ruta de Atención Integral." }, { docId: "decreto-1965-2013", focus: "Clasificación de situaciones y protocolos." }, { docId: "decreto-1421-2017", focus: "DUA, ajustes razonables y PIAR." }, { docId: "ley-1098-2006", focus: "Interés superior y obligaciones de las instituciones educativas." }],
+      },
+    ],
+    workshop: {
+      title: "Ficha de análisis normativo — caso ficticio",
+      scenario: "Elige o inventa una situación de una institución educativa oficial. Úsala para practicar cómo se busca, se lee y se aplica una norma. No incluyas nombres ni datos reales de estudiantes, docentes o familias.",
+      fields: [
+        { key: "situacion", label: "Situación", hint: "Describe el hecho en dos o tres frases, sin nombres.", example: "Un padre pide que su hijo sea promovido aunque perdió tres áreas en el año." },
+        { key: "pregunta", label: "Pregunta que debes resolver", hint: "Formúlala de modo que una norma pueda responderla.", example: "¿Quién define los criterios de promoción y qué recurso tiene el padre?" },
+        { key: "norma", label: "Norma y artículo", hint: "Cita la norma, el artículo y el tipo de norma.", example: "Decreto 1290 de 2009, artículos 6 y 8, compilado en el Decreto 1075 de 2015." },
+        { key: "contenido", label: "Qué dice la norma, en tus palabras", hint: "Parafrasea; no copies el texto completo.", example: "La promoción la define el SIEE de cada institución, que aprueba el consejo directivo." },
+        { key: "instancia", label: "Quién decide o actúa", hint: "Persona u órgano responsable.", example: "La comisión de evaluación aplica el SIEE; la reclamación sigue el procedimiento del SIEE." },
+        { key: "accion", label: "Acción en la institución", hint: "Qué harías y cómo lo comunicarías.", example: "Explicar al padre los criterios del SIEE y orientarlo en el procedimiento de reclamación." },
+        { key: "vigencia", label: "Cómo comprobaste la vigencia", hint: "Fuente oficial consultada y fecha.", example: "Gestor normativo de Función Pública, consultado el 26 de noviembre de 2026." },
+      ],
+      review: ["La pregunta se puede responder con una norma concreta.", "Cité el artículo y el tipo de norma.", "Parafraseé sin cambiar el sentido de la norma.", "Identifiqué la instancia que decide.", "Comprobé la vigencia en una fuente oficial."],
+    },
+  },
   "/formacion/inclusion-dua-piar": {
     purpose: "Reconocer barreras del entorno, diseñar opciones de aprendizaje para el grupo y proponer apoyos individualizados sin confundir DUA con PIAR. La inclusión se trabaja con expectativas de aprendizaje, participación y cuidado de la información, no con etiquetas que sustituyan la comprensión pedagógica.",
     audience: "Docentes de aula y de apoyo, aspirantes a la carrera, coordinadores y rectores que acompañan prácticas inclusivas.",

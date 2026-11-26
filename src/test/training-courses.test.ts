@@ -5,7 +5,7 @@ import { routeTree } from "@/routeTree.gen";
 import { courses, getLibraryDoc, getPage } from "@/lib/educalex-sitemap";
 import { isTrainingPath, serializeWorkshop, trainingCourses, type TrainingPath } from "@/lib/training-courses";
 
-const paths: TrainingPath[] = ["/formacion/inclusion-dua-piar", "/formacion/convivencia-escolar", "/formacion/educacion-rural", "/formacion/steam-robotica"];
+const paths: TrainingPath[] = ["/formacion/actualizacion-normativa", "/formacion/inclusion-dua-piar", "/formacion/convivencia-escolar", "/formacion/educacion-rural", "/formacion/steam-robotica"];
 
 describe("Tercera etapa de formación", () => {
   it.each(paths)("%s tiene cinco unidades y está conectado a su ruta y catálogo", path => {
