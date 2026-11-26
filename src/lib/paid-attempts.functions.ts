@@ -37,3 +37,19 @@ export const startPaidAttempt = createServerFn({ method: "POST" })
     if (error) throw new Error("No se pudo registrar el intento. Intenta de nuevo.");
     return { used: next, unlimited: false };
   });
+
+/** Registra el inicio de un intento en un bloque de 10 preguntas de la preparación completa (máximo 3 por bloque). */
+export const startBlockAttempt = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(input => z.object({ key: z.string().regex(/^[a-z-]{3,30}:[a-z0-9-]{2,40}$/) }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: admin } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
+    const { supabaseAdmin, meta, used } = await readAttempts(context.userId);
+    if (admin === true) return { used, unlimited: true };
+    const count = used[data.key] ?? 0;
+    if (count >= MAX_PAID_ATTEMPTS) throw new Error("Ya usaste tus 3 intentos de este bloque.");
+    const next = { ...used, [data.key]: count + 1 };
+    const { error } = await supabaseAdmin.auth.admin.updateUserById(context.userId, { app_metadata: { ...meta, paid_attempts: next } });
+    if (error) throw new Error("No se pudo registrar el intento. Intenta de nuevo.");
+    return { used: next, unlimited: false };
+  });
