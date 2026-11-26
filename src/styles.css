@@ -2231,3 +2231,18 @@ html { scroll-padding-top: 170px; }
 @media (max-width:700px){.pst-parts,.pst-two,.pst-req{grid-template-columns:1fr}.pst{padding:1rem .8rem}.pst-head h2{font-size:1.2rem}}
 @media (max-width:600px){.prof-tabs{flex-wrap:nowrap}.prof-tabs button{flex:1 1 0;font-size:.88rem;min-height:46px;padding:.4rem .5rem;gap:.3rem}}
 @media (max-width:600px){.pst-step{grid-template-columns:1fr;gap:.4rem}.pst-num{width:1.9rem;height:1.9rem;font-size:.95rem}.trial-start h2{font-size:1.12rem;padding:0 2.2rem}.comp-locks .exam-tile{min-height:52px}}
+/* Menos desplazamiento en celular: competencias en 2 columnas compactas */
+@media (max-width:600px){
+.comp-locks{gap:.4rem;margin:1rem 0}
+.comp-locks h2{font-size:1.08rem}
+.comp-locks>p{font-size:.88rem}
+.comp-locks .exam-grid{grid-template-columns:1fr 1fr;gap:.4rem}
+.comp-locks .exam-tile{min-height:0;padding:.5rem;column-gap:.4rem}
+.comp-locks .exam-tile>svg:first-child{width:1.7rem;height:1.7rem;padding:.3rem;border-radius:8px}
+.comp-locks .exam-tile strong{font-size:.8rem;padding-right:.9rem}
+.comp-locks .exam-tile small{display:none}
+.comp-locks .exam-lock{width:.85rem;height:.85rem}
+.comp-locks .exam-group{font-size:.68rem}
+.trial-start{padding:1rem .8rem;gap:.5rem}
+.trial-start p{font-size:.9rem}
+}
