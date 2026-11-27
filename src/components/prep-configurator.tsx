@@ -1,7 +1,7 @@
 import { Fold } from "@/components/fold";
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, Globe2, Bot, Calculator, ChartNoAxesCombined, CheckCircle2, Clock3, Compass, GraduationCap, HeartHandshake, LayoutList, Lock, PenLine, Play, Scale, Settings, Sparkles, Trophy, Users, type LucideIcon } from "lucide-react";
+import { ArrowRight, BookOpen, FlaskConical, Globe2, Bot, Calculator, ChartNoAxesCombined, CheckCircle2, Clock3, Compass, GraduationCap, HeartHandshake, LayoutList, Lock, PenLine, Play, Scale, Settings, Sparkles, Trophy, Users, type LucideIcon } from "lucide-react";
 import { ProfilePayButton, useDirectPay } from "@/components/direct-pay";
 import { PracticeGame } from "@/components/practice-game";
 import { ProfileStructure } from "@/components/profile-structure";
@@ -122,7 +122,7 @@ export function ProfileHome({ profile }: { profile: SimulationProfile }) {
   </>;
 }
 
-const TILE_ICON: Record<string, LucideIcon> = { matematicas: Calculator, sociales: Globe2, lengua: BookOpen, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
+const TILE_ICON: Record<string, LucideIcon> = { matematicas: Calculator, sociales: Globe2, lengua: BookOpen, naturales: FlaskConical, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
 
 /** Competencias que evalúa la preparación completa: con candado hasta pagar; con el pago, enlazan al simulacro. */
 function CompetencyLocks({ profile }: { profile: SimulationProfile }) {
