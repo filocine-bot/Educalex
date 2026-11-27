@@ -5,11 +5,12 @@ import { ArrowRight, BookOpen, Bot, Calculator, ChartNoAxesCombined, CheckCircle
 import { ProfilePayButton, useDirectPay } from "@/components/direct-pay";
 import { PracticeGame } from "@/components/practice-game";
 import { ProfileStructure } from "@/components/profile-structure";
-import { blocksOf, examComponents, GROUP_LABEL } from "@/lib/exam-components";
+import { AREA_GROUP_LABEL, AREA_TESTS, blocksOf, examComponents, GROUP_LABEL } from "@/lib/exam-components";
+import { BlockQuiz } from "@/components/exam-board";
 import { useMyPremium } from "@/components/premium-purchase";
 import { dilemmas } from "@/lib/dilemmas";
 import { getProduct, PROFILE_LABEL } from "@/lib/payments";
-import type { SimulationProfile } from "@/lib/simulation-bank";
+import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 
 const cop = (n: number) => n.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
 
@@ -96,15 +97,17 @@ export function FreeTools({ profile }: { profile: SimulationProfile }) {
 
 /** Página de perfil: pestañas «Prueba gratis» y «Estructura de la prueba»; al final, las competencias con candado y el pago. */
 export function ProfileHome({ profile }: { profile: SimulationProfile }) {
-  const [tab, setTab] = useState<"prueba" | "estructura">("prueba");
-  const show = (t: "prueba" | "estructura") => { setTab(t); requestAnimationFrame(() => document.getElementById("perfil-tabs")?.scrollIntoView({ behavior: "smooth", block: "start" })); };
+  const [tab, setTab] = useState<"prueba" | "estructura" | "areas">("prueba");
+  const hasAreas = AREA_TESTS[profile].length > 0;
+  const show = (t: "prueba" | "estructura" | "areas") => { setTab(t); requestAnimationFrame(() => document.getElementById("perfil-tabs")?.scrollIntoView({ behavior: "smooth", block: "start" })); };
   return <>
     <div id="perfil-tabs" className="prof-tabs" role="tablist" aria-label="Contenido del perfil">
       <button type="button" role="tab" aria-selected={tab === "prueba"} className={tab === "prueba" ? "active" : ""} onClick={() => show("prueba")}><Play aria-hidden="true" /> Prueba gratis</button>
       <button type="button" role="tab" aria-selected={tab === "estructura"} className={tab === "estructura" ? "active" : ""} onClick={() => show("estructura")}><LayoutList aria-hidden="true" /> Estructura de la prueba</button>
+      {hasAreas && <button type="button" role="tab" aria-selected={tab === "areas"} className={tab === "areas" ? "active" : ""} onClick={() => show("areas")}><Calculator aria-hidden="true" /> Pruebas por área</button>}
     </div>
     <div role="tabpanel">
-      {tab === "prueba"
+      {tab === "areas" ? <AreaTests profile={profile} /> : tab === "prueba"
         ? <section className="trial-game" aria-label="Prueba gratis"><PracticeGame profile={profile} trialOnly /></section>
         : <><ProfileStructure profile={profile} /><button type="button" className="h2-btn h2-btn-gold pst-back" onClick={() => show("prueba")}><Play aria-hidden="true" /> Iniciar prueba gratis</button></>}
     </div>
@@ -119,7 +122,7 @@ export function ProfileHome({ profile }: { profile: SimulationProfile }) {
   </>;
 }
 
-const TILE_ICON: Record<string, LucideIcon> = { lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
+const TILE_ICON: Record<string, LucideIcon> = { matematicas: Calculator, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
 
 /** Competencias que evalúa la preparación completa: con candado hasta pagar; con el pago, enlazan al simulacro. */
 function CompetencyLocks({ profile }: { profile: SimulationProfile }) {
@@ -130,6 +133,7 @@ function CompetencyLocks({ profile }: { profile: SimulationProfile }) {
   const groups = [
     { label: labels.comunes, items: comps.filter(c => c.group === "comunes") },
     { label: labels.propio, items: comps.filter(c => c.group === "pedagogicas") },
+    { label: AREA_GROUP_LABEL, items: comps.filter(c => c.group === "areas") },
   ].filter(g => g.items.length > 0);
   const tile = (key: string, Icon: LucideIcon, title: string, sub: string, tone: string) => {
     const inner = <><Icon aria-hidden="true" /><strong>{title}</strong><small>{sub}</small>{!owned && <Lock className="exam-lock" aria-label="Se habilita con el pago" />}</>;
@@ -149,5 +153,32 @@ function CompetencyLocks({ profile }: { profile: SimulationProfile }) {
     {owned
       ? <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold comp-locks-go">Ir a mi simulacro <ArrowRight aria-hidden="true" /></Link>
       : <div className="trial-paybar comp-locks-pay"><p><strong>Preparación completa · {cop(priceOf(profile))}</strong><span>Pago único. Al pagar te llega al correo el enlace que activa tu simulacro.</span></p><ProfilePayButton profile={profile} className="h2-btn h2-btn-gold" /></div>}
+  </section>;
+}
+
+/** Pruebas por área: una pestaña por área lista; al pulsarla se abre el primer bloque (gratis). Los demás bloques van con la preparación completa. */
+function AreaTests({ profile }: { profile: SimulationProfile }) {
+  const areas = AREA_TESTS[profile];
+  const [sel, setSel] = useState(areas[0]!.id);
+  const [round, setRound] = useState(0);
+  const [review, setReview] = useState<PracticeQuestion[] | null>(null);
+  const { level } = useMyPremium();
+  const owned = level(profile) >= 3;
+  const area = areas.find(a => a.id === sel) ?? areas[0]!;
+  const blocks = blocksOf(area);
+  const rest = area.questions.length - blocks[0]!.questions.length;
+  const restart = () => { setReview(null); setRound(r => r + 1); };
+  const open = (id: string) => { setSel(id); restart(); };
+  return <section className="area-tests" aria-label="Pruebas por área">
+    <div className="area-tabs" role="tablist" aria-label="Áreas disciplinares">
+      {areas.map(a => <button key={a.id} type="button" role="tab" aria-selected={a.id === sel} className={a.id === sel ? "active" : ""} onClick={() => open(a.id)}>{a.title}</button>)}
+    </div>
+    <p className="area-note"><strong>{area.title}:</strong> {area.questions.length} preguntas en {blocks.length} bloques. El bloque 1 es gratis. Referencia: ejes de la guía CNSC–ICFES anterior y Estándares del MEN, mientras el ICFES publica los ejes 2026.</p>
+    <BlockQuiz key={`${sel}-${round}-${review ? "r" : "n"}`} title={`${area.title} · Bloque 1 (gratis)`} questions={review ?? blocks[0]!.questions} review={!!review}
+      onFinish={() => {}} onReview={wrong => setReview(wrong)} onRepeat={restart} onExit={restart} />
+    {rest > 0 && <div className="area-more">
+      <Lock aria-hidden="true" /><p><strong>{rest} preguntas más de {area.title}</strong><span>{owned ? "Están en tu simulacro, en «Pruebas por área disciplinar»." : "Se habilitan con la preparación completa, junto con las demás competencias."}</span></p>
+      {owned && <Link to={SIM_PATH[profile]} className="h2-btn h2-btn-gold">Continuar <ArrowRight aria-hidden="true" /></Link>}
+    </div>}
   </section>;
 }

@@ -2,9 +2,10 @@ import { levelsFor } from "@/lib/game-engine";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 import { rectorPropias2026 } from "@/lib/bank-v3/rector-propias-2026";
 import { coordinadorPropias2026 } from "@/lib/bank-v3/coordinador-propias-2026";
+import { ingresoMatematicas } from "@/lib/bank-v3/areas/ingreso-matematicas";
 
 export type ComponentId = string;
-export type ExamComponent = { id: ComponentId; group: "comunes" | "pedagogicas"; title: string; what: string; questions: PracticeQuestion[] };
+export type ExamComponent = { id: ComponentId; group: "comunes" | "pedagogicas" | "areas"; title: string; what: string; questions: PracticeQuestion[] };
 export type Block = { id: string; label: string; from: number; to: number; questions: PracticeQuestion[] };
 
 const all = (bank: Parameters<typeof levelsFor>[0]) => levelsFor(bank).flatMap(l => l.questions);
@@ -55,7 +56,7 @@ export function examComponents(profile: SimulationProfile): ExamComponent[] {
       { id: "carrera", group: "pedagogicas", title: "Carrera y proceso", what: "Escalafón, requisitos e instrumentos del proceso.", questions: pick(own, /^Carrera y proceso$/) },
     ],
   };
-  return [...(profile === "ascenso-reubicacion" ? [] : comunes), ...propio[profile]].filter(c => c.questions.length > 0);
+  return [...(profile === "ascenso-reubicacion" ? [] : comunes), ...propio[profile], ...AREA_TESTS[profile]].filter(c => c.questions.length > 0);
 }
 
 /** Bloques de 10 preguntas, de menor a mayor dificultad; un resto menor de 5 se suma al último bloque. */
@@ -66,3 +67,14 @@ export function blocksOf(c: ExamComponent): Block[] {
   if (last && prev && last.questions.length < 5) { prev.questions.push(...last.questions); prev.to = last.to; out.pop(); }
   return out;
 }
+
+/** Pruebas por área disciplinar (30 preguntas cada una). Se agregan las áreas a medida que se terminan y revisan. */
+export const AREA_TESTS: Record<SimulationProfile, ExamComponent[]> = {
+  "ingreso-docente": [
+    { id: "matematicas", group: "areas", title: "Matemáticas", what: "Pensamientos numérico, espacial, métrico, aleatorio y variacional, y su didáctica.", questions: byLevel(ingresoMatematicas) },
+  ],
+  "ascenso-reubicacion": [],
+  coordinador: [],
+  rector: [],
+};
+export const AREA_GROUP_LABEL = "Pruebas por área disciplinar";

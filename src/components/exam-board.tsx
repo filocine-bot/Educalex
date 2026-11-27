@@ -8,14 +8,14 @@ import { useMyPremium } from "@/components/premium-purchase";
 import { ProfilePayButton } from "@/components/direct-pay";
 import { getLibraryDoc } from "@/lib/educalex-sitemap";
 import { errorMap, PREMIUM_LOCKED } from "@/lib/game-engine";
-import { blocksOf, examComponents, GROUP_LABEL, type Block, type ExamComponent } from "@/lib/exam-components";
+import { AREA_GROUP_LABEL, blocksOf, examComponents, GROUP_LABEL, type Block, type ExamComponent } from "@/lib/exam-components";
 import { getPaidAttempts, startBlockAttempt } from "@/lib/paid-attempts.functions";
 import { MAX_PAID_ATTEMPTS, type PaidAttempts } from "@/lib/paid-attempts";
 import { PROFILE_LABEL } from "@/lib/payments";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 
 const LETTERS = ["A", "B", "C", "D"] as const;
-const ICONS: Record<string, LucideIcon> = { lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
+const ICONS: Record<string, LucideIcon> = { matematicas: Calculator, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
 const BEST_KEY = "educalex-mejor-bloque";
 const readBest = (): Record<string, number> => { try { return JSON.parse(localStorage.getItem(BEST_KEY) ?? "{}") as Record<string, number>; } catch { return {}; } };
 const saveBest = (k: string, v: number) => { try { const b = readBest(); if ((b[k] ?? -1) < v) { b[k] = v; localStorage.setItem(BEST_KEY, JSON.stringify(b)); } } catch { /* sin almacenamiento */ } };
@@ -66,6 +66,8 @@ export function ExamBoard({ profile, timed }: { profile: SimulationProfile; time
       {comps.some(c => c.group === "comunes") && <div className="exam-grid">{comps.filter(c => c.group === "comunes").map(c => <Tile key={c.id} c={c} locked={!unlocked} onOpen={() => go({ kind: "component", c })} />)}</div>}
       <h3 className="exam-group">{GROUP_LABEL[profile].propio}</h3>
       <div className="exam-grid">{comps.filter(c => c.group === "pedagogicas").map(c => <Tile key={c.id} c={c} locked={!unlocked} onOpen={() => go({ kind: "component", c })} />)}</div>
+      {comps.some(c => c.group === "areas") && <><h3 className="exam-group">{AREA_GROUP_LABEL}</h3>
+      <div className="exam-grid">{comps.filter(c => c.group === "areas").map(c => <Tile key={c.id} c={c} locked={!unlocked} onOpen={() => go({ kind: "component", c })} />)}</div></>}
       <h3 className="exam-group">Prueba completa</h3>
       <div className="exam-grid">
         <button type="button" className={`exam-tile tone-timed${unlocked ? "" : " is-locked"}`} onClick={() => go({ kind: "timed" })}><Clock3 aria-hidden="true" /><strong>Simulacro con tiempo</strong><small>40 preguntas, como el examen</small>{!unlocked && <Lock className="exam-lock" aria-label="Requiere la preparación completa" />}</button>
@@ -104,7 +106,7 @@ function Tile({ c, locked, onOpen }: { c: ExamComponent; locked: boolean; onOpen
 }
 
 type Ans = { q: PracticeQuestion; chosen: number; ok: boolean };
-function BlockQuiz({ title, questions, review, onFinish, onReview, onRepeat, onNext, onExit }: { title: string; questions: PracticeQuestion[]; review: boolean; onFinish: (right: number) => void; onReview: (wrong: PracticeQuestion[]) => void; onRepeat?: (() => void) | undefined; onNext?: (() => void) | undefined; onExit: () => void }) {
+export function BlockQuiz({ title, questions, review, onFinish, onReview, onRepeat, onNext, onExit }: { title: string; questions: PracticeQuestion[]; review: boolean; onFinish: (right: number) => void; onReview: (wrong: PracticeQuestion[]) => void; onRepeat?: (() => void) | undefined; onNext?: (() => void) | undefined; onExit: () => void }) {
   const [i, setI] = useState(0);
   const [chosen, setChosen] = useState<number | null>(null);
   const [answers, setAnswers] = useState<Ans[]>([]);
@@ -141,7 +143,7 @@ function BlockQuiz({ title, questions, review, onFinish, onReview, onRepeat, onN
       {!isRight && <p><strong>La respuesta correcta es {LETTERS[q.correct]}:</strong> {q.options[q.correct]}</p>}
       <p><strong>Por qué:</strong> {q.explanation}</p>
       <p className="game-reference"><BookOpen aria-hidden="true" /> <span><strong>Fundamento:</strong> {q.reference}</span></p>
-      <p className="game-links">{doc && <Link to={doc.shelf}>Ver la norma</Link>}<Link to={q.course}>Estudiar el tema</Link></p>
+      <p className="game-links">{doc && <Link to={doc.shelf}>Ver la norma</Link>}{q.course !== "/concursos/ingreso-docente" && <Link to={q.course}>Estudiar el tema</Link>}</p>
       <Button variant="navy" onClick={next}>{i + 1 < questions.length ? "Siguiente pregunta" : "Ver resultados"}</Button>
     </div>}
   </section>;

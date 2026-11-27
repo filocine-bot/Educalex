@@ -2348,3 +2348,13 @@ html { scroll-padding-top: 170px; }
 .plans-how{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;padding:.7rem 1rem;border-radius:12px;background:#f4f7fb;border:1px solid #d6e0ee;color:#102B50;font-weight:600}
 .plans-how button{display:inline-flex;align-items:center;gap:.35rem;background:#FFC928;color:#102B50;border:0;border-radius:10px;padding:.45rem .9rem;font-weight:800;cursor:pointer}
 .plans-how svg{width:1rem;height:1rem}
+
+/* Pruebas por área */
+.area-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:0 0 .6rem}
+.area-tabs button{min-height:44px;padding:.45rem 1rem;border-radius:999px;border:2px solid #d6e0ee;background:#fff;color:#102B50;font:700 .95rem Poppins,sans-serif;cursor:pointer}
+.area-tabs button.active{background:#102B50;border-color:#102B50;color:#fff}
+.area-note{font-size:.88rem;color:#41546e;margin:0 0 .8rem;line-height:1.45}
+.area-more{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin:1rem 0 0;padding:.9rem 1rem;border:2px dashed #c9d6e8;border-radius:14px;background:#f7f9fc}
+.area-more>svg{width:1.4rem;height:1.4rem;color:#102B50;flex:none}
+.area-more p{flex:1 1 220px;margin:0;display:flex;flex-direction:column;gap:.15rem}
+.area-more span{font-size:.88rem;color:#41546e}
