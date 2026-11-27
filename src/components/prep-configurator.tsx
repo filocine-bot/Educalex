@@ -173,7 +173,7 @@ function AreaTests({ profile }: { profile: SimulationProfile }) {
     <div className="area-tabs" role="tablist" aria-label="Áreas disciplinares">
       {areas.map(a => <button key={a.id} type="button" role="tab" aria-selected={a.id === sel} className={a.id === sel ? "active" : ""} onClick={() => open(a.id)}>{a.title}</button>)}
     </div>
-    <p className="area-note"><strong>{area.title}:</strong> {area.questions.length} preguntas en {blocks.length} bloques. El bloque 1 es gratis. Referencia: {area.basis}, mientras el ICFES publica los ejes 2026.</p>
+    <p className="area-note"><strong>{area.title}:</strong> {area.questions.length} preguntas en {blocks.length} bloques. El bloque 1 es gratis. Referencia: {area.basis}{profile === "ingreso-docente" ? ", mientras el ICFES publica los ejes 2026" : ""}.</p>
     <BlockQuiz key={`${sel}-${round}-${review ? "r" : "n"}`} title={`${area.title} · Bloque 1 (gratis)`} questions={review ?? blocks[0]!.questions} review={!!review}
       onFinish={() => {}} onReview={wrong => setReview(wrong)} onRepeat={restart} onExit={restart} />
     {rest > 0 && <div className="area-more">

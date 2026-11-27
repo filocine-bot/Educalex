@@ -145,7 +145,7 @@ export function BlockQuiz({ title, questions, review, onFinish, onReview, onRepe
       {!isRight && <p><strong>La respuesta correcta es {LETTERS[q.correct]}:</strong> {q.options[q.correct]}</p>}
       <p><strong>Por qué:</strong> {q.explanation}</p>
       <p className="game-reference"><BookOpen aria-hidden="true" /> <span><strong>Fundamento:</strong> {q.reference}</span></p>
-      <p className="game-links">{doc && <Link to={doc.shelf}>Ver la norma</Link>}{q.course !== "/concursos/ingreso-docente" && <Link to={q.course}>Estudiar el tema</Link>}</p>
+      <p className="game-links">{doc && <Link to={doc.shelf}>Ver la norma</Link>}{!q.course.startsWith("/concursos/") && <Link to={q.course}>Estudiar el tema</Link>}</p>
       <Button variant="navy" onClick={next}>{i + 1 < questions.length ? "Siguiente pregunta" : "Ver resultados"}</Button>
     </div>}
   </section>;

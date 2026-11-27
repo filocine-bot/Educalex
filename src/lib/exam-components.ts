@@ -8,6 +8,7 @@ import { ingresoSociales } from "@/lib/bank-v3/areas/ingreso-sociales";
 import { ingresoLengua } from "@/lib/bank-v3/areas/ingreso-lengua";
 import { ingresoNaturales } from "@/lib/bank-v3/areas/ingreso-naturales";
 import { ingresoIngles } from "@/lib/bank-v3/areas/ingreso-ingles";
+import { ascensoMatematicas } from "@/lib/bank-v3/areas/ascenso-matematicas";
 
 export type ComponentId = string;
 export type ExamComponent = { id: ComponentId; group: "comunes" | "pedagogicas" | "areas"; title: string; what: string; questions: PracticeQuestion[]; basis?: string };
@@ -82,7 +83,9 @@ export const AREA_TESTS: Record<SimulationProfile, ExamComponent[]> = {
     { id: "ingles", group: "areas", title: "Inglés", what: "Competencia lingüística, pragmática y sociolingüística, y didáctica del inglés. Preguntas en inglés.", questions: byLevel(ingresoIngles), basis: "competencia comunicativa del MCER, Guía 22 del MEN (2006) y Lineamientos de Idiomas Extranjeros (1999)" },
     { id: "sociales", group: "areas", title: "Ciencias sociales", what: "Historia, geografía, Constitución, economía, diversidad, paz y problemáticas actuales.", questions: byLevel(ingresoSociales), basis: "competencias de Sociales y Ciudadanas del ICFES, Estándares del MEN (2006) y Lineamientos de Ciencias Sociales (2026)" },
   ],
-  "ascenso-reubicacion": [],
+  "ascenso-reubicacion": [
+    { id: "matematicas", group: "areas", title: "Matemáticas", what: "Casos de enseñanza de las matemáticas: contexto, planeación, praxis y ambiente de aula.", questions: byLevel(ascensoMatematicas), basis: "criterios de la prueba pedagógica para docente de aula (Resolución MEN 018987 de 2025, art. 10) aplicados a la enseñanza de las matemáticas" },
+  ],
   coordinador: [],
   rector: [],
 };
