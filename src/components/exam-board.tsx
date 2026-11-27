@@ -16,7 +16,7 @@ import { QuestionFigureView } from "@/components/question-figure";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 
 const LETTERS = ["A", "B", "C", "D"] as const;
-const ICONS: Record<string, LucideIcon> = { matematicas: Calculator, sociales: Globe2, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
+const ICONS: Record<string, LucideIcon> = { matematicas: Calculator, sociales: Globe2, lengua: BookOpen, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
 const BEST_KEY = "educalex-mejor-bloque";
 const readBest = (): Record<string, number> => { try { return JSON.parse(localStorage.getItem(BEST_KEY) ?? "{}") as Record<string, number>; } catch { return {}; } };
 const saveBest = (k: string, v: number) => { try { const b = readBest(); if ((b[k] ?? -1) < v) { b[k] = v; localStorage.setItem(BEST_KEY, JSON.stringify(b)); } } catch { /* sin almacenamiento */ } };

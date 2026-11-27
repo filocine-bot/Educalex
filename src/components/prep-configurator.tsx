@@ -122,7 +122,7 @@ export function ProfileHome({ profile }: { profile: SimulationProfile }) {
   </>;
 }
 
-const TILE_ICON: Record<string, LucideIcon> = { matematicas: Calculator, sociales: Globe2, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
+const TILE_ICON: Record<string, LucideIcon> = { matematicas: Calculator, sociales: Globe2, lengua: BookOpen, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
 
 /** Competencias que evalúa la preparación completa: con candado hasta pagar; con el pago, enlazan al simulacro. */
 function CompetencyLocks({ profile }: { profile: SimulationProfile }) {

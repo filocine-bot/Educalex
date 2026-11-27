@@ -8,7 +8,7 @@ export function QuestionFigureView({ f }: { f: QuestionFigure }) {
   return <figure className="qfig">
     {f.kind === "table" && <div className="qfig-scroll"><table className={`qfig-table${f.head.length > 6 ? " dense" : ""}`}>
       <thead><tr>{f.head.map((h, i) => <th key={i} scope="col">{h}</th>)}</tr></thead>
-      <tbody>{f.rows.map((r, i) => <tr key={i}>{r.map((c, j) => j === 0 ? <th key={j} scope="row">{c}</th> : <td key={j}>{c}</td>)}</tr>)}</tbody>
+      <tbody>{f.rows.map((r, i) => <tr key={i}>{r.map((c, j) => j === 0 ? <th key={j} scope="row" className={c.length > 22 ? "txt" : undefined}>{c}</th> : <td key={j} className={c.length > 14 ? "txt" : undefined}>{c}</td>)}</tr>)}</tbody>
     </table></div>}
     {f.kind === "line" && <LineChart f={f} />}
     {f.kind === "pie" && <PieChart f={f} />}
