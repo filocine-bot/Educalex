@@ -1,7 +1,7 @@
 import { Fold } from "@/components/fold";
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, Bot, Calculator, ChartNoAxesCombined, CheckCircle2, Clock3, Compass, GraduationCap, HeartHandshake, LayoutList, Lock, PenLine, Play, Scale, Settings, Sparkles, Trophy, Users, type LucideIcon } from "lucide-react";
+import { ArrowRight, BookOpen, Globe2, Bot, Calculator, ChartNoAxesCombined, CheckCircle2, Clock3, Compass, GraduationCap, HeartHandshake, LayoutList, Lock, PenLine, Play, Scale, Settings, Sparkles, Trophy, Users, type LucideIcon } from "lucide-react";
 import { ProfilePayButton, useDirectPay } from "@/components/direct-pay";
 import { PracticeGame } from "@/components/practice-game";
 import { ProfileStructure } from "@/components/profile-structure";
@@ -122,7 +122,7 @@ export function ProfileHome({ profile }: { profile: SimulationProfile }) {
   </>;
 }
 
-const TILE_ICON: Record<string, LucideIcon> = { matematicas: Calculator, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
+const TILE_ICON: Record<string, LucideIcon> = { matematicas: Calculator, sociales: Globe2, lectura: BookOpen, cuantitativo: Calculator, blandas: Users, ensenar: GraduationCap, evaluar: PenLine, incluir: HeartHandshake, convivencia: Scale, academica: GraduationCap, acompanamiento: HeartHandshake, directiva: Users, administrativa: Calculator, practica: GraduationCap, reflexion: PenLine, carrera: Scale };
 
 /** Competencias que evalúa la preparación completa: con candado hasta pagar; con el pago, enlazan al simulacro. */
 function CompetencyLocks({ profile }: { profile: SimulationProfile }) {
@@ -173,7 +173,7 @@ function AreaTests({ profile }: { profile: SimulationProfile }) {
     <div className="area-tabs" role="tablist" aria-label="Áreas disciplinares">
       {areas.map(a => <button key={a.id} type="button" role="tab" aria-selected={a.id === sel} className={a.id === sel ? "active" : ""} onClick={() => open(a.id)}>{a.title}</button>)}
     </div>
-    <p className="area-note"><strong>{area.title}:</strong> {area.questions.length} preguntas en {blocks.length} bloques. El bloque 1 es gratis. Referencia: ejes de la guía CNSC–ICFES anterior y Estándares del MEN, mientras el ICFES publica los ejes 2026.</p>
+    <p className="area-note"><strong>{area.title}:</strong> {area.questions.length} preguntas en {blocks.length} bloques. El bloque 1 es gratis. Referencia: {area.basis}, mientras el ICFES publica los ejes 2026.</p>
     <BlockQuiz key={`${sel}-${round}-${review ? "r" : "n"}`} title={`${area.title} · Bloque 1 (gratis)`} questions={review ?? blocks[0]!.questions} review={!!review}
       onFinish={() => {}} onReview={wrong => setReview(wrong)} onRepeat={restart} onExit={restart} />
     {rest > 0 && <div className="area-more">

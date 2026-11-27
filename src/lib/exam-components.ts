@@ -3,9 +3,10 @@ import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank"
 import { rectorPropias2026 } from "@/lib/bank-v3/rector-propias-2026";
 import { coordinadorPropias2026 } from "@/lib/bank-v3/coordinador-propias-2026";
 import { ingresoMatematicas } from "@/lib/bank-v3/areas/ingreso-matematicas";
+import { ingresoSociales } from "@/lib/bank-v3/areas/ingreso-sociales";
 
 export type ComponentId = string;
-export type ExamComponent = { id: ComponentId; group: "comunes" | "pedagogicas" | "areas"; title: string; what: string; questions: PracticeQuestion[] };
+export type ExamComponent = { id: ComponentId; group: "comunes" | "pedagogicas" | "areas"; title: string; what: string; questions: PracticeQuestion[]; basis?: string };
 export type Block = { id: string; label: string; from: number; to: number; questions: PracticeQuestion[] };
 
 const all = (bank: Parameters<typeof levelsFor>[0]) => levelsFor(bank).flatMap(l => l.questions);
@@ -71,7 +72,8 @@ export function blocksOf(c: ExamComponent): Block[] {
 /** Pruebas por área disciplinar (30 preguntas cada una). Se agregan las áreas a medida que se terminan y revisan. */
 export const AREA_TESTS: Record<SimulationProfile, ExamComponent[]> = {
   "ingreso-docente": [
-    { id: "matematicas", group: "areas", title: "Matemáticas", what: "Pensamientos numérico, espacial, métrico, aleatorio y variacional, y su didáctica.", questions: byLevel(ingresoMatematicas) },
+    { id: "matematicas", group: "areas", title: "Matemáticas", what: "Pensamientos numérico, espacial, métrico, aleatorio y variacional, y su didáctica.", questions: byLevel(ingresoMatematicas), basis: "ejes de la guía CNSC–ICFES anterior y Estándares del MEN (2006)" },
+    { id: "sociales", group: "areas", title: "Ciencias sociales", what: "Historia, geografía, Constitución, economía, diversidad, paz y problemáticas actuales.", questions: byLevel(ingresoSociales), basis: "competencias de Sociales y Ciudadanas del ICFES, Estándares del MEN (2006) y Lineamientos de Ciencias Sociales (2026)" },
   ],
   "ascenso-reubicacion": [],
   coordinador: [],

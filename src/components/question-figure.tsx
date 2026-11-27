@@ -19,14 +19,15 @@ export function QuestionFigureView({ f }: { f: QuestionFigure }) {
 
 function LineChart({ f }: { f: Extract<QuestionFigure, { kind: "line" }> }) {
   const W = 340, H = 230, L = 52, R = 14, T = 14, B = 44;
-  const xMax = Math.max(...f.points.map(p => p[0]));
-  const x = (v: number) => L + (v / xMax) * (W - L - R);
+  const xMax = Math.max(...f.points.map(p => p[0])), xMin = Math.min(...f.points.map(p => p[0]));
+  const x = (v: number) => L + ((v - xMin) / (xMax - xMin || 1)) * (W - L - R);
   const y = (v: number) => T + (1 - v / f.yMax) * (H - T - B);
   const yt: number[] = []; for (let v = 0; v <= f.yMax; v += f.yStep) yt.push(v);
   const desc = `${f.yLabel} según ${f.xLabel}: ` + f.points.map(p => `${p[0]}, ${fmt(p[1])}`).join("; ");
+  const xl = (v: number) => (v >= 1000 && v <= 2100 ? String(v) : fmt(v));
   return <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={desc} className="qfig-svg">
     {yt.map(v => <g key={v}><line x1={L} x2={W - R} y1={y(v)} y2={y(v)} stroke="#e3e9f2" /><text x={L - 6} y={y(v) + 4} textAnchor="end" fontSize="11" fill="#41546e">{fmt(v)}</text></g>)}
-    {f.points.map(p => <text key={p[0]} x={x(p[0])} y={H - B + 16} textAnchor="middle" fontSize="11" fill="#41546e">{p[0]}</text>)}
+    {f.points.map(p => <text key={p[0]} x={x(p[0])} y={H - B + 16} textAnchor="middle" fontSize="11" fill="#41546e">{xl(p[0])}</text>)}
     <line x1={L} x2={L} y1={T} y2={H - B} stroke="#41546e" /><line x1={L} x2={W - R} y1={H - B} y2={H - B} stroke="#41546e" />
     <polyline points={f.points.map(p => `${x(p[0])},${y(p[1])}`).join(" ")} fill="none" stroke="#102B50" strokeWidth="3" strokeLinejoin="round" />
     {f.points.map(p => <circle key={p[0]} cx={x(p[0])} cy={y(p[1])} r="4.5" fill="#F2B705" stroke="#102B50" strokeWidth="1.5" />)}
