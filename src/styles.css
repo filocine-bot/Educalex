@@ -2081,10 +2081,6 @@ html { scroll-padding-top: 170px; }
 .mod-notice,.profile-home,.module-page *{min-width:0}
 @media (max-width:640px){.trial-ex-grid{grid-template-columns:1fr}.trial-head{padding:1rem}}
 .exam-table-wrap{max-width:calc(100vw - 32px)}
-/* Botones flotantes de WhatsApp y EducatIA más arriba para no tapar los botones de la página */
-.educatia-launcher{bottom:9.5rem!important}
-.whatsapp-launcher{bottom:14rem!important}
-@media (max-width:640px){.educatia-launcher{bottom:8.5rem!important}.whatsapp-launcher{bottom:12.5rem!important}}
 .game-result.is-trial{padding:1rem}
 .game-result.is-trial svg{width:2rem;height:2rem}
 .game-result.is-trial h2{font-size:1.15rem}
@@ -2095,10 +2091,6 @@ html { scroll-padding-top: 170px; }
 .trial-topic{display:inline-flex;align-items:center;gap:.3rem;background:#102B50;color:#fff;border-radius:999px;padding:.55rem .9rem;font-weight:700;font-size:.88rem;text-decoration:none;min-height:44px}
 .trial-topic span{color:#FFC928}
 .trial-offer-note{font-size:.9rem;color:#334155}
-/* EducatIA más arriba que WhatsApp */
-.educatia-launcher{bottom:15rem!important}
-.whatsapp-launcher{bottom:10rem!important}
-@media (max-width:640px){.educatia-launcher{bottom:13.5rem!important}.whatsapp-launcher{bottom:9rem!important}}
 .trial-owned{margin:0 0 1rem;display:inline-flex}
 .trial-paybar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;background:#fffbea;border:2px solid #FFC928;border-radius:14px;padding:.8rem 1rem;margin:0 0 1rem}
 .trial-paybar p{display:grid;gap:.15rem;margin:0}
@@ -2138,15 +2130,6 @@ html { scroll-padding-top: 170px; }
 @media (max-width:900px){.exam-grid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:640px){.exam-grid{grid-template-columns:1fr 1fr;gap:.45rem}.exam-tile{padding:.55rem .6rem;min-height:58px;column-gap:.45rem}.exam-tile>svg:first-child{width:1.9rem;height:1.9rem;padding:.35rem}.exam-tile strong{font-size:.82rem}.exam-tile small{font-size:.7rem}.exam-board-head p{display:none}}
 @media (max-width:640px){.exam-board .trial-paybar{padding:.6rem .7rem;gap:.5rem}.exam-board .trial-paybar span{display:none}.exam-board .trial-paybar .h2-btn{min-height:42px}.exam-board-head h2{font-size:1.05rem}.exam-group{font-size:.7rem}.exam-tile small{display:none}.exam-tile{min-height:50px}}
-/* Celular: EducatIA más arriba y más pequeña para no tapar el texto */
-@media (max-width:640px){
-  .educatia-launcher{bottom:auto!important;top:42vh;width:42px!important;height:42px!important;min-height:42px!important;opacity:.92}
-  .educatia-launcher img{width:34px;height:34px}
-  .whatsapp-launcher{bottom:5.5rem!important;width:46px!important;height:46px!important;min-height:46px!important}
-}
-@media (max-width:640px){.educatia-launcher{right:.35rem!important}.whatsapp-launcher{right:.35rem!important}}
-/* Celular: WhatsApp junto a EducatIA, a media pantalla */
-@media (max-width:640px){.whatsapp-launcher{bottom:auto!important;top:calc(42vh + 50px);width:42px!important;height:42px!important;min-height:42px!important}}
 .home-launcher{display:none!important}
 .trial-preview{color:#102B50;font-weight:700;text-decoration:underline;font-size:.9rem}
 
@@ -2374,3 +2357,12 @@ html { scroll-padding-top: 170px; }
 .qfig-legend span{display:inline-block;width:.9rem;height:.9rem;border-radius:3px;margin-right:.45rem;vertical-align:-1px}
 .qfig-plan{max-width:300px}
 .qfig-table.dense{font-size:.78rem}.qfig-table.dense th,.qfig-table.dense td{padding:.3rem .12rem}
+
+/* Botones flotantes (definitivo): abajo a la derecha, EducatIA sobre WhatsApp, sin tapar el texto */
+.educatia-launcher{top:auto!important;bottom:4.6rem!important;right:.6rem!important;opacity:1}
+.whatsapp-launcher{top:auto!important;bottom:1rem!important;right:.6rem!important}
+@media (max-width:640px){
+  .educatia-launcher,.whatsapp-launcher{width:42px!important;height:42px!important;min-height:42px!important;right:.3rem!important}
+  .educatia-launcher img{width:34px!important;height:34px!important}
+  .educatia-launcher{bottom:3.6rem!important}.whatsapp-launcher{bottom:.6rem!important}
+}
