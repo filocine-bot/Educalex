@@ -12,6 +12,7 @@ import { AREA_GROUP_LABEL, blocksOf, examComponents, GROUP_LABEL, type Block, ty
 import { getPaidAttempts, startBlockAttempt } from "@/lib/paid-attempts.functions";
 import { MAX_PAID_ATTEMPTS, type PaidAttempts } from "@/lib/paid-attempts";
 import { PROFILE_LABEL } from "@/lib/payments";
+import { QuestionFigureView } from "@/components/question-figure";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 
 const LETTERS = ["A", "B", "C", "D"] as const;
@@ -136,6 +137,7 @@ export function BlockQuiz({ title, questions, review, onFinish, onReview, onRepe
     <div className="game-progress" role="progressbar" aria-label="Avance del bloque" aria-valuemin={0} aria-valuemax={questions.length} aria-valuenow={answers.length}><span style={{ width: `${(answers.length / questions.length) * 100}%` }} /></div>
     <span className="course-kicker">{q.competency}</span>
     {q.context && <p className="question-context"><strong>Situación:</strong> {q.context}</p>}
+    {q.figure && <QuestionFigureView f={q.figure} />}
     <h2 id="bq-q" className="game-prompt">{q.prompt}</h2>
     <div className="game-options">{q.options.map((t, k) => { const st = chosen === null ? "" : k === q.correct ? "is-correct" : k === chosen ? "is-wrong" : "is-dim"; return <button key={k} type="button" className={`game-option ${st}`} onClick={() => pick(k)} disabled={chosen !== null}><span className="game-letter" aria-hidden="true">{LETTERS[k]}</span><span>{t}</span>{chosen !== null && k === q.correct && <CheckCircle2 aria-label="Respuesta correcta" />}{chosen !== null && k === chosen && k !== q.correct && <XCircle aria-label="Tu respuesta, incorrecta" />}</button>; })}</div>
     {chosen !== null && <div role="status" className={`game-feedback ${isRight ? "ok" : "bad"}`}>

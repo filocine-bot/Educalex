@@ -24,7 +24,8 @@ export const ingresoMatematicas: PracticeQuestion[] = [
   },
   {
     id: "mat-ing-3", level: 1, competency: "Matemáticas · aleatorio",
-    context: "En una práctica de estadística en Pereira, un grupo registra en este orden las notas de siete estudiantes en un quiz: 3, 4, 4, 5, 2, 4, 3. La docente les pide calcular la mediana de los datos.",
+    context: "En una práctica de estadística en Pereira, un grupo registra en una tabla, en el orden en que los entregaron, las notas de siete estudiantes en un quiz. La docente les pide calcular la mediana de los datos.",
+    figure: {"kind": "table", "caption": "Notas del quiz, en orden de entrega", "head": ["Estudiante", "1", "2", "3", "4", "5", "6", "7"], "rows": [["Nota", "3", "4", "4", "5", "2", "4", "3"]]},
     prompt: "¿Cuál es la mediana de las notas?",
     options: ["5", "3", "3,6", "4"], correct: 3,
     explanation: "Para hallar la mediana primero se ordenan los datos: 2, 3, 3, 4, 4, 4, 5. El dato central (el cuarto) es 4. El 5 es el dato central sin ordenar y 3,6 es aproximadamente la media (25 ÷ 7).",
@@ -32,7 +33,8 @@ export const ingresoMatematicas: PracticeQuestion[] = [
   },
   {
     id: "mat-ing-4", level: 1, competency: "Matemáticas · espacial (representación)",
-    context: "En una clase de séptimo en Pasto, los estudiantes trabajan con el plano de la institución, dibujado a escala 1:200. En el plano, el aula de matemáticas es un rectángulo de 4 cm de largo y 3 cm de ancho. La docente pide calcular las medidas reales del aula.",
+    context: "En una clase de séptimo en Pasto, los estudiantes trabajan con el plano de la institución, dibujado a escala 1:200. La figura muestra el aula de matemáticas tal como aparece en el plano, con sus medidas en centímetros. La docente pide calcular las medidas reales del aula.",
+    figure: {"kind": "plan", "caption": "Aula de matemáticas en el plano · escala 1:200", "w": 4, "h": 3, "unit": "cm", "label": "Aula"},
     prompt: "¿Cuáles son las medidas reales del aula?",
     options: ["80 m de largo y 60 m de ancho", "2 m de largo y 1,5 m de ancho", "0,8 m de largo y 0,6 m de ancho", "8 m de largo y 6 m de ancho"], correct: 3,
     explanation: "La escala 1:200 indica que 1 cm del plano equivale a 200 cm reales. Entonces 4 cm × 200 = 800 cm = 8 m y 3 cm × 200 = 600 cm = 6 m. Las otras opciones convierten mal los centímetros a metros o dividen por la escala.",
@@ -128,7 +130,8 @@ export const ingresoMatematicas: PracticeQuestion[] = [
   },
   {
     id: "mat-ing-16", level: 2, competency: "Matemáticas · aleatorio",
-    context: "Un grupo de décimo en Leticia midió la temperatura del patio cada hora, desde las 7:00 hasta las 17:00, durante una jornada escolar. Ahora deben elegir el gráfico que mejor muestre cómo cambió la temperatura a lo largo del día.",
+    context: "Un grupo de décimo en Leticia midió la temperatura del patio cada dos horas durante una jornada escolar y organizó los datos en una tabla. Ahora deben elegir el gráfico que mejor muestre cómo cambió la temperatura a lo largo del día.",
+    figure: {"kind": "table", "caption": "Temperatura del patio durante la jornada", "head": ["Hora", "7:00", "9:00", "11:00", "13:00", "15:00", "17:00"], "rows": [["°C", "25", "28", "31", "33", "32", "29"]]},
     prompt: "¿Qué tipo de gráfico es el más adecuado para esos datos?",
     options: ["Un gráfico de líneas, porque muestra el cambio en el tiempo.", "Un pictograma, porque usa dibujos fáciles de interpretar.", "Un diagrama circular, porque muestra las partes de un todo.", "Una tabla de frecuencias, porque resume los datos repetidos."], correct: 0,
     explanation: "Los datos son una variable que cambia en el tiempo; el gráfico de líneas une los puntos en orden y permite ver aumentos y descensos. El diagrama circular sirve para partes de un todo, que no es el caso.",
@@ -176,8 +179,9 @@ export const ingresoMatematicas: PracticeQuestion[] = [
   },
   {
     id: "mat-ing-22", level: 3, competency: "Matemáticas · variacional (lectura de tablas)",
-    context: "Un estudiante de Granada (Meta) registra su distancia a la casa mientras camina hacia el colegio. La tabla muestra el tiempo en minutos y la distancia recorrida en metros: 0 min, 0 m; 5 min, 400 m; 10 min, 800 m; 15 min, 800 m; 20 min, 1 400 m. La docente pide describir el recorrido a partir de los datos.",
-    prompt: "¿Qué descripción del recorrido es coherente con la tabla?",
+    context: "Un estudiante de Granada (Meta) registra su distancia a la casa mientras camina hacia el colegio. La gráfica muestra la distancia recorrida, en metros, según el tiempo transcurrido, en minutos. La docente pide describir el recorrido a partir de la gráfica.",
+    figure: {"kind": "line", "caption": "Distancia recorrida según el tiempo", "xLabel": "Tiempo (min)", "yLabel": "Distancia (m)", "points": [[0, 0], [5, 400], [10, 800], [15, 800], [20, 1400]], "yMax": 1600, "yStep": 400},
+    prompt: "¿Qué descripción del recorrido es coherente con la gráfica?",
     options: ["Caminó siempre a la misma velocidad durante los veinte minutos del recorrido.", "Regresó hacia su casa entre los minutos 10 y 15 y luego siguió hacia el colegio.", "Se detuvo los primeros cinco minutos y luego caminó sin parar hasta el colegio.", "Avanzó a ritmo constante, se detuvo cinco minutos y luego avanzó más rápido."], correct: 3,
     explanation: "Entre 0 y 10 min recorre 400 m cada 5 min (80 m/min). Entre 10 y 15 min la distancia no cambia: estuvo detenido. Entre 15 y 20 min recorre 600 m (120 m/min), más rápido que al inicio. Si hubiera regresado, la distancia habría disminuido.",
     reference: "Estándares Básicos de Competencias en Matemáticas (MEN, 2006): pensamiento variacional y sistemas algebraicos y analíticos.", documentId: "", course: "/concursos/ingreso-docente",
@@ -200,7 +204,8 @@ export const ingresoMatematicas: PracticeQuestion[] = [
   },
   {
     id: "mat-ing-25", level: 4, competency: "Matemáticas · aleatorio (pensamiento crítico)",
-    context: "Un artículo local afirma que «el ingreso promedio mensual de las familias de un barrio de Cartagena es de 3 millones de pesos». Un grupo de once revisa los datos de una muestra de cinco familias: 1,2; 1,4; 1,5; 1,6 y 9,3 millones de pesos. La docente pide evaluar qué medida describe mejor a una familia típica del barrio.",
+    context: "Un artículo local afirma que «el ingreso promedio mensual de las familias de un barrio de Cartagena es de 3 millones de pesos». Un grupo de once revisa los datos de una muestra de cinco familias, que aparecen en la tabla. La docente pide evaluar qué medida describe mejor a una familia típica del barrio.",
+    figure: {"kind": "table", "caption": "Ingreso mensual de cinco familias (millones de pesos)", "head": ["Familia", "A", "B", "C", "D", "E"], "rows": [["Ingreso", "1,2", "1,4", "1,5", "1,6", "9,3"]]},
     prompt: "¿Qué medida describe mejor a una familia típica de esa muestra?",
     options: ["La media, de 3 millones, porque usa todos los datos de la muestra.", "La moda, porque es el ingreso que más se repite en las familias.", "La mediana, de 1,5 millones, porque no la afecta el dato extremo.", "El rango, de 8,1 millones, porque muestra la dispersión de datos."], correct: 2,
     explanation: "La media es (1,2 + 1,4 + 1,5 + 1,6 + 9,3) ÷ 5 = 3,0 millones, pero el dato de 9,3 la eleva: cuatro de las cinco familias ganan menos de 1,7 millones. La mediana, 1,5 millones, no se ve afectada por ese valor extremo. Aquí no hay moda, pues ningún dato se repite.",
@@ -224,7 +229,8 @@ export const ingresoMatematicas: PracticeQuestion[] = [
   },
   {
     id: "mat-ing-28", level: 4, competency: "Matemáticas · numérico (lectura de tablas)",
-    context: "Una papelería de San Andrés publica esta tabla de precios de cuadernos: 2 cuadernos, $7 000; 4 cuadernos, $14 000; 6 cuadernos, $21 000; 10 cuadernos, $32 000. Una docente de séptimo la usa para que sus estudiantes analicen si el precio es proporcional a la cantidad y saquen conclusiones.",
+    context: "Una papelería de San Andrés publica la tabla de precios de cuadernos que aparece abajo. Una docente de séptimo la usa para que sus estudiantes analicen si el precio es proporcional a la cantidad y saquen conclusiones.",
+    figure: {"kind": "table", "caption": "Precios de cuadernos", "head": ["Cuadernos", "Precio"], "rows": [["2", "$7 000"], ["4", "$14 000"], ["6", "$21 000"], ["10", "$32 000"]]},
     prompt: "¿Qué conclusión se apoya en los datos de la tabla?",
     options: ["El costo es proporcional hasta 6 cuadernos; con 10 hay un descuento de $3 000.", "El costo es proporcional en toda la tabla, a $3 500 por cada uno de los cuadernos.", "Cada cuaderno cuesta $3 200 en todos los casos, porque 32 000 ÷ 10 da ese valor.", "El precio de cada cuaderno sube a medida que se compran más unidades en la tienda."], correct: 0,
     explanation: "Hasta 6 cuadernos la razón es constante: 7 000 ÷ 2 = 14 000 ÷ 4 = 21 000 ÷ 6 = 3 500 por cuaderno. A ese precio, 10 cuadernos costarían 35 000, pero la tabla dice 32 000: hay un descuento de 3 000 y la relación deja de ser proporcional. El precio por unidad baja (3 200), no sube.",
@@ -232,7 +238,8 @@ export const ingresoMatematicas: PracticeQuestion[] = [
   },
   {
     id: "mat-ing-29", level: 4, competency: "Matemáticas · aleatorio (lectura de gráficos)",
-    context: "Una encuesta a 200 estudiantes de una institución de Mocoa se presenta en un gráfico circular sobre cómo llegan al colegio: caminando, 45 %; en moto, 30 %; en bus, 15 %; en bicicleta, 10 %. Un informe institucional afirma que «más de la mitad de los estudiantes llega en un vehículo motorizado». La docente pide evaluar la afirmación con los datos.",
+    context: "Una encuesta a 200 estudiantes de una institución de Mocoa sobre cómo llegan al colegio se presenta en el gráfico circular. Un informe institucional afirma que «más de la mitad de los estudiantes llega en un vehículo motorizado». La docente pide evaluar la afirmación con los datos.",
+    figure: {"kind": "pie", "caption": "¿Cómo llegan al colegio? (200 estudiantes)", "slices": [["Caminando", 45], ["Moto", 30], ["Bus", 15], ["Bicicleta", 10]]},
     prompt: "¿Qué puede concluirse sobre la afirmación del informe?",
     options: ["Es falsa: en moto o en bus llega el 45 %, es decir, 90 de los 200 estudiantes.", "Es verdadera: quienes no caminan son el 55 %, más de la mitad del total.", "Es verdadera: moto y bus suman 135 estudiantes, más de la mitad del grupo.", "No se puede saber, porque un gráfico circular no muestra cantidades exactas."], correct: 0,
     explanation: "Los vehículos motorizados son la moto y el bus: 30 % + 15 % = 45 %, y el 45 % de 200 es 90 estudiantes, menos de la mitad. El 55 % de quienes no caminan incluye la bicicleta, que no es motorizada. Con los porcentajes y el total sí se pueden calcular las cantidades.",

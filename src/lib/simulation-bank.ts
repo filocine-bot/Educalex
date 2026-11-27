@@ -7,8 +7,15 @@ import { rectorV3 } from "@/lib/bank-v3/rector";
 import { coordinadorV3 } from "@/lib/bank-v3/coordinador";
 
 export type SimulationProfile = "ingreso-docente" | "ascenso-reubicacion" | "rector" | "coordinador";
+/** Tabla o gráfico que acompaña la situación (preguntas de interpretación y representación). */
+export type QuestionFigure =
+  | { kind: "table"; caption: string; head: string[]; rows: string[][] }
+  | { kind: "line"; caption: string; xLabel: string; yLabel: string; points: [number, number][]; yMax: number; yStep: number }
+  | { kind: "pie"; caption: string; slices: [string, number][] }
+  | { kind: "plan"; caption: string; w: number; h: number; unit: string; label: string };
 export type PracticeQuestion = {
   id: string;
+  figure?: QuestionFigure;
   /** Nivel de complejidad: 1 identificar · 2 aplicar · 3 analizar · 4 evaluar y decidir. */
   level?: 1 | 2 | 3 | 4;
   competency: string;
