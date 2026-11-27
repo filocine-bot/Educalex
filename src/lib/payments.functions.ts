@@ -114,7 +114,23 @@ export const adminSettleTransaction = createServerFn({ method: "POST" })
     if (!res.ok) throw new Error("Wompi no encontró esa transacción. Revisa el ID (aparece en el correo del comprobante).");
     const tx = ((await res.json()) as { data?: { id: string; status: string; reference: string; amount_in_cents: number; currency: string; customer_email?: string } }).data;
     if (!tx) throw new Error("Transacción no encontrada.");
-    const { settlePayment } = await import("@/lib/payments.server");
+    const { settlePayment, sendAccessEmail, logWompiEvent } = await import("@/lib/payments.server");
     const r = await settlePayment(tx);
-    return { status: r.status, product: r.product ?? null, email: tx.customer_email ?? null, reference: tx.reference, wompiStatus: tx.status };
+    // Si el pago ya estaba registrado, reenvía el correo de acceso al comprador.
+    let mail = r.mail;
+    if (!mail && r.status === "APPROVED" && tx.customer_email) mail = await sendAccessEmail(tx.customer_email.trim().toLowerCase(), (getProduct(r.product ?? "")?.profiles[0]) ?? "");
+    await logWompiEvent({ event: "activación manual", reference: tx.reference, transaction_id: tx.id, wompi_status: tx.status, http_status: 200, outcome: `pago ${r.status}`, detail: [r.product, r.detail, mail].filter(Boolean).join(" · ") });
+    return { status: r.status, product: r.product ?? null, email: tx.customer_email ?? null, reference: tx.reference, wompiStatus: tx.status, mail: mail ?? null };
+  });
+
+/** Administración: últimos avisos de Wompi recibidos por EDUCALEX. */
+export const adminWompiLog = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data: admin } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
+    if (admin !== true) throw new Error("Solo administradoras.");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin.from("wompi_event_log" as never).select("received_at,event,reference,transaction_id,wompi_status,http_status,outcome,detail").order("received_at", { ascending: false }).limit(15);
+    if (error) throw new Error("Falta crear la tabla del registro en Supabase (migración wompi_event_log).");
+    return (data ?? []) as unknown as { received_at: string; event: string | null; reference: string | null; transaction_id: string | null; wompi_status: string | null; http_status: number; outcome: string; detail: string | null }[];
   });

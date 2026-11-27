@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { adminLookupAccount, adminResetAccount } from "@/lib/devices.functions";
-import { adminSettleTransaction } from "@/lib/payments.functions";
+import { adminSettleTransaction, adminWompiLog } from "@/lib/payments.functions";
 
 type Info = Awaited<ReturnType<typeof adminLookupAccount>>;
 const fmt = (iso: string) => new Date(iso).toLocaleDateString("es-CO", { day: "numeric", month: "short", year: "numeric" });
@@ -61,7 +61,7 @@ export function AdminPaymentFix() {
     e.preventDefault(); setBusy(true); setMsg("");
     try {
       const r = await settle({ data: { id } });
-      setMsg(r.status === "APPROVED" ? `Pago aprobado y acceso activo (${r.product ?? "producto"}) para ${r.email ?? "el correo del pago"}. Se le envió el enlace de acceso.` : `Wompi reporta el pago como ${r.wompiStatus}. Resultado: ${r.status}.`);
+      setMsg(r.status === "APPROVED" ? `Pago aprobado y acceso activo (${r.product ?? "producto"}) para ${r.email ?? "el correo del pago"}. ${r.mail === "correo enviado" ? "Se le envió el enlace de acceso." : `Atención: ${r.mail ?? "no se envió el correo"}.`}` : `Wompi reporta el pago como ${r.wompiStatus}. Resultado: ${r.status}.`);
     } catch (err) { setMsg((err as Error).message); } finally { setBusy(false); }
   }
   return <section className="admin-tools space-y-3" aria-labelledby="admin-pay-title">
@@ -73,5 +73,25 @@ export function AdminPaymentFix() {
       <Button type="submit" disabled={busy}>{busy ? "Revisando…" : "Revisar y activar"}</Button>
     </form>
     {msg && <p role="status">{msg}</p>}
+  </section>;
+}
+
+type LogRow = Awaited<ReturnType<typeof adminWompiLog>>[number];
+/** Últimos avisos de Wompi: permite ver si llegan, si la firma coincide y si se envió el correo. */
+export function AdminWompiLog() {
+  const load = useServerFn(adminWompiLog);
+  const [rows, setRows] = useState<LogRow[] | null>(null);
+  const [msg, setMsg] = useState("");
+  const [busy, setBusy] = useState(false);
+  async function refresh() { setBusy(true); setMsg(""); try { setRows(await load()); } catch (e) { setRows(null); setMsg((e as Error).message); } finally { setBusy(false); } }
+  return <section className="admin-tools space-y-3" aria-labelledby="admin-log-title">
+    <h2 id="admin-log-title" className="text-xl font-bold">Avisos de pago recibidos (Wompi)</h2>
+    <p className="text-sm">Cada vez que Wompi avisa un pago, queda aquí el resultado: si llegó, si la clave coincidió, si se activó el acceso y si se envió el correo.</p>
+    <Button type="button" onClick={() => void refresh()} disabled={busy}>{busy ? "Cargando…" : "Ver los últimos avisos"}</Button>
+    {msg && <p role="status">{msg}</p>}
+    {rows && (rows.length === 0 ? <p>Aún no ha llegado ningún aviso de Wompi.</p> : <div className="overflow-x-auto"><table className="w-full text-sm border-collapse">
+      <thead><tr className="text-left"><th className="p-1 border-b">Fecha</th><th className="p-1 border-b">Estado</th><th className="p-1 border-b">Resultado</th><th className="p-1 border-b">Detalle</th></tr></thead>
+      <tbody>{rows.map((r, i) => <tr key={i}><td className="p-1 border-b whitespace-nowrap">{new Date(r.received_at).toLocaleString("es-CO", { dateStyle: "short", timeStyle: "short" })}</td><td className="p-1 border-b">{r.http_status}</td><td className="p-1 border-b">{r.outcome}{r.wompi_status ? ` (${r.wompi_status})` : ""}</td><td className="p-1 border-b">{[r.event, r.detail, r.transaction_id].filter(Boolean).join(" · ")}</td></tr>)}</tbody>
+    </table></div>)}
   </section>;
 }

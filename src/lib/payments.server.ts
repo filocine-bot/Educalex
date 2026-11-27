@@ -5,6 +5,18 @@ type Tx = { id: string; status: string; reference: string; amount_in_cents: numb
 const STATUSES = new Set(["APPROVED", "DECLINED", "VOIDED", "ERROR", "PENDING"]);
 const SITE = "https://www.educalex.co";
 
+/** Registro permanente de cada aviso de Wompi (tabla wompi_event_log). Nunca interrumpe el pago si falla. */
+export async function logWompiEvent(row: { event?: string; reference?: string; transaction_id?: string; wompi_status?: string; http_status: number; outcome: string; detail?: string }) {
+  try { await supabaseAdmin.from("wompi_event_log" as never).insert(row as never); } catch (e) { console.error("wompi log", (e as Error).message); }
+}
+
+/** Envía (o reenvía) el enlace de acceso al correo del pago, directo al simulacro comprado. */
+export async function sendAccessEmail(email: string, profile: string): Promise<string> {
+  const { error } = await supabaseAdmin.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: `${SITE}/simulacros/${profile}` } });
+  if (error) { console.error("correo de acceso no enviado", error.message); return `correo no enviado: ${error.message}`; }
+  return "correo enviado";
+}
+
 /** Actualiza la orden con el estado real de Wompi y otorga el acceso si el pago fue aprobado y el monto coincide. */
 export async function grantIfApproved(tx: Tx): Promise<{ status: string; product?: string }> {
   const { data: order, error } = await supabaseAdmin.from("payment_orders").select("reference,user_id,product,amount_in_cents,currency,status").eq("reference", tx.reference).maybeSingle();
@@ -27,17 +39,17 @@ export async function grantIfApproved(tx: Tx): Promise<{ status: string; product
  * se crea (o se reutiliza) la cuenta con ese correo, se registra la orden y se otorga el acceso.
  * A una cuenta nueva se le envía un enlace para entrar (requiere el correo SMTP configurado en Supabase).
  */
-export async function settlePayment(tx: Tx): Promise<{ status: string; product?: string }> {
+export async function settlePayment(tx: Tx): Promise<{ status: string; product?: string; mail?: string; detail?: string }> {
   const { data: existing } = await supabaseAdmin.from("payment_orders").select("reference").eq("reference", tx.reference).maybeSingle();
   if (existing) return grantIfApproved(tx);
   const productId = parseGuestReference(tx.reference);
-  if (!productId) return { status: "UNKNOWN" };
-  if (tx.status !== "APPROVED") return { status: STATUSES.has(tx.status) ? tx.status : "ERROR" };
+  if (!productId) return { status: "UNKNOWN", detail: "referencia sin producto" };
+  if (tx.status !== "APPROVED") return { status: STATUSES.has(tx.status) ? tx.status : "ERROR", detail: "pago no aprobado aún" };
   const product = getProduct(productId);
   const email = tx.customer_email?.trim().toLowerCase();
   if (!product || !purchasable(product) || tx.currency !== "COP" || tx.amount_in_cents !== Math.round(product.priceCOP! * 100) || !email) {
     console.error("wompi: pago sin sesión no válido", tx.reference, { status: tx.status, amount: tx.amount_in_cents, hasEmail: Boolean(email), product: productId });
-    return { status: "ERROR" };
+    return { status: "ERROR", detail: `pago no válido (producto ${productId}, monto ${tx.amount_in_cents}, correo ${email ? "sí" : "no"})` };
   }
   const { LEGAL_VERSION } = await import("@/lib/legal-content");
   const created = await supabaseAdmin.auth.admin.createUser({
@@ -55,11 +67,7 @@ export async function settlePayment(tx: Tx): Promise<{ status: string; product?:
   const { error } = await supabaseAdmin.from("payment_orders").insert({ reference: tx.reference, user_id: userId, product: product.id, amount_in_cents: tx.amount_in_cents });
   if (error && error.code !== "23505") { console.error("wompi: orden no registrada", tx.reference, error.message); throw new Error("no se pudo registrar la orden"); }
   const result = await grantIfApproved(tx);
-  if (created.data.user) {
-    // Enlace al correo para terminar de crear el perfil. Si el SMTP aún no está configurado, falla sin afectar el pago.
-    const { error: mailError } = await supabaseAdmin.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: `${SITE}/simulacros/${product.profiles[0] ?? ""}` } });
-    if (mailError) console.error("correo de acceso no enviado", mailError.message);
-    else console.info("correo de acceso enviado", tx.reference);
-  }
-  return result;
+  // Enlace de acceso al correo del pago (cuenta nueva o existente). Si falla, no afecta el acceso ya otorgado.
+  const mail = await sendAccessEmail(email, product.profiles[0] ?? "");
+  return { ...result, mail, detail: created.data.user ? "cuenta nueva" : "cuenta existente" };
 }
