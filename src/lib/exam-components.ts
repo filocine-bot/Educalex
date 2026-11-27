@@ -9,6 +9,10 @@ import { ingresoLengua } from "@/lib/bank-v3/areas/ingreso-lengua";
 import { ingresoNaturales } from "@/lib/bank-v3/areas/ingreso-naturales";
 import { ingresoIngles } from "@/lib/bank-v3/areas/ingreso-ingles";
 import { ascensoMatematicas } from "@/lib/bank-v3/areas/ascenso-matematicas";
+import { ascensoLengua } from "@/lib/bank-v3/areas/ascenso-lengua";
+import { ascensoSociales } from "@/lib/bank-v3/areas/ascenso-sociales";
+import { ascensoNaturales } from "@/lib/bank-v3/areas/ascenso-naturales";
+import { ascensoIngles } from "@/lib/bank-v3/areas/ascenso-ingles";
 
 export type ComponentId = string;
 export type ExamComponent = { id: ComponentId; group: "comunes" | "pedagogicas" | "areas"; title: string; what: string; questions: PracticeQuestion[]; basis?: string };
@@ -85,6 +89,10 @@ export const AREA_TESTS: Record<SimulationProfile, ExamComponent[]> = {
   ],
   "ascenso-reubicacion": [
     { id: "matematicas", group: "areas", title: "Matemáticas", what: "Casos de enseñanza de las matemáticas: contexto, planeación, praxis y ambiente de aula.", questions: byLevel(ascensoMatematicas), basis: "criterios de la prueba pedagógica para docente de aula (Resolución MEN 018987 de 2025, art. 10) aplicados a la enseñanza de las matemáticas" },
+    { id: "lengua", group: "areas", title: "Lengua castellana", what: "Casos de enseñanza de la lectura, la escritura, la oralidad y la literatura.", questions: byLevel(ascensoLengua), basis: "criterios de la prueba pedagógica para docente de aula (Resolución MEN 018987 de 2025, art. 10) aplicados a la enseñanza de la lengua castellana" },
+    { id: "naturales", group: "areas", title: "Ciencias naturales", what: "Casos de enseñanza de las ciencias: indagación, modelos, laboratorio y educación ambiental.", questions: byLevel(ascensoNaturales), basis: "criterios de la prueba pedagógica para docente de aula (Resolución MEN 018987 de 2025, art. 10) aplicados a la enseñanza de las ciencias naturales" },
+    { id: "ingles", group: "areas", title: "Inglés", what: "Casos de enseñanza del inglés: comprensión, interacción oral, escritura y evaluación.", questions: byLevel(ascensoIngles), basis: "criterios de la prueba pedagógica para docente de aula (Resolución MEN 018987 de 2025, art. 10) aplicados a la enseñanza del inglés" },
+    { id: "sociales", group: "areas", title: "Ciencias sociales", what: "Casos de enseñanza de la historia, la geografía y la formación ciudadana.", questions: byLevel(ascensoSociales), basis: "criterios de la prueba pedagógica para docente de aula (Resolución MEN 018987 de 2025, art. 10) aplicados a la enseñanza de las ciencias sociales" },
   ],
   coordinador: [],
   rector: [],

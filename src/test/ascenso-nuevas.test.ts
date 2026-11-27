@@ -25,8 +25,8 @@ describe("ascenso y reubicación: preguntas del 27 nov. 2026", () => {
   });
 });
 
-describe("ascenso y reubicación: casos de matemáticas", () => {
-  const area = examComponents("ascenso-reubicacion").find(c => c.group === "areas" && c.id === "matematicas")!;
+describe.each(["matematicas", "lengua", "naturales", "ingles", "sociales"])("ascenso y reubicación: casos de %s", id => {
+  const area = examComponents("ascenso-reubicacion").find(c => c.group === "areas" && c.id === id)!;
   it("20 casos en 2 bloques, 5 claves por letra y regla de longitud", () => {
     expect(area.questions).toHaveLength(20);
     expect(blocksOf(area).map(b => b.questions.length)).toEqual([10, 10]);
@@ -38,6 +38,6 @@ describe("ascenso y reubicación: casos de matemáticas", () => {
     }
   });
   it("el bloque 1 son los casos 1 a 10", () => {
-    expect(blocksOf(area)[0]!.questions.map(q => q.id).sort()).toEqual(Array.from({ length: 10 }, (_, i) => `asc-mat-${i + 1}`).sort());
+    expect(blocksOf(area)[0]!.questions.map(q => q.id).sort()).toEqual(Array.from({ length: 10 }, (_, i) => `${area.questions[0]!.id.split("-").slice(0, 2).join("-")}-${i + 1}`).sort());
   });
 });
