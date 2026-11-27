@@ -2367,3 +2367,29 @@ html { scroll-padding-top: 170px; }
   .educatia-launcher img{width:34px!important;height:34px!important}
   .educatia-launcher{bottom:3.6rem!important}.whatsapp-launcher{bottom:.6rem!important}
 }
+
+/* Avisos y caricaturas de las preguntas */
+.qfig-sign{margin:0 auto;max-width:340px;padding:1rem 1.1rem;border-radius:10px;text-align:center;display:flex;flex-direction:column;gap:.5rem;border:3px solid #102B50;background:#fff;color:#102B50}
+.qfig-sign-h{font:800 1.05rem/1.2 Poppins,sans-serif;letter-spacing:.06em}
+.qfig-sign-b{display:flex;flex-direction:column;font-size:1rem;line-height:1.4;font-weight:600}
+.qfig-sign-f{font-size:.78rem;opacity:.85}
+.qfig-sign.tone-warning{background:#FFD43B;border-color:#1a1a1a;color:#1a1a1a}
+.qfig-sign.tone-info{background:#1b7f3b;border-color:#0f5a29;color:#fff}
+.qfig-sign.tone-ad{background:#C0392B;border-color:#8e2318;color:#fff}
+.qfig-sign.tone-ad .qfig-sign-h{font-size:1.25rem}
+.qfig-sign.tone-ad .qfig-sign-f{background:#fff;color:#8e2318;border-radius:6px;padding:.25rem .4rem;opacity:1}
+.qfig-sign.tone-museum{background:#f7f1e3;border-color:#8a6d3b;color:#3e2f14;font-family:Georgia,serif}
+.qfig-sign.tone-museum .qfig-sign-h{font-family:Georgia,serif}
+.qfig-comic{display:grid;gap:.6rem}
+.qfig-comic.panels-2{grid-template-columns:1fr 1fr}
+@media (max-width:520px){.qfig-comic.panels-2{grid-template-columns:1fr}}
+.qfig-panel{border:2px solid #102B50;border-radius:10px;padding:.6rem;background:#fbfcff;display:flex;flex-direction:column;gap:.5rem}
+.qfig-scene{margin:0;font-size:.8rem;font-style:italic;color:#41546e;border-bottom:1px dashed #c9d6e8;padding-bottom:.35rem}
+.qfig-line{display:flex;align-items:flex-start;gap:.45rem}
+.qfig-line.side-right{flex-direction:row-reverse}
+.qfig-who{display:flex;flex-direction:column;align-items:center;flex:none;width:3.4rem}
+.qfig-who small{font-size:.66rem;font-weight:700;color:#102B50;text-align:center;line-height:1.1}
+.qfig-person{width:2.4rem;height:auto}
+.qfig-bubble{position:relative;margin:.2rem 0 0;padding:.45rem .6rem;background:#fff;border:2px solid #102B50;border-radius:12px;font-size:.88rem;line-height:1.35;color:#102B50;font-weight:600}
+.qfig-line.side-left .qfig-bubble::before{content:"";position:absolute;left:-8px;top:10px;border:7px solid transparent;border-right-color:#102B50;border-left:0}
+.qfig-line.side-right .qfig-bubble::before{content:"";position:absolute;right:-8px;top:10px;border:7px solid transparent;border-left-color:#102B50;border-right:0}

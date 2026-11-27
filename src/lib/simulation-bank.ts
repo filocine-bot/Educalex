@@ -12,7 +12,9 @@ export type QuestionFigure =
   | { kind: "table"; caption: string; head: string[]; rows: string[][] }
   | { kind: "line"; caption: string; xLabel: string; yLabel: string; points: [number, number][]; yMax: number; yStep: number }
   | { kind: "pie"; caption: string; slices: [string, number][] }
-  | { kind: "plan"; caption: string; w: number; h: number; unit: string; label: string };
+  | { kind: "plan"; caption: string; w: number; h: number; unit: string; label: string }
+  | { kind: "sign"; caption: string; tone: "notice" | "warning" | "info" | "ad" | "museum"; heading: string; body: string[]; footer?: string }
+  | { kind: "comic"; caption: string; panels: { scene?: string; speech: { who: string; says: string; side: "left" | "right" }[] }[] };
 export type PracticeQuestion = {
   id: string;
   figure?: QuestionFigure;

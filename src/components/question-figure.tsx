@@ -13,6 +13,12 @@ export function QuestionFigureView({ f }: { f: QuestionFigure }) {
     {f.kind === "line" && <LineChart f={f} />}
     {f.kind === "pie" && <PieChart f={f} />}
     {f.kind === "plan" && <Plan f={f} />}
+    {f.kind === "sign" && <div className={`qfig-sign tone-${f.tone}`} role="img" aria-label={[f.heading, ...f.body, f.footer ?? ""].join(" ")}>
+      <strong className="qfig-sign-h">{f.heading}</strong>
+      <div className="qfig-sign-b">{f.body.map((l, i) => <span key={i}>{l}</span>)}</div>
+      {f.footer && <small className="qfig-sign-f">{f.footer}</small>}
+    </div>}
+    {f.kind === "comic" && <Comic f={f} />}
     <figcaption>{f.caption}</figcaption>
   </figure>;
 }
@@ -60,4 +66,28 @@ function Plan({ f }: { f: Extract<QuestionFigure, { kind: "plan" }> }) {
     <line x1={ox - 16} x2={ox - 16} y1={oy} y2={oy + h} stroke="#41546e" />
     <text x={ox - 22} y={oy + h / 2 + 4} textAnchor="end" fontSize="13" fill="#102B50" fontWeight="700">{f.h} {f.unit}</text>
   </svg>;
+}
+
+const FACE = ["#F2B705", "#2E8B57", "#C0392B", "#6C5CE7", "#1E88E5"];
+function Person({ color }: { color: string }) {
+  return <svg viewBox="0 0 40 52" className="qfig-person" aria-hidden="true">
+    <circle cx="20" cy="14" r="11" fill="#fde7c8" stroke="#102B50" strokeWidth="2" />
+    <circle cx="16" cy="13" r="1.6" fill="#102B50" /><circle cx="24" cy="13" r="1.6" fill="#102B50" />
+    <path d="M15 18 q5 4 10 0" stroke="#102B50" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+    <path d="M4 52 q0-20 16-20 q16 0 16 20 z" fill={color} stroke="#102B50" strokeWidth="2" />
+  </svg>;
+}
+
+function Comic({ f }: { f: Extract<QuestionFigure, { kind: "comic" }> }) {
+  const names = [...new Set(f.panels.flatMap(p => p.speech.map(s => s.who)))];
+  const color = (who: string) => FACE[names.indexOf(who) % FACE.length]!;
+  return <div className={`qfig-comic panels-${f.panels.length}`}>
+    {f.panels.map((p, i) => <div key={i} className="qfig-panel">
+      {p.scene && <p className="qfig-scene">{p.scene}</p>}
+      {p.speech.map((s, j) => <div key={j} className={`qfig-line side-${s.side}`}>
+        <div className="qfig-who"><Person color={color(s.who)} /><small>{s.who}</small></div>
+        <p className="qfig-bubble">{s.says}</p>
+      </div>)}
+    </div>)}
+  </div>;
 }

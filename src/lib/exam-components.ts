@@ -6,6 +6,7 @@ import { ingresoMatematicas } from "@/lib/bank-v3/areas/ingreso-matematicas";
 import { ingresoSociales } from "@/lib/bank-v3/areas/ingreso-sociales";
 import { ingresoLengua } from "@/lib/bank-v3/areas/ingreso-lengua";
 import { ingresoNaturales } from "@/lib/bank-v3/areas/ingreso-naturales";
+import { ingresoIngles } from "@/lib/bank-v3/areas/ingreso-ingles";
 
 export type ComponentId = string;
 export type ExamComponent = { id: ComponentId; group: "comunes" | "pedagogicas" | "areas"; title: string; what: string; questions: PracticeQuestion[]; basis?: string };
@@ -77,6 +78,7 @@ export const AREA_TESTS: Record<SimulationProfile, ExamComponent[]> = {
     { id: "matematicas", group: "areas", title: "Matemáticas", what: "Pensamientos numérico, espacial, métrico, aleatorio y variacional, y su didáctica.", questions: byLevel(ingresoMatematicas), basis: "ejes de la guía CNSC–ICFES anterior y Estándares del MEN (2006)" },
     { id: "lengua", group: "areas", title: "Lengua castellana", what: "Lingüística, gramática textual, producción escrita, literatura, medios, argumentación y didáctica.", questions: byLevel(ingresoLengua), basis: "competencias de Lectura Crítica del ICFES, Lineamientos de Lengua Castellana (1998) y Estándares del MEN (2006)" },
     { id: "naturales", group: "areas", title: "Ciencias naturales", what: "Biología, química, física, ciencia-tecnología-sociedad, educación ambiental y didáctica de las ciencias.", questions: byLevel(ingresoNaturales), basis: "competencias de Ciencias Naturales del ICFES, Lineamientos (1998) y Estándares del MEN (2006)" },
+    { id: "ingles", group: "areas", title: "Inglés", what: "Competencia lingüística, pragmática y sociolingüística, y didáctica del inglés. Preguntas en inglés.", questions: byLevel(ingresoIngles), basis: "competencia comunicativa del MCER, Guía 22 del MEN (2006) y Lineamientos de Idiomas Extranjeros (1999)" },
     { id: "sociales", group: "areas", title: "Ciencias sociales", what: "Historia, geografía, Constitución, economía, diversidad, paz y problemáticas actuales.", questions: byLevel(ingresoSociales), basis: "competencias de Sociales y Ciudadanas del ICFES, Estándares del MEN (2006) y Lineamientos de Ciencias Sociales (2026)" },
   ],
   "ascenso-reubicacion": [],
