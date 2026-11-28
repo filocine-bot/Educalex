@@ -50,3 +50,9 @@ describe("rector: banco nuevo del concurso (bloques aprobados)", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 });
+
+describe("bloques completos", () => {
+  it.each(["ingreso-docente", "ascenso-reubicacion", "rector", "coordinador"] as const)("ningún bloque de %s tiene menos de 10 preguntas", profile => {
+    for (const c of examComponents(profile)) for (const b of blocksOf(c)) expect(b.questions.length, `${c.title} ${b.label}`).toBeGreaterThanOrEqual(10);
+  });
+});
