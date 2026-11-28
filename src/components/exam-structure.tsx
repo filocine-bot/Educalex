@@ -6,7 +6,7 @@ const ROWS: Row[] = [
   { label: "Prueba escrita principal", docente: "Prueba de aptitudes y competencias básicas. Eliminatoria.", directivo: "Prueba de aptitudes y competencias básicas. Eliminatoria." },
   { label: "Puntaje mínimo para seguir", docente: "60 sobre 100", directivo: "70 sobre 100", note: "Decreto 2038 de 2016 y Anexo Técnico 2026" },
   { label: "Componentes comunes", docente: "Lectura crítica · Razonamiento cuantitativo · Competencias blandas (liderazgo, ética, trabajo en equipo y ciudadanía)", directivo: "Lectura crítica · Razonamiento cuantitativo · Competencias blandas (liderazgo, ética, trabajo en equipo y ciudadanía)", note: "Anexo Técnico 2026, numeral 2.1" },
-  { label: "Componente propio del cargo", docente: "Conocimientos disciplinares del área del empleo y competencias pedagógicas: enseñar, evaluar e incluir.", directivo: "Funciones del cargo directivo: gestión directiva, administrativa y financiera, y gestión académica.", note: "Para directivos, división usada en el concurso 2022; confírmala en la guía 2026" },
+  { label: "Conocimientos disciplinares y competencias pedagógicas", docente: "Conocimientos disciplinares del área del empleo y competencias pedagógicas: enseñar, evaluar e incluir.", directivo: "Funciones del cargo directivo: gestión directiva, administrativa y financiera, y gestión académica.", note: "Para directivos, división usada en el concurso 2022; confírmala en la guía 2026" },
   { label: "Cómo son las situaciones", docente: "Casos de aula: planear una clase, evaluar, ajustar para un estudiante, enseñar un contenido del área.", directivo: "Casos de institución: PEI, gobierno escolar, presupuesto y Fondo de Servicios Educativos, acompañamiento a docentes, convivencia y mejoramiento institucional.", note: "Orientación EDUCALEX, no texto oficial" },
   { label: "Prueba psicotécnica", docente: "Clasificatoria. Se aplica el mismo día y en la misma sesión.", directivo: "Clasificatoria. Se aplica el mismo día y en la misma sesión.", note: "Anexo Técnico 2026" },
   { label: "Etapas posteriores", docente: "Valoración de antecedentes y entrevista, solo para quienes superan la prueba eliminatoria.", directivo: "Valoración de antecedentes y entrevista, solo para quienes superan la prueba eliminatoria." },
@@ -16,7 +16,7 @@ const ROWS: Row[] = [
 export function ExamStructure() {
   return <section className="exam-structure" aria-labelledby="exam-structure-title">
     <h2 id="exam-structure-title">Estructura de la prueba: docentes y directivos docentes</h2>
-    <p>Los dos cargos presentan la misma prueba eliminatoria con una base común, pero cambian el componente propio del cargo y el puntaje mínimo.</p>
+    <p>Los dos cargos presentan la misma prueba eliminatoria con una base común, pero cambian los conocimientos disciplinares y las competencias pedagógicas que se evalúan, y el puntaje mínimo.</p>
     <div className="exam-table-wrap"><table className="exam-table">
       <thead><tr><th scope="col">Aspecto</th><th scope="col">Docentes</th><th scope="col">Directivos docentes</th></tr></thead>
       <tbody>{ROWS.map(r => <tr key={r.label}><th scope="row">{r.label}{r.note && <small>{r.note}</small>}</th><td>{r.docente}</td><td>{r.directivo}</td></tr>)}</tbody>

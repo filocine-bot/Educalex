@@ -24,9 +24,9 @@ const all = (bank: Parameters<typeof levelsFor>[0]) => levelsFor(bank).flatMap(l
 const byLevel = (qs: PracticeQuestion[]) => [...qs].sort((a, b) => (a.level ?? 0) - (b.level ?? 0));
 
 export const GROUP_LABEL: Record<SimulationProfile, { comunes: string; propio: string; intro: string }> = {
-  "ingreso-docente": { comunes: "Componentes comunes", propio: "Componente pedagógico del cargo", intro: "Prueba de aptitudes y competencias básicas (CNSC): componentes comunes y componente pedagógico del docente." },
-  coordinador: { comunes: "Componentes comunes", propio: "Componente propio del cargo: coordinador", intro: "Prueba de aptitudes y competencias básicas (CNSC): componentes comunes y funciones del coordinador." },
-  rector: { comunes: "Componentes comunes", propio: "Componente propio del cargo: rector", intro: "Prueba de aptitudes y competencias básicas (CNSC): componentes comunes y funciones del rector." },
+  "ingreso-docente": { comunes: "Componentes comunes", propio: "Conocimientos disciplinares y competencias pedagógicas", intro: "Prueba de aptitudes y competencias básicas (CNSC, Anexo Técnico 2026, numeral 2.1): componentes comunes y conocimientos disciplinares y competencias pedagógicas del docente." },
+  coordinador: { comunes: "Componentes comunes", propio: "Conocimientos disciplinares y competencias pedagógicas (funciones del cargo de coordinador)", intro: "Prueba de aptitudes y competencias básicas (CNSC, Anexo Técnico 2026, numeral 2.1): componentes comunes y funciones del coordinador." },
+  rector: { comunes: "Componentes comunes", propio: "Conocimientos disciplinares y competencias pedagógicas (funciones del cargo de rector)", intro: "Prueba de aptitudes y competencias básicas (CNSC, Anexo Técnico 2026, numeral 2.1): componentes comunes y funciones del rector." },
   "ascenso-reubicacion": { comunes: "", propio: "Prueba pedagógica escrita", intro: "Evaluación para ascenso y reubicación (MEN, Decreto Ley 1278): prueba pedagógica escrita sobre tu práctica." },
 };
 

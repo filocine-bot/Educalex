@@ -54,7 +54,7 @@ function CnscStructure({ profile }: { profile: "ingreso-docente" | "coordinador"
               <ul>{COMMON.map(c => <li key={c.text}><c.icon aria-hidden="true" />{c.text}</li>)}</ul>
             </div>
             <div className="pst-part is-own">
-              <h3>Componente propio del cargo</h3>
+              <h3>Conocimientos disciplinares y competencias pedagógicas</h3>
               <ul>{d.own.map(c => <li key={c.text}><c.icon aria-hidden="true" />{c.text}</li>)}</ul>
               {d.ownNote && <small>{d.ownNote}</small>}
             </div>
