@@ -41,3 +41,12 @@ describe.each(["matematicas", "lengua", "naturales", "ingles", "sociales"])("asc
     expect(blocksOf(area)[0]!.questions.map(q => q.id).sort()).toEqual(Array.from({ length: 10 }, (_, i) => `${area.questions[0]!.id.split("-").slice(0, 2).join("-")}-${i + 1}`).sort());
   });
 });
+
+describe("rector: banco nuevo del concurso (bloques aprobados)", () => {
+  it("cada pregunta nueva aparece una sola vez en los componentes de Rector", async () => {
+    const { rectorBanco2026 } = await import("@/lib/bank-v3/rector-banco-2026");
+    const ids = examComponents("rector").flatMap(c => c.questions.map(q => q.id));
+    for (const q of rectorBanco2026) expect(ids.filter(id => id === q.id), q.id).toHaveLength(1);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+});

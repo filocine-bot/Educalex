@@ -1,6 +1,7 @@
 import { levelsFor } from "@/lib/game-engine";
 import type { PracticeQuestion, SimulationProfile } from "@/lib/simulation-bank";
 import { rectorPropias2026 } from "@/lib/bank-v3/rector-propias-2026";
+import { rectorBanco2026 } from "@/lib/bank-v3/rector-banco-2026";
 import { coordinadorPropias2026 } from "@/lib/bank-v3/coordinador-propias-2026";
 import { ascensoNuevas2026 } from "@/lib/bank-v3/ascenso-nuevas-2026";
 import { ingresoMatematicas } from "@/lib/bank-v3/areas/ingreso-matematicas";
@@ -31,9 +32,9 @@ export const GROUP_LABEL: Record<SimulationProfile, { comunes: string; propio: s
 /** Componentes de la prueba por cargo (Anexo Técnico 2026, numeral 2.1; ascenso: Resolución MEN 018987 de 2025). */
 export function examComponents(profile: SimulationProfile): ExamComponent[] {
   // Rector y Coordinador suman sus preguntas propias de contexto directivo a los componentes comunes y a gestión académica.
-  const extra = profile === "rector" ? rectorPropias2026 : profile === "coordinador" ? coordinadorPropias2026 : [];
+  const extra = profile === "rector" ? [...rectorPropias2026, ...rectorBanco2026] : profile === "coordinador" ? coordinadorPropias2026 : [];
   const nucleo = [...extra.filter(q => /^(Lectura crítica|Razonamiento cuantitativo)$/.test(q.competency)), ...extra.filter(q => q.competency === "Competencias blandas").map(q => ({ ...q, competency: (profile === "rector" ? "Blandas · liderazgo directivo" : "Blandas · liderazgo y convivencia") })), ...all("nucleo-comun")];
-  const own = [...all(profile), ...extra.filter(q => q.competency === "Gestión académica"), ...(profile === "ascenso-reubicacion" ? ascensoNuevas2026 : [])];
+  const own = [...all(profile), ...extra.filter(q => q.competency === "Gestión académica"), ...(profile === "ascenso-reubicacion" ? ascensoNuevas2026 : []), ...(profile === "rector" ? rectorBanco2026.filter(q => !/^(Lectura crítica|Razonamiento cuantitativo|Competencias blandas|Gestión académica)$/.test(q.competency)) : [])];
   const pick = (qs: PracticeQuestion[], re: RegExp) => byLevel(qs.filter(q => re.test(q.competency)));
   const comunes: ExamComponent[] = [
     { id: "lectura", group: "comunes", title: "Lectura crítica", what: "Comprender, interpretar y evaluar textos.", questions: pick(nucleo, /^Lectura crítica$/) },
